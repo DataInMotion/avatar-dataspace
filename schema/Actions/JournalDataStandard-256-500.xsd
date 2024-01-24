@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp1 (x64) (http://www.altova.com) by Scott S Peterson (private) -->
+<xs:schema xmlns="http://www.himsa.com/other/Journal/500" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/other/Journal/500" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="HIMSAJournalStandard">
+		<xs:annotation>
+			<xs:documentation>ROOT ELEMENT
+
+Important: All XML data must be encoded using UTF-8.
+
+Version 500 is the first XML version of this standard.   This standard can be considered a XML wrapper for text that is formated via RTF.  See annotations under the "Body" element for further details. 
+
+Version 100 is also fairly simple in scope as it relies solely on the Microsoft RTF format.
+
+
+REV 1 (see REV History below)
+
+Copyright © 2022 HIMSA II  K/S
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+
+
+REV History
+
+Rev 1 - Initial Release</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Body" type="xs:base64Binary">
+					<xs:annotation>
+						<xs:documentation>Microsoft RTF format.
+
+GUI elements such as the WPF RichTextBox can display RTF encoding, and allow for the use of different fonts, textFormatting, textsize, tabulations, textcolor, etc.
+In most cases Journal entries will be shown without any problem – but any RTF control will only show the data that is supported by the used RTF specification. This means that a specific RTF control may not show extended data that was created in a newer RTF control with a newer version of RTF.
+Note: The Noah 4 Journal module uses the RTF version that is available with WPF.
+
+Q: Where can a subject or heading for a journal be saved?
+A: the journal standard does not support this but rather relies upon the Noah action description to save this.  Noah compatible software will need to save a subject or heading as part of the Noah action description.
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ConvertedFromDataStandard">
+				<xs:annotation>
+					<xs:documentation>If this is present the value of the data standard version will be entered here.  This value will only be entered by NOAH software which converts data.  The version numbers are typically 100,200 ect.
+
+This data is presented as a source of information and at this time does not have a specific meaning.  As older data standards will not be validated by NOAH it is possible that some variations of data may be presented from old data.
+
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

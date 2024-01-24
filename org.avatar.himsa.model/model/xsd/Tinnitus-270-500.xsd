@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.himsa.com/measurement/Tinnitus/500" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/measurement/Tinnitus/500" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="TinnitusMeasurementData">
+		<xs:annotation>
+			<xs:documentation>ROOT ELEMENT
+
+December 15 2022
+
+See REV history below
+
+Important: All XML data must be encoded using UTF-8.
+
+For software using this data standard:
+In order not to waste space in the NOAH database it is not legal to save empty elements. <Element/>The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+REV History:
+Revision 1: December 15 2022:
+- First release
+  
+Copyright © 2022 HIMSA II  K/S
+</xs:documentation>
+			<xs:documentation>Tinnitus measurements that can be used to quantify subjective tinnitus measurements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TinnitusMeasurementNotes" type="TinnitusMeasurementNotes_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Notes added to the Tinnitus Measurement</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TinnitusMeasurementEquipment" type="MeasurementEquipment_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Tinnitus Measurement Equipment</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TinnitusPitchMatch" type="TinnitusPitchMatch_Type" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>(TPM) Test attempt to determine the frequency best matching the tinnitus</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TinnitusLoudnessMatch" type="TinnitusLoudnessMatch_Type" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>(TLM) Test attempt to determine loudness of the tinnitus</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MinimumMaskingLevel" type="MinimumMaskingLevel_Type" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>The minimum level to mask Tinnitus (MML). Test attempt to determine the lowest level at which a standard band of noise "covered" the tinnitus</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ResidualInhibition" type="ResidualInhibition_Type" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Tinnitus loudness suppression after exposure to a stimulus</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="MeasurementConditions_Type">
+		<xs:annotation>
+			<xs:documentation>Measuring Conditions for each measurement
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusSignalType" type="Signal_Type">
+				<xs:annotation>
+					<xs:documentation>Stimulus signal is the sound being presented to the patient, in the ear being tested, that you want them to respond to. (e.g. Pure Tone)
+Please note, for ResidualInhibition, the patient is submitted to a masking signal on the ear being tested. In this case the StimulusSignalType must be set in accordance to that masking signal. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusSignalOutput" type="SignalOutput_Type">
+				<xs:annotation>
+					<xs:documentation>This refers to the method used to deliver the sound the patient responds to.  The ear and way the sound is delivered is specified but not the exact device used to deliver that sound (e.g. left air conduction not TDH39)
+See annotations for SignalOutput_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingSignalType" type="Signal_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a sound used to stop the hearing in an ear that is not being tested from picking up the test signal. Often used when one ear is found to be significantly poorer than the other or for bone conduction testing.
+The non test ear picking up the test tone is called crossover. Masking is presented to the non test ear.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingUnit" type="SignalUnit_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The unit used for the masking signal.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingSignalOutput" type="SignalOutput_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This refers to the method used to deliver the masking sound to the patient. The ear and way the sound is delivered is specified but not the exact device used to deliver that sound. (e.g. left air conduction not TDH39)
+See annotations for SignalOutput_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusTransducerType" type="Transducer_Type" default="NoTransducer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The device used to deliver sound to the test ear.
+See annotations for Transducer_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingTransducerType" type="Transducer_Type" default="NoTransducer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The device used to deliver sound to the non test ear.
+See annotations for Transducer_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusTransducerDescription" default="" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional description of the Transducer</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingTransducerDescription" default="" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional description of the Transducer</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusAmplitudeModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The amplitude of the basic tone is modulated to produce a warble sound. 
+Measurement conditions typically used with DifferenceLimenIntensity.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingAmplitudeModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Amplitude Modulation is typically not used</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusBandwidthModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD! </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingBandwidthModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TBD! </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusFrequencyModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The frequency of the basic tone is modulated by a lower frequency to produce a warble sound. 
+Measurement conditions typically used with DifferenceLimenFrequency</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequencyModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Frequency Modulation is typically not used.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TinnitusMeasurementNotes_Type">
+		<xs:annotation>
+			<xs:documentation>The Measurement Notes structure is designed to hold the general notes from the Tinnitus Measurement. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TinnitusPerceptionLocation" type="TinnitusPerceptionLocation_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The perceived location of tinnitus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TinnitusTemporalCharacteristic" type="TinnitusTemporalCharacteristic_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The temporal characteristic of Tinnitus. How is the tinnitus experienced.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherMeasurementNotes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Other notes. Eg. Tinnitus etiology information</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MeasurementEquipment_Type">
+		<xs:annotation>
+			<xs:documentation>The Measurement equipment used for the Tinnitus Measurement. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AudiometerMakeModel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Manufacturer Make Model of the equipment used.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AudiometerSerialNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Serial Number of the equipment used.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="41"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AudiometerLastCalibrationDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date of Last Calibration of the equipment used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MeasurementFrequencyPoint_Type">
+		<xs:annotation>
+			<xs:documentation>Measurement Point with Frequency and optional Intensity, bandwidth and pulseDuration.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusFrequency">
+				<xs:annotation>
+					<xs:documentation>The frequency at which the measurement was done.
+##freq## </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusIntensity" type="Intensity_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The signal intensity and unit used for the stimulus signals.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusBandwidth" type="Bandwidth_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The width of the shaped noise defined by upper and lower limits in Hz. Center of noise defined in frequency and level in intensity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusPulseDuration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Duration of acoustic signal when using pulsed stimuli in seconds. </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequency" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The frequency at which the measurement was done.
+##freq## </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingIntensity" type="Intensity_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The signal intensity and unit used for the stimulus signals.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MeasurementIntensityPoint_Type">
+		<xs:annotation>
+			<xs:documentation>Measurement Point with Intensity and optional Frequency, bandwidth and pulseDuration.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusIntensity" type="Intensity_Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The signal intensity and unit used for the stimulus signals.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusFrequency" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The frequency at which the measurement was done.
+##freq## </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequency" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The frequency at which the masking was done.
+##freq## </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingIntensity" type="Intensity_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The signal intensity and unit used for the masking signal.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Intensity_Type">
+		<xs:annotation>
+			<xs:documentation>Stimulus intensity and unit applied</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Intensity">
+				<xs:annotation>
+					<xs:documentation>The signal intensity </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Unit" type="SignalUnit_Type">
+				<xs:annotation>
+					<xs:documentation>The unit used for the signal.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TinnitusPitchMatch_Type">
+		<xs:annotation>
+			<xs:documentation>(TPM) Test attempt to determine the frequency best matching the tinnitus</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Measurement Conditions for the Pitch Match measurement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementPoint" type="MeasurementFrequencyPoint_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Pitch Match point</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MatchingSuccess" type="TinnitusMatchSucess_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The sucess of matching</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TinnitusLoudnessMatch_Type">
+		<xs:annotation>
+			<xs:documentation>(TLM) Test attempt to determine loudness of the tinnitus</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Measurement Conditions for the Loudness Match measurement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementPoint" type="MeasurementIntensityPoint_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Loudness Match point</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MatchingSuccess" type="TinnitusMatchSucess_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The sucess of matching</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MinimumMaskingLevel_Type">
+		<xs:annotation>
+			<xs:documentation>(MML). Test attempt to determine the lowest level at which a standard band of noise "covered" the tinnitus</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Measurement Conditions for the Minimum Masking Level measurement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementPoint" type="MeasurementIntensityPoint_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Minimum Masking Level point</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MatchingSuccess" type="TinnitusMatchSucess_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The sucess of masking</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResidualInhibition_Type">
+		<xs:annotation>
+			<xs:documentation>Tinnitus loudness suppression after exposure to a stimulus</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Measurement Conditions for the Residual Inhibition measurement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalIntensity" type="MeasurementIntensityPoint_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Stimulus Signal Level and frequescy used for Residual Inhibition measurements. Here the Signal is used to mask the tinnitus. Optional masking can be applied to the other ear.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusExposureTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The time, in seconds, the patient is exposed to the stimulus signal</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="InhibitionTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The time, in seconds, the masking is effective after it has been turned off</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PulseDuration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Duration of acoustic signal when using pulsed stimuli in seconds. </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="GapDuration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>the silence interval between the acoustic pulses in seconds</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NumberOfCycles" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The time, in seconds, the masking is effective after it has been turned off</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="InhibitionSuccess" type="TinnitusInhibitionSucess_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The sucess of Inhibition when applying masking</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PerceptionLocation" type="TinnitusPerceptionLocation_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The percieved location of tinnitus</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Signal_Type">
+		<xs:annotation>
+			<xs:documentation>The type of Signal used in the measurement. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Signal_Types">
+				<xs:annotation>
+					<xs:documentation>The Other type should be specified in the OtherSignalType element. </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:documentation>The type of Signal used in the measurement. The Other type should be specified in the OtherSignalType element. </xs:documentation>
+					</xs:annotation>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="Undefined">
+							<xs:annotation>
+								<xs:documentation>Unknown or unlisted signal type</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="NoSignal">
+							<xs:annotation>
+								<xs:documentation>No signal applied</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Tone">
+							<xs:annotation>
+								<xs:documentation>Sinusoidal tone</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Warble">
+							<xs:annotation>
+								<xs:documentation/>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="NarrowBandNoise">
+							<xs:annotation>
+								<xs:documentation>Narrow Band Noise</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="TwoTone"/>
+						<xs:enumeration value="WhiteNoise">
+							<xs:annotation>
+								<xs:documentation>white noise, constant power spectral density</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="PinkNoise">
+							<xs:annotation>
+								<xs:documentation>Pink Noise, each octave have an equal amount of noise power</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="RainbowPassage">
+							<xs:annotation>
+								<xs:documentation>Rainbow Passage signal</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="SpeechNoise">
+							<xs:annotation>
+								<xs:documentation>Speech with Noise</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="SpeechLike">
+							<xs:annotation>
+								<xs:documentation>Speech Like signal</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="LoudSpeech">
+							<xs:annotation>
+								<xs:documentation>Loud Speech</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="OwnVoice">
+							<xs:annotation>
+								<xs:documentation>Patients own voice</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Icra2pb1f1mn">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology,  2 persons babble, 1 female, 1 male, Normal effort.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Icra3bsmnfn">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology, 3 band speech modulated noise, Female weighted, Normal effort.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Icra3bsmnmn">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology, 3 band speech modulated noise, Male weighted, Normal effort.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Icra6pbl">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology, 6 persons babble, Loud effort</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Icra6pbn">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology, 6 persons babble, Normal effort</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Icra6pbr">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology, 6 persons babble, Raised effort</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="IcraUrgnml">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology, Unmodulated random gaussian noise. Male weighted, Loud effort</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="IcraUrgnmn">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology, Unmodulated random gaussian noise. Male weighted, Normal effort</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="IcraUrgnmr">
+							<xs:annotation>
+								<xs:documentation>International Collegium of Rehabilitative Audiology, Unmodulated random gaussian noise. Male weighted, Raised effort</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="SpeechNoiseILTASS">
+							<xs:annotation>
+								<xs:documentation>Speech Noise, the international long-term average speech spectrum </xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Aurins">
+							<xs:annotation>
+								<xs:documentation/>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="ISTS">
+							<xs:annotation>
+								<xs:documentation>International Speech Test Signal</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="EUHA-MPO">
+							<xs:annotation>
+								<xs:documentation>ISTS presented at 55 dB SPL together with short, loud sequential sinusoids.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="Other"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OtherSignalSpecification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description of the Signal used when referring to "Other" signal type.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Bandwidth_Type">
+		<xs:annotation>
+			<xs:documentation>The width of the shaped noise defined by upper and lower limits in Hz.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UpperLimit" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The upper cutoff frequency of the shaped noise</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="UpperSlope">
+				<xs:annotation>
+					<xs:documentation>The slope of the shaped noise from center frequency to upper cutoff frequency</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PlateauSlope" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The slope at the center frequency</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LowerLimit" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The lower cutoff frequency of the shaped noise</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LowerSlope">
+				<xs:annotation>
+					<xs:documentation>The slope of the shaped noise from center frequency to lower cutoff frequency</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minExclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SignalUnit_Type">
+		<xs:annotation>
+			<xs:documentation>The decibel scale is used to measure the level of sound presented to the ears relative to a reference point. 
+HL - Hearing Level dB HL refers to the hearing ability of a person. Normal hearing is defined as 0 dB HL. 
+SL - Sensation level
+SPL - Sound Pressure Level. dB SPL is the measured pressure relative to 20 micropascals.
+ABS / Absolute Value of a measurement without any corrections</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="HL"/>
+			<xs:enumeration value="SL"/>
+			<xs:enumeration value="SPL"/>
+			<xs:enumeration value="ABS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignalOutput_Type">
+		<xs:annotation>
+			<xs:documentation>The Signal Output Type defines the means of presenting sound to the patient:
++ Air Conductor / headphones
++ Bone conductor / vibrator placed on the mastoid (HOCA-5 page 10)
++ Free Field / Loudspeakers in a special test room
++ Insert Phone / small foam tips used to deliver air conduction test.
+It also defines which side (i.e. the persons left or right ear) is stimulated.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoSignalOutput"/>
+			<xs:enumeration value="AirConductorLeft"/>
+			<xs:enumeration value="AirConductorRight"/>
+			<xs:enumeration value="AirConductorBinaural"/>
+			<xs:enumeration value="BoneConductorLeft"/>
+			<xs:enumeration value="BoneConductorRight"/>
+			<xs:enumeration value="BoneConductorBinaural"/>
+			<xs:enumeration value="FreeFieldLeft"/>
+			<xs:enumeration value="FreeFieldRight"/>
+			<xs:enumeration value="FreeFieldBinaural"/>
+			<xs:enumeration value="InsertPhoneLeft"/>
+			<xs:enumeration value="InsertPhoneRight"/>
+			<xs:enumeration value="InsertPhoneBinaural"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TinnitusMatchSucess_Type">
+		<xs:annotation>
+			<xs:documentation>How is the tinnitus matching working
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Partial">
+				<xs:annotation/>
+			</xs:enumeration>
+			<xs:enumeration value="Complete">
+				<xs:annotation/>
+			</xs:enumeration>
+			<xs:enumeration value="NoResponse">
+				<xs:annotation>
+					<xs:documentation>Reached the limits of equipment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CouldNotTest">
+				<xs:annotation/>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TinnitusInhibitionSucess_Type">
+		<xs:annotation>
+			<xs:documentation>How is the inhibition by masking of tinnitus working
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Partial">
+				<xs:annotation/>
+			</xs:enumeration>
+			<xs:enumeration value="Complete">
+				<xs:annotation/>
+			</xs:enumeration>
+			<xs:enumeration value="Combination">
+				<xs:annotation/>
+			</xs:enumeration>
+			<xs:enumeration value="Exacerbation">
+				<xs:annotation/>
+			</xs:enumeration>
+			<xs:enumeration value="NoResponse">
+				<xs:annotation>
+					<xs:documentation>Reached the limits of equipment</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CouldNotTest">
+				<xs:annotation/>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TinnitusPerceptionLocation_Type">
+		<xs:annotation>
+			<xs:documentation>The perception of the location of Tinnitus</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Central">
+				<xs:annotation>
+					<xs:documentation>Central / Tinnitus is percived centrally in the head.      </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Binaural">
+				<xs:annotation>
+					<xs:documentation>Binaural / Tinnitus is percived in both ears not central.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MonauralRight">
+				<xs:annotation>
+					<xs:documentation>MonArualRight / Tinnitus is percived in the right side of the head.      </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MonauralLeft">
+				<xs:annotation>
+					<xs:documentation>MonarualLeft / Tinnitus is percived in the right side of the head.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VariableLocation">
+				<xs:annotation>
+					<xs:documentation>Tinnitus is percived in variable location</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Unknown">
+				<xs:annotation>
+					<xs:documentation>Tinnitus perception location cannot be decided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TinnitusTemporalCharacteristic_Type">
+		<xs:annotation>
+			<xs:documentation>Record temporal characteristics of Tinnitus</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Steady">
+				<xs:annotation>
+					<xs:documentation>Tinnitus is characterized as Steady sound      </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Pulsatile">
+				<xs:annotation>
+					<xs:documentation>Tinnitus is characterized as Pulsating </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Fluctuating">
+				<xs:annotation>
+					<xs:documentation>Tinnitus is characterized as Fluctuating but not pulsatile</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Unknown">
+				<xs:annotation>
+					<xs:documentation>Tinnitus characteristic cannot be decided</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Transducer_Type">
+		<xs:annotation>
+			<xs:documentation>The device used to deliver sound (e.g. type of headphone TDH39)
+A simple explanation for each type of device is provided below:
++ TDH39 / Supra aural headphones for air conduction tests
++ HDA200 / Supra aural headphones often used for extended high frequency air conduction testing
++ EarTone 3A / Insert earphones 
++ DT48 / Supra aural headphones for air conduction tests	
++ TDH49 /  Supra aural headphones for air conduction tests
++ B71 / Bone Conductor
++ B72 / Bone conductor
++ Beoton / specific set of headphones used with Beoton audiometers only 
++ Holmberg / Supra aural headphones for air conduction tests usually used in noisier environments 
++EARTONE5A, 
++IP30,RadioEar  EARTONE3A version
++TDH50, 
++Holmco_PD81, 
++Holmco_PD95, 
++DD45, RadioEar
++DD65, RadioEar DD45 with Peltor
++B81, RadioEar
++HDA280
++Eartone3A-ABR  
++HDA300 / Sennheiser (now EOL, but has been used in the current years)
++IP30_10Ohm / ABR from RadioEar
++IP30_50Ohm / ABR from RadioEar
++DD65v2 / RadioEar
++DD450 / RadioEar
++TDH39 / Telephonics
++BC-1 / Bone conducoter from BHM
++BC-2 / Bone conducoter from BHM
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoTransducer"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="HearingInstrument"/>
+			<xs:enumeration value="TDH39"/>
+			<xs:enumeration value="HDA200"/>
+			<xs:enumeration value="EARTONE3A"/>
+			<xs:enumeration value="DT48"/>
+			<xs:enumeration value="TDH49"/>
+			<xs:enumeration value="B71"/>
+			<xs:enumeration value="B72"/>
+			<xs:enumeration value="Beoton"/>
+			<xs:enumeration value="Holmberg"/>
+			<xs:enumeration value="EARTONE5A"/>
+			<xs:enumeration value="Eartone3A-ABR"/>
+			<xs:enumeration value="TDH50"/>
+			<xs:enumeration value="IP30"/>
+			<xs:enumeration value="IP30_10Ohm"/>
+			<xs:enumeration value="IP30_50Ohm"/>
+			<xs:enumeration value="DD45"/>
+			<xs:enumeration value="DD450"/>
+			<xs:enumeration value="B81"/>
+			<xs:enumeration value="DD65"/>
+			<xs:enumeration value="DD65v2"/>
+			<xs:enumeration value="Holmco_PD81"/>
+			<xs:enumeration value="Holmco_PD95"/>
+			<xs:enumeration value="HDA280"/>
+			<xs:enumeration value="HDA300"/>
+			<xs:enumeration value="BC-1"/>
+			<xs:enumeration value="BC-2"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Released by HIMSA September 2013 -->
+<xs:schema xmlns="http://www.himsa.com/PatientExport/PatientExport" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:aud="http://www.himsa.com/Measurement/Audiogram" xmlns:aud502="http://www.himsa.com/Measurement/Audiogram/502" xmlns:his="http://www.himsa.com/Instrument/Selection" xmlns:hif="http://www.himsa.com/Instrument/Fitting" xmlns:rc="http://www.himsa.com/Instrument/RemoteControl" xmlns:rem="http://www.himsa.com/Measurement/RealEar" xmlns:hit="http://www.himsa.com/Measurement/HearingInstrumentTest" xmlns:imp="http://www.himsa.com/Measurement/Impedance" targetNamespace="http://www.himsa.com/PatientExport/PatientExport" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.himsa.com/Measurement/Audiogram" schemaLocation="..\Actions\Audiogram-1-500.xsd"/>
+	<xs:import namespace="http://www.himsa.com/Measurement/Audiogram/502" schemaLocation="..\Actions\Audiogram-1-502.xsd"/>
+	<xs:import namespace="http://www.himsa.com/Instrument/Selection" schemaLocation="..\Actions\HearingInstrumentSelection-129-130-500.xsd"/>
+	<xs:import namespace="http://www.himsa.com/Instrument/Fitting" schemaLocation="..\Actions\HearingInstrumentFitting-131-132-500.xsd"/>
+	<xs:import namespace="http://www.himsa.com/Instrument/RemoteControl" schemaLocation="..\Actions\RemoteControlSelection-133-500.xsd"/>
+	<xs:import namespace="http://www.himsa.com/Measurement/RealEar" schemaLocation="..\Actions\RealEarMeasurement-3-4-500.xsd"/>
+	<xs:import namespace="http://www.himsa.com/Measurement/HearingInstrumentTest" schemaLocation="..\Actions\HearingInstrumentTest-5-6-500.xsd"/>
+	<xs:import namespace="http://www.himsa.com/Measurement/Impedance" schemaLocation="..\Actions\Impedance-15-16-500.xsd"/>
+	<xs:element name="Patients">
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="Patient">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="Patient_Type">
+								<xs:sequence>
+									<xs:element name="Actions" nillable="true" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Action" type="Action_Data_Type" minOccurs="0" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Patient_Type">
+		<xs:sequence>
+			<xs:element name="PatientGUID" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="FirstName" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LastName" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MiddleName" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+      <xs:element name="PatientNo" nillable="true" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+			<xs:element name="ActivePatient" type="xs:boolean" nillable="true" minOccurs="0"/>
+			<xs:element name="Gender" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKENS">
+						<xs:enumeration value="Male"/>
+						<xs:enumeration value="Female"/>
+						<xs:enumeration value="NotRecorded"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="BirthDate" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="UserId">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CreateDate" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Address1" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Address2" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Address3" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Title" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Salutation" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SSNumber" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Zip" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postal Code / Zip Code</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="City" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Province" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Country" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EMail" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="HomeTelephone" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="WorkTelephone" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MobileTelephone" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Insurance1" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Insurance2" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Physician" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Referral" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Other1" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Other2" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="BackEndSystemPatientId" nillable="true" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Action_Data_Type">
+		<xs:sequence>
+			<xs:element name="TypeOfData">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKENS">
+						<xs:enumeration value="Audiogram"/>
+						<xs:enumeration value="HearingInstrumentSelectionLeft"/>
+						<xs:enumeration value="HearingInstrumentSelectionRight"/>
+						<xs:enumeration value="HearingInstrumentFittingLeft"/>
+						<xs:enumeration value="HearingInstrumentFittingRight"/>
+						<xs:enumeration value="RemoteControlSelection"/>
+						<xs:enumeration value="ImpedanceLeft"/>
+						<xs:enumeration value="ImpedanceRight"/>
+						<xs:enumeration value="REMLeft"/>
+						<xs:enumeration value="REMRight"/>
+						<xs:enumeration value="HITLeft"/>
+						<xs:enumeration value="HITRight"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+            <xs:element name="DataFormat">
+				<xs:simpleType>
+                <xs:restriction base="xs:integer"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Description">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ActionDate" type="xs:dateTime"/>
+			<xs:element name="LastModifiedDate" type="xs:dateTime" nillable="true"/>
+			<xs:element name="UserId">
+				<xs:annotation>
+					<xs:documentation>The NOAH user that created the data</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PublicData" type="PubliclyFormattedData" nillable="true" minOccurs="0"/>
+			<xs:element name="ActionGroup" type="xs:dateTime" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element is used to group actions that are grouped together.  A common example of this would be left hearing instrument selection action and a right being stored with the same actiongroup so that it is known that the patient was fit at the same time with these two instruments</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeviceType" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:int"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ModuleId" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+    <xs:attribute name="operation"  type="operation_TYPE" use="optional"/>
+  </xs:complexType>
+	<xs:complexType name="PubliclyFormattedData">
+		<xs:choice>
+			<xs:element ref="aud:HIMSAAudiometricStandard" minOccurs="0"/>
+			<xs:element ref="aud502:HIMSAAudiometricStandard" minOccurs="0"/>
+			<xs:element ref="his:HearingInstrumentSelection" minOccurs="0"/>
+			<xs:element ref="hif:HearingInstrumentFitting" minOccurs="0"/>
+			<xs:element ref="rc:RemoteControlSelection" minOccurs="0"/>
+			<xs:element ref="rem:HIMSARemStandard" minOccurs="0"/>
+			<xs:element ref="hit:HIMSAHitStandard" minOccurs="0"/>
+			<xs:element ref="imp:AcousticImpedanceCompleteMeasurement" minOccurs="0"/>
+		</xs:choice>
+	</xs:complexType>
+  <xs:simpleType name="operation_TYPE">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Deleted"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

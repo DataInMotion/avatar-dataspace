@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.himsa.com/Measurement/AudiogramMetadata/500" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/Measurement/AudiogramMetadata/500" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="HIMSAAudiogramMetadataStandard">
+		<xs:annotation>
+			<xs:documentation>ROOT ELEMENT
+
+Important: All XML data must be encoded using UTF-8.
+
+REV 2 (See REV history below)
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+REV History
+Rev 1 - First public release August 2 2019
+REV 2 / November 4 2019 - Annotation updates only, note to use UTF-8
+
+Copyright © 2019 HIMSA II  K/S
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AutomatedMeasurement" type="xs:boolean" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>True means that the measurement was collected via in an automated fashion.   The measurement system defines if the test was automated.  This standard does not consider if the measurement was 100% or partial automated.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PredictedAccuracies" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:choice>
+							<xs:annotation>
+								<xs:documentation>Choose One</xs:documentation>
+							</xs:annotation>
+							<xs:element name="Qualind">
+								<xs:annotation>
+									<xs:documentation>Qualind ™</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="DefinedValue">
+											<xs:annotation>
+												<xs:documentation>Qualind defined values</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:NMTOKEN">
+													<xs:enumeration value="Good"/>
+													<xs:enumeration value="Fair"/>
+													<xs:enumeration value="Poor"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Disagree" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>If text is stored in Disagree this means that the hearing care professional has disagreed with Qualind.  They will then be able enter their own free from text based value</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="NonStandardized">
+								<xs:annotation>
+									<xs:documentation>Information that is not defined by a published standard.  The information is assumed to be understood by the creator of the data.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:choice>
+										<xs:annotation>
+											<xs:documentation>Choose One</xs:documentation>
+										</xs:annotation>
+										<xs:element name="DefinedValue">
+											<xs:annotation>
+												<xs:documentation>enumerated choices of Good, Fair and Poor</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:NMTOKEN">
+													<xs:enumeration value="Good"/>
+													<xs:enumeration value="Fair"/>
+													<xs:enumeration value="Poor"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="CustomValue" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>a free form text string can be stored if one of the defined values is not desired</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AudiogramClassifications" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Audiogramgram Classifications are optional to be stored.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="AMCLASS">
+								<xs:annotation>
+									<xs:documentation>AMCLASS ™</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Symmetry" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:NMTOKEN">
+													<xs:enumeration value="SymmetricalHearingLoss"/>
+													<xs:enumeration value="ASymmetricalHearingLoss"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="RightEar" type="AMCLASS_Type" minOccurs="0"/>
+										<xs:element name="LeftEar" type="AMCLASS_Type" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="NonStandardized" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Information that is not defined by a published standard.  The information is assumed to be understood by the creator of the data.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="AMCLASS_Type">
+		<xs:sequence>
+			<xs:element name="SiteOfLesion">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="Conductive"/>
+						<xs:enumeration value="Sensorineural"/>
+						<xs:enumeration value="Mixed"/>
+						<xs:enumeration value="SensorineuralOrMixed"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ConfigurationSeverityChoice">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="NormalHearing" type="xs:boolean" fixed="true">
+							<xs:annotation>
+								<xs:documentation>If to be stored this value is set to True as a fixed choice</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="FlatHearingLoss">
+							<xs:simpleType>
+								<xs:restriction base="xs:NMTOKEN">
+									<xs:enumeration value="Mild"/>
+									<xs:enumeration value="Moderate"/>
+									<xs:enumeration value="Severe"/>
+									<xs:enumeration value="Profound"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="SlopingHearingLoss">
+							<xs:simpleType>
+								<xs:restriction base="xs:NMTOKEN">
+									<xs:enumeration value="NormalMild"/>
+									<xs:enumeration value="NormalModerate"/>
+									<xs:enumeration value="NormalSevere"/>
+									<xs:enumeration value="MildModerate"/>
+									<xs:enumeration value="MildSevere"/>
+									<xs:enumeration value="ModerateSevere"/>
+									<xs:enumeration value="Profound"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="RisingHearingLoss">
+							<xs:simpleType>
+								<xs:restriction base="xs:NMTOKEN">
+									<xs:enumeration value="MildNormal"/>
+									<xs:enumeration value="ModerateNormal"/>
+									<xs:enumeration value="ModerateMild"/>
+									<xs:enumeration value="SevereNormal"/>
+									<xs:enumeration value="SevereMild"/>
+									<xs:enumeration value="SevereModerate"/>
+									<xs:enumeration value="ProfoundSevere"/>
+									<xs:enumeration value="Profound"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="TroughShapedHearingLoss">
+							<xs:simpleType>
+								<xs:restriction base="xs:NMTOKEN">
+									<xs:enumeration value="Mild"/>
+									<xs:enumeration value="Moderate"/>
+									<xs:enumeration value="Severe"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="PeakedHearingLoss">
+							<xs:simpleType>
+								<xs:restriction base="xs:NMTOKEN">
+									<xs:enumeration value="Mild"/>
+									<xs:enumeration value="Moderate"/>
+									<xs:enumeration value="Severe"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Other">
+							<xs:simpleType>
+								<xs:restriction base="xs:NMTOKEN">
+									<xs:enumeration value="Mild"/>
+									<xs:enumeration value="Moderate"/>
+									<xs:enumeration value="Severe"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

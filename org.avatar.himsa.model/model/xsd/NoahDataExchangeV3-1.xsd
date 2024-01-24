@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Released by HIMSA September 2013 -->
+<xs:schema xmlns="http://www.himsa.com/XMLWrapper/XMLWrapper" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pt="http://www.himsa.com/PatientExport/PatientExport" xmlns:si="http://www.himsa.com/DataExchange/ExportSignature" targetNamespace="http://www.himsa.com/XMLWrapper/XMLWrapper" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xs:import/>
+	<xs:import namespace="http://www.himsa.com/PatientExport/PatientExport" schemaLocation=".\PatientExportV3-1.xsd"/>
+	<xs:element name="NOAHDataExchange">
+		<xs:annotation>
+			<xs:documentation>This Schema file describes the XML document, which wraps the data send in and out of Noah</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NoahDataExchangeProtocol">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="NoahDataExchangeProtocol_Type">
+								<xs:sequence>
+									<xs:element name="Signature" type="xs:base64Binary" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Base64Binary encrypted metadata e.g. Signature and/or type of visit and/or data transfer comments. </xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element ref="pt:Patients"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+      <xs:attribute name="WSIConformanceLevel" type="xs:int" use="required"/>
+    </xs:complexType>
+	</xs:element>
+	<xs:complexType name="NoahDataExchangeProtocol_Type">
+		<xs:sequence>
+			<xs:element name="NoahSiteID">
+				<xs:annotation>
+					<xs:documentation>Noah site id, where is Noah loacated.  This site id is set per NOAH Server installation </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NoahUserID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Noah System user id as assigned by the NOAH System User Management feature.  Typiclally setup by the NOAH System Administrator</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="BusinessSystemUserID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Business system user ID that is linked to the NoahUserID</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TransmissionID" nillable="true">
+				<xs:annotation>
+					<xs:documentation>Transmissing ID calculated from a Himsa specified algorithm.  This ID is used soely for HIMSA functions</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MethodName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Method, which action/method to activate 
+
+As of 3/18/2010 this is not being used and is subject to be removed</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="ExportNoahAction"/>
+						<xs:enumeration value="ImportBSAction"/>
+						<xs:enumeration value="RequestBSpatientDetails"/>
+						<xs:enumeration value="CreateNoahPatient"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ReturnCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Return code from the transmission, if it is a initiating tranmission or success the value is 0 otherwise it must be diffrent from 0
+
+## As of 3/18/2010 This element is a work in progress for further HIMSA consideration ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ReturnCodeMessage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Return code message from the transmission.
+
+## As of 3/18/2010 This element is a work in progress for further HIMSA consideration ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="60"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TransactionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates which transaction type Data out: ExportOutOfNoah. Data into Noah: ImportIntoNoah</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="ExportOutOfNoah"/>
+						<xs:enumeration value="ImportIntoNoah"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

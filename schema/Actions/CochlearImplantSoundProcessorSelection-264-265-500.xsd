@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.himsa.com/CochlearImplantSoundProcessorSelection/500" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/CochlearImplantSoundProcessorSelection/500" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="CochlearImplantSoundProcessorSelection">
+		<xs:annotation>
+			<xs:documentation>Important: All XML data must be encoded using UTF-8.
+
+REV 2 (see REV History below)
+
+Copyright © 2019 HIMSA II K/S
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+
+REV History
+REV 1 / May 8 2019 first release
+REV 2 / November 4 2019 - Annotation updates only, note to use UTF-8</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SoundProcessor" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The model name
+</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="SerialNumber" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Serial Number of the processor
+</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer"/>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

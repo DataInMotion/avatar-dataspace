@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp1 (x64) (http://www.altova.com) by Scott S Peterson (private) -->
+<xs:schema xmlns="http://www.himsa.com/AlertDashboard/Notification/500" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/AlertDashboard/Notification/500" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="NotificationAction">
+		<xs:annotation>
+			<xs:documentation>HIMSA Notification Action Data Standard
+
+Important: All XML data must be encoded using UTF-8.
+
+REV 2 (see REV History below)
+
+Copyright © 2019 HIMSA II K/S
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+Copyright © 2019 HIMSA II K/S
+
+REV History
+REV 1 /  Intial release made April 2 2019
+REV 2 / November 6 2019 - Annotation updates only, note to use UTF-8</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Category">
+					<xs:annotation>
+						<xs:documentation>Must be one of the pre-defined values.  The string will be verified to see if it matches one of the pre-defined valid strings. These strings are defined in the cloud but will dynamically be retrieved by NoahServer.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Description">
+					<xs:annotation>
+						<xs:documentation>The Notification Description.  The notification description is not be confused with Action Description.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="ActionGUID" nillable="true" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Used to reference the action that was sent, or referenced, in the same Notification (if any)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Url" type="xs:anyURI" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>If provided Noah will use this link to open the default web browser when the user selects the notification action in the GUI</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ModuleID" type="xs:int" nillable="true" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>If provided Noah will open this module when the user selects the notification action in the GUI</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ModuleParameter" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>command line argument when opening a module</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="IconUrl" type="xs:anyURI" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>url address to icon resource. Used in conjunction with URL
+
+If this value isn’t provided and the ’Url’ value is provided – then a default icon will be displayed</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Group" nillable="true" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Used to mark a notification action/alert as a part of a series of notification actions/alerts with the same Group.</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ConvertedFromDataStandard">
+				<xs:annotation>
+					<xs:documentation>Software saving data formatted via this XSD file should not use this element for storage.  The intention is for Noah data convertors to fill in an appropriate value for runtime conversions - not permanent storage.
+
+Please note that values less than 500 mean that the data was originally stored in a format which was not validated by Noah before storage.  This could mean that the data will not validated against this version</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

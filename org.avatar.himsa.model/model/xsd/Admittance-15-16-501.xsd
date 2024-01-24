@@ -1,0 +1,2087 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp1 (x64) (http://www.altova.com) by Scott S Peterson (private) -->
+<!-- Rev 1 - Release Candidate 2-->
+<xs:schema xmlns="http://www.himsa.com/Measurement/Admittance/501" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/Measurement/Admittance/501" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="AcousticImmittanceAssessment">
+		<xs:annotation>
+			<xs:documentation>Important: All XML data must be encoded using UTF-8.
+
+REV 3 - See REV History Below
+
+Tympanometry is a commonly used objective test of middle ear function. 
+
+Defined in the ANSI standard – ANSI s3.39-1987 (R2007) as “the dynamic measure of acoustic immitance in the ear canal as a function of changes in air pressure in the ear canal” Katz pg. 175
+
+HIMSA highly recommends the below 3rd party documentation for individuals not familiar with Audiology.  The book is reference throughout this data standard:
+[HOCA-5] Handbook of Clinical Audiology, edited by Jack Katz, Williams and Wilkins, 2002, 5. Edition
+
+REV History
+REV1 / First release of 501 made April 18th 2017
+REV 2 / July 30 2018 It has been brought to HIMSA's attention that the ResultOfReflexTest annotations for REFLEX are incorrect.  The values were incorrectly carried over from fromat 100.  This issue has also existed since the first REV of format 500 and been corrected.
+ REV 3 / November 4 2019 - Annotation updates only, note to use UTF-8
+
+Copyright © 2017 HIMSA II K/S
+
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+@@ Text entered between these symbols denote special instructions to the HIMSA developer responsible for creating a conversion DLL between format 500 and format 501 @@
+
+@@ 500 --> 501 name change
+AcousticImpedanceCompleteMeasurement changed to AcousticImmittanceAssessment
+@@
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TympanogramTest" type="TympanogramTest_Type" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Tympanograms
+
+The mobility of the ear drum and the middle ear is recorded while the air
+pressure in the auditory canal is varied, typically in the interval of
+[-300 .. +200] daPa .
+
++ Unit for Pressure [p]ı / The unit chosen for pressure is deka Pascal (daPa) or tens of Pascal.
+1 daPa approximates 1 mm Water. Ref. [Van Camp].
+
+		[p] = daPa dekaPascal or tens of Pascals.
+
++ resFreq / Ear Resonance Frequency. This field is intended for future use in Noah.
+If the probe frequency is swept in an interval of e.g. [200..2kHz], a
+resonance frequency can be found near 1000 Hz. Below this frequency the
+ear is stiffness controlled, and above this frequency it is mass controlled.
+
++ Maximum Mobility point i.e.Max 
+ Point / For the well-functioning normal middle ear a point of "maximum mobility" will be found, often for a slightly negative pressure [-100..0 ] daPa.
+
++ Middle Ear Acoustic Impedance and Admittance / The mobility of the ear drum and the middle ear is in short named "Middle Ear acoustic Immitance", which can mean Acoustic Impedance, Za
+or Acoustic Admittance Ya where pr. definition
+
+		__1__
+		Za = Ya The subscript a for acoustic is omitted hereafter.
+
++ Unit for Acoustic Admittance [Y] / For practical reasons the Admittance Y is most often measured, and indeed this measure is the one saved in IMPDEF.H, the SI unit being
+
+		____m3___
+		[Y] = Pa . s
+
++ "SI-mho / The SI unit is equal to the cgs unit millimho x 100 or mho x 105
+
+
+@@ 501 -> 500 Prior to format 501 this element was limited to 3 and this limitation has now been removed. When converting down and finding more than 3 then convert the first 3 and drop the remaining tests @@</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ReflexTest" type="ReflexTest_Type" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Reflex Tests
+
+The acoustic reflex is a contraction of two middle ear muscles, named the stapedius and tensor tympani muscles. The muscle contraction is a normal bilateral response to acoustic or other eliciting stimuli, (which is not necessarily bilateral). The amount of contraction and subsequent acoustic reflex decay are measured by immitance audiometry.
+
+The reflex is commonly described as ipsilateral or contralateral depending on which side the response is observed relative to the stimulus.
+
+Usually manual inspection of the recorded response is required to verify that a reflex response has been recorded as normal breathing can cause artefact on the test recordings.
+Generally there are 3 tests undertaken using the acoustic reflex response, which are:
+1) Normal reflex test
+2) Reflex decay test
+3) Reflex latency test
+
+
+1) Normal reflex test 
+Changes in the immitance of the ear are monitored as a tonal or noise stimuli is presented which elicits an acoustic reflex. The test establishes the lowest sound level that elicits a reliable acoustic reflex response which is seen as a measurable change in acoustic immitance. 
+
+As the acoustic reflex is a bilateral response we can stimulate either ear and record a response from the same or opposite ear.
+
+ The stimulus can be presented in the same ear as the immitance recording and this is called an ipsilateral reflex. Alternatively the immitance can be recorded in the opposite ear to the stimulus and this is called a contralateral reflex. Ipsilateral and contralateral reflexes test different neural pathways.
+
+For clarity the definitions used are detailed below.
+
+Contra Reflex Measurement (Right):
++ Probe in: Right ear
++ Stimuli in: Left ear
++Reflex result are saved for: Right ear
+
+Contra Reflex Measurement (Left):
++Probe in: Left ear
++Stimuli in: Right ear
++Reflex result are saved for: Left ear
+
+IPSI Reflex Measurement (Right):
++Probe in: Right ear
++Stimuli in: Right ear
++Reflex result are saved for: Right ear
+
+IPSI Reflex Measurement (Left):
++Probe in: Left ear
++Stimuli in: Left ear
++Reflex result are saved for: Left ear
+
+Ref: Pg 207 Katz
+
+
+2) Reflex Decay test 
+Acoustic reflex decay or adaptation, is the reduction in the magnitude of the acoustic reflex response during the presentation of a sustained stimulus. (pg 220 Katz)
+
+Test frequencies tend to be 500Hz and 1000Hz as the reflex tends to naturally rapidly decay at high frequencies.
+
+A reflex is said to decay if it falls to 50% or less of its original value in the 10 or 30 second stimulus time.
+
+Abnormally rapid reflex decay is associated with retrocochlear hearing loss.
+
+
+This curve illustrates the normal situation where the decay value is negative. The formula used for calculating the decay is
+
+		Y2 - Y1
+		_______
+	Decay = Y1 . 100		 percent. Range [0..100] percent.
+
+
+3) Reflex Latency test 
+Acoustic reflex latency refers to how long it takes for the acoustic reflex to occur after the stimulus is presented. The delay is measured from the onset of the stimulus until the beginning of the reflex response. (pg 223 Katz). Generally taken as the time it takes after the stimulus is presented for the immitance change to rise to 10% of it’s eventual value.
+
+The latency period tends to be substantially increased in retrocochlear hearing losses.
+
+@@ 501 -> 500 
+
+The number of reflex tests were capped at 16 prior to format 501.  In order to provide backwards compatibility, the following logic will be followed
+Convert all results, not exceeding more than 16, any ReflexTests over this number will be dropped.  Convert with the following preferred order
+Group 1
+ImpedanceMeasurementCondition > TestType = Reflex AND ResultOfReflexTest = True (0), sort tests by ImpedanceMeasurementCondition > SignalLevel in ascending order.  If the limit of 16 has not been met move to Group 2
+Group 2
+ImpedanceMeasurementCondition > TestType = Reflex AND ResultOfReflexTest = True (0), where ImpedanceMeasurementCondition > SignalLevel does not exist, SignalLevel was not provided.  If the total limit of 16 from groups 1 and 2 have not been met, then proceed to group 3
+Group 3
+ImpedanceMeasurementCondition > TestType = Decay.  If the total limit of 16 from groups 1, 2, and 3 have not been met, then proceed to group 4
+Group 4
+ImpedanceMeasurementCondition > TestType = Latency.  If the total limit of 16 from groups 1, 2, 3, and 4 have not been met, then proceed to group 5
+Group 5
+ImpedanceMeasurementCondition > TestType = any other remaining choices in order they are saved
+
+@@ 
+
+
+
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="EustachianTubeFunctionIntactEarDrumTest" type="EustachianTubeFunctionIntactEarDrumTest" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Eustachian Tube Test (Intact ear drum)
+
+The principle of this test is to record a maximum admittance point and if it is recorded at a significantly negative pressure to continue the test. The patient is then asked to try to force open the Eustachian tube by yawning, swallowing or holding the nose and blowing. A second maximum admittance is then recorded. A normal outcome would be for the second maximum admittance to be recorded closer to 0daPa. Only peak admittance volume is stored for each test. Ref Katz pg. 183
+
+The result of the test  / The movement of the max point from one sweep to another indicates the
+pressure change in the middle ear. Maximum admittance is assumed to happen when the applied pressure equals the internal pressure in the middle ear.  Overview and principles of Acoustic.  Ref Katz pg. 176
+
+
+
+
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="EustachianTubeFunctionPerforatedEarDrumTest" type="EustachianTubeFunctionPerforatedEarDrumTest" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Eustachian Tube Test (Perforated Ear drum)
+
+The pressure of the sealed ear canal volume and middle ear is measured as a function of time. The client is asked to swallow /yarn / hold the mouth and nose shut while blowing, in order to activate Eustachian tube function. A pressure fall will indicate a functioning Eustachian tube.
+
+pressure Point / Curve points. The pressure in daPa is saved versus time.
+
+openPoint / If the Eustachian tube ventilates the middle ear, the pressure change will be registered on the curve. Up to 3 identified pressures can be saved.
+
+closePoint / When the Eustachian tube closes, the pressure stabilises. Up to 3 identifiedpressures can be saved.
+
+timeBase / The maximum x-value is saved here for scaling purposes.
+
+ </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SupplementaryData" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Supplementary data is data supplied by a Noah compatible application that does not follow a HIMSA published standard.  The Supplementary data is included in conjunction with the HIMSA defined data standard – the data will be alongside the well-established HIMSA standards.  For readers that are knowledgeable with the past “Public Extension” concept that Noah originally used with C header file based standards, this idea is similar in nature.
+
+What is the need for supplementary data?
+
+This general idea was originally suggested by a current HIMSA measurement equipment member company.  
+
+Despite HIMSA’s best intentions it is unrealistic that the HIMSA defined data standards can be updated as quickly as desired by another member company.  HIMSA is actively trying to create a system where data standards can be updated in a more flexible manner but there will still be times where HIMSA cannot publish an updated version quickly enough due to technical issues or it could be that there is not good consensus with other member companies on a particular topic.
+
+If data is stored as supplementary data then there is an easier to use option for the member to include the data so that other HIMSA member companies may make use of the data until it may be possible that the data structure be placed in the official HIMSA standard.
+
+At first it may seem that HIMSA is suggesting a step backwards in data standardization but this is not the case.  HIMSA believes that it will only make Noah easier to work with for member companies and in the long run provide HIMSA with more data information that could be candidates for standardization.
+
+What will HIMSA have for requirements?
+
++The intention for saving the data in this area is to share it to other members that may wish to use it.  If the data is proprietary or is secret in some way, do not store the data here.
+
++Supplementary data must be stored in an XML format.
+
++The data must include a version number, if the member creating the data changes the format then the version of the format must change as well
+
++If a new version is created the member company is required to notify HIMSA of the changes
+
++The member company creating supplementary data recognizes that HIMSA will most likely review the supplementary data format for possible inclusion in a future HIMSA standard.
+
+What will HIMSA ask for but not have as a requirement?
+
++Supplementary will be defined by a schema (.XSD) file, if not then documentation must be available to HIMSA member companies requesting it.  
+
++If a HIMSA standard is eventually updated to include the data that used to be stored in supplementary data HIMSA will strongly encourage member companies to move towards utilizing the updated public data standard.
+
+
+What can the member companies (creators of data) expect?
+
++If a Noah runtime data converter is translating data from one format to another it will not perform any conversion on supplementary data, it will simply pass it along in the existing format.  Please note that this will only function on data standards 502 and newer.  This means that software trying to utilize older format (e.g. format 200) will not be able to receive this data.
+
+@@ 501 to 500 conversion - This data must be removed as it was not supported in formation 500 
+
+@@ 
+
+
+
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Information">
+								<xs:complexType>
+									<xs:attribute name="Version" use="required">
+										<xs:annotation>
+											<xs:documentation>Version of this data</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:integer"/>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="Comments">
+										<xs:annotation>
+											<xs:documentation>General Comments about  the data from the developer of the data</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:any namespace="##any" processContents="skip" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Any legal formatted XML data.  This data does conform to this </xs:documentation>
+								</xs:annotation>
+							</xs:any>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Notes" type="MeasurementNotes_Type" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="501">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ValidatedByNOAH" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>This attribute is no longer in use.  The original intention was for Noah to fill in the value but the idea was never fully implemented and not needed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ConvertedFromDataStandard">
+				<xs:annotation>
+					<xs:documentation>Software saving data formatted via this XSD file should not use this element for storage.  The intention is for Noah data convertors to fill in an appropriate value for runtime conversions - not permanent storage.
+
+Please note that values less than 500 mean that the data was originally stored in a format which was not validated by Noah before storage.  This could mean that the data will not validated against this version</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Unit_Type">
+		<xs:annotation>
+			<xs:documentation>Attaches to a saved value and describes the unit used.
+
++ cubicCentiMetre / In [IEC 60645-5 2005] is referred a rule of thumb
+
++ milliLitre / The acoustic admittance of an air-filled cavity of volume 1 cubic cm at standard atmospheric conditions (barometric air pressure 100 kPa, temperature 20 degrees Celsius) is:
+
++ MilliMho / This size is per definition 1 cgs acoustic millimho.
+Since 1 cubic cm is equal to 1 ml, the three admittance units therefore
+should yield the same numeric values.
+
++ Degree / If polar notation of the complex admittance is preferred, this measure expresses the phase angle.
+
++ DekaPascal / Pressure in tens of Pascal, daPa, Pa/10. 1 daPa equals 1 mm of water.
+
+6/25/2012 Annotation
+
+The IMP standard format 100 defined the possible values in the following manner 
+•	cubicCentiMetre_100 	-- Cubic Centi Metre x 100 
+•	milliLitre_100 		-- Milli Litre x 100
+•	milli_mho		-- Milli mho  x 100  i.e. "SI-mho"
+•	degree_3600		-- Phase in degrees x 10
+•	deka_Pascal		-- Pressure in deka Pascal (daPa or tens of Pa)
+
+This means that a module saving data would set the admittance unit, using the list above, but would also have to save the admittance value accordingly.  For example, if the unit was cubiccenterMetre then the value would have to be X 100.  This concept was used as the original header file did not have the ability to use decimal values.
+
+While HIMSA migrated this standard (format 500) to XML we in almost all cases defined the xml element as a decimal where the format value was defined as “value”X100 ect.
+
+In this case we are not able to make this similar type of change as value will in some cases by X100, X10, or nothing.
+
+If a module is saving data using format 500 then it is mandatory that the developer save the value as an integer by multiplying the value according to the list of values above.
+
+Conversely, a module reading data must divide the integer accordingly.
+End of 6/25/2012 Annotation
+
+@@ convert between 500 and 501
+Please note that the enumerated cubicCentiMetre as changed to cubicCentiMeter
+@@</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="CubicCentimeter"/>
+			<xs:enumeration value="MilliLiter"/>
+			<xs:enumeration value="MilliMho"/>
+			<xs:enumeration value="Degree"/>
+			<xs:enumeration value="DekaPascal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TympanogramResult_Type">
+		<xs:annotation>
+			<xs:documentation>Reference pg 177 Katz
+
+Jerger 1970 classified the shapes of tympanograms and this system is still commonly used today and is applicable only to a 226Hz probe test.
+
+(A) tympanograms have peaks near atmospheric pressure
+(AD) tympanograms have a high peak near atmospheric pressure
+(As) tympanograms have a shallow peak near atmospheric pressure
+(B) tympanograms are flat
+(C) tympanograms have negative pressure peaks
+(D) and (E) tympanograms have a notched peak and are more common with higher probe frequencies.
+CouldNotSeal (CNS) / Could not seal, therefore no results obtained
+DidNotTest (DNT) /The stimulus was not presented to subject. Reasons: Per instruction by physician or because the test was judged to be unnecessary. No point was plotted.
+CouldNotTest (CNT)  / Unable to present stimulus. Reasons: Subject's physical or behavioral limitations, inability to obtain a seal. No point was plotted
+Other - Something other than listed above
+
+@@ 501 - 500 down conversion
+
+if CNS, DNT, or CNT or Other are used then it will not be possible to convert the complete tympogram test (TympanogramTest Element).  These choice represent that there was no test obtained, they provide more information why it was not obtained
+
+@@
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="AD"/>
+			<xs:enumeration value="AS"/>
+			<xs:enumeration value="B"/>
+			<xs:enumeration value="C"/>
+			<xs:enumeration value="D"/>
+			<xs:enumeration value="E"/>
+			<xs:enumeration value="CouldNotSeal"/>
+			<xs:enumeration value="DidNotTest "/>
+			<xs:enumeration value="CouldNotTest"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecordingMode_Type">
+		<xs:annotation>
+			<xs:documentation>A Measuring condition of the admittance measurement.
+
++ compensated / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance.
+
+Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and
+[0.65 .. 1.75] ccm in adults. Katz pg 180. The volume is given by the formula
+
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Compensated"/>
+			<xs:enumeration value="NonCompensated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignalType_Type">
+		<xs:annotation>
+			<xs:documentation>+ pureTone / Sinus tone stimulus.
++ multiTone  / Two sine waves simultaneously.
++ narrowBandNoise / Band filtered noise, e.g. 1/3 or 1/1 octave band noise.
+broadBandNoise This Signal Type is White Noise, i.e. noise with equal energy content for equal absolute bandwidths in Hz. An averaged FFT-analysis of white noise shows a flat spectrum.
++ lowPassNoise / A noise signal produced by low pass filtering a BroadBandNoise.
++ highPassNoise / A noise signal produced by high pass filtering a broadBandNoise.
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="PureTone"/>
+			<xs:enumeration value="MultiTone"/>
+			<xs:enumeration value="NarrowBandNoise"/>
+			<xs:enumeration value="BroadBandNoise"/>
+			<xs:enumeration value="LowPassNoise"/>
+			<xs:enumeration value="HighPassNoise"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignalOutput_Type">
+		<xs:annotation>
+			<xs:documentation>TSignalOutput Reflex Stimulus Signal Output. The stimulus tone is measured in HL at (e.g. 3 different frequencies:
+	Ipsilateral [500 .. 4 kHz]
+	Contralateral [500 .. 8 kHz]
+
++ ipsilateral / Stimulus tone provided through the probe tip at "ipsi" - the same side as the 226 Hz tone.
+
++ contralateral / For the Contralateral stimulus (opposite side of the probe) is frequently used a TDH39 headphone calibrated in HL. The 8 kHz freq thus obtainable can often not be produced by the probe system.
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Ipsilateral"/>
+			<xs:enumeration value="Contralateral"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReflexTestType_Type">
+		<xs:annotation>
+			<xs:documentation>Different acoustic reflex measurements
+
++ fixedLevel / Used at screening tests at e.g. 90 dB HL. The probe freq (226Hz) is always
+kept at 85 dB SPL. The stimulus tone is measured in HL at e.g. 3 different
+frequencies: Contralateral [500 .. 8 kHz] Ipsilateral [500 .. 4 kHz]. For
+contralateral stimulus is frequently used a TDH39 headphone calibrated in
+HL. The 8 kHz freq can often not be produced by the probe system.
+
++ AutoThreshold Search / Sweep from e.g. 80 to 110 dB HL stimulus tone. Continuous increase in
+intensity over [2..5] seconds, the stapedius reflex is monitored continuously.
+A trained person must then decide from the band of curves when the reflex is
+present. The probe frequency (226 Hz) is always kept at 85 dB SPL.
+
++ sequence / A pre-programmed sequence of acoustic reflex tests. The probe freq (226
+Hz) is always kept at 85 dB SPL, the stimulus tone intensity is varied in steps.
+
++ multiplexed / Some methods prescribe that the probe tone and the stimulus tone is "multiplexed" - i.e. interchanged. The 226 Hz probe tone is used to find the max. admittance point, and then the stimulus tone is applied instead.
+
++ reflex / A manually performed reflex test. All parameters are saved in the Measurement Conditions. The result is noted as TRUE or FALSE.
+
++ decay / The decay percentage is measured after 10 seconds. See measurement details at explanation for TReflexTest
+
++ latency / The latency in time before a 10 pct value of the acoustic reflex is obtained is measured and saved. See measurement details at explanation for TReflexTest.
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="FixedLevel"/>
+			<xs:enumeration value="AutoThresholdSearch"/>
+			<xs:enumeration value="Sequence"/>
+			<xs:enumeration value="Multiplexed"/>
+			<xs:enumeration value="Reflex"/>
+			<xs:enumeration value="Decay"/>
+			<xs:enumeration value="Latency"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Admittance_Type">
+		<xs:annotation>
+			<xs:documentation>The admittance value is saved with a reference to the definition of a
+complex value and a reference to the definition of the unit for the value.
+
+@@ 500 to 501 name change
+admittance_Type to Admittance_Type 
+@@
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Calculated">
+					<xs:annotation>
+						<xs:documentation>
+
+@@ Convert DOWN Rules 501 to 500
+The calculaed value was first introduced in version 501.  When converting down it will be necessary to move the Y value to Measured > G AND then place a 0 (zero) in the B Element.  HIMSA has tried very hard not to use zero in this case since the migration to XSD based formats.  However, in this case, this is the only option and previous to format 501 the use off zero in B was commonly used to denote that the point was a calculated point.
+
+@@
+
+
+@@ Convert UP from 500 to 501
+
+IF there is one point or value AND argument2 is set to 0 then it is possible to map Argument 1 to Y
+
+If there is more than one point or value then argument1 will map to G and argument2 will map to B
+
+@@</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AdmittanceValueCalculated" type="AdmittanceValueCalculated_Type"/>
+							<xs:element name="CalculatedAdmittanceUnit" type="AdmittanceUnitCalculated_Type">
+								<xs:annotation>
+									<xs:documentation>admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Measured">
+					<xs:annotation>
+						<xs:documentation>
+@@ Convert 501  500
+The Measured element is new in 501
+When converting down the Measured values will be mapped to their respective Argumentadmittance1 and 2 values, see further down in this structure for more details
+@@
+
+
+@@ Convert UP from 500 to 501
+
+IF there is one point or value AND argument2 is set to 0 then it is possible to map Argument 1 to Y
+
+If there is more than one point or value then argument1 will map to G and argument2 will map to B
+
+@@</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AdmittancePointMeasured" type="AdmittanceValueMeasured_Type"/>
+							<xs:element name="AdmittanceUnitMeasured" type="AdmittanceUnitMeasured_Type">
+								<xs:annotation>
+									<xs:documentation>Admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceValue_Type">
+		<xs:annotation>
+			<xs:documentation>The admittance Curve depicts the modulus of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this
+structure, both the real and the imaginary part of the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of
+phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.
+
+@@ 500 to 501 name change
+admittanceValue_Type to AdmittanceValue_Type
+@@
+
+
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="ValueCalculated" type="AdmittanceValueCalculated_Type">
+					<xs:annotation>
+						<xs:documentation>@@ Convert DOWN Rules 501 to 500
+The calculated value was first introduced in version 501.  When converting down it will be necessary to move the Y value to Argumentadmittance1 > AND then place a 0 (zero) in the Argumentadmittance2 Element.  HIMSA has tried very hard not to use zero in this case since the migration to XSD based formats.  However, in this case, this is the only option and previous to format 501 the use of zero in B was commonly used to denote that the point was a calculated point.
+
+@@
+
+
+@@ Convert UP from 500 to 501
+
+IF there is one point or value AND argument2 is set to 0 then it is possible to map Argument 1 to Y
+
+If there is more than one point or value then argument1 will map to G and argument2 will map to B, it is not a calculated point but rather a measured
+
+@@
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Measured" type="AdmittanceValueMeasured_Type">
+					<xs:annotation>
+						<xs:documentation>@@ Convert DOWN Rules 501 to 500
+The calculated value was first introduced in version 501.  When converting down it will be necessary to move the G value to Argumentadmittance1 > AND then B value to the Argumentadmittance2 Element.  
+
+@@
+
+
+@@ Convert UP from 500 to 501
+
+IF there is one point or value AND argument2 is set to 0 then it is possible to map Argument 1 to Y
+
+If there is more than one point or value then argument1 will map to G and argument2 will map to B
+
+@@
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceUnit_Type">
+		<xs:annotation>
+			<xs:documentation>The Y-values of the admittance Curve can have different units (cc, ml, mmho..
+etc), which depends of the instrument type.
+
+@@ Convert UP from 500 to 501
+When converting UP the ArgumentUnit1 value will map to admittanceUnitMeasured > G
+ArgumentUnit2 will map to admittanceUnitMeasured > B
+@@
+
+@@ 500 to 501 name change
+admittanceUnit_Type to AdmittanceUnit_Type
+@@
+
+ </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="AdmittanceUnitCalculated" type="AdmittanceUnitCalculated_Type">
+					<xs:annotation>
+						<xs:documentation>admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+
+@@ Convert DOWN Rules 501 to 500
+The calculated value was first introduced in version 501.  When converting down it will be necessary to map the Y value to ArgumentUnit1 AND also ArgumentUnit2.  
+@@
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AdmittanceUnitMeasured" type="AdmittanceUnitMeasured_Type">
+					<xs:annotation>
+						<xs:documentation>admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+@@ Convert DOWN Rules 501 to 500
+The Measured value was first introduced in version 501. 
+When converting down it will be necessary to map the Y value to ArgumentUnit1 AND B value to ArgumentUnit2.  
+@@
+
+
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceCurve_Type">
+		<xs:annotation>
+			<xs:documentation>@@ 500 to 501 name change
+admittanceCurve_Type to AdmittanceCurve_Type
+@@</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>The Curve must contain all calculated or measured points, it is not possible to mix and match</xs:documentation>
+				</xs:annotation>
+				<xs:element name="Calculated">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CalculatedAdmittancePoints">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Pt" type="AdmittanceValuePointCalculated_Type" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>@@
+
+501  500, the number of points is capped at 250 for format 500.  HIMSA applies an algorithm to preserve the shape of the curve while reducing the number of points.
+HIMSA is using a modified version of the Algorithm referred to as Douglas-Peucker N – description following here:
+
+http://psimpl.sourceforge.net/douglas-peucker.html
+In this paper it is concluded that DP is the best shape preserving algorithm of tested ones:
+
+http://citeseerx.ist.psu.edu/viewdo...p;type=pdf
+For the visually oriented the concept of the algorithm can be seen here:
+
+http://mourner.github.io/simplify-js/
+@@
+</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CalculatedAdmittanceUnit" type="AdmittanceUnitCalculated_Type">
+								<xs:annotation>
+									<xs:documentation>admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+
+</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Measured">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="MeasuredAdmittancePoints">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Pt" type="AdmittanceValuePointMeasured_Type" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>@@
+
+501  500, the number of points is capped at 250 for format 500.  HIMSA applies an algorithm to preserve the shape of the curve while reducing the number of points.
+HIMSA is using a modified version of the Algorithm referred to as Douglas-Peucker N – description following here:
+
+http://psimpl.sourceforge.net/douglas-peucker.html
+In this paper it is concluded that DP is the best shape preserving algorithm of tested ones:
+
+http://citeseerx.ist.psu.edu/viewdo...p;type=pdf
+For the visually oriented the concept of the algorithm can be seen here:
+
+http://mourner.github.io/simplify-js/
+@@</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="MeasuredAdmittanceUnit" type="AdmittanceUnitMeasured_Type">
+								<xs:annotation>
+									<xs:documentation>admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+@@ Convert DOWN Rules 501 to 500
+The Measured value was first introduced in version 501. 
+When converting down it will be necessary to map the G value to ArgumentUnit1 AND B value to ArgumentUnit2.  
+@@</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Gradient_Type">
+		<xs:annotation>
+			<xs:documentation>The Gradient of the admittance Curve 
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GradientValue" type="AdmittanceValue_Type">
+				<xs:annotation>
+					<xs:documentation>Gradient of the admittance curve
+
+@@ Convert UP from 500 to 501
+When converting UP the ArgumentUnit1 value will map to admittanceValueMeasured > G
+ArgumentUnit2 will map to admittanceValueMeasured > B
+@@
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GradientUnit" type="AdmittanceUnit_Type">
+				<xs:annotation>
+					<xs:documentation>Unit of the gradient value either ml,cc, mmho or deka Pascal
+
+
+@@ Convert UP from 500 to 501
+In format 500 there was only one unit.  To keep the XSD more consistent:
+
+When dealing with a calculated point then map to Y
+When dealing wiht a measured pont then map to both G and B
+
+@@
+
+
+@@ Convert Down from 501 to 500
+Map Y to GradientUnit
+Or
+Map G to GradientUnit
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TympanogramMeasurementConditions_Type">
+		<xs:annotation>
+			<xs:documentation>Measure Conditions (tymp)
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SweepSpeed" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Change in the pressure in which the curve is recorded. Measured and saved in
+dekaPascal per second (daPa/s).
+
+@@ This value has changed from mandatory to optional to help support manual entry of data where this information may not be known or supported to be recorded.  This change was made in format 501
+
+@@ Convert DOWN from 501 to 500
+This element is mandatory in format 500.  When converting down enter a value of 0 (zero)
+@@
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecordMode" type="RecordingMode_Type">
+				<xs:annotation>
+					<xs:documentation>How is the admittance curve recorded, Compensated or Non Compensated.
+
+The admittance equivalent to the Ear canal volume is conventionally subtracted
+from measures of total aural admittance to yield an estimate of the middle ear
+admittance. This is referred to as compensated admittance. 
+
+Katz pg 169
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProbeFrequency">
+				<xs:annotation>
+					<xs:documentation>Frequency of the probe tone
+
+@@ Convert down 501 --> 500
+
+The ProbeFrequency element has been changed to the below structure, to support the ability to record that the frequency is essentially unknown
+
+Convert the 501 Frequency to  ProbeFrequency if the value is an integer
+
+If the "Other" value has been chossen then enter zero in ProbeFrequency
+
+@@
+
+@@ Convert up 500 --> 501
+
+The ProbeFrequency element has been changed to the below structure, to support the ability to record that the frequency is essentially unknown
+
+Convert the 500 ProbeFrequency to Frequency if the value is an integer
+
+If the value is not present then add "Other" to the Other element
+
+@@
+</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Frequency" type="xs:integer" default="226">
+							<xs:annotation>
+								<xs:documentation>
+</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Other" type="FrequencyOther_Type" default="Other ">
+							<xs:annotation>
+								<xs:documentation>Other or unknow frequency
+</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TympanogramTest_Type">
+		<xs:annotation>
+			<xs:documentation> </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AdmittanceCurve" type="AdmittanceCurve_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Graphics representation of measurement
+
+@@ 501 --> 500 This element was made to be optional starting in format 501.
+
+If converting down to 500 AND there is no curve then create a curve with one point following format 500 with the following information:
++ admittancePoint > Pressure = 0
++ admittancePoint > admittance  > Argumentadmittance1 = 0
++ admittancePoint > admittance  > Argumentadmittance2 = 0
++ admittanceUnit > ArgumentUnit1 = CubicCentimetrer
++ admittanceUnit > ArgumentUnit2 = CubicCentimetrer
+
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaximumAdmittance" type="Admittance_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Peak value for the admittance curve
+
+@@ 501 --> 500 This element was made to be optional starting in format 501.
+
+If converting down to 500 AND there is no curve then create an entry following format 500 with the following information:
++ admittancePoint > admittance  > Argumentadmittance1 = 0
++ admittancePoint > admittance  > Argumentadmittance2 = 0
++ admittanceUnit > ArgumentUnit1 = CubicCentimetrer
++ admittanceUnit > ArgumentUnit2 = CubicCentimetrer
+
+@@
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CanalVolume" type="Admittance_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>canalVolume /  Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and
+[0.65 .. 1.75] ccm in adults. Katz pg 180. 
+
+The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance.
+
+The volume is given by the formula
+
+Ve = γ . ps . Ca = ρ . c2 . Ca = γ . ps . Ya/(2 . pi . f)
+
++Ve / is the equivalent volume in m3
++γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.
++ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.
++ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement
++c / is the speed of sound in m/s at the temperature and pressure of the measurement
++Ca / is the acoustic compliance in m3/Pa
++ Ya / is the magnitude of the acoustic admittance in m3/(Pa⋅s)
++ f / is the probetone frequency in Hz
+
+In normal used units (Ve in ml, Ya in mmho and f in Hz) this can be approximated as:
+Ve [ml] =  Ya . f / 226
+
++Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.
++Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Gradient" type="Gradient_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gradient of the admittance curve
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pressure" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Middle ear pressure at the point of maximum admittance.
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResonanceFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Defined as the frequency at which compliant and mass succeptance are equal. Normal middle ear resonance falls between 800 and 1200Hz. Below the resonant frequency the middle ear is stiffness controlled and above the resonant frequency it is mass controlled (Katz pg 189)
+
+Various middle ear pathologies will have an effect on the mass or stiffness of the system resulting in altered resonant frequencies in abnormal ears.
+
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Result" type="TympanogramResult_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Jerger 1970 classified the shapes of tympanograms and this system is still commonly used today and is applicable only to a 226Hz probe test.
+
+See TympanogramResults_Type for further information
+Katz pg 177
+
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementCondition" type="TympanogramMeasurementConditions_Type">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StaticAdmittance" type="StaticAdmittance_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Also known as peak compensated static acoustic admittance. This is the height of the peak measured from the positive tail (typically +200daPa) to the peak. The term compensated means the admittance at the positive tail, which is used as an estimate of ear canal volume, has been removed from the measurement of peak height. 
+
+@@ Convert 501  500
+This value was first introduced in format 501.
+When converting down the value will be discarded
+@@
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReflexCurve_Type">
+		<xs:annotation>
+			<xs:documentation>Acoustic Reflex (stapedius reflex) measurement. The reflexPoints saves
+[time, admittance] values, and the admittance unit saves the unit of the data. 
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>The Curve must contain all calculated or measured points, it is not possible to mix and match</xs:documentation>
+				</xs:annotation>
+				<xs:element name="NumericDelta">
+					<xs:annotation>
+						<xs:documentation>Y'</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="NumericDeltaYPoints">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Pt" type="ReflexValuePointCalculated_Type" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CalculatedAdmittanceUnit" type="AdmittanceUnitCalculated_Type">
+								<xs:annotation>
+									<xs:documentation>Admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+
+@@ Convert DOWN Rules 501 to 500
+The calculated value was first introduced in version 501.  When converting down it will be necessary to map the Y value to ArgumentUnit1 AND also ArgumentUnit2.  
+@@
+</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DeltaY">
+					<xs:annotation>
+						<xs:documentation>
+
+@@ Format 501 to 500
+
+If an application (including the 501100 runtime converter)  wishes to make use of DeltaY it must then be converted  to NumericDelta following the below formula.
+
+NumericDeltaY = NumericY - NumericY0
+
+Using the supplied DeltaG and DeltaB values the following variables will be used.
+
+B = DeltaB + B0
+G = DeltaG + G0
+NumericY = SQRT(B * B + G * G)
+NumericY0 = SQRT(B0 * B0 + G0 * G0)
+
+Then convert NumericDeltaY as documented to format 500
+
+
+@@
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DeltaYPoints">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Pt" type="ReflexValuePointMeasured_Type" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="G0" type="xs:decimal">
+								<xs:annotation>
+									<xs:documentation>Reference Admittance</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="B0" type="xs:decimal">
+								<xs:annotation>
+									<xs:documentation>Reference Admittance</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="MeasuredAdmittanceUnit" type="AdmittanceUnitMeasured_Type">
+								<xs:annotation>
+									<xs:documentation>admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+@@ Convert DOWN Rules 501 to 500
+The Measured value was first introduced in version 501. 
+When converting down it will be necessary to map the G value to ArgumentUnit1 AND B value to ArgumentUnit2.  
+@@</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceMeasurementCondition_Type">
+		<xs:annotation>
+			<xs:documentation>Measuring conditions (reflex)
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SignalLevel" type="SignalLevel_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of the stimulus tone:
+
+@@ Format 501 - 500 
+
+This is element has been changed from a xs:decimal element to a type where there is a choice between recording a signal level or a response.  There are also conversion notes for SignalLevel_Type
+
+@@
+
+@@ format 500 up to 501
+
+Map SignalLevel to StimulusLevel
+
+@@
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalType" type="SignalType_Type">
+				<xs:annotation>
+					<xs:documentation>The type of the stimulus tone:
+
+See SignalType_Type for more information
+
+## signalType ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalOutput" type="SignalOutput_Type">
+				<xs:annotation>
+					<xs:documentation>See SignalOutput_Type for more information
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Frequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Stimulus tone frequency measured in Hertz.
+
+For a fixed level tests this element would not be used if SignalOutput is set to PureTone or NarrowBandNoise
+
+For Auto Threshold Search, sequence, multiplexed, or reflex tests this element would only be used if the SignalOutput is set to PureTone or NarrowBandNoise
+
+For Latency or Decay tests this element would be used if SignalOutput is NarrowBandNoise the center frequency should be stated. !!
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pressure" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Pressure applied through probe measured in deka Pascal
+
+@@ Format 501 - 500 
+This value was mandatory in format 500.  When converting down and not present then enter a 0
+
+@@
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProbeFrequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Frequency of the probe tone
+
+Format 100 defined this data as optional and if not specified was to be assumed to be a value of 226.  If the conversion DLL finds this value to be empty in a format 100 data record it will insert the value of 226.
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestType" type="ReflexTestType_Type">
+				<xs:annotation>
+					<xs:documentation>See ReflexTestType_Type for more information
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CanalVolume" type="Admittance_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>canalVolume / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance. Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and
+[0.65 .. 1.75] ccm in adults. Refer [HOCA4] Chapter 20. The volume is given by the formula
+
+Vc = γ . ps . Ca = ρ . c2 . Ca where
+
++Vc / is the equivalent volume in m3
++γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.
++ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.
++ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement
++c / is the speed of sound in m/s at the temperature and pressure of the measurement
++Ca / is the acoustic admittance in m3/Pa
++Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.
++Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm.
+
+
+@@ Format 501 - 500 
+This element was mandatory in format 500.  When converting down and not present then enter a 0
+
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReflexTest_Type">
+		<xs:annotation>
+			<xs:documentation> Reflex Test
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReflexCurve" type="ReflexCurve_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Graphic representation of the admittance change caused by acoustic reflex
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultOfReflexTest" type="ResultOfReflexTest_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of this element can expressed in different ways depending on the enumerated value set in ImpedanceMeasurementConditions TestType:
+
+REFLEX
++Reflex detected = FALSE (value = 0)
++Reflex detected = TRUE (Value = 1)
+
+DECAY
++ The value represents a percentage
+
+LATENCY
++ time in milliseconds
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdmittanceMeasurementCondition" type="AdmittanceMeasurementCondition_Type">
+				<xs:annotation>
+					<xs:documentation>Measure conditions for reflex recording
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EustachianTubeFunctionIntactEarDrumTest">
+		<xs:annotation>
+			<xs:documentation>Eustachian Tube Function Intact ear drum
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AdmittanceCurve" type="AdmittanceCurve_Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Admittance curves 
+
+@@ Format 501 to 500 conversion
+
+Format 500 was defned to have a max of 3 curves which is now removed.
+
+When converting data HIMSA will take a simple approach and convert the first 3 curves and will drop the remaining curves.  
+
+@@
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="Pressure" type="xs:integer" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Middle Ear Pressure at maximum
+
+From the Middle Ear Pressure curve, only the peak value is stored for each
+curve.
+
+@@ Format 501 to 500 conversion
+
+Format 500 was defned to have a max of 3 pressure valudes which is now removed.
+
+When converting data HIMSA will take a simple approach and convert the first 3 pressure values and will drop the remaining values.
+
+@@
+
+
+
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:element name="CanalVolume" type="Admittance_Type">
+				<xs:annotation>
+					<xs:documentation>canalVolume / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance. Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and
+[0.65 .. 1.75] ccm in adults. Katz pg 180. The volume is given by the formula
+
+Vc = γ . ps . Ca = ρ . c2 . Ca where
+
++Vc / is the equivalent volume in m3
++γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.
++ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.
++ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement
++c / is the speed of sound in m/s at the temperature and pressure of the measurement
++Ca / is the acoustic admittance in m3/Pa
++Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.
++Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm.
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementCondition" type="TympanogramMeasurementConditions_Type">
+				<xs:annotation>
+					<xs:documentation>Measure conditions
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PressurePoint_Type">
+		<xs:annotation>
+			<xs:documentation>Curve point for the Measurement of the Eustachian Tube Function in the
+case of a perforated eardrum (tympanic membrane). 
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Time">
+				<xs:annotation>
+					<xs:documentation>Time in seconds</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+						<xs:minInclusive value="0.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pressure" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>deka Pascal</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EustachianTubeFunctionPerforatedEarDrumTest">
+		<xs:annotation>
+			<xs:documentation>Eustachian Tube Function for Perforated ear drum
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PressurePoint" type="PressurePoint_Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Measurement points
+
+
+@@ Format 501 to 500 conversion
+
+Format 500 was defned to have a max of 200 points which is now removed.
+
+When converting data HIMSA will take a simple approach and convert the first 200 points and will drop the remaining points.  
+
+@@
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OpenPoint" type="xs:integer" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Eustachian Tube Open Pressure Point deka Pascal
+
+@@ Format 501 to 500 conversion
+
+Format 500 was defned to have a max of 3 points which is now removed.
+
+When converting data HIMSA will take a simple approach and convert the first 3points and will drop the remaining points.  
+
+@@
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ClosePoint" type="xs:integer" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Eustachian Tube Close Pressure Point deka Pascal
+
+
+@@ Format 501 to 500 conversion
+
+Format 500 was defned to have a max of 3 points which is now removed.
+
+When converting data HIMSA will take a simple approach and convert the first 3points and will drop the remaining points.  
+
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeBase" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The time that it took the test
+
+Please note that this element will not be converted down to format 100 if requested by another Noah compatible software program.  This is due to the fact that two different versions of format 100 Impedance exist and the safest action is to not pass this element back to a module wishing to read in format 100.  Additionally, another software program reading this test should not find this data missing as critical.
+
+
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+						<xs:minInclusive value="0.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceValueCalculated_Type">
+		<xs:annotation>
+			<xs:documentation>The Admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this
+structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of
+phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.
+
+The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.
+
+OR
+
+If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice
+
+
+@@ 500 to 501 name change
+admittanceValueCalculated_Type to AdmittanceValueCalculated_Type
+@@</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Y" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>The calculated value (Y)
+
+When saving data the calculated value is simply stored in this element.
+
+When reading a measured element the below formula can be used to obtain the calculated value.  
+
+square root ((G x G) + (B x B))
+
+Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the admittance values accurately a complex number is recorded which has a real and an imaginary element.
+
+@@ Convert DOWN Rules 501 to 500
+
+This element is first introduced in format 501 so when converting down this value will need to be transfered to admittanceValue_Type > Argument1.  Read the conversion directions for the Element G.  Additionally, admittanceValue_Type >Argument2 will need to be given a value of 0
+
+@@
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceValuePointCalculated_Type">
+		<xs:annotation>
+			<xs:documentation>The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this
+structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of
+phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.
+
+The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.
+
+OR
+
+If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Pressure" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The applied pressure of the stimulus (x-axis on the admittance graph)
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Y" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>The calculated value (Y)
+
+When saving data the calculated value is simply stored in this element.
+
+When reading a measured element the below formula can be used to obtain the calculated value.  
+
+square root ((G x G) + (B x B))
+
+Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the admittance values accurately a complex number is recorded which has a real and an imaginary element.
+
+@@ Convert DOWN Rules 501 to 500
+
+This element is first introduced in format 501 so when converting down this value will need to be transfer to admittanceValue_Type > Argument1.  Read the conversion directions for the Element G.  Additionally, admittanceValue_Type >Argument2 will need to be given a value of 0
+
+In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.
++ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)
+
+@@
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceValueMeasured_Type">
+		<xs:annotation>
+			<xs:documentation>The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this
+structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of
+phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.
+
+The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.
+
+OR
+
+If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="G" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Real part of the admittance value
+
+Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the admittance values accurately a complex number is recorded which has a real and an imaginary element.
+
+@@ Convert DOWN Rules 501 to 500
+
+This element was renamed to "G" from "Argumentadmittance1" 
+
+In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.
++ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)
+@@
+
+@@ Convert UP Rules 500 to 501
++ If CubicCentimeter is the unit then divide the integer by 100
++ If MilliLiter is the unit then divide the integer by 100
++ If MilliMho is the unit then divide the integer by 100
++ If Degree is the unit then divide the integer by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is 90 the converted result will be .90 (90/100)
+@@
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="B" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Imaginary part of the admittance value
+
+As the ear drum moves in and out from its resting state whilst responding to forces applied by the air pump during the admittance measurement it has in phase and out of phase motions. To accurately locate these movements on a admittance curve we are required to employ complex mathematical formula that include the imaginary number elements.
+
+@@ Convert DOWN Rules 501 to 500
+
+This element was renamed to "B" from "Argumentadmittance2" 
+
+In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.
++ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)
+@@
+
+@@ Convert UP Rules 500 to 501
++ If CubicCentimeter is the unit then divide the integer by 100
++ If MilliLiter is the unit then divide the integer by 100
++ If MilliMho is the unit then divide the integer by 100
++ If Degree is the unit then divide the integer by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is 90 the converted result will be .90 (90/100)
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceValuePointMeasured_Type">
+		<xs:annotation>
+			<xs:documentation>The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this
+structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of
+phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.
+
+The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.
+
+OR
+
+If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Pressure" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The applied pressure of the stimulus (x-axis on the admittance graph)
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="G" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Real part of the admittance value
+
+Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the admittance values accurately a complex number is recorded which has a real and an imaginary element.
+
+@@ Convert DOWN Rules 501 to 500
+
+This element was renamed to "G" from "Argument1" 
+
+In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.
++ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)
+@@
+
+@@ Convert UP Rules 500 to 501
++ If CubicCentimeter is the unit then divide the integer by 100
++ If MilliLiter is the unit then divide the integer by 100
++ If MilliMho is the unit then divide the integer by 100
++ If Degree is the unit then divide the integer by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is 90 the converted result will be .90 (90/100)
+@@
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="B" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Imaginary part of the admittance value
+
+As the ear drum moves in and out from its resting state whilst responding to forces applied by the air pump during the admittance measurement it has in phase and out of phase motions. To accurately locate these movements on a admittance curve we are required to employ complex mathematical formula that include the imaginary number elements.
+
+@@ Convert DOWN Rules 501 to 500
+
+This element was renamed to "B" from "Argument2" 
+
+In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.
++ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)
+@@
+
+@@ Convert UP Rules 500 to 501
++ If CubicCentimeter is the unit then divide the integer by 100
++ If MilliLiter is the unit then divide the integer by 100
++ If MilliMho is the unit then divide the integer by 100
++ If Degree is the unit then divide the integer by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is 90 the converted result will be .90 (90/100)
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceUnitCalculated_Type">
+		<xs:annotation>
+			<xs:documentation>The Y-values of the admittance Curve can have different units (cc, ml, mmho..
+etc), which depends of the instrument type.
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="YUnit" type="Unit_Type">
+				<xs:annotation>
+					<xs:documentation>
+
+@@ Convert DOWN Rules 501 to 500
+The calculated value was first introduced in version 501.  When converting down it will be necessary to map the Y value to ArgumentUnit1 AND also ArgumentUnit2.  
+@@
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmittanceUnitMeasured_Type">
+		<xs:annotation>
+			<xs:documentation>The Y-values of the admittance Curve can have different units (cc, ml, mmho..
+etc), which depends of the instrument type.
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GUnit" type="Unit_Type">
+				<xs:annotation>
+					<xs:documentation>Unit of the real part
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BUnit" type="Unit_Type">
+				<xs:annotation>
+					<xs:documentation>Unit of the Imaginary part
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StaticAdmittance_Type">
+		<xs:annotation>
+			<xs:documentation>Also known as peak compensated static acoustic admittance. This is the height of the peak measured from the positive tail (typically +200daPa) to the peak. The term compensated means the admittance at the positive tail, which is used as an estimate of ear canal volume, has been removed from the measurement of peak height. 
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StaticAdmittanceValue" type="AdmittanceValue_Type">
+				<xs:annotation>
+					<xs:documentation>
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StaticAdmittanceUnit" type="AdmittanceUnit_Type">
+				<xs:annotation>
+					<xs:documentation>Usually  "cc", "ml", "mmho"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SignalLevel_Type">
+		<xs:annotation>
+			<xs:documentation>
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="StimulusLevel">
+					<xs:annotation>
+						<xs:documentation>Level of the stimulus tone in dB HL. The ipsilateral stimulus tone is added via
+the probe, the contralateral stimulus tone is added through a headphone, often a
+TDH39 that can easily be calibrated in dB HL (Hearing Level).
+</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:decimal">
+							<xs:fractionDigits value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Response" type="ReflexTestResponse_Type">
+					<xs:annotation>
+						<xs:documentation>See annotations for ReflexTestResponse_Type for a complete list of valid choices
+
+@@ 501 --> 500 This is a new element added to format 501
+
+If this element has been used it cannot be converted down as would be expected.  However, The SignalLevel element in 500 is mandatory.  If this choice has been made this it will be necessary to create a SignalLevel elment and set the value to zero.
+
+
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ReflexTestResponse_Type">
+		<xs:annotation>
+			<xs:documentation>Choices that can be recorded when a result is not obtained
+
+•	Normal / Valid threshold point. Used for valid points at the threshold: For this threshold point, the tester or equipment detects a present reflex. 
+•	NoResponse (NR)  / Reflex not detected.  The stimulus was at the highest output level of the measurement device or at the highest intensity level allowed by clinical protocol, but no reflex was detected
+•	CouldNotSeal (CNS) / Could not seal, therefore no results obtained
+•	DidNotTest (DNT) /The stimulus was not presented to subject. Reasons: Per instruction by physician or because the test was judged to be unnecessary. No point was plotted.
+•	CouldNotTest (CNT)  / Unable to present stimulus. Reasons: Subject's physical or behavioral limitations, inability to obtain a seal. No point was plotted.
+
+No Response Safety (NR@): The professional stopped for safety reasons.  This is used to show that testing could have continued but was stopped.  NR@100, NR@105, NR@110, NR@115, NR@120
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Normal "/>
+			<xs:enumeration value="NoResponse"/>
+			<xs:enumeration value="CouldNotSeal"/>
+			<xs:enumeration value="DidNotTest "/>
+			<xs:enumeration value="CouldNotTest"/>
+			<xs:enumeration value="NR_at100"/>
+			<xs:enumeration value="NR_at105"/>
+			<xs:enumeration value="NR_at110"/>
+			<xs:enumeration value="NR_at115"/>
+			<xs:enumeration value="NR_at120"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FrequencyOther_Type">
+		<xs:annotation>
+			<xs:documentation>Used as an option to record that the frequency is "other" or unknown
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other "/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Ear_Type">
+		<xs:annotation>
+			<xs:documentation>A simple type that defines Right, Left, or Binaural</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Right"/>
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Binaural"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MeasurementNotes_Type">
+		<xs:annotation>
+			<xs:documentation>The Measurement Notes structure is designed to hold the notes from an Audiological
+Measurement. The information herein could be useful to other entities as the information
+affects the test and its results.
+
+
+@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TympanometerMakeModel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Manufacturer Make Model of the equipment used.
+
+@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="41"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TympanometerSerialNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Manufacturer Serial Number of the equipment used.
+
+@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="41"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TympanometerLastCalibration" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date of Last Calibration of the equipment used.
+
+@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IsDeaf" type="Ear_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element is used to clearly signal that the patient is deaf in the ear choice that is set.  If a value is set then the reader of the data can assume that this is a valid reason for why testing was conducted for the set ear(s) or any data present for a deaf ear.  If an ear selection is made then user conducting the Audiogram test has determined that the ear choice is deaf.
+
+This approach is taken rather than requiring the reader of the data to pay attention to curves that may be present with the PointStatus_Type is set to something like DidNotTest or CouldNotTest, or NoResponse at the maximum output of the audiometer, which can vary per audiometer.
+
+@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReflexValuePointCalculated_Type">
+		<xs:annotation>
+			<xs:documentation>The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this
+structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of
+phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.
+
+The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.
+
+OR
+
+If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Time">
+				<xs:annotation>
+					<xs:documentation>Time in seconds  X-Values of the point
+
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NumericDeltaY" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Delta Y' 
+
+
+
+@@ Convert DOWN Rules 501 to 500
+
+Format 500 restricted the number of points to be 128.  When converting down to format 500 the converter will simply take the first up to 128 points, the rest of the points will be dropped.
+
+This element is first introduced in format 501 so when converting down this value will need to be transfer to admittanceValue_Type > Argument1.  
+
+Argument2 will be zero
+
+In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.
++ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100
++ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10
++ If DekaPascal then nothing needs to be done
+Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReflexValuePointMeasured_Type">
+		<xs:annotation>
+			<xs:documentation>The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this
+structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of
+phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.
+
+The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.
+
+OR
+
+If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Time">
+				<xs:annotation>
+					<xs:documentation>Time in seconds  X-Values of the point
+
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DeltaG" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Real part of the delta Y Point 
+
+
+
+@@ Convert DOWN Rules 501 to 500
+This value does not directly converter down to format 500, see conversion instructions under DeltaY
+@@
+
+
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeltaB" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Imaginary part of the delta Y Point
+
+
+@@ Convert DOWN Rules 501 to 500
+This value does not directly converter down to format 500, see conversion instructions under DeltaY
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultOfReflexTest_Type">
+		<xs:choice>
+			<xs:element name="ReflexDetected" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates if the reflex was detected
+
+@@ 501 to 500 conversion
+
+IF TestType measurement condition IS NOT Decay or Latency then: 
+
+Map True to 1 for ResultOfReflexTest
+Map False to 0 for ResultOfReflexTest
+
+@@
+
+@@ 500 to 501
+
+IF TestType measurement condition IS NOT Decay or Latency AND ResultOfReflex is 1 or 0 then:
+Map ResultOfReflex value of 1 to True
+Map ResultOfReflex value of 0 to False
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecayBasicResult">
+				<xs:annotation>
+					<xs:documentation>Positive if the results was positive for Decay
+Negative if the result was negative for Decay
+
+Use the element "DecayPercent" if a percent val;ue is to be stored.
+
+@@ 501 to 500 conversion
+This is a new element but can be convereted down to 500
+
+If value is Positive then map 1 to ResultOfReflexTest
+If value is Negative then map 0 to ResultOfReflexTest
+
+@@
+
+@@ 500 to 501
+
+If the TestType measurement condition = Decay AND the ResultOfReflex = 1 OR zero then 
+
+If ResultOfReflex = 1 then this element will be Positive
+If ResultOfReflex = 0 then this element will be Negative
+
+If the TestType measurement condition = Decay AND the ResultOfReflex IS NOT 1 OR zero then map the value to DecayPercent (see below)
+
+@@</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="Positive"/>
+						<xs:enumeration value="Negative"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DecayPercent" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Decay value represented as percent
+
+@@ Format 501 to 500
+If the TestType measurement condition = Decay then
+Map this element ResultOfReflex element
+@@
+
+@@ Format 500 to 501
+If the TestType measurement condition = Decay AND the ResultOfReflex IS NOT 1 OR zero then map the ResultOfReflex value to this element
+@@ 
+
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LatencyTime" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>time in milliseconds
+
+@@ Format 501 to Format 500
+If the TestType measurement condition = Latency then
+Map this element ResultOfReflex element
+
+@@
+
+@@ Format 500 to 501
+If the TestType measurement condition = Latency then map the ResultOfReflex value to this element
+@@ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

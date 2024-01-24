@@ -1,0 +1,1959 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.himsa.com/Measurement/Audiogram/502" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/Measurement/Audiogram/502" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="HIMSAAudiometricStandard">
+		<xs:annotation>
+			<xs:documentation>ROOT ELEMENT
+
+Revision 4 released January 17 2018
+
+See REV history below
+
+Important: All XML data must be encoded using UTF-8.
+
+HIMSA highly recommends the below 3rd party documentation for individuals not familiar with Audiology.  The book is reference throughout this data standard:
+[HOCA-5] Handbook of Clinical Audiology, edited by Jack Katz, Williams and Wilkins, 2002, 5. Edition
+
+For software saving an Audiogram using this data standard:
+In order not to waste space in the NOAH database it is not legal to save empty elements.  For example, do not store <Element/>.
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+REV History
+Rev 1 - first release, Jan. 2016
+Rev 2 - October 13 2016, Weber point should not contain stimulus level element
+Rev 3 - January 17 2018 REV 4 / January 17 2018 - Annotation updates only.  Text "If masking is to be recorded it is then necessary to save values for both MaskingFrequency and MaskingLevel.  The XSD was not able to be setup to enforce this rule due to legacy (format 200) design." added to MaskingFrequency and MaskingLevel.  This rule already seems to be followed by most companies and the original format 200 documentation stipulates to enter the value if masking is performed.
+REV 4 November 4 2019 - Annotation updates only, note to use UTF-8
+
+
+Copyright © 2016 HIMSA II  K/S
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ToneThresholdAudiogram" minOccurs="0" maxOccurs="18">
+					<xs:annotation>
+						<xs:documentation>Standard Tone Hearing Threshold (THR) Audiogram. This is the basic audiogram for
+recording the patient’s Hearing Threshold Level (HTL).
+
+Method: Presentation of Pure tone stimulus via transducer. Masking in the opposite ear is
+frequently used. Threshold is defined as the 50% response level (softest level at which
+patient responds to tone 50% of the time).
+
+Note that the max. 24 curve points can come in any order as [frequency, intensity] pairs.
+Each point is properly identified by its standard frequency for which the intensity is
+recorded.
+
+Ref. [HOCA-5, Chapter 5, page 71: Puretone Evaluation ]
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions">
+								<xs:annotation>
+									<xs:documentation> Global Element used throughout this standard - see AudioMetricMeasurementConditions_Type for more details
+
+The same set of measurement conditions are used for all Audiogram curves.
+The Audiogram measurement conditions are very versatile and expandable in such a way that whenever new measurement methods are discovered they can be added to the existing ones.
+
+They are meant to be used both by the ENT (Ear, Nose, Throat) for diagnostics purposes and for fitting hearing instruments as well. It is very important to realize that combinations of measurement conditions that make perfect sense to the ENT can be meaningless when programming hearing instruments. It is therefore important to examine all measurement conditions to ascertain whether they are useful for the intended purpose.
+
+
+
+</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TonePoints" type="TonePoints_Type" maxOccurs="24"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="UncomfortableLevel" minOccurs="0" maxOccurs="6">
+					<xs:annotation>
+						<xs:documentation>Uncomfortable Level Audiogram
+
+The lowest signal level, in each ear, which is judged to be uncomfortably loud by the patient. The measurement is usually done with pure tones at audiometric frequencies but may be performed using speech-weighted noise; the signal level has to be expressed relative to a reference value, e.g. as hearing level.
+
+Note that the max. 24 curve points can come in any order as [frequency, intensity] pairs.
+Each point is properly identified by its standard frequency for which the intensity is
+recorded.
+
+Ref. [HOCA-5, Chapter 5, page 71: Puretone Evaluation]</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="TonePoints" type="TonePoints_Type" maxOccurs="24"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MostComfortableLevel" minOccurs="0" maxOccurs="6">
+					<xs:annotation>
+						<xs:documentation>Most Comfortable Level (MCL) Audiogram
+
+This is an area within the residual hearing in which sounds are perceived as comfortable by the patient. 
+Tones presented during this test are pure tones and the patient is asked to respond when they find the sound comfortable. Generally audiologists now try to test to find this area of hearing by concentrating on finding the upper and lower levels of comfort.
+
+Note that the max. 24 curve points can come in any order as [frequency, intensity] pairs.
+Each point is properly identified by its standard frequency for which the intensity is
+recorded.
+
+Ref. [HOCA-5, Chapter 5, page 71: Puretone Evaluation]</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="TonePoints" type="TonePoints_Type" maxOccurs="24"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SpeechDiscriminationAudiogram" minOccurs="0" maxOccurs="12">
+					<xs:annotation>
+						<xs:documentation>Speech Discrimination is tested by having the speaker present a one syllable word, usually with a lead in sentence such as ’say the word..’ in lists of 25 or 50, which the listener repeats. These lists are standardized and weighted using all of the speech sounds heard in the chosen language. The percentage of words the listener repeats correctly is the discrimination score. The percentage correct is influenced by the type and degree of hearing loss present. This audiogram plots the results of this test against hearing level
+
+Ref. [HOCA-5, Chapter 5, page 71: Speech Audiometry]
+
+Note for individuals familiar with earlier versions of this data standard:
+In previous versions of this standard this Audiogram was documented as a discrimination loss audiogram.  The documentation implied that the score would represent the loss not the score.  However, this description was in conflict with the definition of the percent score.  To correct this documentation error HIMSA has changed the name and description.  </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="SpeechDiscriminationPoints" type="SpeechScorePoint_Type" maxOccurs="24"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SpeechReceptionThresholdAudiogram" minOccurs="0" maxOccurs="12">
+					<xs:annotation>
+						<xs:documentation>Speech Reception Threshold (SRT) Audiogram The SRT is also defined as the Threshold
+of Intelligibility (TI). It is defined as the presentation level (in dB HL) necessary for the
+patient to reach a score of 50 % when presented for a series of easily understandable
+phonemes. The SRT can be compared with the tone audiometry thresholds at the
+frequencies [500, 100, 2000] Hz.
+
+The SRT measurement can be carried out as a validation of the Tone Threshold Audiogram.
+
+Ref. [HOCA-5, Chapter 7, page 96: Speech Audiometry]
+Ref. [HOCA-5, Chapter 32, page 584: Pseudohypacusis] </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="SpeechReceptionPoints" type="SpeechScorePoint_Type" maxOccurs="24"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SpeechMostComfortableLevel" minOccurs="0" maxOccurs="12">
+					<xs:annotation>
+						<xs:documentation>Speech Most Comfortable Level (MCL) Audiogram. Measurement of Discrimination
+Loss is done at Most Comfortable Loudness for the patient, normally 30-40 dB above the
+Speech Reception Threshold (SRT).
+
+Some patients might find this level too high (recruitment present). This may make it
+difficult to find the correct level for recording the MCL speech audiogram. In such cases a
+complete speech audiogram curve should be recorded.  NOTE: only the very MCL point of the speech audiogram can be saved.
+
+Ref. [HOCA-5, Chapter 7, page 96: Speech Audiometry]</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="SpeechMostComfortablePoint" type="SpeechScorePoint_Type"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SpeechUncomfortableLevel" minOccurs="0" maxOccurs="12">
+					<xs:annotation>
+						<xs:documentation>Speech UnComfortable Level (UCL) Audiogram. The SRT, MCL and UCL for speech
+audiograms are saved as a single intensity value.
+
+A complete speech audiogram curve would show the whole range from Speech Reception Threshold
+(SRT), to Most Comfortable Level (MCL) to Uncomfortable Level (UCL)
+
+Ref. [HOCA-5, Chapter 7, page 96: Speech Audiometry]</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="SpeechUncomfortablePoint" type="SpeechScorePoint_Type"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ToneNotes" type="MeasurementNotes_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Notes added to the Tone Audiogram</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SpeechNotes" type="MeasurementNotes_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Notes added to the Speech Audiogram</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FrequenciesUsedForToneAverage" type="FrequenciesUsedForToneAverage_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>This structure allows specification of certain frequencies at which the pure tone average should be calculated. Each ear has two average values to allow for “double-weighting” of certain values as required in certain countries like Japan.
+
+The average calculation method is applied to all averages for the given ear, so there is no
+opportunity to specify a different pure tone average calculation method for bone
+conduction than is used for air conduction, etc.
+
+The rationale behind only a single set of information for each of left and right ears is that it
+really does not make sense to calculate the average differently between two different tests.
+
+A note on the double weighting: Essentially, if the set specifies to weight averages at
+500,1000,1500 Hz and the second specifies 1000 Hz, then the average would be calculated
+as follows:
+
+(ValueAt(500) + (2 * ValueAt(1000)) + ValueAt(1500)) / 4
+
+If the ValueAt(1000) for the left ear is maybe unreliable, a better average is sought for
+that ear but you can still leave the right ear calculation unchanged.
+
+Ref. [HOCA-5, Chapter 5, page 71: Puretone Evaluation ]
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DecayAudiogram" minOccurs="0" maxOccurs="2">
+					<xs:annotation>
+						<xs:documentation>Testing involves the presentation of a sustained pure tone at or above the patient’s hearing threshold. The patient indicates when the tone is heard and when it disappears. The tone is presented at increasing levels until it is continuously heard for a set amount of time.
+
+Tone decay is defined as a reduction in the ability to hear a sustained tone, and is indicative of a retrocochlear hearing loss. 
+
+Tone decay can be carried out at any frequency, and methods including the presentation levels vary in the research literature.
+
+
+Ref. [HOCA-5, Chapter 8, page 111: Cochlear and Retrocochlear Behavioral Tests ]</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="DecayPoints" type="DecayPoint_Type" maxOccurs="50"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AlternateBinauralLoudnessBalanceAudiogram" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A sound of constant intensity is presented to the patient’s good ear for a few seconds. A sound is then presented to the patient’s bad ear. The patient is asked to judge if the sounds are of equal loudness. The sound in the bad ear is varied until a loudness match with the good ear is found.
+
+The level of the tone presented to the good ear is then increased and the procedure repeated.
+At each frequency tested a graph is produced where equal loudness judgments are connected with a straight line.
+
+Abnormal growth of loudness is an indication of cochlear hearing loss and is termed recruitment.
+
+Ref. [HOCA-5, Chapter 8, page 111: Cochlear and Retrocochlear Behavioral Tests ]</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="AlternateBinauralLoudnessBalancePoints" type="TonePoints_Type" maxOccurs="192">
+								<xs:annotation>
+									<xs:documentation>Masking Level and Masking Frequency are used to denote the stimulus in channel 2 of the Audiometer which would always be a pure tone</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="StengerAudiogram" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Stenger test is used when a patient claims that his hearing is impaired in one ear but the Audiologists does not believe them.  
+
+This test can only be performed if the difference in thresholds between ears is ≥ 20 dB. It involves presentation of a tone of one frequency to both ears and is based on the principle that when 2 tones of the same frequency are introduced simultaneously to both ears, only the louder tone will be perceived. The audiometer should allow separate intensity control for each channel.
+
+The tone is first introduced to the good ear at a level which is 5-10 dB above the known
+threshold. The same frequency tone is then simultaneously presented to the “bad” ear at a
+level 10 dB below the (admitted) threshold. If the patient is simulating a hearing loss he
+would hear the tone louder in the bad ear, and would, therefore, not respond to the tone,
+since he/she does not want to admit to hearing in the bad ear and is unaware of the tone in
+the good ear.
+
+If the patient has a loss in the bad ear as measured, he/she will respond to the tone in the
+good ear.  If the patient was found to be dishonest then a new audiogram would be saved.
+
+Note that the max. 24 curve points can come in any order as [frequency, intensity] pairs.
+Each point is properly identified by its standard frequency for which the intensity is
+recorded.
+
+Ref. [HOCA-5 chapter 32, page 584: Pseudohypacusis] </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="StengerPoints" type="TonePoints_Type" maxOccurs="24">
+								<xs:annotation>
+									<xs:documentation>Masking Level and Masking Frequency are used to denote the stimulus in channel 2 of the Audiometer which would always be a pure tone</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DifferenceLimenIntensity" minOccurs="0" maxOccurs="2">
+					<xs:annotation>
+						<xs:documentation>Difference Limen Intensity Audiogram also called Amplitude Modulation (AM) Test or
+the Lüscher-Zwislocki test. In this audiogram, an Amplitude Modulation is added to a
+steady tone, and the patient is asked to indicate the smallest variation he can detect.
+
+The result is then recorded in dB. The most significant level of recording is found to be
+approx. 40 dB above the hearing threshold.
+
+Ref. [HOCA-5 chapter 3, page 33: Pseudohypacusis] </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="DifferenceLimenIntensityPoints" type="DifferenceLimenIntensityPoint_Type" maxOccurs="24"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DifferenceLimenFrequency" minOccurs="0" maxOccurs="2">
+					<xs:annotation>
+						<xs:documentation>Difference Limen Frequency Audiogram also called Frequency Modulation (FM) Test. In
+this audiogram, a Frequency Modulation is added to a steady tone, and the patient is asked
+to indicate the smallest variation he can detect. This test is used to diagnose abnormal growth of loudness in cochlear hearing losses.
+
+The result is then recorded in percentage.  
+
+Ref. [HOCA-5 chapter 8, page 111: Cochlear and Retrocochlear Behavioral Tests ] 
+Ref. [HOCA-5 chapter 3, page 33: Pseudohypacusis] </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions">
+								<xs:annotation>
+									<xs:documentation> Global Element used throughout this standard - see AudioMetricMeasurementConditions_Type for more details
+
+</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DifferenceLimenFrequencyPoints" type="DifferenceLimenFrequencyPoint_Type" maxOccurs="24"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ShortIncrementSensitivityIndex" minOccurs="0" maxOccurs="2">
+					<xs:annotation>
+						<xs:documentation>Short increment sensitivity index testing is where a continuous tone is presented 20dB above HTL and every 5 seconds the intensity of that tone increases by 1 dB and is held at that level for one- fifth of a second before reducing back to the original level. The patient signals if the rise is heard. 20 rises are presented and the score then multiplied by 5 to give a percentage score. People with cochlear losses are likely to score above 70% where as normal hearing and other losses typically score less than 30% 
+
+Ref. [HOCA-5 chapter 8, page 111: Cochlear and Retrocochlear Behavioral Tests] </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="AudMeasurementConditions"/>
+							<xs:element name="ShortIncrementSensitivityIndexPoints" type="ShortIncrementSensitivityIndexPoint" maxOccurs="24"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PrivateAudiogramData" type="xs:base64Binary" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>In the past it was allowed by HIMSA to save privately formatted data in the unused section of the public storage area of a NOAH action.  This usage was used mainly because more space was allocated for public storage versus private.  At present this is no longer an issue as equal storage is allocated to both public and private data storage.
+
+This elements primary function is to pass along any private data stored in the public area as base64 encoded data.  NOAH is not performing any translation or conversion of data.
+
+This data will never be converted back to an earlier version of a Audiogram data standard.  For example, if an audiogram format 500 is saved with this element populated and then an older NOAH compatible fitting module tries to read the Audiogram (causing a conversion down to format 200) this data will be ignored by the converter process.
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="WeberPoints" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Weber test is preformed by placing the struck tuning fork on the forehad or upper incisor teeth.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="WeberPoint" maxOccurs="8">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="StimulusFrequency" type="xs:integer">
+											<xs:annotation>
+												<xs:documentation>Frequency of the stimulus channel in Hz
+</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="StimulusLevel">
+											<xs:annotation>
+												<xs:documentation>Important Note: There was a misunderstanding during the creation phase of the Weber Element that was not caught later on.  The StimulusLevel Element should not have not been implemented.  As it makes no sense to have it HIMSA will plan to remove this element in the next format release.  
+
+It would not be our normal procedure to remove an element but in this case it seems safe to do so in this case.
+
+As the element is further marked as mandatory a module saving the data would be required to save a value.  HIMSA will suggest to save the value of zero.  Readers of data can of course just ignore the value.
+
+In the next format version HIMSA will also take the necessary steps in the conversion Dll’s to handle this situation.
+
+Stimulus Level of the stimulus channel in dB
+</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:decimal"/>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="PointStatus" type="WeberPointStatus_Type">
+											<xs:annotation>
+												<xs:documentation>Right / The patient heard better on the right ear.
+Left / The patient heard better on the left ear.
+Center / The patient heard equally well in both ears
+NoResponse / The patient did not respond
+NotAudible / Not audible to the patient</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SupplementaryData" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Supplementary data is data supplied by a Noah compatible application that does not follow a HIMSA published standard.  The Supplementary data is included in conjunction with the HIMSA defined data standard – the data will be alongside the well-established HIMSA standards.  For readers that are knowledgeable with the past “Public Extension” concept that Noah originally used with C header file based standards, this idea is similar in nature.
+
+What is the need for supplementary data?
+
+This general idea was originally suggested by a current HIMSA measurement equipment member company.  
+
+Despite HIMSA’s best intentions it is unrealistic that the HIMSA defined data standards can be updated as quickly as desired by another member company.  HIMSA is actively trying to create a system where data standards can be updated in a more flexible manner but there will still be times where HIMSA cannot publish an updated version quickly enough due to technical issues or it could be that there is not good consensus with other member companies on a particular topic.
+
+If data is stored as supplementary data then there is an easier to use option for the member to include the data so that other HIMSA member companies may make use of the data until it may be possible that the data structure be placed in the official HIMSA standard.
+
+At first it may seem that HIMSA is suggesting a step backwards in data standardization but this is not the case.  HIMSA believes that it will only make Noah easier to work with for member companies and in the long run provide HIMSA with more data information that could be candidates for standardization.
+
+What will HIMSA have for requirements?
+
++The intention for saving the data in this area is to share it to other members that may wish to use it.  If the data is proprietary or is secret in some way, do not store the data here.
+
++Supplementary data must be stored in an XML format.
+
++The data must include a version number, if the member creating the data changes the format then the version of the format must change as well
+
++If a new version is created the member company is required to notify HIMSA of the changes
+
++The member company creating supplementary data recognizes that HIMSA will most likely review the supplementary data format for possible inclusion in a future HIMSA standard.
+
+What will HIMSA ask for but not have as a requirement?
+
++Supplementary will be defined by a schema (.XSD) file, if not then documentation must be available to HIMSA member companies requesting it.  
+
++If a HIMSA standard is eventually updated to include the data that used to be stored in supplementary data HIMSA will strongly encourage member companies to move towards utilizing the updated public data standard.
+
+
+What can the member companies (creators of data) expect?
+
++If a Noah runtime data converter is translating data from one format to another it will not perform any conversion on supplementary data, it will simply pass it along in the existing format.  Please note that this will only function on data standards 502 and newer.  This means that software trying to utilize older format (e.g. format 200) will not be able to receive this data.
+
+@@ 502 to 500 conversion - This data must be removed as it was not supported in formation 500 @@
+
+@@ 500 to 502 - this is not possible @@
+
+
+
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Information">
+								<xs:complexType>
+									<xs:attribute name="Version" use="required">
+										<xs:annotation>
+											<xs:documentation>Version of this data</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:integer"/>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="Comments">
+										<xs:annotation>
+											<xs:documentation>General Comments about  the data from the developer of the data</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:any namespace="##any" processContents="skip" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Any legal formatted XML data.  This data does conform to this </xs:documentation>
+								</xs:annotation>
+							</xs:any>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="502">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ValidatedByNOAH" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>This attribute is no longer in use.  The original intention was for Noah to fill in the value but the idea was never fully implemented and not needed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ConvertedFromDataStandard">
+				<xs:annotation>
+					<xs:documentation>Software saving data formatted via this XSD file should not use this element for storage.  The intention is for Noah data convertors to fill in an appropriate value for runtime conversions - not permanent storage.
+
+Please note that values less than 500 mean that the data was originally stored in a format which was not validated by Noah before storage.  This could mean that the data will not validated against this version</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AudMeasurementConditions" type="AudioMetricMeasurementConditions_Type">
+		<xs:annotation>
+			<xs:documentation>Global Element used throughout this standard - see AudioMetricMeasurementConditions_Type for more details
+
+The same set of measurement conditions are used for all Audiogram curves.
+The Audiogram measurement conditions are very versatile and expandable in such a way that whenever new measurement methods are discovered they can be added to the existing ones.
+
+They are meant to be used both by the ENT (Ear, Nose, Throat) for diagnostics purposes and for fitting hearing instruments as well. It is very important to realize that combinations of measurement conditions that make perfect sense to the ENT can be meaningless when programming hearing instruments. It is therefore important to examine all measurement conditions to ascertain whether they are useful for the intended purpose.
+
+The measurement conditions have initial (default) values that must be filled in.
+
+The following elements are mandatory and have initial values set:
+StimulusSignalType, MaskingSignalType
+StimulusSignalOutput, MaskingSignalOutput
+StimulusdBWeighting, MaskingdBWeighting
+
+In addition to the initial default values listed above recording the following audiogram test requires the following elements be set (even though they are listed as optional in the XSD schema file)
+
+For tone audiograms these are:
+StimulusPresentationType, MaskingPresentationType
+
+For speech audiograms these are:
+StimulusAuxiliary
+MaskingAuxiliary
+
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:simpleType name="Signal_Type">
+		<xs:annotation>
+			<xs:documentation>AuxiliarySignal / Stimulus from Compact Disc or Audio Tape
+Microphone / Live voice from microphone
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoSignalApplied"/>
+			<xs:enumeration value="PureTone"/>
+			<xs:enumeration value="Warble"/>
+			<xs:enumeration value="NarrowBandNoise"/>
+			<xs:enumeration value="SpeechNoise"/>
+			<xs:enumeration value="WhiteNoise"/>
+			<xs:enumeration value="PinkNoise"/>
+			<xs:enumeration value="AuxiliarySignal"/>
+			<xs:enumeration value="Microphone"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignalOutput_Type">
+		<xs:annotation>
+			<xs:documentation>The Signal Output Type is of extra importance. It defines the means of presenting sound to the patient:
++ Air Conductor / headphones
++ Bone conductor / vibrator placed on the mastoid (HOCA-5 page 10)
++ Free Field / Loudspeakers in a special test room
++ Insert Phone / small foam tips used to deliver air conduction test
+
+It also defines which side (i.e. the persons left or right ear) is stimulated.
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoSignalOutput"/>
+			<xs:enumeration value="AirConductorLeft"/>
+			<xs:enumeration value="AirConductorRight"/>
+			<xs:enumeration value="AirConductorBinaural"/>
+			<xs:enumeration value="BoneConductorLeft"/>
+			<xs:enumeration value="BoneConductorRight"/>
+			<xs:enumeration value="BoneConductorBinaural"/>
+			<xs:enumeration value="FreeFieldLeft"/>
+			<xs:enumeration value="FreeFieldRight"/>
+			<xs:enumeration value="FreeFieldBinaural"/>
+			<xs:enumeration value="InsertPhoneLeft"/>
+			<xs:enumeration value="InsertPhoneRight"/>
+			<xs:enumeration value="InsertPhoneBinaural"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="dBweighting_Type">
+		<xs:annotation>
+			<xs:documentation>The decibel scale is used to measure the level of sound presented to the ears relative to a reference point. The decibel scales express a ratio between two numbers these are converted to a logarithmic scale. As this is a ratio we must have a reference level - you cannot say the sound is 10 times bigger if you do not state what it is bigger than. This reference point varies between different dB scales. 
+
+For example dBSPL uses audiometric zero as it's reference point which is measured in Pascals and is the minimum pressure required to cause the sensation of hearing in the mid frequency region, (0,0002Pa). There are a number of different scales to use when measuring hearing thresholds on all of which use decibels with different reference points. 
+
+The stimulus dB weighting is used to determine how much correction is required so that the audiometer dials read accurately for the chosen measurement scale. This will vary between tests e.g. dBSPL and dBHL measurements will have different dB weightings.
+
+ABS / Absolute Value of a measurement without any corrections
+CSL / Comfortable Speech Level.  According to ISO standard.
+
+
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NodBWeighting"/>
+			<xs:enumeration value="HL"/>
+			<xs:enumeration value="SPL"/>
+			<xs:enumeration value="ABS"/>
+			<xs:enumeration value="CSL"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Presentation_Type">
+		<xs:annotation>
+			<xs:documentation>Presentation is done in a number of different ways. In some tests the stimulus is always on (i.e. using the continuous presentation type)- (e.g. Tone Decay presents a continuous pure tone signal.)
+
+Some of the stimulus types in this section are specific to diagnostic tests such as:
++ SISI ./ Short Increment Sensitivity Index 
++ Alternating / usually used with ABLB testing (Alternate Binaural Loudness balance)
++ Amplitude Modulated / used in Bekesey Audiometry (automatic)
++ StepWiseFrequencyModulated / often called ‘warble tones’ can be used in free field testing 
++ Impulse / Random pulses
++ Pulsed Presentation / Used in Bekesey Audiometry (automatic) and can be used as part of pure tone audiometry to make it easier for patients to distinguish stimulus sound
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoPresentationType"/>
+			<xs:enumeration value="Continuous"/>
+			<xs:enumeration value="PulsedPresentation"/>
+			<xs:enumeration value="Alternating"/>
+			<xs:enumeration value="AmplitudeModulated"/>
+			<xs:enumeration value="StepwiseFrequencyModulated"/>
+			<xs:enumeration value="Impulse"/>
+			<xs:enumeration value="SiSiSignal"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Transducer_Type">
+		<xs:annotation>
+			<xs:documentation>The device used to deliver sound (e.g. type of headphone TDH39)
+A simple explanation for each type of device is provided below:
++ TDH39 / Supra aural headphones for air conduction tests
++ HDA200 / Supra aural headphones often used for extended high frequency air conduction testing
++ EarTone 3A / Insert earphones 
++ DT48 / Supra aural headphones for air conduction tests	
++ TDH49 /  Supra aural headphones for air conduction tests
++ B71 / Bone Conductor
++ B72 / Bone conductor
++ Beoton / specific set of headphones used with Beoton audiometers only 
++ Holmberg / Supra aural headphones for air conduction tests usually used in noisier environments 
++EARTONE5A, 
++IP30,RadioEar  EARTONE3A version
++TDH50, 
++Holmco_PD81, 
++Holmco_PD95, 
++DD45, RadioEar
++DD65, RadioEar DD45 with Peltor
++B81, RadioEar
++HDA280
++Eartone3A-ABR  
+@@Convert down Rule: Going from 502->500.  If the transducer is not in the format 500 transducer list use unknown.  All transducers after User3 are new@@
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoTransducerType"/>
+			<xs:enumeration value="TDH39"/>
+			<xs:enumeration value="HDA200"/>
+			<xs:enumeration value="EARTONE3A"/>
+			<xs:enumeration value="DT48"/>
+			<xs:enumeration value="TDH49"/>
+			<xs:enumeration value="B71"/>
+			<xs:enumeration value="B72"/>
+			<xs:enumeration value="Beoton"/>
+			<xs:enumeration value="Holmberg"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+			<xs:enumeration value="EARTONE5A"/>
+			<xs:enumeration value="Eartone3A-ABR"/>
+			<xs:enumeration value="TDH50"/>
+			<xs:enumeration value="IP30"/>
+			<xs:enumeration value="DD45"/>
+			<xs:enumeration value="B81"/>
+			<xs:enumeration value="DD65"/>
+			<xs:enumeration value="Holmco_PD81"/>
+			<xs:enumeration value="Holmco_PD95"/>
+			<xs:enumeration value="HDA280"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TransducerCalibrationStandard_Type">
+		<xs:annotation>
+			<xs:documentation>Different ISO and ANSI standards available for transducer calibration. The calibration standards are
+available for a number of typical transducers
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoTransducerCalibrationStandard"/>
+			<xs:enumeration value="ISO389"/>
+			<xs:enumeration value="ISO389_FFEQ"/>
+			<xs:enumeration value="ISO7566"/>
+			<xs:enumeration value="ISO7566_FFEQ"/>
+			<xs:enumeration value="ISO8798"/>
+			<xs:enumeration value="ISO8798_FFEQ"/>
+			<xs:enumeration value="ISO226"/>
+			<xs:enumeration value="ISO226_FFEQ"/>
+			<xs:enumeration value="ANSIS36"/>
+			<xs:enumeration value="ANSIS36_FFEQ"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HearingInstrumentCondition_Type">
+		<xs:annotation>
+			<xs:documentation>The Hearing Instrument Condition Type indicates whether the patient wore a Hearing Instrument during the measurement. The NOAH 3.0 Audiogram Module specification allows a user to specify both an Aided1 and an Aided2 condition to differentiate between tests with two different types of Hearing Instruments. This scenario may mean that the user enters data in an Aided2 field without corresponding information on the Aided1 test condition. 
+
++ Unknown / The aided condition is unknown
++ No Condition / The aided condition is unavailable
++ Unaided / There is no hearing instrument or related device being worn by the patient
++ Aided1 / Hearing instrument 1
++ Aided 2 /  Hearing instrument 2
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoCondition"/>
+			<xs:enumeration value="UnAided"/>
+			<xs:enumeration value="Aided1"/>
+			<xs:enumeration value="Aided2"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AuxiliaryParameter_Type">
+		<xs:annotation>
+			<xs:documentation>Typically used with speech testing
+
+Types of word list used to carry out speech testing. Some are used for speech discrimination testing but others are there for more specific tests of speech understanding in noise for example. This does not define the actual word list used by name just by the type
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NoAuxiliaryParameter"/>
+			<xs:enumeration value="MonoSyllabicWords"/>
+			<xs:enumeration value="MultiSyllabicWords"/>
+			<xs:enumeration value="DichoticWords"/>
+			<xs:enumeration value="Freiburger"/>
+			<xs:enumeration value="Reim"/>
+			<xs:enumeration value="Numerals"/>
+			<xs:enumeration value="SpondaicWords"/>
+			<xs:enumeration value="ConversationalSpeech"/>
+			<xs:enumeration value="PhoneticallyBalanced"/>
+			<xs:enumeration value="SentenceMaterial"/>
+			<xs:enumeration value="BodyParts"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SpeechThreshold_Type">
+		<xs:annotation>
+			<xs:documentation>
+This enumerated type is used for speech testing to determine if the test used is of type SAT, SDT or SRT. Speech is used as the stimulus in these tests.
+
++SRT - Speech recognition threshold test / The level at which 50% correct score is obtained when patients are asked to repeat a spondaic word list.  - Spondaic words are 2 syllable words with equal stress on each syllable.( e.g. Birthday)
++SDT - Speech Detection threshold test / A single word is presented repeatedly and the intensity is increased in 5dB steps and decreased in 10dB steps (like pure tone audiometry) until the point where the patient indicates they can detect, but not repeat the speech heard. Threshold (again like pure tone audiometry) is taken as the level where the patient responds 2 out of 3 or 2 out of 4 times.
++SAT Speech Awareness Threshold Test / Same Description as of SDT
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NotUsed"/>
+			<xs:enumeration value="SRT"/>
+			<xs:enumeration value="SDT"/>
+			<xs:enumeration value="SAT"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AudioMetricMeasurementConditions_Type">
+		<xs:annotation>
+			<xs:documentation>Measuring Conditions for each recorded curve
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusSignalType" default="NoSignalApplied">
+				<xs:annotation>
+					<xs:documentation>Stimulus signal is the sound being presented to the patient, in the ear being tested, that you want them to respond to. (e.g. Pure Tone)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="Signal_Type"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingSignalType" type="Signal_Type" default="NoSignalApplied">
+				<xs:annotation>
+					<xs:documentation>This is a sound used to stop the hearing in an ear that is not being tested from picking up the test signal. Often used when one ear is found to be significantly poorer than the other or for bone conduction testing.
+
+The non test ear picking up the test tone is called crossover. Masking is presented to the non test ear.
+
+An example of masking noise commonly used is narrowband noise (NBN)
+
+The enumerated value "NoSignalApplied" signals that masking has NOT been performed.  If masking has been used then a value other then NoSignalApplied will and must be used.
+
+Ref. [HOCA-5, Chapter 9, page 124: Clinical Masking]</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusSignalOutput" type="SignalOutput_Type" default="NoSignalOutput">
+				<xs:annotation>
+					<xs:documentation>This refers to the method used to deliver the sound the patient responds to.  The ear and way the sound is delivered is specified but not the exact device used to deliver that sound (e.g. left air conduction not TDH39)
+
+See annotations for SignalOutput_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingSignalOutput" type="SignalOutput_Type" default="NoSignalOutput">
+				<xs:annotation>
+					<xs:documentation>This refers to the method used to deliver the masking sound to the patient. The ear and way the sound is delivered is specified but not the exact device used to deliver that sound. (e.g. left air conduction not TDH39)
+
+See annotations for SignalOutput_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusdBWeighting" type="dBweighting_Type" default="NodBWeighting">
+				<xs:annotation>
+					<xs:documentation>The weighting used for the stimulus signal.
+
+See annotations for dBweighting_Type for more information
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingdBWeighting" type="dBweighting_Type" default="NodBWeighting">
+				<xs:annotation>
+					<xs:documentation>The weighting used for the masking signal.
+
+See annotations for dBweighting_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusPresentationType" default="NoPresentationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Presentation Type for the Stimulus signal
+
+See annotations for Presentation_Type for more information</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="Presentation_Type"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingPresentationType" type="Presentation_Type" default="NoPresentationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Presentation Type for the Masking signal
+
+See annotations for Presentation_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusTransducerType" type="Transducer_Type" default="NoTransducerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The device used to deliver sound to the test ear.
+
+See annotations for Transducer_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingTransducerType" type="Transducer_Type" default="NoTransducerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The device used to deliver sound to the non test ear.
+
+See annotations for Transducer_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransducerDescription" default="" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional description of the Transducer</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="16"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusTransducerCalibrationStandard" type="TransducerCalibrationStandard_Type" default="NoTransducerCalibrationStandard" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Standard used for the Stimulus Transducer Calibration
+
+See annotations for Transducer_Type for more information
+
+Ref. [HOCA-5, Chapter 4, page 50: Puretone, Speech and Noise signals]
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingTransducerCalibrationStandard" type="TransducerCalibrationStandard_Type" default="NoTransducerCalibrationStandard" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Standard used for the MaskingTransducer Calibration
+
+See annotations for Transducer_Type for more information
+
+Ref. [HOCA-5, Chapter 4, page 50: Puretone, Speech and Noise signals]
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HearingInstrument_1_Condition" type="HearingInstrumentCondition_Type" default="NoCondition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates if a hearing instrument was worn by the patient during testing for condition 1
+
+See annotations for HearingInstrumentCondtion_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HearingInstrument_2_Condition" type="HearingInstrumentCondition_Type" default="NoCondition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates if a hearing instrument was worn by the patient during testing for condition 2
+
+See annotations for HearingInstrumentCondtion_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HearingInstrumentDescription" default="" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Generic text description of the hearing instrument(s) worn during the test</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="16"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusAuxiliary" type="AuxiliaryParameter_Type" default="NoAuxiliaryParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Word list type used for stimulus
+
+See AuxiliaryParameter_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingAuxiliary" type="AuxiliaryParameter_Type" default="NoAuxiliaryParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Word list type used for masking
+
+See AuxiliaryParameter_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WordListName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>When testing a patient's speech discrimination a number of different sets of words can be used these are termed word lists (e.g. Maryland CNC word list or BKB Sentence list)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="16"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AuxiliaryParameterDescription" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Generic text description of the Auxiliary Parameters</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="16"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SpeechThresholdType" type="SpeechThreshold_Type" default="NotUsed" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of speech threshold test
+
+See SpeechThreshold_Type for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusOnTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used to control how long a signal is presented, in seconds, when a button on the audiometer is pressed.
+
+An example is SISI - short increment sensitivity index testing where a continuous tone is presented 20dB above HTL and every 5 seconds the intensity of that tone increases by 1 dB and is held at that level for one- fifth of a second before reducing back to the original level. </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.000"/>
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingOnTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used to control how long a signal is presented, in seconds, when a button on the audiometer is pressed.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.000"/>
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusOffTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used to control how long a signal is off between presentations (in seconds) in automatic tests.
+example is SISI - short increment sensitivity index testing where a continuous tone is presented 20dB above HTL and every 5 seconds the intensity of that tone increases by 1 dB and is held at that level for one- fifth of a second before reducing back to the original level. </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.000"/>
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingOffTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used to control how long a signal is presented, in seconds, when a button on the audiometer is pressed.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+						<xs:minInclusive value="0.000"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusSiSiParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Defines the amount of decibel increase added to the carrier signal during SISI testing, commonly used values are 1,2 and 3 dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingSiSiParameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking is not commonly used for SiSi testing, </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusWarbleModulation" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The warble tone is a variation of the pure tone. The frequency of the basic tone is modulated in a desired pattern This is often used in free field Audiometry testing </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingWarbleModulation" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Warble Modulation is not commonly used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusWarbleModulationSize" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The amplitude of the warble tone in percent of the steady tone.
+
+Measurement conditions typically used with DifferenceLimenFrequency testing.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+						<xs:minInclusive value="0.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingWarbleModulationSize" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Warble Modulation Size is not commonly used</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusFrequencyModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The frequency of the basic tone is modulated by a lower frequency to produce a warble sound. 
+
+Measurement conditions typically used with DifferenceLimenFrequency</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequencyModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Frequency Modulation is typically not used.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusAmplitudeModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The amplitude of the basic tone is modulated to produce a warble sound. 
+
+Measurement conditions typically used with DifferenceLimenIntensity.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingAmplitudeModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Amplitude Modulation is typically not used</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusPulseModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the frequency in Hz with which the signal is switched between the ears
+
+Measurement conditions typically used with AlternateBinauralLoudnessBalanceConditions </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.0"/>
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingPulseModulation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Pulse Modulation is typically not used</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.0"/>
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StimulusPulseCycle" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Stimulus Pulse Cycle is the percentage of stimulus frequency where the signal is applied to the good ear. The rest of the pulse time is applied to the bad ear.  This tells the audiometer how to cycle through that presentation when the stimulus present button is pressed.
+
+Measurement conditions typically used with AlternateBinauralLoudnessBalanceConditions </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingPulseCycle" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>In this case masking is understood to be the second measurement channel.  This is the pulse time applied to the bad ear.  
+
+Measurement conditions typically used with AlternateBinauralLoudnessBalanceConditions</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EstimatedResult" type="EstimatedResultBy_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If set this indicates that the test results have been estimated via one of the supported methods (e.g. ASSR, ABR)
+
+@@Convert down Rule: Going from 502->500.  This element and concept did not exist so none of the data in this element can be convereted down @@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeviceSolutions" type="DeviceSolutions_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A new element available starting in version 502.  The element is an expansion of the HearingInstrument_1_Condition and HearingInstrument_2_Condition elements to better describe aided solutions.  See annotations for DeviceSolutions_Type for more information
+
+@@Convert down Rule: Going from 502->500.  This element and concept did not exist so none of the data in this element can be convereted down @@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PointStatus_Type">
+		<xs:annotation>
+			<xs:documentation>Notes for Enumerated Values:
+
++ Unknown / The parameter is defined, but to the value Unknown
+
++ Normal / Valid threshold point.  Used for valid curve points at the threshold: For this threshold point,  the patient could hear and respond to the presented stimulus 50 pct. of the time. (from the definition of a threshold).
+
++ AlwaysResponse / Patient might hear better than this.  Used for valid curve points probably above the threshold:, The patient could hear and respond to the presented stimulus all of the time.
+
++ NoResponse / Patient did not respond.  The stimulus was at the highest output level of the measurement device, but the patient did not respond. In pure tone graph, a point is
+plotted at the dB level corresponding to the highest output level of the measuring device.
+
++ NotMeasurable / Presented stimulus to patient but without a result. It was not possible to measure threshold consistently or reliably.  A point is plotted at the dB level that best represents the 
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Normal"/>
+			<xs:enumeration value="AlwaysResponse"/>
+			<xs:enumeration value="NoResponse"/>
+			<xs:enumeration value="NotMeasurable"/>
+			<xs:enumeration value="DidNotTest"/>
+			<xs:enumeration value="CouldNotTest"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ToneAverage_Type">
+		<xs:annotation>
+			<xs:documentation> Frequency Values used to calculate the average
+
+In the event that a XML file is saved into NOAH (e.g. a new NOAH module is saving in version 500) it is technically possible for a frequency to be listed more than once as this would validate fine.  In the event that a program is reading the data then the additional entry will effectively need to be ignored
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="125"/>
+			<xs:enumeration value="250"/>
+			<xs:enumeration value="500"/>
+			<xs:enumeration value="750"/>
+			<xs:enumeration value="1000"/>
+			<xs:enumeration value="1500"/>
+			<xs:enumeration value="2000"/>
+			<xs:enumeration value="3000"/>
+			<xs:enumeration value="4000"/>
+			<xs:enumeration value="6000"/>
+			<xs:enumeration value="8000"/>
+			<xs:enumeration value="12000"/>
+			<xs:enumeration value="16000"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MeasurementNotes_Type">
+		<xs:annotation>
+			<xs:documentation>The Measurement Notes structure is designed to hold the notes from an Audiological
+Measurement. The information herein could be useful to other entities as the information
+affects the test and its results.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AudiometerMakeModel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Manufacturer Make Model of the equipment used.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="41"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AudiometerSerialNumber" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Manufacturer Serial Number of the equipment used.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="41"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AudiometerLastCalibration" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date of Last Calibration of the equipment used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestMethod" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>It is possible to carry out Audiological tests according to a number of different protocols. This field allows the actual method of testing to be described.  For example, Visual reinforcement Audiometry is used to achieve a Pure Tone Audiogram from small children and the audiologist would comment that testing was performed using this method.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="41"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TestReliability" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Patients are required to respond consistently at the same level during pure tone audiometry in order to find their HTL accurately. For some patients this is not possible and an accurate HTL cannot be established because the patient responds at varying levels during the testing claiming them to be their HTL. The audiologist would generally remark that the responses were not accurate by writing a comment in the reliability field</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="41"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IsDeaf" type="Ear_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This element is used to clearly signal that the patient is deaf in the ear choice that is set.  If a value is set then the reader of the data can assume that this is a valid reason for why testing was conducted for the set ear(s) or any data present for a deaf ear.  If an ear selection is made then user conducting the Audiogram test has determined that the ear choice is deaf.
+
+This approach is taken rather than requiring the reader of the data to pay attention to curves that may be present with the PointStatus_Type is set to something like DidNotTest or CouldNotTest, or NoResponse at the maximum output of the audiometer, which can vary per audiometer.
+
+@@Convert down Rule: Going from 502->500.  This element and concept did not exist so none of the data in this element can be convereted down @@
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FrequenciesUsedForToneAverage_Type">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LeftEar1" minOccurs="0" maxOccurs="13">
+				<xs:annotation>
+					<xs:documentation>Frequencies used to calculate the average for LeftEar1</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="ToneAverage_Type"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LeftEar2" type="ToneAverage_Type" minOccurs="0" maxOccurs="13">
+				<xs:annotation>
+					<xs:documentation>Frequencies used to calculate the average for LeftEar2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RightEar1" type="ToneAverage_Type" minOccurs="0" maxOccurs="13">
+				<xs:annotation>
+					<xs:documentation>Frequencies used to calculate the average for RightEar1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RightEar2" type="ToneAverage_Type" minOccurs="0" maxOccurs="13">
+				<xs:annotation>
+					<xs:documentation>Frequencies used to calculate the average for RightEar2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TonePoints_Type">
+		<xs:annotation>
+			<xs:documentation>Data point used to store curve points of tone audiograms
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusFrequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Frequency of the stimulus channel in Hz
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusLevel">
+				<xs:annotation>
+					<xs:documentation>Stimulus Level of the stimulus channel in dB
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Frequency for masking channe in Hz. 
+
+If masking has been used then it is assumed that this frequency is the same as the StimulusFrequency. However, If masking is to be recorded it is then necessary to save values for both MaskingFrequency and MaskingLevel.  The XSD was not able to be setup to enforce this rule due to legacy (format 200) design.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingLevel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Level of the masking channel in dB.
+
+If the MaskingLevel has been populated with data this means that the point as defined by the StimulusFrequency and StimulusLevel is masked.
+
+If masking is to be recorded it is then necessary to save values for both MaskingFrequency and MaskingLevel.  The XSD was not able to be setup to enforce this rule due to legacy (format 200) design.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TonePointStatus" type="PointStatus_Type">
+				<xs:annotation>
+					<xs:documentation>Status of the point
+
+See PointStatus_Type annotation notes for more information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalMaskingPoint" type="AdditionalMasking_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a new element added in version 502.  Previously it was not possible/realistic to save 2 points, one being masked and the other unmasked.  When recording a pure tone audiogram, the classic (manual) method of recording allows not masked and masked values for the same measurement to be recorded. For example, if a large asymmetry, re-test the poorer ear with masking, end up with a set of not masked and a set of masked results for the same ear. From a hearing aid fitting perspective all that is needed is the “true” thresholds but clinically having sight of the two sets of values is significant.
+
+Moving forward it is now possible to store both a masked and unmasked point.  If the software storing the audiogram wishes to support this use case then it must use this element to define the masked point.
+
+@@ 502 to 500 down convert rules: If masking data is present in this structure then copy the entire child structure up one level.  This means that the masking data will overwrite the related elements.  This is preferred as the masked data is considered better data for other programs such as fitting modules to use.
+
++AdditionalStimulusLevel -> StimulusLevel
++AdditionalMaskingLevel -> MaskingLevel
++AdditionalMaskingPointStatus -> TonePointStatus
+
+
+Also noted - The new AdditionalStimulusLevel is added compared to 502.  It is added as the first element, normally a new element was be added as the last.  In this case it makes more sense to add it first and OK to do in the case that AdditionalMaskingPoint was in error for version 502. @@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DifferenceLimenIntensityPoint_Type">
+		<xs:annotation>
+			<xs:documentation>Data point for Difference Limen Intensity (DLI) thresholds
+
+The difference limen (DL) will be saved for the frequency in question in the variable
+modSize.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusFrequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Frequency of the stimulus channel in Hz.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusLevel">
+				<xs:annotation>
+					<xs:documentation>Stimulus Level of the stimulus channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Frequency of the masking channel in Hz</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingLevel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Level of the masking channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ModulationSize">
+				<xs:annotation>
+					<xs:documentation>Modulation Size. The observed Difference Limen Threshold measured in dB.  This value represents the lowest detectable difference in Sound Pressure Level.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+						<xs:minInclusive value="0.0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DifferenceLimenIntensityPointStatus" type="PointStatus_Type">
+				<xs:annotation>
+					<xs:documentation>Status of the point
+
+See PointStatus_Type annotations for more details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalMaskingPoint" type="AdditionalMasking_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a new element added in version 502.  Previously it was not possible/realistic to save 2 points, one being masked and the other unmasked.  When recording a pure tone audiogram, the classic (manual) method of recording allows not masked and masked values for the same measurement to be recorded. For example, if a large asymmetry, re-test the poorer ear with masking, end up with a set of not masked and a set of masked results for the same ear. From a hearing aid fitting perspective all that is needed is the “true” thresholds but clinically having sight of the two sets of values is significant.
+
+Moving forward it is now possible to store both a masked and unmasked point.  If the software storing the audiogram wishes to support this use case then it must use this element to define the masked point.
+
+@@ 502 to 500 down convert rules: If masking data is present in this structure then copy the entire child structure up one level.  This means that the masking data will overwrite the related elements.  This is preferred as the masked data is considered better data for other programs such as fitting modules to use.
+
+AdditionalStimulusLevel -> StimulusLevel
+AdditionalMaskingLevel -> MaskingLevel
+AdditionalMaskingPointStatus -> DifferenceLimenIntensityPointStatus
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DifferenceLimenFrequencyPoint_Type">
+		<xs:annotation>
+			<xs:documentation>Data point for Difference Limen Frequency (DLF)
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusFrequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Frequency of the stimulus channel in Hz.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusLevel">
+				<xs:annotation>
+					<xs:documentation>Stimulus Level of the stimulus channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Frequency of the masking channel in Hz.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingLevel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Level of the masking channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ModulationSize">
+				<xs:annotation>
+					<xs:documentation>Modulation Size. The observed Difference Limen Threshold is saved as a percentage. This integer value represents the lowest detectable difference in frequency represented as described below:
+
+The Difference Limen (DL) will be saved for the variation in frequency in question in the
+variable modSize. In the DLF case the measurement becomes
+
+			Frequency1A - Frequency1B
+Modulation Size = ___________________________________________ X 10,000
+				Frequency1A
+
+
+Intensity1A is defined as the measuring intensity and thus saved as intensity1. Intensity1B is the varied stimulus intensity. It can be increased or lowered.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:totalDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DifferenceLimenFrequencyPointStatus" type="PointStatus_Type">
+				<xs:annotation>
+					<xs:documentation>Status of Point
+
+See PointStatus_Type enumeration for more details</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalMaskingPoint" type="AdditionalMasking_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a new element added in version 502.  Previously it was not possible/realistic to save 2 points, one being masked and the other unmasked.  When recording a pure tone audiogram, the classic (manual) method of recording allows not masked and masked values for the same measurement to be recorded. For example, if a large asymmetry, re-test the poorer ear with masking, end up with a set of not masked and a set of masked results for the same ear. From a hearing aid fitting perspective all that is needed is the “true” thresholds but clinically having sight of the two sets of values is significant.
+
+Moving forward it is now possible to store both a masked and unmasked point.  If the software storing the audiogram wishes to support this use case then it must use this element to define the masked point.
+
+@@ 502 to 500 down convert rules: If masking data is present in this structure then copy the entire child structure up one level.  This means that the masking data will overwrite the related elements.  This is preferred as the masked data is considered better data for other programs such as fitting modules to use.
+
+AdditionalStimulusLevel -> StimulusLevel
+AdditionalMaskingLevel -> MaskingLevel
+AdditionalMaskingPointStatus -> DifferenceLimenFrequencyPointStatus
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShortIncrementSensitivityIndexPoint">
+		<xs:annotation>
+			<xs:documentation>Data point for Short Increment Sensitivity Index (SISI) Audiogram
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusFrequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Frequency of the stimulus channel in Hz.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusLevel">
+				<xs:annotation>
+					<xs:documentation>Stimulus Level of the stimulus channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Frequency of the masking channel in Hz.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingLevel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Level of the masking channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ModulationSize">
+				<xs:annotation>
+					<xs:documentation>The observed SiSi Increment size measured in dB.  This value represents the lowest detectable difference in Sound Pressure Level</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NumberOfAnswers" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Number of positive responses given by the patient corresponding to the saved increment
+size.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumberOfIncrements" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The total number of presentations given with the corresponding increment size</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalMaskingPoint" type="AdditionalMasking2_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a new element added in version 502.  Previously it was not possible/realistic to save 2 points, one being masked and the other unmasked.  When recording a pure tone audiogram, the classic (manual) method of recording allows not masked and masked values for the same measurement to be recorded. For example, if a large asymmetry, re-test the poorer ear with masking, end up with a set of not masked and a set of masked results for the same ear. From a hearing aid fitting perspective all that is needed is the “true” thresholds but clinically having sight of the two sets of values is significant.
+
+Moving forward it is now possible to store both a masked and unmasked point.  If the software storing the audiogram wishes to support this use case then it must use this element to define the masked point.
+
+@@ 502 to 500 down convert rules: If masking data is present in this structure then copy the entire child structure up one level.  This means that the masking data will overwrite the related elements.  This is preferred as the masked data is considered better data for other programs such as fitting modules to use.
+
+AdditionalStimulusLevel -> StimulusLevel
+AdditionalMaskingLevel -> MaskingLevel
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DecayPoint_Type">
+		<xs:annotation>
+			<xs:documentation>Data point for Decay sections
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusFrequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Frequency of the stimulus channel in Hz.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StimulusLevel">
+				<xs:annotation>
+					<xs:documentation>Stimulus Level of the stimulus channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Frequency of the masking channel in Hz.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaskingLevel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Intensity Level of the masking channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StartTime">
+				<xs:annotation>
+					<xs:documentation>Start time for a Decay presentation</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+						<xs:minInclusive value="0.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EndTime">
+				<xs:annotation>
+					<xs:documentation>Start and End time for a Decay presentation</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0.00"/>
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AdditionalMaskingPoint" type="AdditionalMasking2_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a new element added in version 502.  Previously it was not possible/realistic to save 2 points, one being masked and the other unmasked.  When recording a pure tone audiogram, the classic (manual) method of recording allows not masked and masked values for the same measurement to be recorded. For example, if a large asymmetry, re-test the poorer ear with masking, end up with a set of not masked and a set of masked results for the same ear. From a hearing aid fitting perspective all that is needed is the “true” thresholds but clinically having sight of the two sets of values is significant.
+
+Moving forward it is now possible to store both a masked and unmasked point.  If the software storing the audiogram wishes to support this use case then it must use this element to define the masked point.
+
+@@ 502 to 500 down convert rules: If masking data is present in this structure then copy the entire child structure up one level.  This means that the masking data will overwrite the related elements.  This is preferred as the masked data is considered better data for other programs such as fitting modules to use.
+AdditionalStimulusLevel –> enter the StimulusFrequency value
+AdditionalMaskingLevel -> MaskingLevel
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SpeechScorePoint_Type">
+		<xs:annotation>
+			<xs:documentation>Data point for Speech Scores, used by all speech audiograms
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="StimulusLevel">
+				<xs:annotation>
+					<xs:documentation>Stimulus Level of the stimulus channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MaskingLevel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Masking Level of the masking channel in dB</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ScorePercent">
+				<xs:annotation>
+					<xs:documentation>The number of correct repeated phonemes (words, syllables…) in percent
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+						<xs:minInclusive value="0.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NumberOfWords" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of correctly repeated phonemes (words, syllables…) </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpeechPointStatus" type="PointStatus_Type">
+				<xs:annotation>
+					<xs:documentation>Status of the Point
+
+@@ Convert Down Rule: Converting from 502->500. This element is not in format 500.  You will need to remove it when converting to format 500. @@
+
+++Convert Up Rule: 
+Converting from 500->502.
+This is a manditory element in format 502.  Use the value Unknown when converting up.++
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalMaskingPoint" type="AdditionalMasking_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a new element added in version 502.  Previously it was not possible/realistic to save 2 points, one being masked and the other unmasked.  When recording a pure tone audiogram, the classic (manual) method of recording allows not masked and masked values for the same measurement to be recorded. For example, if a large asymmetry, re-test the poorer ear with masking, end up with a set of not masked and a set of masked results for the same ear. From a hearing aid fitting perspective all that is needed is the “true” thresholds but clinically having sight of the two sets of values is significant.
+
+Moving forward it is now possible to store both a masked and unmasked point.  If the software storing the audiogram wishes to support this use case then it must use this element to define the masked point.
+
+@@ 502 to 500 down convert rules: If masking data is present in this structure then copy the entire child structure up one level.  This means that the masking data will overwrite the related elements.  This is preferred as the masked data is considered better data for other programs such as fitting modules to use.
+
+AdditionalStimulusLevel -> StimulusLevel
+AdditionalMaskingLevel -> MaskingLevel
+AdditionalMaskingPointStatus -> SpeechPointStatus
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdditionalMasking_Type">
+		<xs:sequence>
+			<xs:element name="AdditionalStimulusLevel">
+				<xs:annotation>
+					<xs:documentation>Stimulus Level of the stimulus channel in dB
+
+An additional frequency is not defined as it must be the same as StimulusFrequency
+
+@@ 
+AdditionalStimulusLevel -> StimulusLevel
+@@
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AdditionalMaskingLevel">
+				<xs:annotation>
+					<xs:documentation>Masking Level of the masking channel in dB.
+
+An additional frequency is not defined as it must be the same as StimulusFrequency
+
+@@ 
+AdditionalMaskingLevel -> MaskingLevel
+@@</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AdditionalMaskingPointStatus" type="PointStatus_Type">
+				<xs:annotation>
+					<xs:documentation>Status of the point
+
+See PointStatus_Type annotation notes for more information
+
+@@ 
+AdditionalMaskingPointStatus -> SpeechPointStatus or TonePointStatus
+
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdditionalMasking2_Type">
+		<xs:annotation>
+			<xs:documentation>The Additonal Masking 2 Type is used for tests such as Decay testing where a Point Status is not included</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AdditionalStimulusLevel">
+				<xs:annotation>
+					<xs:documentation>Stimulus Level of the stimulus channel in dB
+
+An additional frequency is not defined as it must be the same as StimulusFrequency
+
+@@ 
+AdditionalStimulusLevel -> StimulusLevel
+@@
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AdditionalMaskingLevel">
+				<xs:annotation>
+					<xs:documentation>Masking Level of the masking channel in dB.
+
+An additional frequency is not defined as it must be the same as StimulusFrequency
+
+@@ 
+AdditionalMaskingLevel -> MaskingLevel
+@@</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Ear_Type">
+		<xs:annotation>
+			<xs:documentation>A simple type that defines Right, Left, or Binaural</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Right"/>
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Binaural"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EstimatedResultBy_Type">
+		<xs:annotation>
+			<xs:documentation>Used as a way for the measurement equipement to indicate that the test was estimated by someother type of test, indicated by the enumerated choices
+
++ ASSR / estimated by auditory steady-state response 
++ ABR / estiamted by auditory brainstem response
++ Other / not one of the currently standardized methods listed above</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ASSR"/>
+			<xs:enumeration value="ABR"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WeberPointStatus_Type">
+		<xs:annotation>
+			<xs:documentation>Point status choices specific for a weber test
++Right / The patient heard better on the right ear.
++Left / The patient heard better on the left ear.
++Center / The patient heard equally well in both ears
++NoResponse / The patient did not respond
++NotAudible / Not audible to the patient
++AudibleButCantTellWhichSide / audible but the patient is unable to determine what side they can hear the sound</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Right"/>
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Center"/>
+			<xs:enumeration value="NoResponse"/>
+			<xs:enumeration value="NotAudible"/>
+			<xs:enumeration value="AudibleButCantTellWhichSide"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AidedSolutions_Type">
+		<xs:annotation>
+			<xs:documentation>
+
++ None / no solution operational
+
++ EarOccluded / ear canal occluded with use of headphone, foam insert, insert phone
+
++ AcousticHearingAid / hearing aid delivering sound to the ear canal using air conduction
+			+ BoneConductionHearing Aid / 	hearing aid delivering sound to the cochlea using bone conduction (not surgically implanted)
+
++ BoneAnchoredHearing Aid / implanted hearing aid delivering sound to the cochlea using bone conduction
+
++ CochlearImplant / device implanted in the cochlea allowing electrical stimulation of the auditory nerve 
+
++ ElectroacousticStimulation / Device that combines an acoustic hearing aid with a cochlear implant resulting in partial acoustic stimulation and partial electrical stimulation of the auditory nerve, eg. MedEl Synchrony EAS, Cochlear Nucleus Hybrid
+
++ MiddleEarImplant / o	Device implanted in the middle ear that mechanically drives the ossicles, eg. Envoy Medical Esteem, MedEl Vibrant Soundbridge
+			+ AuditoryBrainstemImplant / Device implanted in the brainstem that stimulates the cochlear nucleus, eg. MedEl ABI, Cochlear Nucleus ABI
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="None "/>
+			<xs:enumeration value="EarOccluded"/>
+			<xs:enumeration value="AcousticHearingAid"/>
+			<xs:enumeration value="BoneConductionHearingAid"/>
+			<xs:enumeration value="BoneAnchoredHearingAid"/>
+			<xs:enumeration value="CochlearImplant"/>
+			<xs:enumeration value="ElectroacousticStimulation"/>
+			<xs:enumeration value="MiddleEarImplant"/>
+			<xs:enumeration value="AuditoryBrainstemImplant"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DeviceSolutions_Type">
+		<xs:annotation>
+			<xs:documentation>Versions 500 and earlier all indicate that these are used to note of a hearing instrument was worn during the test, not another type of device.  However, it is not clear what ear(s) is aided and until now this has not been important – at least nobody has informed HIMSA that this was important.
+
+As HIMSA has looked to add the support for indicating if different types of devices can be indicated it has become apparent that a bit more complete structure is needed.  In general the new structure will contain a more complete list of device solutions and the ability/requirement to denote which ear the solution is associated with.
+
+The phrase “Aided Solution” will now be used in the new structure to do a better job of generally describing hearing instruments, cochlear implants etc.)
+This is a new optional element to use and will have no connection of use with HearingInstrument_1_Condition and HearingInstrument_2_Condition elements
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RightEarDevice" type="AidedSolutions_Type" default="None ">
+				<xs:annotation>
+					<xs:documentation>If a device does not exist for this ear then select 'None'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LeftEarDevice" type="AidedSolutions_Type" default="None ">
+				<xs:annotation>
+					<xs:documentation>If a device does not exist for this ear then select 'None'</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

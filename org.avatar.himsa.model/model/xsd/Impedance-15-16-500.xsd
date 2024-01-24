@@ -1,0 +1,1028 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp1 (x64) (http://www.altova.com) by Scott S Peterson (private) -->
+<!-- Rev 2 made by HIMSA. June 25 2012. Typo and grammatical fixes in annotations only July 10, 2012 -->
+<xs:schema xmlns="http://www.himsa.com/Measurement/Impedance" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/Measurement/Impedance" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="AcousticImpedanceCompleteMeasurement">
+		<xs:annotation>
+			<xs:documentation>Important: All XML data must be encoded using UTF-8.
+
+REV 7 (see REV History below)
+
+Tympanometry is a commonly used objective test of middle ear function. 
+
+Defined in the ANSI standard – ANSI s3.39-1987 (R2007) as “the dynamic measure of acoustic immitance in the ear canal as a function of changes in air pressure in the ear canal” Katz pg. 175
+
+HIMSA highly recommends the below 3rd party documentation for individuals not familiar with Audiology.  The book is reference throughout this data standard:
+[HOCA-5] Handbook of Clinical Audiology, edited by Jack Katz, Williams and Wilkins, 2002, 5. Edition
+
+
+Copyright © 2017 HIMSA II K/S
+REV History
+REV1 / September 2011, first release of format 100 translated to XSD
+REV2 / July 2012, HIMSA released REV 2 of the IMP 500 data standard in conjunction with Noah 4.3.  was made because ImpedanceMeasurementCondition_Type > Frequency needed to be changed from mandatory to optional. This change was needed because the element is used depending on the SignalOutput. All changes for REV 2 are marked between the “!!” symbols.
+REV 3 / May 2014, clear up annotations dealing with the description of Contra Reflex Measurement and IPSI Reflex Measurement
+REV 4 / August 9 2015 - Annotation updates only.  See new annotations for attributes ValidatedByNOAH and ConvertedFromDataStandard
+REV 5 / April 18 2017 With the release of the Noah 4 Audiogram module (version 1.2) HIMSA has updated the Admittance runtime data converter format 100 –> 500.  The changes that were made were done so to address issues where the previous converter would create a format 500 XML file that would pass validation.  This was a known issue with the original move to XML based data standards.  However, HIMSA recently discovered that there was an undesirable side effect when creating updated format (e.g. format 501).  Without fixing this issue the invalid XML caused further problems converting to format 501.  
+The detailed changes can be found by searching for the text “@@ REV 5 Converter Change 100>500”
+The general changes are choosing default values if not present or entering in a value of -32676 rather than a value of zero (as this can be a valid result).
+REV 6 / July 30 2018 It has been brought to HIMSA's attention that the ResultOfReflexTest annotations for REFLEX are incorrect.  The values were incorrectly carried over from fromat 100.  This issue has existed since the first REV of format 500.  The correct values of 1=True and 0=False are not documented.
+REV 7 / November 4 2019- Annotation updates only, note to use UTF-8
+
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+Copyright © 2012 HIMSA II K/S
+
+
+##TImpedanceSession## describing your root element
+
+@@ Text entered between these symbols denote special instructions to the HIMSA developer responsible for creating a conversion DLL between format 100 and format 500 @@</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TympanogramTest" type="TympanogramTest_Type" minOccurs="0" maxOccurs="3">
+					<xs:annotation>
+						<xs:documentation>Tympanograms
+
+The mobility of the ear drum and the middle ear is recorded while the air
+pressure in the auditory canal is varied, typically in the interval of
+[-300 .. +200] daPa .
+
++ Unit for Pressure [p]ı / The unit chosen for pressure is deka Pascal (daPa) or tens of Pascal.
+1 daPa approximates 1 mm Water. Ref. [Van Camp].
+
+		[p] = daPa dekaPascal or tens of Pascals.
+
++ resFreq / Ear Resonance Frequency. This field is intended for future use in Noah.
+If the probe frequency is swept in an interval of e.g. [200..2kHz], a
+resonance frequency can be found near 1000 Hz. Below this frequency the
+ear is stiffness controlled, and above this frequency it is mass controlled.
+
++ Maximum Mobility point i.e.Max 
+ Point / For the well-functioning normal middle ear a point of "maximum mobility" will be found, often for a slightly negative pressure [-100..0 ] daPa.
+
++ Middle Ear Acoustic Impedance and Admittance / The mobility of the ear drum and the middle ear is in short named "Middle Ear acoustic Immitance", which can mean Acoustic Impedance, Za
+or Acoustic Admittance Ya where pr. definition
+
+		__1__
+		Za = Ya The subscript a for acoustic is omitted hereafter.
+
++ Unit for Acoustic Admittance [Y] / For practical reasons the Admittance Y is most often measured, and indeed this measure is the one saved in IMPDEF.H, the SI unit being
+
+		____m3___
+		[Y] = Pa . s
+
++ "SI-mho / The SI unit is equal to the cgs unit millimho x 100 or mho x 105
+
+## tympTest ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ReflexTest" type="ReflexTest_Type" minOccurs="0" maxOccurs="16">
+					<xs:annotation>
+						<xs:documentation>Reflex Tests
+
+The acoustic reflex is a contraction of two middle ear muscles, named the stapedius and tensor tympani muscles. The muscle contraction is a normal bilateral response to acoustic or other eliciting stimuli, (which is not necessarily bilateral). The amount of contraction and subsequent acoustic reflex decay are measured by immitance audiometry.
+
+The reflex is commonly described as ipsilateral or contralateral depending on which side the response is observed relative to the stimulus.
+
+Usually manual inspection of the recorded response is required to verify that a reflex response has been recorded as normal breathing can cause artefact on the test recordings.
+Generally there are 3 tests undertaken using the acoustic reflex response, which are:
+1) Normal reflex test
+2) Reflex decay test
+3) Reflex latency test
+
+
+1) Normal reflex test 
+Changes in the immitance of the ear are monitored as a tonal or noise stimuli is presented which elicits an acoustic reflex. The test establishes the lowest sound level that elicits a reliable acoustic reflex response which is seen as a measurable change in acoustic immitance. 
+
+As the acoustic reflex is a bilateral response we can stimulate either ear and record a response from the same or opposite ear.
+
+ The stimulus can be presented in the same ear as the immitance recording and this is called an ipsilateral reflex. Alternatively the immitance can be recorded in the opposite ear to the stimulus and this is called a contralateral reflex. Ipsilateral and contralateral reflexes test different neural pathways.
+
+For clarity the definitions used are detailed below.
+
++ Right contralateral reflex denotes the stimulus is delivered in the left ear and the probe recording the response is in the right ear.
+
++ Left contralateral reflex denotes the stimulus is delivered in the right ear and the probe recording the response is in the left ear.
+
++ Right ipsilateral denotes stimulus and probe in the right ear.
+
++ Left ipsilateral denotes stimulus and probe in left ear. Ref: Pg 207 Katz
+
+
+2) Reflex Decay test 
+Acoustic reflex decay or adaptation, is the reduction in the magnitude of the acoustic reflex response during the presentation of a sustained stimulus. (pg 220 Katz)
+
+Test frequencies tend to be 500Hz and 1000Hz as the reflex tends to naturally rapidly decay at high frequencies.
+
+A reflex is said to decay if it falls to 50% or less of its original value in the 10 or 30 second stimulus time.
+
+Abnormally rapid reflex decay is associated with retrocochlear hearing loss.
+
+
+This curve illustrates the normal situation where the decay value is negative. The formula used for calculating the decay is
+
+		Y2 - Y1
+		_______
+	Decay = Y1 . 100		 percent. Range [0..100] percent.
+
+
+3) Reflex Latency test 
+Acoustic reflex latency refers to how long it takes for the acoustic reflex to occur after the stimulus is presented. The delay is measured from the onset of the stimulus until the beginning of the reflex response. (pg 223 Katz). Generally taken as the time it takes after the stimulus is presented for the immitance change to rise to 10% of it’s eventual value.
+
+The latency period tends to be substantially increased in retrocochlear hearing losses.
+
+
+
+##  reflexTest  ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="EustachianTubeFunctionIntactEarDrumTest" type="EustachianTubeFunctionIntactEarDrumTest" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Eustachian Tube Test (Intact ear drum)
+
+The principle of this test is to record a maximum compliance point and if it is recorded at a significantly negative pressure to continue the test. The patient is then asked to try to force open the Eustachian tube by yawning, swallowing or holding the nose and blowing. A second maximum compliance is then recorded. A normal outcome would be for the second maximum compliance to be recorded closer to 0daPa. Only peak compliance volume is stored for each test. Ref Katz pg. 183
+
+The result of the test  / The movement of the max point from one sweep to another indicates the
+pressure change in the middle ear. Maximum compliance is assumed to happen when the applied pressure equals the internal pressure in the middle ear.  Overview and principles of Acoustic.  Ref Katz pg. 176
+
+
+
+
+## etfIntactTest ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="EustachianTubeFunctionPerforatedEarDrumTest" type="EustachianTubeFunctionPerforatedEarDrumTest" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Eustachian Tube Test (Perforated Ear drum)
+
+The pressure of the sealed ear canal volume and middle ear is measured as a function of time. The client is asked to swallow /yarn / hold the mouth and nose shut while blowing, in order to activate Eustachian tube function. A pressure fall will indicate a functioning Eustachian tube.
+
+pressure Point / Curve points. The pressure in daPa is saved versus time.
+
+openPoint / If the Eustachian tube ventilates the middle ear, the pressure change will be registered on the curve. Up to 3 identified pressures can be saved.
+
+closePoint / When the Eustachian tube closes, the pressure stabilises. Up to 3 identifiedpressures can be saved.
+
+timeBase / The maximum x-value is saved here for scaling purposes.
+
+## etfPerforatedTes ## </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PrivateImpedanceData" type="xs:base64Binary" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>In the past it was allowed by HIMSA to save privately formatted data in the unused section of the public storage area of a NOAH action.  This usage was used mainly because more space was allocated for public storage versus private.  At present this is no longer an issue as equal storage is allocated to both public and private data storage.
+
+This elements primary function is to pass along any private data stored in the public area as base64 encoded data.  NOAH is not performing any translation or conversion of data.
+
+The data will be upconverted from format 100 to format 500
+
+This data will never be converted back to an earlier version of a IMP data standard.  For example, if an IMP action format 500 is saved with this element populated and then an older NOAH compatible fitting module tries to read the data (causing a conversion down to format 100) this data will be ignored by the converter process.
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ValidatedByNOAH" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>This attribute is no longer in use.  The original intention was for Noah to fill in the value but the idea was never fully implemented and not needed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ConvertedFromDataStandard">
+				<xs:annotation>
+					<xs:documentation>Software saving data formatted via this XSD file should not use this element for storage.  The intention is for Noah data convertors to fill in an appropriate value for runtime conversions - not permanent storage.
+
+Please note that values less than 500 mean that the data was originally stored in a format which was not validated by Noah before storage.  This could mean that the data will not validated against this version</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="Unit_Type">
+		<xs:annotation>
+			<xs:documentation>Attaches to a saved value and describes the unit used.
+
++ cubicCentiMetre / In [IEC 60645-5 2005] is referred a rule of thumb:
++ milliLitre / The acoustic admittance of an air-filled cavity of volume 1 cubic cm at standard atmospheric conditions (barometric air pressure 100 kPa, temperature 20 degrees Celsius) is:
+
++ milli_mho / This size is per definition 1 cgs acoustic millimho.
+Since 1 cubic cm is equal to 1 ml, the three admittance units therefore
+should yield the same numeric values.
+
++ degree_3600 / If polar notation of the complex admittance is preferred, this measure expresses the phase angle in tenths of a degree.
+
++ deka_Pascal / Pressure in tens of Pascal, daPa, Pa/10. 1 daPa equals 1 mm of water.
+
+6/25/2012 Annotation
+
+The IMP standard format 100 defined the possible values in the following manner 
+•	cubicCentiMetre_100 	-- Cubic Centi Metre x 100 
+•	milliLitre_100 		-- Milli Litre x 100
+•	milli_mho		-- Milli mho  x 100  i.e. "SI-mho"
+•	degree_3600		-- Phase in degrees x 10
+•	deka_Pascal		-- Pressure in deka Pascal (daPa or tens of Pa)
+
+This means that a module saving data would set the compliance unit, using the list above, but would also have to save the compliance value accordingly.  For example, if the unit was cubiccenterMetre then the value would have to be X 100.  This concept was used as the original header file did not have the ability to use decimal values.
+
+While HIMSA migrated this standard (format 500) to XML we in almost all cases defined the xml element as a decimal where the format value was defined as “value”X100 ect.
+
+In this case we are not able to make this similar type of change as value will in some cases by X100, X10, or nothing.
+
+If a module is saving data using format 500 then it is mandatory that the developer save the value as an integer by multiplying the value according to the list of values above.
+
+Conversely, a module reading data must divide the integer accordingly.
+End of 6/25/2012 Annotation
+
+
+## TUnit ##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="CubicCentimetrer"/>
+			<xs:enumeration value="MilliLiter"/>
+			<xs:enumeration value="MilliMho"/>
+			<xs:enumeration value="Degree"/>
+			<xs:enumeration value="DekaPascal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TympanogramResult_Type">
+		<xs:annotation>
+			<xs:documentation>Reference pg 177 Katz
+
+Jerger 1970 classified the shapes of tympanograms and this system is still commonly used today and is applicable only to a 226Hz probe test.
+
+(A) tympanograms have peaks near atmospheric pressure
+(AD) tympanograms have a high peak near atmospheric pressure
+(As) tympanograms have a shallow peak near atmospheric pressure
+(B) tympanograms are flat
+(C) tympanograms have negative pressure peaks
+(D) and (E) tympanograms have a notched peak and are more common with higher probe frequencies.
+
+## TTympResult ##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="AD"/>
+			<xs:enumeration value="AS"/>
+			<xs:enumeration value="B"/>
+			<xs:enumeration value="C"/>
+			<xs:enumeration value="D"/>
+			<xs:enumeration value="E"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecordingMode_Type">
+		<xs:annotation>
+			<xs:documentation>A Measuring condition of the compliance measurement.
+
++ compensated / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance.
+
+Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and
+[0.65 .. 1.75] ccm in adults. Katz pg 180. The volume is given by the formula
+
+
+##TRecordModee ##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Compensated"/>
+			<xs:enumeration value="NonCompensated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignalType_Type">
+		<xs:annotation>
+			<xs:documentation>+ pureTone / Sinus tone stimulus.
++ multiTone  / Two sine waves simultaneously.
++ narrowBandNoise / Band filtered noise, e.g. 1/3 or 1/1 octave band noise.
+broadBandNoise This Signal Type is White Noise, i.e. noise with equal energy content for equal absolute bandwidths in Hz. An averaged FFT-analysis of white noise shows a flat spectrum.
++ lowPassNoise / A noise signal produced by low pass filtering a BroadBandNoise.
++ highPassNoise / A noise signal produced by high pass filtering a broadBandNoise.
+
+## TSignalType ##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="PureTone"/>
+			<xs:enumeration value="MultiTone"/>
+			<xs:enumeration value="NarrowBandNoise"/>
+			<xs:enumeration value="BroadBandNoise"/>
+			<xs:enumeration value="LowPassNoise"/>
+			<xs:enumeration value="HighPassNoise"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignalOutput_Type">
+		<xs:annotation>
+			<xs:documentation>TSignalOutput Reflex Stimulus Signal Output. The stimulus tone is measured in HL at (e.g. 3 different frequencies:
+	Ipsilateral [500 .. 4 kHz]
+	Contralateral [500 .. 8 kHz]
+
++ ipsilateral / Stimulus tone provided through the probe tip at "ipsi" - the same side as the 226 Hz tone.
+
++ contralateral / For the Contralateral stimulus (opposite side of the probe) is frequently used a TDH39 headphone calibrated in HL. The 8 kHz freq thus obtainable can often not be produced by the probe system.
+
+## TSignalOutput ##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Ipsilateral"/>
+			<xs:enumeration value="Contralateral"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReflexTestType_Type">
+		<xs:annotation>
+			<xs:documentation>Different acoustic reflex measurements
+
++ fixedLevel / Used at screening tests at e.g. 90 dB HL. The probe freq (226Hz) is always
+kept at 85 dB SPL. The stimulus tone is measured in HL at e.g. 3 different
+frequencies: Contralateral [500 .. 8 kHz] Ipsilateral [500 .. 4 kHz]. For
+contralateral stimulus is frequently used a TDH39 headphone calibrated in
+HL. The 8 kHz freq can often not be produced by the probe system.
+
++ AutoThreshold Search / Sweep from e.g. 80 to 110 dB HL stimulus tone. Continuous increase in
+intensity over [2..5] seconds, the stapedius reflex is monitored continuously.
+A trained person must then decide from the band of curves when the reflex is
+present. The probe frequency (226 Hz) is always kept at 85 dB SPL.
+
++ sequence / A pre-programmed sequence of acoustic reflex tests. The probe freq (226
+Hz) is always kept at 85 dB SPL, the stimulus tone intensity is varied in steps.
+
++ multiplexed / Some methods prescribe that the probe tone and the stimulus tone is "multiplexed" - i.e. interchanged. The 226 Hz probe tone is used to find the max. compliance point, and then the stimulus tone is applied instead.
+
++ reflex / A manually performed reflex test. All parameters are saved in the Measurement Conditions. The result is noted as TRUE or FALSE.
+
++ decay / The decay percentage is measured after 10 seconds. See measurement details at explanation for TReflexTest
+
++ latency / The latency in time before a 10 pct value of the acoustic reflex is obtained is measured and saved. See measurement details at explanation for TReflexTest.
+
+## TRflxTestType ##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="FixedLevel"/>
+			<xs:enumeration value="AutoThresholdSearch"/>
+			<xs:enumeration value="Sequence"/>
+			<xs:enumeration value="Multiplexed"/>
+			<xs:enumeration value="Reflex"/>
+			<xs:enumeration value="Decay"/>
+			<xs:enumeration value="Latency"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Compliance_Type">
+		<xs:annotation>
+			<xs:documentation>The Compliance value is saved with a reference to the definition of a
+complex value and a reference to the definition of the unit for the value.
+
+## TCompliance ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ComplianceValue" type="ComplianceValue_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Compliance value
+
+6/25/2012 Annotation
+Note: If a Maximum Compliance is stored it should have compliance value.  This element was accidentally not defined as mandatory.  This error was discovered after the release of format 500.  HIMSA will not change the value to mandatory for fear of causing a problem for any module that has written code against the schema file
+
+## complVal 
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ComplianceUnit" type="ComplianceUnit_Type">
+				<xs:annotation>
+					<xs:documentation>Unit of the Compliance Value
+
+## complUnit ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ComplianceUnit_Type">
+		<xs:annotation>
+			<xs:documentation>The Y-values of the Compliance Curve can have different units (cc, ml, mmho..
+etc), which depends of the instrument type.
+
+ ## TComplUnit ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ArgumentUnit1" type="Unit_Type">
+				<xs:annotation>
+					<xs:documentation>Unit of the real part
+
+## ArgUnit1 ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArgumentUnit2" type="Unit_Type">
+				<xs:annotation>
+					<xs:documentation>Unit of the Imaginary part
+
+## ArgUnit2 ##
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ComplianceValue_Type">
+		<xs:annotation>
+			<xs:documentation>The Compliance Curve depicts the modulus of the compliance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this
+structure, both the real and the imaginary part of the value is saved, but for practical purposes, the Compliance can be considered 90 degrees out of
+phase (real part approximately zero) at the Max. Compliance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.
+
+
+## TComplVal ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ArgumentCompliance1" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Real part of the compliance value
+
+Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the compliance values accurately a complex number is recorded which has a real and an imaginary element.
+
+6/25 note - See the important annotation listed under Unit_Type
+
+## argCompl1 ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArgumentCompliance2" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Imaginary part of the compliance value
+
+As the ear drum moves in and out from its resting state whilst responding to forces applied by the air pump during the compliance measurement it has in phase and out of phase motions. To accurately locate these movements on a compliance curve we are required to employ complex mathematical formula that include the imaginary number elements.
+
+6/25 note - See the important annotation listed under Unit_Type
+
+This element was not defined as mandatory in format 100.  If the data is converted from format 100 and the value is empty then the HIMSA conversion DLL will insert a value of 0 (zero)
+
+## argCompl2 ##
+
+@@ If reading format 100 and the field is empty then populate this element with the value of 0 (zero) @@
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CompliancePoint_Type">
+		<xs:annotation>
+			<xs:documentation>With a probe that acts as sealing, the pressure before the tympanic
+membrane can be varied by attaching a pump with a tube. While varying
+the pressure, the compliance of the middle ear expressed as the acoustic
+admittance is measured, and later saved in a Compliance Pressure point.
+
+ ## TComplPoint ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Pressure" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The applied pressure of the stimulus (x-axis on the compliance graph)
+
+## pressure ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Compliance" type="ComplianceValue_Type">
+				<xs:annotation>
+					<xs:documentation>The compliance of the system at a known pressure, (y-axis on the compliance graph).
+
+## compliance ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ComplianceCurve_Type">
+		<xs:annotation>
+			<xs:documentation>## TComplCrv ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CompliancePoint" type="CompliancePoint_Type" maxOccurs="250">
+				<xs:annotation>
+					<xs:documentation>Measuring points 
+
+## ComplPoint ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ComplianceUnit" type="ComplianceUnit_Type">
+				<xs:annotation>
+					<xs:documentation>Compliance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.
+
+## ComplUnit ##
+
+@@ REV 5 Converter Change 100>500
+If undefined, will be given the default value. The default value is CubicCentimetrer
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Gradient_Type">
+		<xs:annotation>
+			<xs:documentation>The Gradient of the Compliance Curve 
+
+## TGradient ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GradientValue" type="ComplianceValue_Type">
+				<xs:annotation>
+					<xs:documentation>Gradient of the compliance curve
+
+## GradientVal ## </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GradientUnit" type="Unit_Type">
+				<xs:annotation>
+					<xs:documentation>Unit of the gradient value either ml,cc, mmho or deka Pascal
+
+## gradientUnit ##
+
+@@ REV 5 Converter Change 100>500
+If undefined, will be given the default value DekaPascal
+@@
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TympanogramMeasurementConditions_Type">
+		<xs:annotation>
+			<xs:documentation>Measure Conditions (tymp)
+## TTyMeasCond ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SweepSpeed" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Change in the pressure in which the curve is recorded. Measured and saved in
+dekaPascal per second (daPa/s).
+
+## sweepSpeed ##
+
+@@ REV 5 Converter Change 100>500
+If undefined, will be given the value -32767
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecordMode" type="RecordingMode_Type">
+				<xs:annotation>
+					<xs:documentation>How is the compliance curve recorded, Compensated or Non Compensated.
+
+The admittance equivalent to the Ear canal volume is conventionally subtracted
+from measures of total aural admittance to yield an estimate of the middle ear
+admittance. This is referred to as compensated admittance. 
+
+Katz pg 169
+
+## recordMode ##
+
+@@ REV 5 Converter Change 100>500
+If undefined, will be given the value Compensated
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProbeFrequency" type="xs:integer" default="226">
+				<xs:annotation>
+					<xs:documentation>Frequency of the probe tone
+
+Format 100 defined this data as optional and if not specified was to be assumed to be a value of 226.  If the conversion DLL finds this value to be empty in a format 100 data record it will insert the value of 226.
+
+@@ If reading format 100 and the field is empty then populate this element with the value of 226 @@
+
+## probeFreq ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TympanogramTest_Type">
+		<xs:annotation>
+			<xs:documentation> ## TTympTest ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ComplianceCurve" type="ComplianceCurve_Type">
+				<xs:annotation>
+					<xs:documentation>Graphics representation of measurement
+
+## complCrv ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaximumCompliance" type="Compliance_Type">
+				<xs:annotation>
+					<xs:documentation>Peak value for the compliance curve
+
+## maxCompl ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CanalVolume" type="Compliance_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>canalVolume / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance. Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and
+[0.65 .. 1.75] ccm in adults. Katz pg 180. The volume is given by the formula
+Vcc = γ . ps . Ca = ρ . c2 . Ca where
+
++Vc / is the equivalent volume in m3
++γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.
++ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.
++ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement
++c / is the speed of sound in m/s at the temperature and pressure of the measurement
++Ca / is the acoustic compliance in m3/Pa
++Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.
++Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm.
+
+##  canalVolume  ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Gradient" type="Gradient_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gradient of the compliance curve
+
+##  gradient  ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pressure" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Middle ear pressure at the point of maximum admittance.
+
+## pressure ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResonanceFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Defined as the frequency at which compliant and mass succeptance are equal. Normal middle ear resonance falls between 800 and 1200Hz. Below the resonant frequency the middle ear is stiffness controlled and above the resonant frequency it is mass controlled (Katz pg 189)
+
+Various middle ear pathologies will have an effect on the mass or stiffness of the system resulting in altered resonant frequencies in abnormal ears.
+
+
+## ResFrq ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Result" type="TympanogramResult_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Jerger 1970 classified the shapes of tympanograms and this system is still commonly used today and is applicable only to a 226Hz probe test.
+
+A / tympanograms have peaks near atmospheric pressure
+AD / tympanograms have a high peak near atmospheric pressure
+As / tympanograms have a shallow peak near atmospheric pressure
+B / tympanograms are flat
+C / tympanograms have negative pressure peaks
+D/ and E tympanograms have a notched peak and are more common with higher probe frequencies.
+
+Katz pg 177
+
+
+##  result  ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementCondition" type="TympanogramMeasurementConditions_Type">
+				<xs:annotation>
+					<xs:documentation>## measCond ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReflexPoint_Type">
+		<xs:annotation>
+			<xs:documentation>Reflex test point
+
+## TReflexPoint ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Time">
+				<xs:annotation>
+					<xs:documentation>Time in seconds  X-Values of the point
+
+##  time ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+						<xs:minInclusive value="0.000"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Compliance" type="ComplianceValue_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Y-Values of the point
+
+## compliance ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReflexCurve_Type">
+		<xs:annotation>
+			<xs:documentation>Acoustic Reflex (stapedius reflex) measurement. The reflexPoints saves
+[time, compliance] values, and the compliance unit saves the unit of the data. 
+
+## TReflexCrv ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReflexPoint" type="ReflexPoint_Type" maxOccurs="128">
+				<xs:annotation>
+					<xs:documentation>Measuring reflex point
+
+## reflexPoint ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ComplianceUnit" type="ComplianceUnit_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Unit of compliance data
+
+## complUnit ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ImpedanceMeasurementCondition_Type">
+		<xs:annotation>
+			<xs:documentation>Measuring conditions (reflex)
+
+##TImpMeasCond ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SignalLevel">
+				<xs:annotation>
+					<xs:documentation>Level of the stimulus tone in dB HL. The ipsilateral stimulus tone is added via
+the probe, the contralateral stimulus tone is added through a headphone, often a
+TDH39 that can easily be calibrated in dB HL (Hearing Level).
+
+## signalLevel ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SignalType" type="SignalType_Type">
+				<xs:annotation>
+					<xs:documentation>The type of the stimulus tone:
+
+See SignalType_Type for more information
+
+## signalType ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalOutput" type="SignalOutput_Type">
+				<xs:annotation>
+					<xs:documentation>See SignalOutput_Type for more information
+
+## signalOutput ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Frequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Stimulus tone frequency measured in Hertz.
+
+!! Rev 2 change
+The element has been changed from mandatory to optional.  This was needed because the element is used depending on the SignalOutput
+
+For a fixed level tests this element would not be used if SignalOutput is set to PureTone or NarrowBandNoise
+
+For Auto Threshold Search, sequence, multiplexed, or reflex tests this element would only be used if the SignalOutput is set to PureTone or NarrowBandNoise
+
+For Latency or Decay tests this element would be used if SignalOutput is NarrowBandNoise the center frequency should be stated. !!
+
+
+## frequency ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pressure" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Pressure applied through probe measured in deka Pascal
+
+## pressure ##
+
+@@ REV 5 Converter Change 100>500
+If undefined, will be given the value -32767
+@@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProbeFrequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Frequency of the probe tone
+
+Format 100 defined this data as optional and if not specified was to be assumed to be a value of 226.  If the conversion DLL finds this value to be empty in a format 100 data record it will insert the value of 226.
+
+## ProbeFreq ##
+
+@@ If reading format 100 and the field is empty then populate this element with the value of 226 @@</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestType" type="ReflexTestType_Type">
+				<xs:annotation>
+					<xs:documentation>See ReflexTestType_Type for more information
+
+## testType ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CanalVolume" type="Compliance_Type">
+				<xs:annotation>
+					<xs:documentation>canalVolume / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance. Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and
+[0.65 .. 1.75] ccm in adults. Refer [HOCA4] Chapter 20. The volume is given by the formula
+
+Vc = γ . ps . Ca = ρ . c2 . Ca where
+
++Vc / is the equivalent volume in m3
++γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.
++ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.
++ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement
++c / is the speed of sound in m/s at the temperature and pressure of the measurement
++Ca / is the acoustic compliance in m3/Pa
++Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.
++Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm.
+##canalVoll ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReflexTest_Type">
+		<xs:annotation>
+			<xs:documentation> Reflex Test
+
+## TReflexTest ## </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReflexCurve" type="ReflexCurve_Type">
+				<xs:annotation>
+					<xs:documentation>Graphic representation of the compliance change caused by acoustic reflex
+
+## reflexCrv ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultOfReflexTest" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The value of this element can expressed in different ways depending on the enumerated value set in ImpedanceMeasurementConditions TestType:
+
+REFLEX
++Reflex detected = FALSE (value = 0)
++Reflex detected = TRUE (Value = 1)
+
+DECAY
++ The value represents a percentage
+
+LATENCY
++ time in milliseconds
+
+## result ## </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImpedanceMeasurementCondition" type="ImpedanceMeasurementCondition_Type">
+				<xs:annotation>
+					<xs:documentation>Measure conditions for reflex recording
+
+## impMeasCond ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EustachianTubeFunctionIntactEarDrumTest">
+		<xs:annotation>
+			<xs:documentation>Eustachian Tube Function Intact ear drum
+
+## TEtfIntactTest ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ComplianceCurve" type="ComplianceCurve_Type" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Compliance curves 
+
+## complCrv ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="Pressure" type="xs:integer" maxOccurs="3">
+					<xs:annotation>
+						<xs:documentation>Middle Ear Pressure at maximum
+
+From the Middle Ear Pressure curve, only the peak value is stored for each
+curve.
+
+## pressure ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:element name="CanalVolume" type="Compliance_Type">
+				<xs:annotation>
+					<xs:documentation>canalVolume / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance. Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and
+[0.65 .. 1.75] ccm in adults. Katz pg 180. The volume is given by the formula
+
+Vc = γ . ps . Ca = ρ . c2 . Ca where
+
++Vc / is the equivalent volume in m3
++γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.
++ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.
++ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement
++c / is the speed of sound in m/s at the temperature and pressure of the measurement
++Ca / is the acoustic compliance in m3/Pa
++Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.
++Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm.
+
+## canalVolume ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementCondition" type="TympanogramMeasurementConditions_Type">
+				<xs:annotation>
+					<xs:documentation>Measure conditions
+
+## measCond ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PressurePoint_Type">
+		<xs:annotation>
+			<xs:documentation>Curve point for the Measurement of the Eustachian Tube Function in the
+case of a perforated eardrum (tympanic membrane). 
+
+## TPressurePoint ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Time">
+				<xs:annotation>
+					<xs:documentation>Time in seconds</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+						<xs:minInclusive value="0.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pressure" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>deka Pascal</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EustachianTubeFunctionPerforatedEarDrumTest">
+		<xs:annotation>
+			<xs:documentation>Eustachian Tube Function for Perforated ear drum
+
+## TEtfPerfTest ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PressurePoint" type="PressurePoint_Type" maxOccurs="200">
+				<xs:annotation>
+					<xs:documentation>Measurement points
+
+## pressurePoint ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OpenPoint" type="xs:integer" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Eustachian Tube Open Pressure Point deka Pascal
+
+## openPoint ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ClosePoint" type="xs:integer" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Eustachian Tube Close Pressure Point deka Pascal
+
+## closePoint ##
+
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeBase" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The time that it took the test
+
+Please note that this element will not be converted down to format 100 if requested by another Noah compatible software program.  This is due to the fact that two different versions of format 100 Impedance exist and the safest action is to not pass this element back to a module wishing to read in format 100.  Additionally, another software program reading this test should not find this data missing as critical.
+
+## timeBase ##
+
+@@ When converting from format 500 down to format 100 do not include this element if present @@</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+						<xs:minInclusive value="0.00"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

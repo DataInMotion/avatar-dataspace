@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Final release by HIMSA. 15th August 2011. Typo and grammatical fixes in annotations only July 10, 2012 -->
+<xs:schema xmlns="http://www.himsa.com/Instrument/Selection" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/Instrument/Selection" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="HearingInstrumentSelection">
+		<xs:annotation>
+			<xs:documentation>HIMSA Hearing Instrument Selection Data Standard
+
+Important: All XML data must be encoded using UTF-8.
+
+REV 2 (see REV History below)
+
+Copyright © 2012 HIMSA II K/S
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.
+
+Copyright © 2012 HIMSA II K/S
+
+REV History
+Final Release / August 15 2011
+REV 1 / August 9 2015 - Annotation updates only.  See new annotations for attributes ValidatedByNOAH and ConvertedFromDataStandard
+
+REV 2 / November 4 2019 - Annotation updates only, note to use UTF-8</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="InstrumentTypeName" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Instrument Type Name is defined by the manufacturer as a string value and not a publicly shared value across all HIMSA Manufacturers.  A typical entry would be a model name of the instrument
+
+## TypeName ##</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="41"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="DeviceCategory" type="DeviceCategory_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>## TDeviceCategory ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SerialNumber" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Serial Number of the Instrument
+
+## SerialNo ##</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="21"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="VentType" type="Vent_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Vent Type is defined by the manufacturer as an integer value and not a publicly shared value across all HIMSA Manufacturers
+
+##  TVentType ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="EarMoldForm" type="EarMoldForm_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>EarMoldForm Type is defined by the manufacturer as an integer value and not a publicly shared value across all HIMSA Manufacturers
+
+## TEarMoldForm ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="EarMoldText" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Free from notes about the Ear mold (e.g. type of material  or color)
+
+## EarMoldText ##</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="61"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="SoundCanalType" type="SoundCanal_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>SoundCanal Type Type is defined by the manufacturer as an integer value and not a publicly shared value across all HIMSA Manufacturers
+
+## TSoundCanalType ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="BatteryType" type="Battery_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+## TBatteryType ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Reserved" type="xs:base64Binary" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Do not use this element to store data.
+
+This element was originally defined in format 100 and not clearly defined.  HIMSA will translate any format 100 values to format 500 but does not allow any data storage for formats 500+
+
+## Reserved ##</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PrivateSelectionData" type="xs:base64Binary" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>HIMSA does not support using this element for storage in format 500+
+
+In the past it was allowed by HIMSA to save privately formatted data in the unused section of the public storage area of a NOAH action.  This usage was used mainly because more space was allocated for public storage versus private.  At present this is no longer an issue as equal storage is allocated to both public and private data storage.
+
+This elements primary function is to pass along any private data stored in the public area as base64 encoded data.  NOAH is not performing any translation or conversion of data.
+
+The data will be upconverted from format 100 to format 500
+
+This data will never be converted back to an earlier version of a Hearing Instrument Selection data standard.  For example, if an hearing instrument selection action format 500 is saved with this element populated and then an older NOAH compatible fitting module tries to read the data (causing a conversion down to format 100) this data will be ignored by the converter process.
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ValidatedByNOAH" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>This attribute is no longer in use.  The original intention was for Noah to fill in the value but the idea was never fully implemented and not needed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ConvertedFromDataStandard">
+				<xs:annotation>
+					<xs:documentation>Software saving data formatted via this XSD file should not use this element for storage.  The intention is for Noah data convertors to fill in an appropriate value for runtime conversions - not permanent storage.
+
+Please note that values less than 500 mean that the data was originally stored in a format which was not validated by Noah before storage.  This could mean that the data will not validated against this version</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DeviceCategory_Type">
+		<xs:sequence>
+			<xs:element name="DeviceCategoryTypeCode" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This value is solely determined by the manufacturer.  The values are not publicly defined to shared across all industry manufacturers.
+
+## DevCatCode ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeviceCategoryText" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This value is used to describe the type of instrument (e.g. BTE, ITE).  This value is not a fixed enumerated value.
+
+## DevCatText ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="21"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Battery_Type">
+		<xs:sequence>
+			<xs:element name="BatteryTypeCode" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This value is solely determined by the manufacturer.  The values are not publicly defined to shared across all industry manufacturers
+
+## BatTypeCode ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatteryTypeText" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Free form text to describe the battery (eg. r13 r14)
+
+## BatTypeText ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="21"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Vent_Type">
+		<xs:annotation>
+			<xs:documentation>Vent Type is defined by the manufacturer as an integer value and not a publicly shared value across all HIMSA Manufacturers</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	<xs:simpleType name="EarMoldForm_Type">
+		<xs:annotation>
+			<xs:documentation>EarMoldForm Type is defined by the manufacturer as an integer value and not a publicly shared value across all HIMSA Manufacturers</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	<xs:simpleType name="SoundCanal_Type">
+		<xs:annotation>
+			<xs:documentation>SoundCanal Type Type is defined by the manufacturer as an integer value and not a publicly shared value across all HIMSA Manufacturers</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,1719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="_501" nsURI="http://www.himsa.com/Measurement/Admittance/501"
+    nsPrefix="_501">
+  <eClassifiers xsi:type="ecore:EClass" name="AcousticImmittanceAssessmentType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AcousticImmittanceAssessment_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tympanogramTest" upperBound="-1"
+        eType="#//TympanogramTestType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Tympanograms&#xA;&#xA;The mobility of the ear drum and the middle ear is recorded while the air&#xA;pressure in the auditory canal is varied, typically in the interval of&#xA;[-300 .. +200] daPa .&#xA;&#xA;+ Unit for Pressure [p]ı / The unit chosen for pressure is deka Pascal (daPa) or tens of Pascal.&#xA;1 daPa approximates 1 mm Water. Ref. [Van Camp].&#xA;&#xA;&#x9;&#x9;[p] = daPa dekaPascal or tens of Pascals.&#xA;&#xA;+ resFreq / Ear Resonance Frequency. This field is intended for future use in Noah.&#xA;If the probe frequency is swept in an interval of e.g. [200..2kHz], a&#xA;resonance frequency can be found near 1000 Hz. Below this frequency the&#xA;ear is stiffness controlled, and above this frequency it is mass controlled.&#xA;&#xA;+ Maximum Mobility point i.e.Max &#xA; Point / For the well-functioning normal middle ear a point of &quot;maximum mobility&quot; will be found, often for a slightly negative pressure [-100..0 ] daPa.&#xA;&#xA;+ Middle Ear Acoustic Impedance and Admittance / The mobility of the ear drum and the middle ear is in short named &quot;Middle Ear acoustic Immitance&quot;, which can mean Acoustic Impedance, Za&#xA;or Acoustic Admittance Ya where pr. definition&#xA;&#xA;&#x9;&#x9;__1__&#xA;&#x9;&#x9;Za = Ya The subscript a for acoustic is omitted hereafter.&#xA;&#xA;+ Unit for Acoustic Admittance [Y] / For practical reasons the Admittance Y is most often measured, and indeed this measure is the one saved in IMPDEF.H, the SI unit being&#xA;&#xA;&#x9;&#x9;____m3___&#xA;&#x9;&#x9;[Y] = Pa . s&#xA;&#xA;+ &quot;SI-mho / The SI unit is equal to the cgs unit millimho x 100 or mho x 105&#xA;&#xA;&#xA;@@ 501 -> 500 Prior to format 501 this element was limited to 3 and this limitation has now been removed. When converting down and finding more than 3 then convert the first 3 and drop the remaining tests @@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TympanogramTest"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reflexTest" upperBound="-1"
+        eType="#//ReflexTestType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Reflex Tests&#xA;&#xA;The acoustic reflex is a contraction of two middle ear muscles, named the stapedius and tensor tympani muscles. The muscle contraction is a normal bilateral response to acoustic or other eliciting stimuli, (which is not necessarily bilateral). The amount of contraction and subsequent acoustic reflex decay are measured by immitance audiometry.&#xA;&#xA;The reflex is commonly described as ipsilateral or contralateral depending on which side the response is observed relative to the stimulus.&#xA;&#xA;Usually manual inspection of the recorded response is required to verify that a reflex response has been recorded as normal breathing can cause artefact on the test recordings.&#xA;Generally there are 3 tests undertaken using the acoustic reflex response, which are:&#xA;1) Normal reflex test&#xA;2) Reflex decay test&#xA;3) Reflex latency test&#xA;&#xA;&#xA;1) Normal reflex test &#xA;Changes in the immitance of the ear are monitored as a tonal or noise stimuli is presented which elicits an acoustic reflex. The test establishes the lowest sound level that elicits a reliable acoustic reflex response which is seen as a measurable change in acoustic immitance. &#xA;&#xA;As the acoustic reflex is a bilateral response we can stimulate either ear and record a response from the same or opposite ear.&#xA;&#xA; The stimulus can be presented in the same ear as the immitance recording and this is called an ipsilateral reflex. Alternatively the immitance can be recorded in the opposite ear to the stimulus and this is called a contralateral reflex. Ipsilateral and contralateral reflexes test different neural pathways.&#xA;&#xA;For clarity the definitions used are detailed below.&#xA;&#xA;Contra Reflex Measurement (Right):&#xA;+ Probe in: Right ear&#xA;+ Stimuli in: Left ear&#xA;+Reflex result are saved for: Right ear&#xA;&#xA;Contra Reflex Measurement (Left):&#xA;+Probe in: Left ear&#xA;+Stimuli in: Right ear&#xA;+Reflex result are saved for: Left ear&#xA;&#xA;IPSI Reflex Measurement (Right):&#xA;+Probe in: Right ear&#xA;+Stimuli in: Right ear&#xA;+Reflex result are saved for: Right ear&#xA;&#xA;IPSI Reflex Measurement (Left):&#xA;+Probe in: Left ear&#xA;+Stimuli in: Left ear&#xA;+Reflex result are saved for: Left ear&#xA;&#xA;Ref: Pg 207 Katz&#xA;&#xA;&#xA;2) Reflex Decay test &#xA;Acoustic reflex decay or adaptation, is the reduction in the magnitude of the acoustic reflex response during the presentation of a sustained stimulus. (pg 220 Katz)&#xA;&#xA;Test frequencies tend to be 500Hz and 1000Hz as the reflex tends to naturally rapidly decay at high frequencies.&#xA;&#xA;A reflex is said to decay if it falls to 50% or less of its original value in the 10 or 30 second stimulus time.&#xA;&#xA;Abnormally rapid reflex decay is associated with retrocochlear hearing loss.&#xA;&#xA;&#xA;This curve illustrates the normal situation where the decay value is negative. The formula used for calculating the decay is&#xA;&#xA;&#x9;&#x9;Y2 - Y1&#xA;&#x9;&#x9;_______&#xA;&#x9;Decay = Y1 . 100&#x9;&#x9; percent. Range [0..100] percent.&#xA;&#xA;&#xA;3) Reflex Latency test &#xA;Acoustic reflex latency refers to how long it takes for the acoustic reflex to occur after the stimulus is presented. The delay is measured from the onset of the stimulus until the beginning of the reflex response. (pg 223 Katz). Generally taken as the time it takes after the stimulus is presented for the immitance change to rise to 10% of it’s eventual value.&#xA;&#xA;The latency period tends to be substantially increased in retrocochlear hearing losses.&#xA;&#xA;@@ 501 -> 500 &#xA;&#xA;The number of reflex tests were capped at 16 prior to format 501.  In order to provide backwards compatibility, the following logic will be followed&#xA;Convert all results, not exceeding more than 16, any ReflexTests over this number will be dropped.  Convert with the following preferred order&#xA;Group 1&#xA;ImpedanceMeasurementCondition > TestType = Reflex AND ResultOfReflexTest = True (0), sort tests by ImpedanceMeasurementCondition > SignalLevel in ascending order.  If the limit of 16 has not been met move to Group 2&#xA;Group 2&#xA;ImpedanceMeasurementCondition > TestType = Reflex AND ResultOfReflexTest = True (0), where ImpedanceMeasurementCondition > SignalLevel does not exist, SignalLevel was not provided.  If the total limit of 16 from groups 1 and 2 have not been met, then proceed to group 3&#xA;Group 3&#xA;ImpedanceMeasurementCondition > TestType = Decay.  If the total limit of 16 from groups 1, 2, and 3 have not been met, then proceed to group 4&#xA;Group 4&#xA;ImpedanceMeasurementCondition > TestType = Latency.  If the total limit of 16 from groups 1, 2, 3, and 4 have not been met, then proceed to group 5&#xA;Group 5&#xA;ImpedanceMeasurementCondition > TestType = any other remaining choices in order they are saved&#xA;&#xA;@@ &#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ReflexTest"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eustachianTubeFunctionIntactEarDrumTest"
+        eType="#//EustachianTubeFunctionIntactEarDrumTest" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Eustachian Tube Test (Intact ear drum)&#xA;&#xA;The principle of this test is to record a maximum admittance point and if it is recorded at a significantly negative pressure to continue the test. The patient is then asked to try to force open the Eustachian tube by yawning, swallowing or holding the nose and blowing. A second maximum admittance is then recorded. A normal outcome would be for the second maximum admittance to be recorded closer to 0daPa. Only peak admittance volume is stored for each test. Ref Katz pg. 183&#xA;&#xA;The result of the test  / The movement of the max point from one sweep to another indicates the&#xA;pressure change in the middle ear. Maximum admittance is assumed to happen when the applied pressure equals the internal pressure in the middle ear.  Overview and principles of Acoustic.  Ref Katz pg. 176&#xA;&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="EustachianTubeFunctionIntactEarDrumTest"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eustachianTubeFunctionPerforatedEarDrumTest"
+        eType="#//EustachianTubeFunctionPerforatedEarDrumTest" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Eustachian Tube Test (Perforated Ear drum)&#xA;&#xA;The pressure of the sealed ear canal volume and middle ear is measured as a function of time. The client is asked to swallow /yarn / hold the mouth and nose shut while blowing, in order to activate Eustachian tube function. A pressure fall will indicate a functioning Eustachian tube.&#xA;&#xA;pressure Point / Curve points. The pressure in daPa is saved versus time.&#xA;&#xA;openPoint / If the Eustachian tube ventilates the middle ear, the pressure change will be registered on the curve. Up to 3 identified pressures can be saved.&#xA;&#xA;closePoint / When the Eustachian tube closes, the pressure stabilises. Up to 3 identifiedpressures can be saved.&#xA;&#xA;timeBase / The maximum x-value is saved here for scaling purposes.&#xA;&#xA; "/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="EustachianTubeFunctionPerforatedEarDrumTest"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="supplementaryData" eType="#//SupplementaryDataType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Supplementary data is data supplied by a Noah compatible application that does not follow a HIMSA published standard.  The Supplementary data is included in conjunction with the HIMSA defined data standard – the data will be alongside the well-established HIMSA standards.  For readers that are knowledgeable with the past “Public Extension” concept that Noah originally used with C header file based standards, this idea is similar in nature.&#xA;&#xA;What is the need for supplementary data?&#xA;&#xA;This general idea was originally suggested by a current HIMSA measurement equipment member company.  &#xA;&#xA;Despite HIMSA’s best intentions it is unrealistic that the HIMSA defined data standards can be updated as quickly as desired by another member company.  HIMSA is actively trying to create a system where data standards can be updated in a more flexible manner but there will still be times where HIMSA cannot publish an updated version quickly enough due to technical issues or it could be that there is not good consensus with other member companies on a particular topic.&#xA;&#xA;If data is stored as supplementary data then there is an easier to use option for the member to include the data so that other HIMSA member companies may make use of the data until it may be possible that the data structure be placed in the official HIMSA standard.&#xA;&#xA;At first it may seem that HIMSA is suggesting a step backwards in data standardization but this is not the case.  HIMSA believes that it will only make Noah easier to work with for member companies and in the long run provide HIMSA with more data information that could be candidates for standardization.&#xA;&#xA;What will HIMSA have for requirements?&#xA;&#xA;+The intention for saving the data in this area is to share it to other members that may wish to use it.  If the data is proprietary or is secret in some way, do not store the data here.&#xA;&#xA;+Supplementary data must be stored in an XML format.&#xA;&#xA;+The data must include a version number, if the member creating the data changes the format then the version of the format must change as well&#xA;&#xA;+If a new version is created the member company is required to notify HIMSA of the changes&#xA;&#xA;+The member company creating supplementary data recognizes that HIMSA will most likely review the supplementary data format for possible inclusion in a future HIMSA standard.&#xA;&#xA;What will HIMSA ask for but not have as a requirement?&#xA;&#xA;+Supplementary will be defined by a schema (.XSD) file, if not then documentation must be available to HIMSA member companies requesting it.  &#xA;&#xA;+If a HIMSA standard is eventually updated to include the data that used to be stored in supplementary data HIMSA will strongly encourage member companies to move towards utilizing the updated public data standard.&#xA;&#xA;&#xA;What can the member companies (creators of data) expect?&#xA;&#xA;+If a Noah runtime data converter is translating data from one format to another it will not perform any conversion on supplementary data, it will simply pass it along in the existing format.  Please note that this will only function on data standards 502 and newer.  This means that software trying to utilize older format (e.g. format 200) will not be able to receive this data.&#xA;&#xA;@@ 501 to 500 conversion - This data must be removed as it was not supported in formation 500 &#xA;&#xA;@@ &#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="SupplementaryData"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="notes" eType="#//MeasurementNotesType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Notes"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="convertedFromDataStandard"
+        eType="#//ConvertedFromDataStandardType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Software saving data formatted via this XSD file should not use this element for storage.  The intention is for Noah data convertors to fill in an appropriate value for runtime conversions - not permanent storage.&#xA;&#xA;Please note that values less than 500 mean that the data was originally stored in a format which was not validated by Noah before storage.  This could mean that the data will not validated against this version"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="ConvertedFromDataStandard"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="validatedByNOAH" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="This attribute is no longer in use.  The original intention was for Noah to fill in the value but the idea was never fully implemented and not needed."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="ValidatedByNOAH"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
+        eType="#//VersionType" defaultValueLiteral="501" unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Version of this data standard"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="Version"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceCurveType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="@@ 500 to 501 name change&#xA;admittanceCurve_Type to AdmittanceCurve_Type&#xA;@@"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceCurve_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calculated" eType="#//CalculatedType1"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Calculated"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measured" eType="#//MeasuredType1"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Measured"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceMeasurementConditionType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Measuring conditions (reflex)&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceMeasurementCondition_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signalLevel" eType="#//SignalLevelType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the stimulus tone:&#xA;&#xA;@@ Format 501 - 500 &#xA;&#xA;This is element has been changed from a xs:decimal element to a type where there is a choice between recording a signal level or a response.  There are also conversion notes for SignalLevel_Type&#xA;&#xA;@@&#xA;&#xA;@@ format 500 up to 501&#xA;&#xA;Map SignalLevel to StimulusLevel&#xA;&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="SignalLevel"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="signalType" lowerBound="1"
+        eType="#//SignalTypeType" unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the stimulus tone:&#xA;&#xA;See SignalType_Type for more information&#xA;&#xA;## signalType ##"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="SignalType"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="signalOutput" lowerBound="1"
+        eType="#//SignalOutputType" unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="See SignalOutput_Type for more information&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="SignalOutput"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="frequency" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Stimulus tone frequency measured in Hertz.&#xA;&#xA;For a fixed level tests this element would not be used if SignalOutput is set to PureTone or NarrowBandNoise&#xA;&#xA;For Auto Threshold Search, sequence, multiplexed, or reflex tests this element would only be used if the SignalOutput is set to PureTone or NarrowBandNoise&#xA;&#xA;For Latency or Decay tests this element would be used if SignalOutput is NarrowBandNoise the center frequency should be stated. !!&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Frequency"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pressure" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Pressure applied through probe measured in deka Pascal&#xA;&#xA;@@ Format 501 - 500 &#xA;This value was mandatory in format 500.  When converting down and not present then enter a 0&#xA;&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pressure"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="probeFrequency" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Frequency of the probe tone&#xA;&#xA;Format 100 defined this data as optional and if not specified was to be assumed to be a value of 226.  If the conversion DLL finds this value to be empty in a format 100 data record it will insert the value of 226.&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ProbeFrequency"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="testType" lowerBound="1"
+        eType="#//ReflexTestTypeType" unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="See ReflexTestType_Type for more information&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TestType"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="canalVolume" eType="#//AdmittanceType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="canalVolume / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance. Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and&#xA;[0.65 .. 1.75] ccm in adults. Refer [HOCA4] Chapter 20. The volume is given by the formula&#xA;&#xA;Vc = γ . ps . Ca = ρ . c2 . Ca where&#xA;&#xA;+Vc / is the equivalent volume in m3&#xA;+γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.&#xA;+ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.&#xA;+ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement&#xA;+c / is the speed of sound in m/s at the temperature and pressure of the measurement&#xA;+Ca / is the acoustic admittance in m3/Pa&#xA;+Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.&#xA;+Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm.&#xA;&#xA;&#xA;@@ Format 501 - 500 &#xA;This element was mandatory in format 500.  When converting down and not present then enter a 0&#xA;&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="CanalVolume"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The admittance value is saved with a reference to the definition of a&#xA;complex value and a reference to the definition of the unit for the value.&#xA;&#xA;@@ 500 to 501 name change&#xA;admittance_Type to Admittance_Type &#xA;@@&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Admittance_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calculated" eType="#//CalculatedType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;The calculaed value was first introduced in version 501.  When converting down it will be necessary to move the Y value to Measured > G AND then place a 0 (zero) in the B Element.  HIMSA has tried very hard not to use zero in this case since the migration to XSD based formats.  However, in this case, this is the only option and previous to format 501 the use off zero in B was commonly used to denote that the point was a calculated point.&#xA;&#xA;@@&#xA;&#xA;&#xA;@@ Convert UP from 500 to 501&#xA;&#xA;IF there is one point or value AND argument2 is set to 0 then it is possible to map Argument 1 to Y&#xA;&#xA;If there is more than one point or value then argument1 will map to G and argument2 will map to B&#xA;&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Calculated"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measured" eType="#//MeasuredType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;@@ Convert 501  500&#xA;The Measured element is new in 501&#xA;When converting down the Measured values will be mapped to their respective Argumentadmittance1 and 2 values, see further down in this structure for more details&#xA;@@&#xA;&#xA;&#xA;@@ Convert UP from 500 to 501&#xA;&#xA;IF there is one point or value AND argument2 is set to 0 then it is possible to map Argument 1 to Y&#xA;&#xA;If there is more than one point or value then argument1 will map to G and argument2 will map to B&#xA;&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Measured"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceUnitCalculatedType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The Y-values of the admittance Curve can have different units (cc, ml, mmho..&#xA;etc), which depends of the instrument type.&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceUnitCalculated_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="yUnit" lowerBound="1" eType="#//UnitType"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;The calculated value was first introduced in version 501.  When converting down it will be necessary to map the Y value to ArgumentUnit1 AND also ArgumentUnit2.  &#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="YUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceUnitMeasuredType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The Y-values of the admittance Curve can have different units (cc, ml, mmho..&#xA;etc), which depends of the instrument type.&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceUnitMeasured_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gUnit" lowerBound="1" eType="#//UnitType"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Unit of the real part&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="GUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bUnit" lowerBound="1" eType="#//UnitType"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Unit of the Imaginary part&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="BUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceUnitType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The Y-values of the admittance Curve can have different units (cc, ml, mmho..&#xA;etc), which depends of the instrument type.&#xA;&#xA;@@ Convert UP from 500 to 501&#xA;When converting UP the ArgumentUnit1 value will map to admittanceUnitMeasured > G&#xA;ArgumentUnit2 will map to admittanceUnitMeasured > B&#xA;@@&#xA;&#xA;@@ 500 to 501 name change&#xA;admittanceUnit_Type to AdmittanceUnit_Type&#xA;@@&#xA;&#xA; "/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceUnit_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admittanceUnitCalculated"
+        eType="#//AdmittanceUnitCalculatedType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.&#xA;&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;The calculated value was first introduced in version 501.  When converting down it will be necessary to map the Y value to ArgumentUnit1 AND also ArgumentUnit2.  &#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AdmittanceUnitCalculated"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admittanceUnitMeasured"
+        eType="#//AdmittanceUnitMeasuredType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;The Measured value was first introduced in version 501. &#xA;When converting down it will be necessary to map the Y value to ArgumentUnit1 AND B value to ArgumentUnit2.  &#xA;@@&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AdmittanceUnitMeasured"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceValueCalculatedType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The Admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this&#xA;structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of&#xA;phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.&#xA;&#xA;The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.&#xA;&#xA;OR&#xA;&#xA;If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice&#xA;&#xA;&#xA;@@ 500 to 501 name change&#xA;admittanceValueCalculated_Type to AdmittanceValueCalculated_Type&#xA;@@"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceValueCalculated_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The calculated value (Y)&#xA;&#xA;When saving data the calculated value is simply stored in this element.&#xA;&#xA;When reading a measured element the below formula can be used to obtain the calculated value.  &#xA;&#xA;square root ((G x G) + (B x B))&#xA;&#xA;Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the admittance values accurately a complex number is recorded which has a real and an imaginary element.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;&#xA;This element is first introduced in format 501 so when converting down this value will need to be transfered to admittanceValue_Type > Argument1.  Read the conversion directions for the Element G.  Additionally, admittanceValue_Type >Argument2 will need to be given a value of 0&#xA;&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Y"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceValueMeasuredType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this&#xA;structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of&#xA;phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.&#xA;&#xA;The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.&#xA;&#xA;OR&#xA;&#xA;If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceValueMeasured_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="g" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Real part of the admittance value&#xA;&#xA;Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the admittance values accurately a complex number is recorded which has a real and an imaginary element.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;&#xA;This element was renamed to &quot;G&quot; from &quot;Argumentadmittance1&quot; &#xA;&#xA;In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.&#xA;+ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)&#xA;@@&#xA;&#xA;@@ Convert UP Rules 500 to 501&#xA;+ If CubicCentimeter is the unit then divide the integer by 100&#xA;+ If MilliLiter is the unit then divide the integer by 100&#xA;+ If MilliMho is the unit then divide the integer by 100&#xA;+ If Degree is the unit then divide the integer by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is 90 the converted result will be .90 (90/100)&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="G"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="b" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Imaginary part of the admittance value&#xA;&#xA;As the ear drum moves in and out from its resting state whilst responding to forces applied by the air pump during the admittance measurement it has in phase and out of phase motions. To accurately locate these movements on a admittance curve we are required to employ complex mathematical formula that include the imaginary number elements.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;&#xA;This element was renamed to &quot;B&quot; from &quot;Argumentadmittance2&quot; &#xA;&#xA;In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.&#xA;+ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)&#xA;@@&#xA;&#xA;@@ Convert UP Rules 500 to 501&#xA;+ If CubicCentimeter is the unit then divide the integer by 100&#xA;+ If MilliLiter is the unit then divide the integer by 100&#xA;+ If MilliMho is the unit then divide the integer by 100&#xA;+ If Degree is the unit then divide the integer by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is 90 the converted result will be .90 (90/100)&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="B"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceValuePointCalculatedType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this&#xA;structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of&#xA;phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.&#xA;&#xA;The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.&#xA;&#xA;OR&#xA;&#xA;If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceValuePointCalculated_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pressure" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The applied pressure of the stimulus (x-axis on the admittance graph)&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pressure"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The calculated value (Y)&#xA;&#xA;When saving data the calculated value is simply stored in this element.&#xA;&#xA;When reading a measured element the below formula can be used to obtain the calculated value.  &#xA;&#xA;square root ((G x G) + (B x B))&#xA;&#xA;Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the admittance values accurately a complex number is recorded which has a real and an imaginary element.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;&#xA;This element is first introduced in format 501 so when converting down this value will need to be transfer to admittanceValue_Type > Argument1.  Read the conversion directions for the Element G.  Additionally, admittanceValue_Type >Argument2 will need to be given a value of 0&#xA;&#xA;In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.&#xA;+ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)&#xA;&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Y"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceValuePointMeasuredType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this&#xA;structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of&#xA;phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.&#xA;&#xA;The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.&#xA;&#xA;OR&#xA;&#xA;If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceValuePointMeasured_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pressure" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The applied pressure of the stimulus (x-axis on the admittance graph)&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pressure"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="g" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Real part of the admittance value&#xA;&#xA;Acoustic admittance requires two numbers to specify its location in the complex plane, and is a vector which rotates in a circular manner tied to the probe frequency. In order to place the admittance values accurately a complex number is recorded which has a real and an imaginary element.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;&#xA;This element was renamed to &quot;G&quot; from &quot;Argument1&quot; &#xA;&#xA;In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.&#xA;+ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)&#xA;@@&#xA;&#xA;@@ Convert UP Rules 500 to 501&#xA;+ If CubicCentimeter is the unit then divide the integer by 100&#xA;+ If MilliLiter is the unit then divide the integer by 100&#xA;+ If MilliMho is the unit then divide the integer by 100&#xA;+ If Degree is the unit then divide the integer by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is 90 the converted result will be .90 (90/100)&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="G"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="b" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Imaginary part of the admittance value&#xA;&#xA;As the ear drum moves in and out from its resting state whilst responding to forces applied by the air pump during the admittance measurement it has in phase and out of phase motions. To accurately locate these movements on a admittance curve we are required to employ complex mathematical formula that include the imaginary number elements.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;&#xA;This element was renamed to &quot;B&quot; from &quot;Argument2&quot; &#xA;&#xA;In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.&#xA;+ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)&#xA;@@&#xA;&#xA;@@ Convert UP Rules 500 to 501&#xA;+ If CubicCentimeter is the unit then divide the integer by 100&#xA;+ If MilliLiter is the unit then divide the integer by 100&#xA;+ If MilliMho is the unit then divide the integer by 100&#xA;+ If Degree is the unit then divide the integer by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is 90 the converted result will be .90 (90/100)&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="B"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdmittanceValueType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The admittance Curve depicts the modulus of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this&#xA;structure, both the real and the imaginary part of the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of&#xA;phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.&#xA;&#xA;@@ 500 to 501 name change&#xA;admittanceValue_Type to AdmittanceValue_Type&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="AdmittanceValue_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueCalculated" eType="#//AdmittanceValueCalculatedType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="@@ Convert DOWN Rules 501 to 500&#xA;The calculated value was first introduced in version 501.  When converting down it will be necessary to move the Y value to Argumentadmittance1 > AND then place a 0 (zero) in the Argumentadmittance2 Element.  HIMSA has tried very hard not to use zero in this case since the migration to XSD based formats.  However, in this case, this is the only option and previous to format 501 the use of zero in B was commonly used to denote that the point was a calculated point.&#xA;&#xA;@@&#xA;&#xA;&#xA;@@ Convert UP from 500 to 501&#xA;&#xA;IF there is one point or value AND argument2 is set to 0 then it is possible to map Argument 1 to Y&#xA;&#xA;If there is more than one point or value then argument1 will map to G and argument2 will map to B, it is not a calculated point but rather a measured&#xA;&#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ValueCalculated"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measured" eType="#//AdmittanceValueMeasuredType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="@@ Convert DOWN Rules 501 to 500&#xA;The calculated value was first introduced in version 501.  When converting down it will be necessary to move the G value to Argumentadmittance1 > AND then B value to the Argumentadmittance2 Element.  &#xA;&#xA;@@&#xA;&#xA;&#xA;@@ Convert UP from 500 to 501&#xA;&#xA;IF there is one point or value AND argument2 is set to 0 then it is possible to map Argument 1 to Y&#xA;&#xA;If there is more than one point or value then argument1 will map to G and argument2 will map to B&#xA;&#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Measured"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CalculatedAdmittancePointsType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="CalculatedAdmittancePoints_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pt" lowerBound="1" upperBound="-1"
+        eType="#//AdmittanceValuePointCalculatedType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="@@&#xA;&#xA;501  500, the number of points is capped at 250 for format 500.  HIMSA applies an algorithm to preserve the shape of the curve while reducing the number of points.&#xA;HIMSA is using a modified version of the Algorithm referred to as Douglas-Peucker N – description following here:&#xA;&#xA;http://psimpl.sourceforge.net/douglas-peucker.html&#xA;In this paper it is concluded that DP is the best shape preserving algorithm of tested ones:&#xA;&#xA;http://citeseerx.ist.psu.edu/viewdo...p;type=pdf&#xA;For the visually oriented the concept of the algorithm can be seen here:&#xA;&#xA;http://mourner.github.io/simplify-js/&#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pt"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CalculatedType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Calculated_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admittanceValueCalculated"
+        lowerBound="1" eType="#//AdmittanceValueCalculatedType" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AdmittanceValueCalculated"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calculatedAdmittanceUnit"
+        lowerBound="1" eType="#//AdmittanceUnitCalculatedType" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="CalculatedAdmittanceUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CalculatedType1">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Calculated_._1_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calculatedAdmittancePoints"
+        lowerBound="1" eType="#//CalculatedAdmittancePointsType" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="CalculatedAdmittancePoints"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calculatedAdmittanceUnit"
+        lowerBound="1" eType="#//AdmittanceUnitCalculatedType" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="CalculatedAdmittanceUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ConvertedFromDataStandardType" instanceClassName="java.math.BigInteger">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ConvertedFromDataStandard_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#integer"/>
+      <details key="minInclusive" value="100"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DecayBasicResultType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="DecayBasicResult_._type"/>
+    </eAnnotations>
+    <eLiterals name="Positive"/>
+    <eLiterals name="Negative" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="DecayBasicResultTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="DecayBasicResult_._type:Object"/>
+      <details key="baseType" value="DecayBasicResult_._type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeltaYPointsType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="DeltaYPoints_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pt" lowerBound="1" upperBound="-1"
+        eType="#//ReflexValuePointMeasuredType" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pt"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeltaYType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="DeltaY_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deltaYPoints" lowerBound="1"
+        eType="#//DeltaYPointsType" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="DeltaYPoints"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="g0" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Reference Admittance"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="G0"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="b0" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Reference Admittance"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="B0"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measuredAdmittanceUnit"
+        lowerBound="1" eType="#//AdmittanceUnitMeasuredType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;The Measured value was first introduced in version 501. &#xA;When converting down it will be necessary to map the G value to ArgumentUnit1 AND B value to ArgumentUnit2.  &#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="MeasuredAdmittanceUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value=""/>
+      <details key="kind" value="mixed"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mixed" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="elementWildcard"/>
+        <details key="name" value=":mixed"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="xMLNSPrefixMap" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"
+        transient="true" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="xmlns:prefix"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="xSISchemaLocation" upperBound="-1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"
+        transient="true" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="xsi:schemaLocation"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="acousticImmittanceAssessment"
+        upperBound="-2" eType="#//AcousticImmittanceAssessmentType" volatile="true"
+        transient="true" derived="true" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Important: All XML data must be encoded using UTF-8.&#xA;&#xA;REV 3 - See REV History Below&#xA;&#xA;Tympanometry is a commonly used objective test of middle ear function. &#xA;&#xA;Defined in the ANSI standard – ANSI s3.39-1987 (R2007) as “the dynamic measure of acoustic immitance in the ear canal as a function of changes in air pressure in the ear canal” Katz pg. 175&#xA;&#xA;HIMSA highly recommends the below 3rd party documentation for individuals not familiar with Audiology.  The book is reference throughout this data standard:&#xA;[HOCA-5] Handbook of Clinical Audiology, edited by Jack Katz, Williams and Wilkins, 2002, 5. Edition&#xA;&#xA;REV History&#xA;REV1 / First release of 501 made April 18th 2017&#xA;REV 2 / July 30 2018 It has been brought to HIMSA's attention that the ResultOfReflexTest annotations for REFLEX are incorrect.  The values were incorrectly carried over from fromat 100.  This issue has also existed since the first REV of format 500 and been corrected.&#xA; REV 3 / November 4 2019 - Annotation updates only, note to use UTF-8&#xA;&#xA;Copyright © 2017 HIMSA II K/S&#xA;&#xA;&#xA;The information in this document is subject to change according to the review policies established by HIMSA II.&#xA;&#xA;HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.&#xA; &#xA;This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II.&#xA;&#xA;@@ Text entered between these symbols denote special instructions to the HIMSA developer responsible for creating a conversion DLL between format 500 and format 501 @@&#xA;&#xA;@@ 500 --> 501 name change&#xA;AcousticImpedanceCompleteMeasurement changed to AcousticImmittanceAssessment&#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AcousticImmittanceAssessment"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="EarType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A simple type that defines Right, Left, or Binaural"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Ear_Type"/>
+    </eAnnotations>
+    <eLiterals name="Right"/>
+    <eLiterals name="Left" value="1"/>
+    <eLiterals name="Binaural" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="EarTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Ear_Type:Object"/>
+      <details key="baseType" value="Ear_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EustachianTubeFunctionIntactEarDrumTest">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Eustachian Tube Function Intact ear drum&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="EustachianTubeFunctionIntactEarDrumTest"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admittanceCurve" lowerBound="1"
+        upperBound="-1" eType="#//AdmittanceCurveType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Admittance curves &#xA;&#xA;@@ Format 501 to 500 conversion&#xA;&#xA;Format 500 was defned to have a max of 3 curves which is now removed.&#xA;&#xA;When converting data HIMSA will take a simple approach and convert the first 3 curves and will drop the remaining curves.  &#xA;&#xA;@@&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AdmittanceCurve"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pressure" unique="false"
+        lowerBound="1" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Middle Ear Pressure at maximum&#xA;&#xA;From the Middle Ear Pressure curve, only the peak value is stored for each&#xA;curve.&#xA;&#xA;@@ Format 501 to 500 conversion&#xA;&#xA;Format 500 was defned to have a max of 3 pressure valudes which is now removed.&#xA;&#xA;When converting data HIMSA will take a simple approach and convert the first 3 pressure values and will drop the remaining values.&#xA;&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pressure"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="canalVolume" lowerBound="1"
+        eType="#//AdmittanceType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="canalVolume / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance. Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and&#xA;[0.65 .. 1.75] ccm in adults. Katz pg 180. The volume is given by the formula&#xA;&#xA;Vc = γ . ps . Ca = ρ . c2 . Ca where&#xA;&#xA;+Vc / is the equivalent volume in m3&#xA;+γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.&#xA;+ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.&#xA;+ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement&#xA;+c / is the speed of sound in m/s at the temperature and pressure of the measurement&#xA;+Ca / is the acoustic admittance in m3/Pa&#xA;+Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.&#xA;+Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm.&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="CanalVolume"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measurementCondition" lowerBound="1"
+        eType="#//TympanogramMeasurementConditionsType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Measure conditions&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="MeasurementCondition"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EustachianTubeFunctionPerforatedEarDrumTest">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Eustachian Tube Function for Perforated ear drum&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="EustachianTubeFunctionPerforatedEarDrumTest"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pressurePoint" lowerBound="1"
+        upperBound="-1" eType="#//PressurePointType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Measurement points&#xA;&#xA;&#xA;@@ Format 501 to 500 conversion&#xA;&#xA;Format 500 was defned to have a max of 200 points which is now removed.&#xA;&#xA;When converting data HIMSA will take a simple approach and convert the first 200 points and will drop the remaining points.  &#xA;&#xA;@@&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="PressurePoint"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="openPoint" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Eustachian Tube Open Pressure Point deka Pascal&#xA;&#xA;@@ Format 501 to 500 conversion&#xA;&#xA;Format 500 was defned to have a max of 3 points which is now removed.&#xA;&#xA;When converting data HIMSA will take a simple approach and convert the first 3points and will drop the remaining points.  &#xA;&#xA;@@&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="OpenPoint"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="closePoint" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Eustachian Tube Close Pressure Point deka Pascal&#xA;&#xA;&#xA;@@ Format 501 to 500 conversion&#xA;&#xA;Format 500 was defned to have a max of 3 points which is now removed.&#xA;&#xA;When converting data HIMSA will take a simple approach and convert the first 3points and will drop the remaining points.  &#xA;&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ClosePoint"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeBase" eType="#//TimeBaseType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The time that it took the test&#xA;&#xA;Please note that this element will not be converted down to format 100 if requested by another Noah compatible software program.  This is due to the fact that two different versions of format 100 Impedance exist and the safest action is to not pass this element back to a module wishing to read in format 100.  Additionally, another software program reading this test should not find this data missing as critical.&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TimeBase"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FrequencyOtherType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Used as an option to record that the frequency is &quot;other&quot; or unknown&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="FrequencyOther_Type"/>
+    </eAnnotations>
+    <eLiterals name="Other"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="FrequencyOtherTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="FrequencyOther_Type:Object"/>
+      <details key="baseType" value="FrequencyOther_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GradientType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The Gradient of the admittance Curve &#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Gradient_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="gradientValue" lowerBound="1"
+        eType="#//AdmittanceValueType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Gradient of the admittance curve&#xA;&#xA;@@ Convert UP from 500 to 501&#xA;When converting UP the ArgumentUnit1 value will map to admittanceValueMeasured > G&#xA;ArgumentUnit2 will map to admittanceValueMeasured > B&#xA;@@&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="GradientValue"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="gradientUnit" lowerBound="1"
+        eType="#//AdmittanceUnitType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Unit of the gradient value either ml,cc, mmho or deka Pascal&#xA;&#xA;&#xA;@@ Convert UP from 500 to 501&#xA;In format 500 there was only one unit.  To keep the XSD more consistent:&#xA;&#xA;When dealing with a calculated point then map to Y&#xA;When dealing wiht a measured pont then map to both G and B&#xA;&#xA;@@&#xA;&#xA;&#xA;@@ Convert Down from 501 to 500&#xA;Map Y to GradientUnit&#xA;Or&#xA;Map G to GradientUnit&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="GradientUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InformationType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Information_._type"/>
+      <details key="kind" value="empty"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comments" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//AnySimpleType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="General Comments about  the data from the developer of the data"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="Comments"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
+        eType="#//VersionType1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Version of this data"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="Version"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeasuredAdmittancePointsType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="MeasuredAdmittancePoints_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pt" lowerBound="1" upperBound="-1"
+        eType="#//AdmittanceValuePointMeasuredType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="@@&#xA;&#xA;501  500, the number of points is capped at 250 for format 500.  HIMSA applies an algorithm to preserve the shape of the curve while reducing the number of points.&#xA;HIMSA is using a modified version of the Algorithm referred to as Douglas-Peucker N – description following here:&#xA;&#xA;http://psimpl.sourceforge.net/douglas-peucker.html&#xA;In this paper it is concluded that DP is the best shape preserving algorithm of tested ones:&#xA;&#xA;http://citeseerx.ist.psu.edu/viewdo...p;type=pdf&#xA;For the visually oriented the concept of the algorithm can be seen here:&#xA;&#xA;http://mourner.github.io/simplify-js/&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pt"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeasuredType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Measured_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admittancePointMeasured"
+        lowerBound="1" eType="#//AdmittanceValueMeasuredType" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AdmittancePointMeasured"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admittanceUnitMeasured"
+        lowerBound="1" eType="#//AdmittanceUnitMeasuredType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AdmittanceUnitMeasured"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeasuredType1">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Measured_._1_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measuredAdmittancePoints"
+        lowerBound="1" eType="#//MeasuredAdmittancePointsType" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="MeasuredAdmittancePoints"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measuredAdmittanceUnit"
+        lowerBound="1" eType="#//AdmittanceUnitMeasuredType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;The Measured value was first introduced in version 501. &#xA;When converting down it will be necessary to map the G value to ArgumentUnit1 AND B value to ArgumentUnit2.  &#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="MeasuredAdmittanceUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeasurementNotesType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The Measurement Notes structure is designed to hold the notes from an Audiological&#xA;Measurement. The information herein could be useful to other entities as the information&#xA;affects the test and its results.&#xA;&#xA;&#xA;@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="MeasurementNotes_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tympanometerMakeModel"
+        eType="#//TympanometerMakeModelType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Manufacturer Make Model of the equipment used.&#xA;&#xA;@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TympanometerMakeModel"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tympanometerSerialNumber"
+        eType="#//TympanometerSerialNumberType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Manufacturer Serial Number of the equipment used.&#xA;&#xA;@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TympanometerSerialNumber"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tympanometerLastCalibration"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Date of Last Calibration of the equipment used.&#xA;&#xA;@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="TympanometerLastCalibration"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDeaf" eType="#//EarType"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="This element is used to clearly signal that the patient is deaf in the ear choice that is set.  If a value is set then the reader of the data can assume that this is a valid reason for why testing was conducted for the set ear(s) or any data present for a deaf ear.  If an ear selection is made then user conducting the Audiogram test has determined that the ear choice is deaf.&#xA;&#xA;This approach is taken rather than requiring the reader of the data to pay attention to curves that may be present with the PointStatus_Type is set to something like DidNotTest or CouldNotTest, or NoResponse at the maximum output of the audiometer, which can vary per audiometer.&#xA;&#xA;@@Convert down Rule: Going from 501->500.  This element and concept did not exist so none of the data in this element can be convereted down @@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="IsDeaf"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumericDeltaType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="NumericDelta_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="numericDeltaYPoints" lowerBound="1"
+        eType="#//NumericDeltaYPointsType" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="NumericDeltaYPoints"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calculatedAdmittanceUnit"
+        lowerBound="1" eType="#//AdmittanceUnitCalculatedType" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Admittance can be recorded in different units such as cc, ml or mmho depending on the equipment used. This field denotes the units used in this measurement.&#xA;&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;The calculated value was first introduced in version 501.  When converting down it will be necessary to map the Y value to ArgumentUnit1 AND also ArgumentUnit2.  &#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="CalculatedAdmittanceUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NumericDeltaYPointsType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="NumericDeltaYPoints_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pt" lowerBound="1" upperBound="-1"
+        eType="#//ReflexValuePointCalculatedType" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pt"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PressurePointType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Curve point for the Measurement of the Eustachian Tube Function in the&#xA;case of a perforated eardrum (tympanic membrane). &#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="PressurePoint_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" lowerBound="1" eType="#//TimeType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Time in seconds"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Time"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pressure" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="deka Pascal"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pressure"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProbeFrequencyType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ProbeFrequency_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="frequency" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer"
+        defaultValueLiteral="226" unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Frequency"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="other" eType="#//FrequencyOtherType"
+        defaultValueLiteral="Other " unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Other or unknow frequency&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Other"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RecordingModeType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Measuring condition of the admittance measurement.&#xA;&#xA;+ compensated / The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance.&#xA;&#xA;Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and&#xA;[0.65 .. 1.75] ccm in adults. Katz pg 180. The volume is given by the formula&#xA;&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="RecordingMode_Type"/>
+    </eAnnotations>
+    <eLiterals name="Compensated"/>
+    <eLiterals name="NonCompensated" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="RecordingModeTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="RecordingMode_Type:Object"/>
+      <details key="baseType" value="RecordingMode_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReflexCurveType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Acoustic Reflex (stapedius reflex) measurement. The reflexPoints saves&#xA;[time, admittance] values, and the admittance unit saves the unit of the data. &#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ReflexCurve_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="numericDelta" eType="#//NumericDeltaType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Y'"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="NumericDelta"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deltaY" eType="#//DeltaYType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;&#xA;@@ Format 501 to 500&#xA;&#xA;If an application (including the 501100 runtime converter)  wishes to make use of DeltaY it must then be converted  to NumericDelta following the below formula.&#xA;&#xA;NumericDeltaY = NumericY - NumericY0&#xA;&#xA;Using the supplied DeltaG and DeltaB values the following variables will be used.&#xA;&#xA;B = DeltaB + B0&#xA;G = DeltaG + G0&#xA;NumericY = SQRT(B * B + G * G)&#xA;NumericY0 = SQRT(B0 * B0 + G0 * G0)&#xA;&#xA;Then convert NumericDeltaY as documented to format 500&#xA;&#xA;&#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="DeltaY"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ReflexTestResponseType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Choices that can be recorded when a result is not obtained&#xA;&#xA;•&#x9;Normal / Valid threshold point. Used for valid points at the threshold: For this threshold point, the tester or equipment detects a present reflex. &#xA;•&#x9;NoResponse (NR)  / Reflex not detected.  The stimulus was at the highest output level of the measurement device or at the highest intensity level allowed by clinical protocol, but no reflex was detected&#xA;•&#x9;CouldNotSeal (CNS) / Could not seal, therefore no results obtained&#xA;•&#x9;DidNotTest (DNT) /The stimulus was not presented to subject. Reasons: Per instruction by physician or because the test was judged to be unnecessary. No point was plotted.&#xA;•&#x9;CouldNotTest (CNT)  / Unable to present stimulus. Reasons: Subject's physical or behavioral limitations, inability to obtain a seal. No point was plotted.&#xA;&#xA;No Response Safety (NR@): The professional stopped for safety reasons.  This is used to show that testing could have continued but was stopped.  NR@100, NR@105, NR@110, NR@115, NR@120&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ReflexTestResponse_Type"/>
+    </eAnnotations>
+    <eLiterals name="Normal"/>
+    <eLiterals name="NoResponse" value="1"/>
+    <eLiterals name="CouldNotSeal" value="2"/>
+    <eLiterals name="DidNotTest" value="3"/>
+    <eLiterals name="CouldNotTest" value="4"/>
+    <eLiterals name="NRAt100" value="5" literal="NR_at100"/>
+    <eLiterals name="NRAt105" value="6" literal="NR_at105"/>
+    <eLiterals name="NRAt110" value="7" literal="NR_at110"/>
+    <eLiterals name="NRAt115" value="8" literal="NR_at115"/>
+    <eLiterals name="NRAt120" value="9" literal="NR_at120"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ReflexTestResponseTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ReflexTestResponse_Type:Object"/>
+      <details key="baseType" value="ReflexTestResponse_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReflexTestType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value=" Reflex Test&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ReflexTest_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reflexCurve" eType="#//ReflexCurveType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Graphic representation of the admittance change caused by acoustic reflex&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ReflexCurve"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resultOfReflexTest" eType="#//ResultOfReflexTestType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value of this element can expressed in different ways depending on the enumerated value set in ImpedanceMeasurementConditions TestType:&#xA;&#xA;REFLEX&#xA;+Reflex detected = FALSE (value = 0)&#xA;+Reflex detected = TRUE (Value = 1)&#xA;&#xA;DECAY&#xA;+ The value represents a percentage&#xA;&#xA;LATENCY&#xA;+ time in milliseconds&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ResultOfReflexTest"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admittanceMeasurementCondition"
+        lowerBound="1" eType="#//AdmittanceMeasurementConditionType" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Measure conditions for reflex recording&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AdmittanceMeasurementCondition"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ReflexTestTypeType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Different acoustic reflex measurements&#xA;&#xA;+ fixedLevel / Used at screening tests at e.g. 90 dB HL. The probe freq (226Hz) is always&#xA;kept at 85 dB SPL. The stimulus tone is measured in HL at e.g. 3 different&#xA;frequencies: Contralateral [500 .. 8 kHz] Ipsilateral [500 .. 4 kHz]. For&#xA;contralateral stimulus is frequently used a TDH39 headphone calibrated in&#xA;HL. The 8 kHz freq can often not be produced by the probe system.&#xA;&#xA;+ AutoThreshold Search / Sweep from e.g. 80 to 110 dB HL stimulus tone. Continuous increase in&#xA;intensity over [2..5] seconds, the stapedius reflex is monitored continuously.&#xA;A trained person must then decide from the band of curves when the reflex is&#xA;present. The probe frequency (226 Hz) is always kept at 85 dB SPL.&#xA;&#xA;+ sequence / A pre-programmed sequence of acoustic reflex tests. The probe freq (226&#xA;Hz) is always kept at 85 dB SPL, the stimulus tone intensity is varied in steps.&#xA;&#xA;+ multiplexed / Some methods prescribe that the probe tone and the stimulus tone is &quot;multiplexed&quot; - i.e. interchanged. The 226 Hz probe tone is used to find the max. admittance point, and then the stimulus tone is applied instead.&#xA;&#xA;+ reflex / A manually performed reflex test. All parameters are saved in the Measurement Conditions. The result is noted as TRUE or FALSE.&#xA;&#xA;+ decay / The decay percentage is measured after 10 seconds. See measurement details at explanation for TReflexTest&#xA;&#xA;+ latency / The latency in time before a 10 pct value of the acoustic reflex is obtained is measured and saved. See measurement details at explanation for TReflexTest.&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ReflexTestType_Type"/>
+    </eAnnotations>
+    <eLiterals name="FixedLevel"/>
+    <eLiterals name="AutoThresholdSearch" value="1"/>
+    <eLiterals name="Sequence" value="2"/>
+    <eLiterals name="Multiplexed" value="3"/>
+    <eLiterals name="Reflex" value="4"/>
+    <eLiterals name="Decay" value="5"/>
+    <eLiterals name="Latency" value="6"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ReflexTestTypeTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ReflexTestType_Type:Object"/>
+      <details key="baseType" value="ReflexTestType_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReflexValuePointCalculatedType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this&#xA;structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of&#xA;phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.&#xA;&#xA;The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.&#xA;&#xA;OR&#xA;&#xA;If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ReflexValuePointCalculated_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" lowerBound="1" eType="#//TimeType2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Time in seconds  X-Values of the point&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Time"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numericDeltaY" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Delta Y' &#xA;&#xA;&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;&#xA;Format 500 restricted the number of points to be 128.  When converting down to format 500 the converter will simply take the first up to 128 points, the rest of the points will be dropped.&#xA;&#xA;This element is first introduced in format 501 so when converting down this value will need to be transfer to admittanceValue_Type > Argument1.  &#xA;&#xA;Argument2 will be zero&#xA;&#xA;In format 500 this value is formatted depending on the unit_type.  Format 500 defined this element as an integer with a multiplier (a carryover from the C header format 100).  Format 501 defines this field as a decimal value so the converter will follow the below formula when the runtime converter is called.&#xA;+ If CubicCentimeter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliLiter is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If MilliMho is the unit then round up the value so that it has 2 decimal values, multiply by 100&#xA;+ If Degree is the unit then round up the value so that it has 1 decimal value, multiply by 10&#xA;+ If DekaPascal then nothing needs to be done&#xA;Example, if the unit is CubicCentimeter and the value is .895 the converted results will be 90 (.895 rounds up to .90 X 100 = 90)&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="NumericDeltaY"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReflexValuePointMeasuredType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The admittance Curve depicts the modulus recording of the admittance, i.e. the length of a complex value, calculated by using Pythagoras´ sentence. In this&#xA;structure, both the real and the imaginary part of the value or the value is saved, but for practical purposes, the admittance can be considered 90 degrees out of&#xA;phase (real part approximately zero) at the Max. admittance point. This rule applies only for probe frequencies near 220 Hz e.g. 226 Hz.&#xA;&#xA;The application saving the data which comes from an automated solution (gathering all data from the device) is assumed to save data via the Measured choice and provide the G and B values.  Y can later be caluculated by any applicaiton reading the data.&#xA;&#xA;OR&#xA;&#xA;If the applicaiton (e.g. HIMSA's Audiogram module) provides a simple/manual method to record results it is assumed to use the Calculated choice&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ReflexValuePointMeasured_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" lowerBound="1" eType="#//TimeType1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Time in seconds  X-Values of the point&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Time"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deltaG" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Real part of the delta Y Point &#xA;&#xA;&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;This value does not directly converter down to format 500, see conversion instructions under DeltaY&#xA;@@&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="DeltaG"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deltaB" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Decimal">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Imaginary part of the delta Y Point&#xA;&#xA;&#xA;@@ Convert DOWN Rules 501 to 500&#xA;This value does not directly converter down to format 500, see conversion instructions under DeltaY&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="DeltaB"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResultOfReflexTestType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ResultOfReflexTest_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reflexDetected" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Indicates if the reflex was detected&#xA;&#xA;@@ 501 to 500 conversion&#xA;&#xA;IF TestType measurement condition IS NOT Decay or Latency then: &#xA;&#xA;Map True to 1 for ResultOfReflexTest&#xA;Map False to 0 for ResultOfReflexTest&#xA;&#xA;@@&#xA;&#xA;@@ 500 to 501&#xA;&#xA;IF TestType measurement condition IS NOT Decay or Latency AND ResultOfReflex is 1 or 0 then:&#xA;Map ResultOfReflex value of 1 to True&#xA;Map ResultOfReflex value of 0 to False&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ReflexDetected"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decayBasicResult" eType="#//DecayBasicResultType"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Positive if the results was positive for Decay&#xA;Negative if the result was negative for Decay&#xA;&#xA;Use the element &quot;DecayPercent&quot; if a percent val;ue is to be stored.&#xA;&#xA;@@ 501 to 500 conversion&#xA;This is a new element but can be convereted down to 500&#xA;&#xA;If value is Positive then map 1 to ResultOfReflexTest&#xA;If value is Negative then map 0 to ResultOfReflexTest&#xA;&#xA;@@&#xA;&#xA;@@ 500 to 501&#xA;&#xA;If the TestType measurement condition = Decay AND the ResultOfReflex = 1 OR zero then &#xA;&#xA;If ResultOfReflex = 1 then this element will be Positive&#xA;If ResultOfReflex = 0 then this element will be Negative&#xA;&#xA;If the TestType measurement condition = Decay AND the ResultOfReflex IS NOT 1 OR zero then map the value to DecayPercent (see below)&#xA;&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="DecayBasicResult"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decayPercent" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Decay value represented as percent&#xA;&#xA;@@ Format 501 to 500&#xA;If the TestType measurement condition = Decay then&#xA;Map this element ResultOfReflex element&#xA;@@&#xA;&#xA;@@ Format 500 to 501&#xA;If the TestType measurement condition = Decay AND the ResultOfReflex IS NOT 1 OR zero then map the ResultOfReflex value to this element&#xA;@@ &#xA;&#xA; "/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="DecayPercent"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="latencyTime" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="time in milliseconds&#xA;&#xA;@@ Format 501 to Format 500&#xA;If the TestType measurement condition = Latency then&#xA;Map this element ResultOfReflex element&#xA;&#xA;@@&#xA;&#xA;@@ Format 500 to 501&#xA;If the TestType measurement condition = Latency then map the ResultOfReflex value to this element&#xA;@@ "/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="LatencyTime"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignalLevelType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="SignalLevel_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stimulusLevel" eType="#//StimulusLevelType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Level of the stimulus tone in dB HL. The ipsilateral stimulus tone is added via&#xA;the probe, the contralateral stimulus tone is added through a headphone, often a&#xA;TDH39 that can easily be calibrated in dB HL (Hearing Level).&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="StimulusLevel"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="response" eType="#//ReflexTestResponseType"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="See annotations for ReflexTestResponse_Type for a complete list of valid choices&#xA;&#xA;@@ 501 --> 500 This is a new element added to format 501&#xA;&#xA;If this element has been used it cannot be converted down as would be expected.  However, The SignalLevel element in 500 is mandatory.  If this choice has been made this it will be necessary to create a SignalLevel elment and set the value to zero.&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Response"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SignalOutputType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="TSignalOutput Reflex Stimulus Signal Output. The stimulus tone is measured in HL at (e.g. 3 different frequencies:&#xA;&#x9;Ipsilateral [500 .. 4 kHz]&#xA;&#x9;Contralateral [500 .. 8 kHz]&#xA;&#xA;+ ipsilateral / Stimulus tone provided through the probe tip at &quot;ipsi&quot; - the same side as the 226 Hz tone.&#xA;&#xA;+ contralateral / For the Contralateral stimulus (opposite side of the probe) is frequently used a TDH39 headphone calibrated in HL. The 8 kHz freq thus obtainable can often not be produced by the probe system.&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="SignalOutput_Type"/>
+    </eAnnotations>
+    <eLiterals name="Ipsilateral"/>
+    <eLiterals name="Contralateral" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="SignalOutputTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="SignalOutput_Type:Object"/>
+      <details key="baseType" value="SignalOutput_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SignalTypeType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="+ pureTone / Sinus tone stimulus.&#xA;+ multiTone  / Two sine waves simultaneously.&#xA;+ narrowBandNoise / Band filtered noise, e.g. 1/3 or 1/1 octave band noise.&#xA;broadBandNoise This Signal Type is White Noise, i.e. noise with equal energy content for equal absolute bandwidths in Hz. An averaged FFT-analysis of white noise shows a flat spectrum.&#xA;+ lowPassNoise / A noise signal produced by low pass filtering a BroadBandNoise.&#xA;+ highPassNoise / A noise signal produced by high pass filtering a broadBandNoise.&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="SignalType_Type"/>
+    </eAnnotations>
+    <eLiterals name="PureTone"/>
+    <eLiterals name="MultiTone" value="1"/>
+    <eLiterals name="NarrowBandNoise" value="2"/>
+    <eLiterals name="BroadBandNoise" value="3"/>
+    <eLiterals name="LowPassNoise" value="4"/>
+    <eLiterals name="HighPassNoise" value="5"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="SignalTypeTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="SignalType_Type:Object"/>
+      <details key="baseType" value="SignalType_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StaticAdmittanceType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Also known as peak compensated static acoustic admittance. This is the height of the peak measured from the positive tail (typically +200daPa) to the peak. The term compensated means the admittance at the positive tail, which is used as an estimate of ear canal volume, has been removed from the measurement of peak height. &#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="StaticAdmittance_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticAdmittanceValue"
+        lowerBound="1" eType="#//AdmittanceValueType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="StaticAdmittanceValue"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticAdmittanceUnit" lowerBound="1"
+        eType="#//AdmittanceUnitType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Usually  &quot;cc&quot;, &quot;ml&quot;, &quot;mmho&quot;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="StaticAdmittanceUnit"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="StimulusLevelType" instanceClassName="java.math.BigDecimal">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="StimulusLevel_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#decimal"/>
+      <details key="fractionDigits" value="1"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SupplementaryDataType">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="SupplementaryData_._type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="information" lowerBound="1"
+        eType="#//InformationType" containment="true" resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Information"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="any" unique="false" lowerBound="1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Any legal formatted XML data.  This data does conform to this "/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="elementWildcard"/>
+        <details key="wildcards" value="##any"/>
+        <details key="name" value=":1"/>
+        <details key="processing" value="skip"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TimeBaseType" instanceClassName="java.math.BigDecimal">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="TimeBase_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#decimal"/>
+      <details key="fractionDigits" value="2"/>
+      <details key="minInclusive" value="0.00"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TimeType" instanceClassName="java.math.BigDecimal">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Time_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#decimal"/>
+      <details key="fractionDigits" value="2"/>
+      <details key="minInclusive" value="0.00"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TimeType1" instanceClassName="java.math.BigDecimal">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Time_._1_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#decimal"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TimeType2" instanceClassName="java.math.BigDecimal">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Time_._2_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#decimal"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TympanogramMeasurementConditionsType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Measure Conditions (tymp)&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="TympanogramMeasurementConditions_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sweepSpeed" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Change in the pressure in which the curve is recorded. Measured and saved in&#xA;dekaPascal per second (daPa/s).&#xA;&#xA;@@ This value has changed from mandatory to optional to help support manual entry of data where this information may not be known or supported to be recorded.  This change was made in format 501&#xA;&#xA;@@ Convert DOWN from 501 to 500&#xA;This element is mandatory in format 500.  When converting down enter a value of 0 (zero)&#xA;@@&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="SweepSpeed"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="recordMode" lowerBound="1"
+        eType="#//RecordingModeType" unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="How is the admittance curve recorded, Compensated or Non Compensated.&#xA;&#xA;The admittance equivalent to the Ear canal volume is conventionally subtracted&#xA;from measures of total aural admittance to yield an estimate of the middle ear&#xA;admittance. This is referred to as compensated admittance. &#xA;&#xA;Katz pg 169&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="RecordMode"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="probeFrequency" lowerBound="1"
+        eType="#//ProbeFrequencyType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Frequency of the probe tone&#xA;&#xA;@@ Convert down 501 --> 500&#xA;&#xA;The ProbeFrequency element has been changed to the below structure, to support the ability to record that the frequency is essentially unknown&#xA;&#xA;Convert the 501 Frequency to  ProbeFrequency if the value is an integer&#xA;&#xA;If the &quot;Other&quot; value has been chossen then enter zero in ProbeFrequency&#xA;&#xA;@@&#xA;&#xA;@@ Convert up 500 --> 501&#xA;&#xA;The ProbeFrequency element has been changed to the below structure, to support the ability to record that the frequency is essentially unknown&#xA;&#xA;Convert the 500 ProbeFrequency to Frequency if the value is an integer&#xA;&#xA;If the value is not present then add &quot;Other&quot; to the Other element&#xA;&#xA;@@&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ProbeFrequency"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TympanogramResultType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Reference pg 177 Katz&#xA;&#xA;Jerger 1970 classified the shapes of tympanograms and this system is still commonly used today and is applicable only to a 226Hz probe test.&#xA;&#xA;(A) tympanograms have peaks near atmospheric pressure&#xA;(AD) tympanograms have a high peak near atmospheric pressure&#xA;(As) tympanograms have a shallow peak near atmospheric pressure&#xA;(B) tympanograms are flat&#xA;(C) tympanograms have negative pressure peaks&#xA;(D) and (E) tympanograms have a notched peak and are more common with higher probe frequencies.&#xA;CouldNotSeal (CNS) / Could not seal, therefore no results obtained&#xA;DidNotTest (DNT) /The stimulus was not presented to subject. Reasons: Per instruction by physician or because the test was judged to be unnecessary. No point was plotted.&#xA;CouldNotTest (CNT)  / Unable to present stimulus. Reasons: Subject's physical or behavioral limitations, inability to obtain a seal. No point was plotted&#xA;Other - Something other than listed above&#xA;&#xA;@@ 501 - 500 down conversion&#xA;&#xA;if CNS, DNT, or CNT or Other are used then it will not be possible to convert the complete tympogram test (TympanogramTest Element).  These choice represent that there was no test obtained, they provide more information why it was not obtained&#xA;&#xA;@@&#xA;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="TympanogramResult_Type"/>
+    </eAnnotations>
+    <eLiterals name="A"/>
+    <eLiterals name="AD" value="1"/>
+    <eLiterals name="AS" value="2"/>
+    <eLiterals name="B" value="3"/>
+    <eLiterals name="C" value="4"/>
+    <eLiterals name="D" value="5"/>
+    <eLiterals name="E" value="6"/>
+    <eLiterals name="CouldNotSeal" value="7"/>
+    <eLiterals name="DidNotTest" value="8"/>
+    <eLiterals name="CouldNotTest" value="9"/>
+    <eLiterals name="Other" value="10"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TympanogramResultTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="TympanogramResult_Type:Object"/>
+      <details key="baseType" value="TympanogramResult_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TympanogramTestType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value=" "/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="TympanogramTest_Type"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admittanceCurve" eType="#//AdmittanceCurveType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Graphics representation of measurement&#xA;&#xA;@@ 501 --> 500 This element was made to be optional starting in format 501.&#xA;&#xA;If converting down to 500 AND there is no curve then create a curve with one point following format 500 with the following information:&#xA;+ admittancePoint > Pressure = 0&#xA;+ admittancePoint > admittance  > Argumentadmittance1 = 0&#xA;+ admittancePoint > admittance  > Argumentadmittance2 = 0&#xA;+ admittanceUnit > ArgumentUnit1 = CubicCentimetrer&#xA;+ admittanceUnit > ArgumentUnit2 = CubicCentimetrer&#xA;&#xA;@@"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="AdmittanceCurve"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maximumAdmittance" eType="#//AdmittanceType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Peak value for the admittance curve&#xA;&#xA;@@ 501 --> 500 This element was made to be optional starting in format 501.&#xA;&#xA;If converting down to 500 AND there is no curve then create an entry following format 500 with the following information:&#xA;+ admittancePoint > admittance  > Argumentadmittance1 = 0&#xA;+ admittancePoint > admittance  > Argumentadmittance2 = 0&#xA;+ admittanceUnit > ArgumentUnit1 = CubicCentimetrer&#xA;+ admittanceUnit > ArgumentUnit2 = CubicCentimetrer&#xA;&#xA;@@&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="MaximumAdmittance"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="canalVolume" eType="#//AdmittanceType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="canalVolume /  Ear canal volumes are in the range of [0.30 .. 1.00] ccm in children and&#xA;[0.65 .. 1.75] ccm in adults. Katz pg 180. &#xA;&#xA;The admittance equivalent to the Ear canal volume is conventionally subtracted from measures of total aural admittance to yield an estimate of the middle ear admittance. This is referred to as compensated admittance.&#xA;&#xA;The volume is given by the formula&#xA;&#xA;Ve = γ . ps . Ca = ρ . c2 . Ca = γ . ps . Ya/(2 . pi . f)&#xA;&#xA;+Ve / is the equivalent volume in m3&#xA;+γ / is the ratio of specific heat for air at constant pressure to that at constant volume, approximately 1.40.&#xA;+ps / is the barometric pressure in Pa, normal pressure 0.1013 MPa.&#xA;+ρ / is the ambient density of air in kg/m3, at the temperature and pressure of the measurement&#xA;+c / is the speed of sound in m/s at the temperature and pressure of the measurement&#xA;+Ca / is the acoustic compliance in m3/Pa&#xA;+ Ya / is the magnitude of the acoustic admittance in m3/(Pa⋅s)&#xA;+ f / is the probetone frequency in Hz&#xA;&#xA;In normal used units (Ve in ml, Ya in mmho and f in Hz) this can be approximated as:&#xA;Ve [ml] =  Ya . f / 226&#xA;&#xA;+Note 1 / The ear canal volume equivalent is valid at the probe tone frequency 226 Hz.&#xA;+Note 2 / The equivalent volume of air is equal to its physical value for values not exceeding 5 ccm."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="CanalVolume"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="gradient" eType="#//GradientType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Gradient of the admittance curve&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Gradient"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pressure" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Middle ear pressure at the point of maximum admittance.&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Pressure"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resonanceFrequency" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Defined as the frequency at which compliant and mass succeptance are equal. Normal middle ear resonance falls between 800 and 1200Hz. Below the resonant frequency the middle ear is stiffness controlled and above the resonant frequency it is mass controlled (Katz pg 189)&#xA;&#xA;Various middle ear pathologies will have an effect on the mass or stiffness of the system resulting in altered resonant frequencies in abnormal ears.&#xA;&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ResonanceFrequency"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="result" eType="#//TympanogramResultType"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Jerger 1970 classified the shapes of tympanograms and this system is still commonly used today and is applicable only to a 226Hz probe test.&#xA;&#xA;See TympanogramResults_Type for further information&#xA;Katz pg 177&#xA;&#xA;&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Result"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measurementCondition" lowerBound="1"
+        eType="#//TympanogramMeasurementConditionsType" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value=""/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="MeasurementCondition"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staticAdmittance" eType="#//StaticAdmittanceType"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Also known as peak compensated static acoustic admittance. This is the height of the peak measured from the positive tail (typically +200daPa) to the peak. The term compensated means the admittance at the positive tail, which is used as an estimate of ear canal volume, has been removed from the measurement of peak height. &#xA;&#xA;@@ Convert 501  500&#xA;This value was first introduced in format 501.&#xA;When converting down the value will be discarded&#xA;@@&#xA;&#xA;&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="StaticAdmittance"/>
+        <details key="namespace" value="##targetNamespace"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TympanometerMakeModelType" instanceClassName="java.lang.String">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="TympanometerMakeModel_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#string"/>
+      <details key="maxLength" value="41"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="TympanometerSerialNumberType" instanceClassName="java.lang.String">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="TympanometerSerialNumber_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#string"/>
+      <details key="maxLength" value="41"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="UnitType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Attaches to a saved value and describes the unit used.&#xA;&#xA;+ cubicCentiMetre / In [IEC 60645-5 2005] is referred a rule of thumb&#xA;&#xA;+ milliLitre / The acoustic admittance of an air-filled cavity of volume 1 cubic cm at standard atmospheric conditions (barometric air pressure 100 kPa, temperature 20 degrees Celsius) is:&#xA;&#xA;+ MilliMho / This size is per definition 1 cgs acoustic millimho.&#xA;Since 1 cubic cm is equal to 1 ml, the three admittance units therefore&#xA;should yield the same numeric values.&#xA;&#xA;+ Degree / If polar notation of the complex admittance is preferred, this measure expresses the phase angle.&#xA;&#xA;+ DekaPascal / Pressure in tens of Pascal, daPa, Pa/10. 1 daPa equals 1 mm of water.&#xA;&#xA;6/25/2012 Annotation&#xA;&#xA;The IMP standard format 100 defined the possible values in the following manner &#xA;•&#x9;cubicCentiMetre_100 &#x9;-- Cubic Centi Metre x 100 &#xA;•&#x9;milliLitre_100 &#x9;&#x9;-- Milli Litre x 100&#xA;•&#x9;milli_mho&#x9;&#x9;-- Milli mho  x 100  i.e. &quot;SI-mho&quot;&#xA;•&#x9;degree_3600&#x9;&#x9;-- Phase in degrees x 10&#xA;•&#x9;deka_Pascal&#x9;&#x9;-- Pressure in deka Pascal (daPa or tens of Pa)&#xA;&#xA;This means that a module saving data would set the admittance unit, using the list above, but would also have to save the admittance value accordingly.  For example, if the unit was cubiccenterMetre then the value would have to be X 100.  This concept was used as the original header file did not have the ability to use decimal values.&#xA;&#xA;While HIMSA migrated this standard (format 500) to XML we in almost all cases defined the xml element as a decimal where the format value was defined as “value”X100 ect.&#xA;&#xA;In this case we are not able to make this similar type of change as value will in some cases by X100, X10, or nothing.&#xA;&#xA;If a module is saving data using format 500 then it is mandatory that the developer save the value as an integer by multiplying the value according to the list of values above.&#xA;&#xA;Conversely, a module reading data must divide the integer accordingly.&#xA;End of 6/25/2012 Annotation&#xA;&#xA;@@ convert between 500 and 501&#xA;Please note that the enumerated cubicCentiMetre as changed to cubicCentiMeter&#xA;@@"/>
+    </eAnnotations>
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Unit_Type"/>
+    </eAnnotations>
+    <eLiterals name="CubicCentimeter"/>
+    <eLiterals name="MilliLiter" value="1"/>
+    <eLiterals name="MilliMho" value="2"/>
+    <eLiterals name="Degree" value="3"/>
+    <eLiterals name="DekaPascal" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="UnitTypeObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Unit_Type:Object"/>
+      <details key="baseType" value="Unit_Type"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="VersionType" instanceClassName="java.math.BigInteger">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Version_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#integer"/>
+      <details key="minInclusive" value="500"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="VersionType1" instanceClassName="java.math.BigInteger">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Version_._1_._type"/>
+      <details key="baseType" value="http://www.eclipse.org/emf/2003/XMLType#integer"/>
+    </eAnnotations>
+  </eClassifiers>
+</ecore:EPackage>

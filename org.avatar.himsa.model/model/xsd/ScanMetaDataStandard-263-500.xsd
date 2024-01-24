@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp1 (x64) (http://www.altova.com) by Scott S Peterson (private) -->
+<xs:schema xmlns="http://www.himsa.com/Scan/ScanMetaData" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/Scan/ScanMetaData" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="ScanMetaDataStandard">
+		<xs:annotation>
+			<xs:documentation>Important: All XML data must be encoded using UTF-8.
+
+REV 2 (see REV History below)
+
+Revision History / please see the REV History section further down.  Revision of a version but normally only contains updated annotations.
+
+
+Copyright © 2015 HIMSA II  K/S
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies without the prior permission of HIMSA II.
+
+
+REV History
+
+1 - first 1.0 release format 500
+REV 2 / November 4 2019 - Annotation updates only, note to use UTF-8</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ScanPackage" type="Package_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A Scan Package must only contains scans for 1 unique order for patient. Creating a (1) package which contains scans for multiple orders or patients will be confusing for readers of data (e.g. a hearing instrument manufacturer).
+
+The Scan Package is a collection of individual scans (e.g. 3D scan files) as well as XML files, formatted via this standard, which provide Meta data about the scans.  The package that contains the XML and scan files may also contain other types of files (e.g. picture files) but other types of files are not defined with this Meta data standard.
+
+The use of a Scan Package is optional as it may not always make sense to use it.  A good example of not using the Scan Package would be if scan data is saved in Noah as a scan action.  In this case each scan is defined to be stored as a separate action.  Further actions in Noah are “packaged” by using the ability to an action grouping or reference feature.
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Scans" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ScannerHardware" type="ScannerHardware_Type">
+								<xs:annotation>
+									<xs:documentation>In most cases, when there is more then one scan, the scanner hardware will be the same.  However, it is technically possible that scans could come from multiple scanners.  To ensure that no assumptions are made each scan must have an assoiciated Scanner Hardware Element populated</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ScanProperties" type="ScanProperties_Type"/>
+							<xs:element name="ScanAnnotations" type="ScanAnnotations3D_Type" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Additional information for a scan.   The annotations provide additional information to a 3D object not to a picture of a scan.   
+
+Q: How do the 3D Scan Annotations apply or relate to the annotations defined in the HPS scan format annotations?
+
+A: HPS uses annotations defined in 2D vs 3D.  If HIMSA Meta Scan Standard Annotations and HPS scan format annotations happen to both be present for a specific scan then the HIMSA Meta Scan Standard annotations will override the HPS annotations.  
+</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Version number of the Scanning Solutions Standard.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ScannerHardware_Type">
+		<xs:sequence>
+			<xs:element name="ScannerProvider" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the company which manufactured or distributes the scanning device </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScannerModel" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The model name of the scanning device</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScannerFirmware" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The firmware version of the scanner.  
+
+The firmware version would typically only be needed by the scan solution provider for troubleshooting purposes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScannerType">
+				<xs:annotation>
+					<xs:documentation>The type of Scanner, impression or intra aural scanner
+
++ Impression
++ IntraAural</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Impression"/>
+						<xs:enumeration value="IntraAural"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="UniqueScannerID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A serial number or other unique ID of the scanning device</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ScanProperties_Type">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="ScanTimeStamp" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Data and Time that the scan was obtained from the patient.  This is the date and time obtained not the date/time that the data was saved</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ear">
+				<xs:annotation>
+					<xs:documentation>Ear Side
+
++ Right
++ Left</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Left"/>
+						<xs:enumeration value="Right"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="JawPosition" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The position of the patient’s jaw while the scan was obtained
++ Closed – jaw is closed so that upper and lower teeth are in contact with each other
++ Open – The jaw is open as far as possible without discomfort
++ Bite-Block - Material placed on molars. Patient bites down while impression or scan is taken. 
++ Unknown - The jaw position is unknown.  If no jaw position is listed it is also implied to be unknown.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Closed "/>
+						<xs:enumeration value="Open "/>
+						<xs:enumeration value="Bite-Block"/>
+						<xs:enumeration value="Unknown"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ScanFormat">
+				<xs:annotation>
+					<xs:documentation>The format in which the scan (Geometry Points) 
++HPS
++STL Binary
++ASC</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="HPS"/>
+						<xs:enumeration value="STL Binary"/>
+						<xs:enumeration value="ASC"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ScanComment" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A general comment from the user of the scan solution to the manufacturer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScanFileAndLocation" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A computer name or network address which includes the specific file name of the scan.  
+Legal Examples:
+•	ScanFile.stl
+•	\\localServerName\Path\ScanLeft.hps
+•	https://www.scanprovider.com/rightscan98349kdskddks.stl
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScanStoredInNoah" type="StoredInNoah_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If the ear scan(s) are stored in Noah as Noah actions this element is used to help find and read the data in Noah</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ScanAnnotations3D_Type">
+		<xs:annotation>
+			<xs:documentation>Additional information for a scan.   The annotations provide additional information to a 3D object not to a picture of a scan.   
+
+!!need to make it clear that it is intentional that type of annotations are not strongly defined but rather descirbed by geometry types and an annotiation comment, in other words there are not specific enumerated choices!!</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Point" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A single point.  For an annotation the point will typically be on the surface of the impression object.  In theory it could be possible for the point to be inside or outside of the impression object.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Point_Type">
+							<xs:attribute name="AnnotationComment" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>The comment is used to describe the point in more detail.  There are no specifically defined enumerated values at this time.  
+
+The assumed purposes of the annotation is that it will be read by a human and not a computer system where it could be incorporated into an automation process.
+
+</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Direction" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Direction / Indicates direction.  An example of usage could be to indicate placement of directional microphone(s). </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Direction_Type">
+							<xs:attribute name="AnnotationComment" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>The comment is used to describe the direction in more detail.  There are no specifically defined enumerated values at this time.  
+
+The assumed purposes of the annotation is that it will be read by a human and not a computer system where it could be incorporated into an automation process.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Plane" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Plane / Indicates a plane which could be used to define items such as a cut plane for a faceplate or tip.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Plane_Type">
+							<xs:attribute name="AnnotationComment" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>The comment is used to describe the plane in more detail.  There are no specifically defined enumerated values at this time.  
+
+The assumed purposes of the annotation is that it will be read by a human and not a computer system where it could be incorporated into an automation process.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Area" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Area of interest (e.g. describe anomalies of the ear)
+
+Defined by 3 or more points</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Area_Type">
+							<xs:attribute name="AnnotationComment" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>The comment is used to describe the area in more detail.  There are no specifically defined enumerated values at this time.  
+
+The assumed purposes of the annotation is that it will be read by a human and not a computer system where it could be incorporated into an automation process.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Coordinate_Type" final="list">
+		<xs:annotation>
+			<xs:documentation> Floating Point</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:float"/>
+	</xs:simpleType>
+	<xs:complexType name="Direction_Type">
+		<xs:annotation>
+			<xs:documentation>A Direction is defined as a point with a corresponding vector (directional indicator).  </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Point" type="Point_Type">
+				<xs:annotation>
+					<xs:documentation>Single point which can be on the surface, inside or outside the scan  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Vector" type="Point_Type">
+				<xs:annotation>
+					<xs:documentation>A Vector</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Plane_Type">
+		<xs:annotation>
+			<xs:documentation>A plane is defined by a single point and direction (a vector) of the normal to the plane.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Plane" type="Direction_Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Area_Type">
+		<xs:annotation>
+			<xs:documentation>Used to identify an area of interest. Defined by 3 or more points </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Points" type="Point_Type" minOccurs="3" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Package_Type">
+		<xs:annotation>
+			<xs:documentation>Provides information on the package which will include 1 to many files.  The package will contain Scan specific data but may also contain any type of file</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PackageLocation" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>A computer name or network address which may include the specific file name of the package file
+Legal Examples:
+•	https://www.scanprovider.com
+•	https://www.scanprovider.com/1234567AAA.zip</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PackageID" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>An ID created by the scan solution provider.  The ID is used to reference the correct package.
+
+In most cases it is assumed that the PackageID is present but it is not declared as mandatory. If the package location contains an actual file name then the ID may not be necessary</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StoredInNoah_Type">
+		<xs:sequence>
+			<xs:element name="StoredPublicOrPrivate">
+				<xs:annotation>
+					<xs:documentation>+ Public
++ Private
+
+When data (in this case a scan) is stored in Noah the data is attached to an action as either public data or private data.  If attached as public data then the data should be ready to be used with nor further restrictions.
+
+The data types defined for ear scans are EarScan_L and EarScan_R (“L=left, R=Right).  The STL or HPS formatted file would be saved in an action where the appropriate data type is set.
+</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Public"/>
+						<xs:enumeration value="Private"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ActionDateTimeStamp" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>This element is set so that any Noah compatible application can find the appropriate scan by looking through the patient’s session list looking for an appropriate ear scan action that has the recorded date/timestamp.  Use of Noah referenced actions must not be used.
+
+Q: Noah compatible applications usually would set references between actions to indicate what actions belong together.  Why is this not used?
+
+A: In theory it would be possible to save an EarScan_R and and EarScan_L action to Noah.  Then after saving an action using the ScanMetaData Standard public data it would be possible to reference the ScanMetaData Standard action to the EarScan_R and EarScan_L.
+
+However, the ScanMetaData standard provides for including Meta data for potentially many different scans for the same ear (e.g. Jaw Position). If references where used there would be potentially many multiple actions being referenced but with now clear way to figure out what is the correct matching (e.g. what EarScan_R action is the correct scan for the Open vs. Closed jaw position).
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Point_Type">
+		<xs:sequence>
+			<xs:element name="X" type="Coordinate_Type"/>
+			<xs:element name="Y" type="Coordinate_Type"/>
+			<xs:element name="Z" type="Coordinate_Type"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

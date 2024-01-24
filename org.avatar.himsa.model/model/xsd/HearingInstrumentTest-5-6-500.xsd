@@ -1,0 +1,1394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.himsa.com/Measurement/HearingInstrumentTest" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.himsa.com/Measurement/HearingInstrumentTest" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="HIMSAHitStandard">
+		<xs:annotation>
+			<xs:documentation>Important: All XML data must be encoded using UTF-8.
+
+With the format 200 both the REM and HIT data standards where defined in the same Header file.  While moving to XSD files with format 500 HIMSA decided to split the REM and HIT standards into separate XSD files but the same definitions exist.
+
+REV 2 (see REV History below)
+
+Copyright © 2012 HIMSA II  K/S
+
+The information in this document is subject to change according to the review policies established by HIMSA II.
+
+HIMSA II MAKES NO WARRANTY OF ANY KIND WITH REGARD TO THIS MATERIAL, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTY OR SUITABILITY FOR A PARTICULAR PURPOSE. HIMSA shall not be liable for errors contained herein or for incidental consequential damages in connection with the supply of, performance of, or use of this material.
+ 
+This document contains proprietary information that is protected by copyright. All rights are reserved. No parts of this document may be photocopied, reproduced or distributed to Non-HIMSA member companies. without the prior permission of HIMSA II  K/S
+
+Final Release / August 15 2011
+REV 1 / August 9 2015 - Annotation updates only.  See new annotations for attributes ValidatedByNOAH and ConvertedFromDataStandard
+REV 2 / November 4 2019- Annotation updates only, note to use UTF-8</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="HearingInstrumentTest">
+					<xs:annotation>
+						<xs:documentation>Defines structure for storing a Hearing Instrument Test.
+
+
+##HitData##</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SaturationResponse" type="FrequencyMeasurement" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Saturation Response
+
+##spl90##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="FullOnGain" type="FrequencyMeasurement" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Full On Gain. It represents a calculated level in a 2CC coupler for hearing instrument with the volume control set to its full on position.
+
+## FullOnGain ##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="FrequencyResponse" type="FrequencyMeasurement" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Frequency Response
+
+freqResp##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="BatteryMeasurement" type="BatteryCurrentMeasurement" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Battery Measurement
+
+##Battery##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="SecondThirdHarmonicDistortion" type="HarmonicDistortionMeasurementCurve" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Second and Third Harmonic Distortion Measurement
+
+##harmDistortion##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="IntermodulationDistortionMeasurement" type="IntermodulationDistortionMeasurement" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Intermodulation Distortion Measurement
+
+##interDistortion##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="EquivalentInputNoiseMeasurement" type="EquivalentInputNoise" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Equivalent Input Noise Measurement
+
+##equivInputNoise##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="InputOutput" type="InputOutputMeasurement" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Input / Output Measurement
+
+##ioMeas##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AttackRecoverCurve" type="TargetMeasurement" minOccurs="0" maxOccurs="4">
+								<xs:annotation>
+									<xs:documentation>Attack / Recover Curve measurement
+
+##attackRecover##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="InductionCoil" type="FrequencyMeasurement" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>Audio Induction Coil Loop is one of the oldest forms of assisted listening technology in use today. These systems provide large area access to Hearing Instruments equipped with telecoil.
+
+
+##inductionCoil##</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PrivateHIT" type="xs:base64Binary" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>In the past it was allowed by HIMSA to save privately formatted data in the unused section of the public storage area of a NOAH action.  This usage was used mainly because more space was allocated for public storage versus private.  At present this is no longer an issue as equal storage is allocated to both public and private data storage.
+
+This elements primary function is to pass along any private data stored in the public area as base64 encoded data.  NOAH is not performing any translation or conversion of data.
+
+This data will never be converted back to an earlier version of a Audiogram data standard.  For example, if an HIT format 500 is saved with this element populated and then an older NOAH compatible fitting module tries to read the HIT (causing a conversion down to format 200) this data will be ignored by the converter process.
+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" use="required" fixed="500">
+				<xs:annotation>
+					<xs:documentation>Version of this data standard</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="ValidatedByNOAH" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>This attribute is no longer in use.  The original intention was for Noah to fill in the value but the idea was never fully implemented and not needed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ConvertedFromDataStandard">
+				<xs:annotation>
+					<xs:documentation>Software saving data formatted via this XSD file should not use this element for storage.  The intention is for Noah data convertors to fill in an appropriate value for runtime conversions - not permanent storage.
+
+Please note that values less than 500 mean that the data was originally stored in a format which was not validated by Noah before storage.  This could mean that the data will not validated against this version</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="SignalType">
+		<xs:annotation>
+			<xs:documentation>The signal type used during the measurement.
+
+##TSignalType##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="Tone"/>
+			<xs:enumeration value="Warble"/>
+			<xs:enumeration value="NarrNoise"/>
+			<xs:enumeration value="TwoTone"/>
+			<xs:enumeration value="WhiteNoise"/>
+			<xs:enumeration value="PinkNoise"/>
+			<xs:enumeration value="SpeechNoise"/>
+			<xs:enumeration value="Patient"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SignalOutputType">
+		<xs:annotation>
+			<xs:documentation>The channel/media used to present the signal/stimulus.
+
+##TSignalOutput##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="InternalBox"/>
+			<xs:enumeration value="ExternalBox"/>
+			<xs:enumeration value="FreeField"/>
+			<xs:enumeration value="InternalBoxCoil"/>
+			<xs:enumeration value="ExternalBoxCoil"/>
+			<xs:enumeration value="FreeFieldInductionCoil"/>
+			<xs:enumeration value="AirConduction"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CouplerType">
+		<xs:annotation>
+			<xs:documentation>The device in which the probe microphone is placed; In other words; this is
+where the output is read.
+
+##TCouplerType##
+
+++ Please note that FreibKK was changed to FreiburgerConicalCoupler  
+
+AND
+
+FreibKKK to FreiburgerConicalChildrenCoupler ++</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="RealEar"/>
+			<xs:enumeration value="Coupler711"/>
+			<xs:enumeration value="Coupler2cc"/>
+			<xs:enumeration value="FreiburgerConicalCoupler"/>
+			<xs:enumeration value="FreiburgerConicalChildrenCoupler"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BatteryType">
+		<xs:annotation>
+			<xs:documentation>The battery type used.
+
+##TBattType##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Mercury"/>
+			<xs:enumeration value="ZincAir"/>
+			<xs:enumeration value="OtherType"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BatteryPillType">
+		<xs:annotation>
+			<xs:documentation>The type of battery pill.
+
+##TBattPill##
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Battery312"/>
+			<xs:enumeration value="Battery13"/>
+			<xs:enumeration value="Battery230"/>
+			<xs:enumeration value="Battery675"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MeasurementMode">
+		<xs:annotation>
+			<xs:documentation>The measurement mode was used during the measurement.
+
+##TMeasMode##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="Sweep"/>
+			<xs:enumeration value="FastFourierTransform"/>
+			<xs:enumeration value="TimeMeasurement"/>
+			<xs:enumeration value="Battery"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MeasurementIdentification">
+		<xs:annotation>
+			<xs:documentation>InsertGain_U=50?
+
+Identification of the measurement; mainly for use with data export and
+storage of not yet publicly defined measurements at the end of the public
+buffer.
+
+##TMeasurement##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="Audiometry"/>
+			<xs:enumeration value="TargetCurve"/>
+			<xs:enumeration value="UnaidedResponse"/>
+			<xs:enumeration value="OccludedResponse"/>
+			<xs:enumeration value="InsertionResponseCompensated"/>
+			<xs:enumeration value="AidedResponse"/>
+			<xs:enumeration value="InputOutput"/>
+			<xs:enumeration value="HarmonicDistortion"/>
+			<xs:enumeration value="OcclusionEffect"/>
+			<xs:enumeration value="RealEarToCouplerDifference"/>
+			<xs:enumeration value="XSPL90"/>
+			<xs:enumeration value="FullOnGain"/>
+			<xs:enumeration value="FrequencyResponse"/>
+			<xs:enumeration value="BatteryCurrent"/>
+			<xs:enumeration value="IntermodulationDistortion"/>
+			<xs:enumeration value="EquivalentInputNoise"/>
+			<xs:enumeration value="AttackRecovery"/>
+			<xs:enumeration value="InductionCoil"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+			<xs:enumeration value="InsertionResponseUncompensated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FittingRule">
+		<xs:annotation>
+			<xs:documentation>The fitting rule used for calculation of a target curve
+
+##TFittingRule##
+</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="POGO"/>
+			<xs:enumeration value="POGOII"/>
+			<xs:enumeration value="NAL"/>
+			<xs:enumeration value="NALProf"/>
+			<xs:enumeration value="Berger"/>
+			<xs:enumeration value="HalfGain"/>
+			<xs:enumeration value="ThirdGain"/>
+			<xs:enumeration value="DSL"/>
+			<xs:enumeration value="LIBBY"/>
+			<xs:enumeration value="Byrne"/>
+			<xs:enumeration value="CoxMSU"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+			<xs:enumeration value="User4"/>
+			<xs:enumeration value="User5"/>
+			<xs:enumeration value="User6"/>
+			<xs:enumeration value="User7"/>
+			<xs:enumeration value="User8"/>
+			<xs:enumeration value="User9"/>
+			<xs:enumeration value="User10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HearingInstrumentType">
+		<xs:annotation>
+			<xs:documentation>The type of hearing instrument being tested.
+
+##THIType##</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Undefined"/>
+			<xs:enumeration value="ITE"/>
+			<xs:enumeration value="BTE"/>
+			<xs:enumeration value="ITC"/>
+			<xs:enumeration value="MITC">
+				<!--Mini In The Canal-->
+			</xs:enumeration>
+			<xs:enumeration value="Body"/>
+			<xs:enumeration value="User1"/>
+			<xs:enumeration value="User2"/>
+			<xs:enumeration value="User3"/>
+			<xs:enumeration value="User4"/>
+			<xs:enumeration value="User5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MeasurementConditions">
+		<xs:annotation>
+			<xs:documentation>HIT Measurement Conditions.
+
+## TRHMeasCond ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ManufacturerCode" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Each HIMSA Member company which can create a module is assigned numerical code.  Manufacturer of the measuring equipment
+
+## TManufCode ## </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DevTypeCode" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Device type code of the measuring equipment
+
+## devTypeCode ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalType" type="SignalType">
+				<xs:annotation>
+					<xs:documentation>The signal type used during the measurement.
+
+##TSignalType##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalOutput" type="SignalOutputType">
+				<xs:annotation>
+					<xs:documentation>The channel/media used to present the signal/stimulus.
+
+##TSignalOutput##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalLevel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Use this field to state the signal level if target curve relates to a specific signal level.
+
+## SignalLevel ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SignalFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Signal Frequency
+
+## SignalFreq ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatteryType" type="BatteryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The battery type used.
+
+##TBattType##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatteryPillType" type="BatteryPillType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of battery pill.
+
+##TBattPill##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatteryVoltage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The voltage of the battery in milliVolts
+
+##TBattVoltage##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="BatteryImpedance" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The impedance of the battery in milliOhms
+
+## TBattImp##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="UseRealEarCoupler" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the measurement is done using a coupler instead of a Real Ear. This method can be valuable for example if the patient is a child. Use the value TRUE, if the measurement is done using Real Ear to Coupler Difference
+
+## UseRECoupler  ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementMode" type="MeasurementMode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The measurement mode was used during the measurement.
+
+##TMeasMode##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementIdentification" type="MeasurementIdentification">
+				<xs:annotation>
+					<xs:documentation>Identification of the measurement
+
+##TMeasurement##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BatteryMeasurementConditions">
+		<xs:annotation>
+			<xs:documentation>Battery Measurement Conditions.
+
+## TRHMeasCond ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ManufacturerCode" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Each HIMSA Member company which can create a module is assigned numerical code.  Manufacturer of the measuring equipment
+
+## TManufCode ## </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DevTypeCode" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Device type code of the measuring equipment
+
+## devTypeCode ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalType" type="SignalType">
+				<xs:annotation>
+					<xs:documentation>The signal type used during the measurement.
+
+##TSignalType##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalOutput" type="SignalOutputType">
+				<xs:annotation>
+					<xs:documentation>The channel/media used to present the signal/stimulus.
+
+##TSignalOutput##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalLevel">
+				<xs:annotation>
+					<xs:documentation>Use this field to state the signal level if target curve relates to a specific signal level.
+
+## SignalLevel ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SignalFrequency" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Signal Frequency
+
+## SignalFreq ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatteryType" type="BatteryType">
+				<xs:annotation>
+					<xs:documentation>The battery type used.
+
+##TBattType##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatteryPillType" type="BatteryPillType">
+				<xs:annotation>
+					<xs:documentation>The type of battery pill.
+
+##TBattPill##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatteryVoltage">
+				<xs:annotation>
+					<xs:documentation>The voltage of the battery in milliVolts
+
+##TBattVoltage##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="BatteryImpedance">
+				<xs:annotation>
+					<xs:documentation>The impedance of the battery in milliOhms
+
+## TBattImp##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="UseRealEarCoupler" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the measurement is done using a coupler instead of a Real Ear. This method can be valuable for example if the patient is a child. Use the value TRUE, if the measurement is done using Real Ear to Coupler Difference
+
+## UseRECoupler  ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementMode" type="MeasurementMode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The measurement mode was used during the measurement.
+
+##TMeasMode##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeasurementIdentification" type="MeasurementIdentification" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identification of the measurement
+
+##TMeasurement##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TargetMeasurementPoint">
+		<xs:annotation>
+			<xs:documentation>A measurement point for Attack / Release measurements. This
+structure only contains an output level value, the input curve is
+not saved.
+
+## TARMeasPoint ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Output" maxOccurs="256">
+				<xs:annotation>
+					<xs:documentation>Output Level Attack or Release curve. </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TargetPoint">
+		<xs:annotation>
+			<xs:documentation>## TTargetPoint ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TargetFrequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Target Frequency.
+
+##targetFreq##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TargetGain">
+				<xs:annotation>
+					<xs:documentation>Target Gain. 
+
+##targetGain##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TargetCurve">
+		<xs:annotation>
+			<xs:documentation>A single curve for partial info of an Attack/Release measurement.
+The structure can contain either an attack or a release curve.
+
+## TARCurve ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Curve" type="TargetMeasurementPoint">
+				<xs:annotation>
+					<xs:documentation>The curve itself
+
+## Curve ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Result" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The result of an Attack / Release Measurement is defined as the
+point in time where the output of the Hearing Instrument is
+stabilized at a new level. As stimulus is used a sinus wave.
+
+The time resolution of the measurement (in milliseconds).
+
+## Result ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Resolution" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Expresses the time resolution of the Attack / Release Measurement.
+(In milliseconds).
+
+## Resolution ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreDelay" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The predelay is saved in the Attack Release Curve as the no. of
+milliseconds included in the curve before the level change.
+
+## PreDelay ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TargetMeasurement">
+		<xs:annotation>
+			<xs:documentation>Attack / Recovery Measurement. A complete curve set containing a full
+Attack/Release test.
+
+## TARMeas ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>HIT Measurement Conditions.
+
+## TRHMeasCond ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LevelStep">
+				<xs:annotation>
+					<xs:documentation>Input Level step size from the start level defined in Measurement Conditions.
+The input used is a sine wave. At Attack is used Level Increase,
+at Release is used Level Decrease. The Level Step has to be
+performed at a zero crossing.
+
+
+##levelStep##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AttackCurve" type="TargetCurve">
+				<xs:annotation>
+					<xs:documentation>The result of an Attack Measurement.
+
+##attackCrv##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReleaseCurve" type="TargetCurve">
+				<xs:annotation>
+					<xs:documentation>The curve where the stimulus level decreases.
+
+
+##releaseCrv##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EquivalentInputNoise">
+		<xs:annotation>
+			<xs:documentation>Equivalent Input Noise Measurement.
+In a test box, the Hearing Instrument (HI) is connected to a 2CC coupler. A
+reference microphone is placed close to the HI’s microphone. No signal is
+used. The noise floor in the test box is measured by the reference
+microphone and saved as input level, and the level delivered in the 2CC
+coupler by the HI is measured. The 2CC gain (measured earlier) is
+subtracted from the measured level and the result, saved as output, is called
+the Equivalent Input Noise. This noise is the noise floor plus the HI noise.
+The level should be at least at the input level, which is saved as an extra
+security.
+
+##EINMeas##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>HIT Measurement Conditions.
+
+## TRHMeasCond ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Point" type="FrequencyMeasurementPoint" maxOccurs="169">
+				<xs:annotation>
+					<xs:documentation>Equivalent Input Noise Curve points
+
+##einCrv##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EquivalentRootMeanSquare">
+				<xs:annotation>
+					<xs:documentation>The curve points of the einCrv output curve are squared,
+summed and divided with the number of defined curve points.
+The square root of the result is saved as EINRMS (Root Mean
+Square).
+
+##einRMS##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AttackReleaseMeasurementPoint">
+		<xs:annotation>
+			<xs:documentation>A measurement point for Attack/Release measurements.  The time result (in milliseconds) is saved for the Attack and Release curve.
+
+##TARMeasPoint##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Output">
+				<xs:annotation>
+					<xs:documentation>Output Level Attack or Release curve. Component of the
+structure TARMeasPoint of type TdB10 (or centiBel).
+
+##output##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AttackReleaseTime">
+				<xs:annotation>
+					<xs:documentation>Attack / Release time measured in milliseconds. The TARTime
+is defined Integer.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value=".000"/>
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BatteryMeasurementPoint">
+		<xs:annotation>
+			<xs:documentation>A measurement point for Battery Current measurements.
+
+## TBatMeasPoint; ## </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Frequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The frequency at which the measurement
+was done.
+
+##freq##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Current">
+				<xs:annotation>
+					<xs:documentation>Hearing Instrument Battery Current measured in mA x 100 (Hundredths of milli-
+Ampere). </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BatteryCurrentMeasurement">
+		<xs:annotation>
+			<xs:documentation>A complete curve containing a Battery Current measurement.
+
+##TBatMeas##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BatteryConditions" type="BatteryMeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>Measuring Conditions.
+
+##measCond##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BatteryCurve" type="BatteryMeasurementPoint" maxOccurs="169">
+				<xs:annotation>
+					<xs:documentation>
+##batCrv##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InputOutputPoint">
+		<xs:annotation>
+			<xs:documentation>a measurement point for Input/Output measurements,
+
+Note: no frequency information in single points. This is common for all the measurement points and the value is stated in MeasCond.
+
+## TIOMeasPoint; ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Input">
+				<xs:annotation>
+					<xs:documentation>Signal Input Level
+
+##input##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Output">
+				<xs:annotation>
+					<xs:documentation>Signal Output Level
+
+##output##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InputOutputMeasurement">
+		<xs:annotation>
+			<xs:documentation>Input / Output Measurement. A Component of the outer
+structure HitData.
+
+##TIOMeas##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>HIT Measurement Conditions.
+
+## TRHMeasCond ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Point" type="InputOutputPoint" maxOccurs="61">
+				<xs:annotation>
+					<xs:documentation>Input / Output Measurement Point. 
+
+##TIOMeasPoint##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IntermodulationDistortionPoint">
+		<xs:annotation>
+			<xs:documentation>A single measurement point for Intermodulation  Distortion Measurements
+
+## TTIMDistMeasPoint; ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Freq1" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>First stimulation frequency.
+
+##freq1##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Freq2" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Second stimulation frequency. 
+
+##freq2##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Input1">
+				<xs:annotation>
+					<xs:documentation>The Signal No. 1 Input Level. 
+
+##input1##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Input2">
+				<xs:annotation>
+					<xs:documentation>The Signal No. 2 Input Level. 
+
+##input2##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Output1">
+				<xs:annotation>
+					<xs:documentation>Output Level at Freq1. 
+
+##output1##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Output2">
+				<xs:annotation>
+					<xs:documentation>Output Level at Freq2. 
+
+##output2##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OutputDiff1">
+				<xs:annotation>
+					<xs:documentation>Output Level SecondStimulationFrequency - FirstStimulationFrequency
+
+##outputDif1##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OutputDiff2">
+				<xs:annotation>
+					<xs:documentation>Output Level 2X FirstStimulationFrequency - SecondStimulationFrequency
+
+##outputDif2##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TIDistortion">
+				<xs:annotation>
+					<xs:documentation>Total Intermodulation Distortion expressed as a  percentage 
+
+## TIMPct ##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IntermodulationDistortionMeasurement">
+		<xs:annotation>
+			<xs:documentation>A complete curve containing an Intermodulation Distortion measurement. The Intermodulation Distortion (IM) (difference-frequency) is the ratio of the power of the output signal at frequencies other than those delivered to the Hearing Instrument (HI) to the power of the signals that were applied to the HI. It includes the tones Freq2-Freq1 and 2*Freq1 - Freq2.
+
+##TTIMDistMeas##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementCondition" type="MeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>HIT Measurement Conditions.
+
+## TRHMeasCond ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Point" type="IntermodulationDistortionPoint" maxOccurs="161"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FullTargetCurve">
+		<xs:annotation>
+			<xs:documentation>A full target curve including the description.
+Use the signalLevel field to state the signal level if the target curve relates
+to a specific signal level. Use the ruleName to add a text containing a name
+and description of the target curve.
+
+##TTargetCurve##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ManufacturersCode" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Each HIMSA Member company which can create a module is assigned numerical code.  Manufacturer of the measuring equipment
+
+##TManufCode##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeviceTypeCode" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Device type code of the measuring equipment
+
+##TDevTypeCode##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FittingRule" type="FittingRule">
+				<xs:annotation>
+					<xs:documentation>The fitting rule used for calculation of a target curve
+
+##TFittingRule##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HearingInstrumentType" type="HearingInstrumentType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of hearing instrument being tested.
+
+##THIType##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VentCanalDiameter" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The diameter of the vent canal measured in mm.
+
+##ventDiam##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="VentCanalLength" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The length of the vent canal measured in mm.
+
+##ventLen##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ReserveGain" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The reserve gain included in the target curve.
+
+##resGain##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CouplerType" type="CouplerType">
+				<xs:annotation>
+					<xs:documentation>The device in which the probe microphone is placed; In other words; this is
+where the output is read.
+
+##TCouplerType##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SignalLevel" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Use this field to state the signal level if the target curve relates to a
+specific signal level. 
+
+##signalLevel##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Target" type="TargetPoint" maxOccurs="24">
+				<xs:annotation>
+					<xs:documentation>The target curve.
+
+##target##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RuleName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Text containing the target curve's name/description. 
+
+##ruleName##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="51"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RealEarCouplerDifference">
+		<xs:annotation>
+			<xs:documentation>The Real Ear to Coupler Difference measurement yields the
+gain (output minus input), where the result gives the difference
+between a measurement in a coupler and a measurement in the
+Client's ear. As both parts of this measurement are performed
+with the same measurement conditions, the curve can be used in
+a manner with the input part holding the coupler SPL output
+curve, and the output part holding the Real ear SPL output
+curve. This will yield the correct gain value.
+
+##TRECMeas##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>HIT Measurement Conditions.
+
+##TRHMeasCond</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RECD" type="FrequencyMeasurementPoint" maxOccurs="169">
+				<xs:annotation>
+					<xs:documentation>Real Ear to Coupler Difference measurement 
+
+As input and output are performed with the same measurement conditions, the curve can be used in a manner where the input element is holding the coupler SPL output curve, and the output element is holding the Real Ear SPL output curve. This will yield the correct gain value, where the result gives the difference between a measurement in a coupler and a measurement in the Patient’s ear.
+
+This curve is to be read as gain (output - input).
+
+
+##RECDCrv##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OcclusionEffects">
+		<xs:annotation>
+			<xs:documentation>Occlusion Effects, comparison between the response of the unoccluded
+ear with the response of the occluded ear.
+
+##TOcclMeas##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>HIT Measurement Conditions.
+
+##TRHMeasCond</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="REUR" type="FrequencyMeasurementPoint" maxOccurs="169">
+				<xs:annotation>
+					<xs:documentation>The response of the unoccluded ear, no compensation in input or output.
+
+##OpenEarCrv##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="REOR" type="FrequencyMeasurementPoint" maxOccurs="169">
+				<xs:annotation>
+					<xs:documentation>The response of the occluded ear, no compensation in input or output.
+
+##OccEarCrv##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HarmonicDistortionPoint">
+		<xs:annotation>
+			<xs:documentation>a single measurement point for Harmonic Distortion Measurements.
+
+## TTHDDistMeasPoint ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Frequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The frequency at which the measurement
+was done.
+
+##freq##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Input">
+				<xs:annotation>
+					<xs:documentation>Signal Input Level
+
+##input##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Fx1">
+				<xs:annotation>
+					<xs:documentation>Output level at base frequency. 
+
+##output1Harm##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Fx2">
+				<xs:annotation>
+					<xs:documentation>Output level at 2 * base frequency. 
+
+##output2Harm##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Fx3">
+				<xs:annotation>
+					<xs:documentation>Output level at 3* base frequency.
+
+##ouput3Harm##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ThirdHD">
+				<xs:annotation>
+					<xs:documentation>The calculated Third Harmonic Distortion based on the Output
+1 and 3 levels.
+
+##thdPct##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HarmonicDistortionMeasurementCurve">
+		<xs:annotation>
+			<xs:documentation>A complete curve containing a Harmonic Distortion measurement.
+The harmonic distortion is saved in this structure based on measurements of
+the distortion level at 2 * base frequency and 3* base frequency. It is
+calculated as the ratio of the total value of the harmonics and the base
+frequency. Ref. [HOCA].
+Harmonic Distortion measured in a 2CC coupler has long been an element
+of ANSI standards of hearing aid performance. When measured in a Real
+Ear the distortion level rises considerably, although it is not fully
+understood why.
+Ref. [Mueller].
+
+##TTHDDistMeas##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>HIT Measurement Conditions.
+
+## TRHMeasCond ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Point" type="HarmonicDistortionPoint" maxOccurs="161">
+				<xs:annotation>
+					<xs:documentation>Curve of Intermodulation or Harmonic
+Distortion curve points: 
+
+##distCrv##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FrequencyMeasurementPoint">
+		<xs:annotation>
+			<xs:documentation> ## TFreqMeasPoint ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Frequency" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>The frequency at which the measurement
+was done.
+
+##freq##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Input">
+				<xs:annotation>
+					<xs:documentation>Signal Input Level. 
+
+##input##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Output">
+				<xs:annotation>
+					<xs:documentation>Signal Output Level
+
+##output##</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FrequencyMeasurement">
+		<xs:annotation>
+			<xs:documentation>Generic two-channel frequency response type measurement
+
+## TFreqMeas ##</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeasurementConditions" type="MeasurementConditions">
+				<xs:annotation>
+					<xs:documentation>HIT Measurement Conditions.
+
+## TRHMeasCond ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Point" type="FrequencyMeasurementPoint" maxOccurs="169">
+				<xs:annotation>
+					<xs:documentation>
+## TFreqMeasPoint ##</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
