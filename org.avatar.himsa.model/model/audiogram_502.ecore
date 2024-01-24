@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="_502" nsURI="http://www.himsa.com/Measurement/Audiogram/502"
-    nsPrefix="_502">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="audiogram502" nsURI="http://www.himsa.com/Measurement/Audiogram/502"
+    nsPrefix="ag502">
   <eClassifiers xsi:type="ecore:EClass" name="AdditionalMasking2Type">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The Additonal Masking 2 Type is used for tests such as Decay testing where a Point Status is not included"/>

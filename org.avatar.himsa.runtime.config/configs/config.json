@@ -1,0 +1,25 @@
+{
+  ":configurator:resource-version": 1,
+  
+	"org.apache.felix.http~httpHIMSA":
+	{
+		"org.osgi.service.http.port": "8088",
+		"org.osgi.service.http.host": "localhost",
+		"org.apache.felix.http.context_path": "/himsa",
+		"org.apache.felix.http.name": "HimsaHTTP",
+		"org.apache.felix.http.runtime.init.id": "httpHIMSA"
+	},
+	"JakartarsServletWhiteboardRuntimeComponent~restHIMSA":
+	{
+		"jersey.jakartars.whiteboard.name" : "HimsaREST",
+		"jersey.context.path" : "rest",
+		"osgi.http.whiteboard.target" : "(id=httpHIMSA)"
+	},
+	"EMFMongoRepositoryConfigurator": 
+    {
+ 		"mongo.instances": "test1",
+	    "test1.baseUris": "mongodb://localhost:27017",
+	    "test1.databases": "test",
+	    "test1.test.repoType": "PROTOTYPE"
+  	}
+}

@@ -2,9 +2,24 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.avatar.himsa.model/src" modelPluginID="org.avatar.himsa.model"
     modelName="PatientExportV5-1" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.xsd.ecore.importer" complianceLevel="17.0" copyrightFields="false"
-    operationReflection="true" importOrganizing="true">
-  <foreignModel>PatientExportV5-1.xsd</foreignModel>
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="17.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true" oSGiCompatible="true">
+  <foreignModel>admittance.ecore</foreignModel>
+  <foreignModel>impedance.ecore</foreignModel>
+  <foreignModel>audiogram.ecore</foreignModel>
+  <foreignModel>audiogram_502.ecore</foreignModel>
+  <foreignModel>cochlear.ecore</foreignModel>
+  <foreignModel>instrument-fitting.ecore</foreignModel>
+  <foreignModel>instrument-selection.ecore</foreignModel>
+  <foreignModel>audiogram-metadata.ecore</foreignModel>
+  <foreignModel>instrument-test.ecore</foreignModel>
+  <foreignModel>journal.ecore</foreignModel>
+  <foreignModel>realear-measurement.ecore</foreignModel>
+  <foreignModel>notification.ecore</foreignModel>
+  <foreignModel>patient-export.ecore</foreignModel>
+  <foreignModel>remote-control.ecore</foreignModel>
+  <foreignModel>tinnitus.ecore</foreignModel>
+  <foreignModel>data.ecore</foreignModel>
   <genPackages prefix="_501" basePackage="com.himsa.measurement.admittance" resource="XML"
       disposableProviderFactory="true" ecorePackage="admittance.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="admittance.ecore#//DecayBasicResultType">
@@ -2339,38 +2354,38 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientsType/group"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference patient-export.ecore#//PatientsType/patient"/>
     </genClasses>
-    <genClasses ecoreClass="patient-export.ecore#//PatientType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/patientGUID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/firstName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/lastName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/middleName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/patientNo"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/activePatient"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/gender"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/birthDate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/userId"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/createDate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/address1"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/address2"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/address3"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/title"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/salutation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/sSNumber"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/zip"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/city"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/province"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/country"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/eMail"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/homeTelephone"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/workTelephone"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/mobileTelephone"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/insurance1"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/insurance2"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/physician"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/referral"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/other1"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/other2"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//PatientType/backEndSystemPatientId"/>
+    <genClasses ecoreClass="patient-export.ecore#//Patient">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/patientGUID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/lastName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/middleName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/patientNo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/activePatient"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/gender"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/birthDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/createDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/address1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/address2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/address3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/salutation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/sSNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/zip"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/city"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/province"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/country"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/eMail"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/homeTelephone"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/workTelephone"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/mobileTelephone"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/insurance1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/insurance2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/physician"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/referral"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/other1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/other2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute patient-export.ecore#//Patient/backEndSystemPatientId"/>
     </genClasses>
     <genClasses ecoreClass="patient-export.ecore#//PatientType1">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference patient-export.ecore#//PatientType1/actions"/>

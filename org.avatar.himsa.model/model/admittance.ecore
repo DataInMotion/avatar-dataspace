@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="_501" nsURI="http://www.himsa.com/Measurement/Admittance/501"
-    nsPrefix="_501">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="admittance" nsURI="http://www.himsa.com/Measurement/Admittance/501"
+    nsPrefix="admit">
   <eClassifiers xsi:type="ecore:EClass" name="AcousticImmittanceAssessmentType">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="AcousticImmittanceAssessment_._type"/>
@@ -1076,7 +1076,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="other" eType="#//FrequencyOtherType"
-        defaultValueLiteral="Other " unsettable="true">
+        defaultValueLiteral="Other" unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Other or unknow frequency&#xA;"/>
       </eAnnotations>

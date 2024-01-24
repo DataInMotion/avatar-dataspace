@@ -1,0 +1,14 @@
+-buildpath: \
+	org.osgi.service.component.annotations;version=latest,\
+	org.osgi.service.http.whiteboard;version=latest,\
+	org.gecko.emf.rest.jakartars;version=latest,\
+	org.gecko.emf.json;version=latest,\
+	org.avatar.himsa.model;version=project,\
+	org.avatar.himsa.service.example
+	
+-library: \
+	enableJakartaREST,\
+	enable-emf
+
+Bundle-Version: 1.0.0.SNAPSHOT
+Private-Package: org.avatar.himsa.rest

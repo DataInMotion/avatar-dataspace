@@ -365,13 +365,13 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PatientType">
+  <eClassifiers xsi:type="ecore:EClass" name="Patient">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Patient_Type"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="patientGUID" eType="#//PatientGUIDType"
-        unsettable="true">
+        unsettable="true" iD="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="PatientGUID"/>
@@ -622,7 +622,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PatientType1" eSuperTypes="#//PatientType">
+  <eClassifiers xsi:type="ecore:EClass" name="PatientType1" eSuperTypes="#//Patient">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Patient_._type"/>
       <details key="kind" value="elementOnly"/>
