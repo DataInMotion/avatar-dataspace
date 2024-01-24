@@ -6,6 +6,8 @@
 	geckoDIMC,\
 	geckoEMF,\
 	jakartaREST,\
+	geckoEMFUtil,\
+	geckoEMFRepository,\
 	geckoOSGi-Test,\
 	geckoJacoco
 
