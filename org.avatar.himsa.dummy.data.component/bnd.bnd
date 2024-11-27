@@ -1,0 +1,15 @@
+-library: enable-emf
+
+Bundle-Version: 1.0.0.SNAPSHOT
+-privatepackage: org.avatar.himsa.dummy.data.component
+-buildpath: \
+	org.gecko.emf.repository.api,\
+	org.gecko.emf.repository.mongo,\
+	osgi.cmpn,\
+	org.avatar.himsa.model;version=latest,\
+	net.datafaker;version=latest,\
+	org.gecko.emf.mongo.component
+	
+-includeresource: OSGI-INF/configurator/=config/
+Require-Capability: \
+	osgi.extender;filter:='(osgi.extender=osgi.configurator)'

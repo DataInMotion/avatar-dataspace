@@ -127,3 +127,8 @@ org.geckoprojects.persistence:org.gecko.emf.repository.bnd.library.workspace:6.1
 org.eclipse.osgi-technology.rest:org.eclipse.osgitech.rest.bnd.library:1.2.2
 
 org.bndtools:org.bndtools.templates.osgi:7.0.0
+
+# Deps for fake PII generator
+net.datafaker:datafaker:2.4.2
+net.datafaker:datafaker:jar:sources:2.4.2
+com.googlecode.libphonenumber:libphonenumber:8.13.50
