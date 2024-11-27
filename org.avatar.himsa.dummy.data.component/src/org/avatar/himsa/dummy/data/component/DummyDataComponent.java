@@ -39,7 +39,7 @@ public class DummyDataComponent {
 	private static final List<String> HEALTH_INSURANCE_COMPANIES_GERMANY = List.of("AOK", "BARMER", "HKK", "hkk health insurance", "KNIGHTSHAFT",
 			"DAK health", "KKH", "Techniker Krankenkasse", "TK", "HEK", "Hanseatic Health Insurance", "BKK", "IKK"); 
 	
-	private Faker faker = new Faker(new Locale("de"));
+	private Faker faker = new Faker(new Locale("it"));
 	private PromiseFactory factory = new PromiseFactory(Executors.newFixedThreadPool(4));
 	
 	@Activate
