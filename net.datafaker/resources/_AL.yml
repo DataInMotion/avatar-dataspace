@@ -1,5 +1,0 @@
-# encoding: utf-8
-_AL:
-  faker:
-    phone_number:
-      country_code: ['355']

@@ -1,5 +1,0 @@
-# encoding: utf-8
-_CA:
-  faker:
-    passport:
-      valid: "[A-Z]{2}[0-9]{6}"

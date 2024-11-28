@@ -7,8 +7,8 @@ Bundle-Version: 1.0.0.SNAPSHOT
 	org.gecko.emf.repository.mongo,\
 	osgi.cmpn,\
 	org.avatar.himsa.model;version=latest,\
-	net.datafaker;version=latest,\
-	org.gecko.emf.mongo.component
+	org.gecko.emf.mongo.component,\
+	net.datafaker
 	
 -includeresource: OSGI-INF/configurator/=config/
 Require-Capability: \
