@@ -130,3 +130,4 @@ org.bndtools:org.bndtools.templates.osgi:7.0.0
 
 # Runtime Deps for fake PII generator
 com.googlecode.libphonenumber:libphonenumber:8.13.50
+org.geckoprojects.libraries:net.datafaker:2.4.2-SNAPSHOT
