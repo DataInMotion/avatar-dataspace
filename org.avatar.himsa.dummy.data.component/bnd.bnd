@@ -8,7 +8,8 @@ Bundle-Version: ${project-version}
 	osgi.cmpn,\
 	org.avatar.himsa.model;version=latest,\
 	org.gecko.emf.mongo.component,\
-	net.datafaker;version=latest
+	net.datafaker;version=latest,\
+	org.emau.icmvc.ganimed.ttp.cm2
 	
 -includeresource: OSGI-INF/configurator/=config/
 Require-Capability: \
