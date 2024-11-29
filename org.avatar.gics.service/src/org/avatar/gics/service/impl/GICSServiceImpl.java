@@ -19,12 +19,13 @@ import java.net.URL;
 
 import org.avatar.gics.service.api.GICSService;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.emau.icmvc.ganimed.ttp.cm2.Cm2Factory;
+import org.emau.icmvc.ganimed.ttp.cm2.Cm2Package;
 import org.emau.icmvc.ganimed.ttp.cm2.GetAllConsentedIdsFor;
+import org.emau.icmvc.ganimed.ttp.cm2.GetAllConsentedIdsForResponse;
 import org.emau.icmvc.ganimed.ttp.cm2.PolicyKeyDTO;
 import org.emau.icmvc.ganimed.ttp.cm2.config.CheckConsentConfig;
 import org.emau.icmvc.ganimed.ttp.cm2.config.ConfigFactory;
@@ -37,6 +38,7 @@ import org.xmlsoap.schemas.envelope.Body;
 import org.xmlsoap.schemas.envelope.DocumentRoot;
 import org.xmlsoap.schemas.envelope.Envelope;
 import org.xmlsoap.schemas.envelope.EnvelopeFactory;
+import org.xmlsoap.schemas.envelope.EnvelopePackage;
 
 /**
  * 
@@ -51,19 +53,20 @@ public class GICSServiceImpl implements GICSService {
 	ResourceSet rs;
 	
 	@Reference(target = "("+EMFNamespaces.EMF_MODEL_CONTENT_TYPE+"=soap)")
-	EPackage soapPackage;
+	EnvelopePackage soapPackage;
 	
 	@Reference(target = "("+EMFNamespaces.EMF_MODEL_NAME+"=cm2)")
-	EPackage cm2Package;
+	Cm2Package cm2Package;
 	
 	@Activate
 	public void activate() {
 		Resource res = rs.createResource(URI.createFileURI("test.envelope"), "soap");
 		DocumentRoot soapRoot = EnvelopeFactory.eINSTANCE.createDocumentRoot();
 		Envelope envelope = EnvelopeFactory.eINSTANCE.createEnvelope();
-		soapRoot.setEnvelope(envelope);
 		Body body = EnvelopeFactory.eINSTANCE.createBody();
 		envelope.setBody(body);
+		soapRoot.setEnvelope(envelope);
+
 		
 		org.emau.icmvc.ganimed.ttp.cm2.DocumentRoot gICSRoot = Cm2Factory.eINSTANCE.createDocumentRoot();
 		GetAllConsentedIdsFor request = Cm2Factory.eINSTANCE.createGetAllConsentedIdsFor();
@@ -79,13 +82,24 @@ public class GICSServiceImpl implements GICSService {
 		request.setConfig(config);
 		gICSRoot.setGetAllConsentedIdsFor(request);
 		
-		body.getAny().add(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, request);
-		
-		Resource resource = rs.createResource(URI.createURI("http://localhost:8080/gics/gicsService"));
+		body.getAny().add(cm2Package.getDocumentRoot_GetAllConsentedIdsFor(), request);
+		Resource resource = rs.createResource(URI.createURI("http://localhost:8080/gics/gicsService"), "soap");
 		resource.getContents().add(soapRoot);
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		try {
+//			resource.save(baos, null);
+//			System.out.println("Result: " + new String(baos.toByteArray(), StandardCharsets.UTF_8));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+//		body.getAny().add(XMLTypePackage.Literals.XML_TYPE_DOCUMENT_ROOT__CDATA, request);
+//		
+//		Resource resource = rs.createResource(URI.createURI("http://localhost:8080/gics/gicsService"));
+//		resource.getContents().add(soapRoot);
 		try {
 			URL dwd = new URL("http://localhost:8080/gics/gicsService");
-//			URL dwd = new URL("https://cdc.dwd.de/geoserver/wfs?outputFormat=json");
 			HttpURLConnection dwdCon = (HttpURLConnection) dwd.openConnection();
 			dwdCon.addRequestProperty("Accept", "*/*");
 			dwdCon.addRequestProperty("Content-Type", "text/plain");
@@ -97,10 +111,17 @@ public class GICSServiceImpl implements GICSService {
 			int responseCode = dwdCon.getResponseCode();
 			if (responseCode == 200 ) {
 //				InputStream result = dwdCon.getInputStream();
-				Resource responseResource = rs.createResource(URI.createURI("reposnse.soap"));
+				Resource responseResource = rs.createResource(URI.createURI("reposnse.soap"), "soap");
 				responseResource.load(dwdCon.getInputStream(), null);
 				DocumentRoot response = (DocumentRoot) responseResource.getContents().get(0);
-				 System.out.println("Response: " + response.toString());
+				FeatureMap mixed = response.getMixed();
+				Envelope responseEnvelope = (Envelope) mixed.get(soapPackage.getDocumentRoot_Envelope(), true);
+				GetAllConsentedIdsForResponse responseBody =  (GetAllConsentedIdsForResponse) responseEnvelope.getBody().getAny().get(0).getValue();
+				
+				System.out.println("Test");
+				for(String id : responseBody.getReturn().getConsentIds()) {
+					System.out.println("Consented Id " + id);
+				}
 			} else {
 				System.out.println("Error: unexpected response code for request: " + responseCode);
 			}
@@ -108,9 +129,9 @@ public class GICSServiceImpl implements GICSService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		System.out.println("Test");
+//		
+//		
+//		
+//		System.out.println("Test");
 	}
 }

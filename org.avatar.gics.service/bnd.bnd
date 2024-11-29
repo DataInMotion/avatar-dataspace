@@ -5,5 +5,5 @@ javac.target: 17
 
 Bundle-Version: ${project-version}
 -buildpath: \
-	org.avatar.gics.service.model;version=latest,\
-	org.xmlsoap.model
+	org.xmlsoap.model,\
+	org.emau.icmvc.ganimed.ttp.cm2

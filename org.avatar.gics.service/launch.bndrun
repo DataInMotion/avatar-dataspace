@@ -23,14 +23,11 @@
 	org.eclipse.emf.ecore;version='[2.35.0,2.35.1)',\
 	org.eclipse.emf.ecore.xmi;version='[2.36.0,2.36.1)',\
 	org.xmlsoap.model;version='[1.0.0,1.0.1)',\
-	org.avatar.gics.service.model;version=snapshot
+	org.emau.icmvc.ganimed.ttp.cm2;version='[1.0.0,1.0.1)'
 
 -runrequires: \
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.shell)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.gogo.command)',\
-	bnd.identity;id='org.avatar.gics.service',\
-	bnd.identity;id='org.gecko.emf.osgi.component',\
-	bnd.identity;id='org.xmlsoap.model',\
-	bnd.identity;id='org.avatar.gics.service.model'
+	bnd.identity;id='org.avatar.gics.service'
 -runfw: org.apache.felix.framework;version='[7.0.5,7.0.5]'
 -runee: JavaSE-17
