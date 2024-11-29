@@ -1,6 +1,6 @@
 -library: enable-emf
 
-Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-Version: ${project-version}
 -privatepackage: org.avatar.himsa.dummy.data.component
 -buildpath: \
 	org.gecko.emf.repository.api,\

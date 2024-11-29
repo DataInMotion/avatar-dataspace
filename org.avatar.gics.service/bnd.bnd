@@ -1,0 +1,9 @@
+-library: enable-emf
+
+javac.source: 17
+javac.target: 17
+
+Bundle-Version: ${project-version}
+-buildpath: \
+	org.avatar.gics.service.model;version=latest,\
+	org.xmlsoap.model

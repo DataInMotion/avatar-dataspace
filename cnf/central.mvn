@@ -62,6 +62,10 @@ org.eclipse.platform:org.eclipse.equinox.preferences:3.10.100
 org.eclipse.jdt:org.eclipse.jdt.core:3.32.0
 org.eclipse.platform:org.eclipse.osgi:3.18.200
 org.eclipse.platform:org.eclipse.text:3.12.300
+org.eclipse.emf:org.eclipse.emf.common:2.29.0
+org.eclipse.emf:org.eclipse.emf.ecore:2.35.0
+org.eclipse.emf:org.eclipse.emf.ecore.xcore.lib:1.7.0
+org.eclipse.emf:org.eclipse.emf.ecore.xmi:2.36.0
 
 org.osgi:org.osgi.annotation.versioning:1.1.2
 org.osgi:org.osgi.annotation.bundle:2.0.0
@@ -118,16 +122,20 @@ org.osgi:osgi.cmpn:7.0.0
 org.slf4j:slf4j-simple:1.7.36
 org.slf4j:slf4j-api:1.7.36
 
-org.geckoprojects.bnd:org.gecko.bnd.dimc.library:1.5.0
-org.geckoprojects.bnd:org.gecko.bnd.jacoco.library:1.5.0
-org.geckoprojects.bnd:org.gecko.bnd.osgitest.library:1.5.0
+org.geckoprojects.bnd:org.gecko.bnd.dimc.library:1.6.0
+org.geckoprojects.bnd:org.gecko.bnd.jacoco.library:1.6.0
+org.geckoprojects.bnd:org.gecko.bnd.osgitest.library:1.6.0
 org.geckoprojects.emf:org.gecko.emf.osgi.bnd.library.workspace:6.0.1
 org.geckoprojects.emf.utils:org.gecko.emf.util.jakartars.bnd.library.workspace:2.3.0
 org.geckoprojects.persistence:org.gecko.emf.repository.bnd.library.workspace:6.1.0-SNAPSHOT
 org.eclipse.osgi-technology.rest:org.eclipse.osgitech.rest.bnd.library:1.2.2
+org.geckoprojects.emf:org.gecko.emf.osgi.example.model.basic:6.2.0
+
 
 org.bndtools:org.bndtools.templates.osgi:7.0.0
 
 # Runtime Deps for fake PII generator
 com.googlecode.libphonenumber:libphonenumber:8.13.50
 org.geckoprojects.libraries:net.datafaker:2.4.2-SNAPSHOT
+
+org.geckoprojects.emf.model:org.xmlsoap.model:1.0.0

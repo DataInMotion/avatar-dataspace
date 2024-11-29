@@ -1,0 +1,50 @@
+/*
+ */
+package org.emau.icmvc.ganimed.ttp.cm2;
+
+import org.eclipse.emf.ecore.EObject;
+
+import org.osgi.annotation.versioning.ProviderType;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>List Current Consent Templates</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.emau.icmvc.ganimed.ttp.cm2.ListCurrentConsentTemplates#getDomainName <em>Domain Name</em>}</li>
+ * </ul>
+ *
+ * @see org.emau.icmvc.ganimed.ttp.cm2.Cm2Package#getListCurrentConsentTemplates()
+ * @model extendedMetaData="name='listCurrentConsentTemplates' kind='elementOnly'"
+ * @generated
+ */
+@ProviderType
+public interface ListCurrentConsentTemplates extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Domain Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Domain Name</em>' attribute.
+	 * @see #setDomainName(String)
+	 * @see org.emau.icmvc.ganimed.ttp.cm2.Cm2Package#getListCurrentConsentTemplates_DomainName()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
+	 *        extendedMetaData="kind='element' name='domainName'"
+	 * @generated
+	 */
+	String getDomainName();
+
+	/**
+	 * Sets the value of the '{@link org.emau.icmvc.ganimed.ttp.cm2.ListCurrentConsentTemplates#getDomainName <em>Domain Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Domain Name</em>' attribute.
+	 * @see #getDomainName()
+	 * @generated
+	 */
+	void setDomainName(String value);
+
+} // ListCurrentConsentTemplates
