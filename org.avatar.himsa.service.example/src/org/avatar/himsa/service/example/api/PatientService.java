@@ -13,6 +13,8 @@
  */
 package org.avatar.himsa.service.example.api;
 
+import java.util.List;
+
 import org.avatar.himsa.export.Patient;
 
 /**
@@ -23,5 +25,7 @@ import org.avatar.himsa.export.Patient;
 public interface PatientService {
 	
 	Patient getPatient(String id);
+	
+	List<Patient> getPatientsWithConsent(String domainId, String policyId, String policyVersion);
 
 }
