@@ -9,7 +9,8 @@ Bundle-Version: ${project-version}
 	org.avatar.himsa.model;version=latest,\
 	org.gecko.emf.mongo.component,\
 	net.datafaker;version=latest,\
-	org.emau.icmvc.ganimed.ttp.cm2
+	org.emau.icmvc.ganimed.ttp.cm2,\
+	org.avatar.gics.service;version=latest
 	
 -includeresource: OSGI-INF/configurator/=config/
 Require-Capability: \

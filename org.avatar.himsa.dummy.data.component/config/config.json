@@ -7,5 +7,9 @@
 	    "test1.baseUris": "mongodb://localhost:27017",
 	    "test1.databases": "test",
 	    "test1.test.repoType": "PROTOTYPE"
+  	},
+  	"GICSService~test":
+  	{
+  		"url": "http://localhost:8080/gics/gicsService"
   	}
 }

@@ -18,6 +18,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.avatar.gics.service.api.GICSService;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.export.PatientExportFactory;
 import org.avatar.himsa.export.PatientExportPackage;
@@ -27,10 +28,12 @@ import org.emau.icmvc.ganimed.ttp.cm2.ConsentDTO;
 import org.emau.icmvc.ganimed.ttp.cm2.ConsentKeyDTO;
 import org.emau.icmvc.ganimed.ttp.cm2.ConsentStatus;
 import org.emau.icmvc.ganimed.ttp.cm2.ConsentTemplateKeyDTO;
+import org.emau.icmvc.ganimed.ttp.cm2.ConsentTemplateType;
 import org.emau.icmvc.ganimed.ttp.cm2.EntryType1;
 import org.emau.icmvc.ganimed.ttp.cm2.ModuleKeyDTO;
 import org.emau.icmvc.ganimed.ttp.cm2.ModuleStateDTO;
 import org.emau.icmvc.ganimed.ttp.cm2.ModuleStatesType;
+import org.emau.icmvc.ganimed.ttp.cm2.Qcdto;
 import org.emau.icmvc.ganimed.ttp.cm2.SignerIdDTO;
 import org.gecko.emf.repository.EMFRepository;
 import org.osgi.service.component.ComponentServiceObjects;
@@ -46,6 +49,9 @@ public class DummyDataComponent {
 
 	@Reference(target="(repo_id=test1.test)")
 	ComponentServiceObjects<EMFRepository> repoSO;
+	
+	@Reference
+	GICSService gicsService;
 	
 	private static final Logger LOGGER = Logger.getLogger(DummyDataComponent.class.getName());
 	private static final List<String> HEALTH_INSURANCE_COMPANIES_GERMANY = List.of("AOK", "BARMER", "HKK", "hkk health insurance", "KNIGHTSHAFT",
@@ -67,11 +73,16 @@ public class DummyDataComponent {
 	private void doCreateDummyData() {
 		EMFRepository repo = repoSO.getService();
 		try {
-			List<EObject> existingPatients = repo.getAllEObjects(PatientExportPackage.eINSTANCE.getPatient());
+			List<Patient> existingPatients = repo.getAllEObjects(PatientExportPackage.eINSTANCE.getPatient());
 			boolean createPatients = existingPatients.isEmpty();
 
 			if(createPatients) {
-				repo.save(createDummyPatients(10).stream().map(mr -> (EObject) mr).toList());
+				Collection<Patient> patients = createDummyPatients(10);
+				repo.save(patients.stream().map(mr -> (EObject) mr).toList());
+				for(Patient patient : patients) {
+					ConsentDTO consent = doCreateDummyConsent(patient);
+					gicsService.addConsent(consent);
+				}
 			}
 		} finally {
 			repoSO.ungetService(repo);
@@ -115,7 +126,7 @@ public class DummyDataComponent {
 		patient.setInsurance1((String) selectRandomElement(HEALTH_INSURANCE_COMPANIES_GERMANY.toArray(new String[] {})));
 		patient.setSSNumber(faker.idNumber().ssnValid());
 		
-		patient.setPhysician(faker.name().fullName());
+		patient.setPhysician("Dr ".concat(faker.name().firstName().concat(" " + faker.name().lastName())));
 		patient.setReferral(faker.name().fullName());
 		
 		patient.setPatientNo(faker.number().digits(6));
@@ -140,8 +151,9 @@ public class DummyDataComponent {
 		return patient;
 	}
 	
-	private ConsentDTO doCreateDummyConsent(String patientId) {
+	private ConsentDTO doCreateDummyConsent(Patient patient) {
 		ConsentDTO consent = Cm2Factory.eINSTANCE.createConsentDTO();
+		consent.setTemplateType(ConsentTemplateType.CONSENT);
 		ConsentKeyDTO consentKey = Cm2Factory.eINSTANCE.createConsentKeyDTO();
 		ConsentTemplateKeyDTO consentTemplateKey = Cm2Factory.eINSTANCE.createConsentTemplateKeyDTO();
 		consentTemplateKey.setDomainName("avatar");
@@ -150,7 +162,7 @@ public class DummyDataComponent {
 		consentKey.setConsentTemplateKey(consentTemplateKey);
 		SignerIdDTO sid = Cm2Factory.eINSTANCE.createSignerIdDTO();
 		sid.setIdType("Patient ID");
-		sid.setId(patientId);
+		sid.setId(patient.getPatientGUID());
 		consentKey.getSignerIds().add(sid);
 		consent.setKey(consentKey);
 		ModuleStatesType mst1 = Cm2Factory.eINSTANCE.createModuleStatesType();
@@ -161,7 +173,7 @@ public class DummyDataComponent {
 		mk.setVersion("1.0");
 		et1.setKey(mk);
 		ModuleStateDTO ms = Cm2Factory.eINSTANCE.createModuleStateDTO();
-		ms.setConsentState((ConsentStatus) selectRandomElement(ConsentStatus.values()));
+		ms.setConsentState((ConsentStatus) selectRandomElement(new ConsentStatus[] {ConsentStatus.ACCEPTED, ConsentStatus.DECLINED}));
 		et1.setValue(ms);
 		
 		EntryType1 et2 = Cm2Factory.eINSTANCE.createEntryType1();
@@ -171,7 +183,7 @@ public class DummyDataComponent {
 		mk2.setVersion("1.0");
 		et2.setKey(mk2);
 		ModuleStateDTO ms2 = Cm2Factory.eINSTANCE.createModuleStateDTO();
-		ms2.setConsentState((ConsentStatus) selectRandomElement(ConsentStatus.values()));
+		ms2.setConsentState((ConsentStatus) selectRandomElement(new ConsentStatus[] {ConsentStatus.ACCEPTED, ConsentStatus.DECLINED}));
 		et2.setValue(ms2);
 		
 		mst1.getEntry().add(et1);
@@ -180,35 +192,51 @@ public class DummyDataComponent {
 				
 		consent.setPatientSignatureIsFromGuardian(false);
 		consent.setPatientSigningPlace(faker.address().city());
-		
-		consent.setPhysicianId("Dr " + faker.name().firstName() + " " + faker.name().lastName());
-		consent.setPhysicianSigningPlace(faker.address().city());
 		consent.setPatientSignatureBase64(Base64.getEncoder().encodeToString(faker.name().fullName().getBytes()));
 		
+		consent.setPhysicianId(patient.getPhysician());
+		consent.setPhysicianSigningPlace(faker.address().city());
+		consent.setPhysicianSignatureBase64(Base64.getEncoder().encodeToString(faker.name().fullName().getBytes()));
+		Qcdto qualityControl = Cm2Factory.eINSTANCE.createQcdto();
 		try {
 			GregorianCalendar c = new GregorianCalendar();
-			Timestamp d1 = faker.date().past(1, TimeUnit.DAYS);
-			Timestamp d2 = faker.date().past(1, TimeUnit.DAYS);
-			Timestamp d3 = faker.date().past(1, TimeUnit.DAYS);
-			c.setTime(d1.before(d2) ? d2 : d1);
+			Timestamp d1 = faker.date().past(100, 7, TimeUnit.DAYS);
+			Timestamp d2 = faker.date().past(100, 7, TimeUnit.DAYS);
+			Timestamp d3 = faker.date().past(100, 7, TimeUnit.DAYS);
+			
+			Timestamp creation = d1.before(d2) ? d1 : d2;
+			creation = creation.before(d3) ? creation : d3;
+			Timestamp patientSig = creation.before(d3) ? d3 : creation;
+			Timestamp physicianSig = faker.date().between(patientSig, faker.date().past(6, TimeUnit.DAYS));
+			
+			c.setTime(creation.equals(d1) ? d2 : d1);
 			XMLGregorianCalendar xmlCalendar;
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			consent.setCreationDate(xmlCalendar); 
 			consentKey.setConsentDate(xmlCalendar);
 			
 			c = new GregorianCalendar();
-			c.setTime(d1.before(d2) ? d1 : d2);
+			c.setTime(patientSig);
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			consent.setPatientSigningDate(xmlCalendar);
 			
 			c = new GregorianCalendar();
-			c.setTime(d1.before(d3) ? d1 : d3);
+			c.setTime(physicianSig);
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			consent.setPhysicianSigningDate(xmlCalendar);
+			
+			Timestamp d4 = faker.date().past(7, TimeUnit.DAYS);
+			c = new GregorianCalendar();
+			c.setTime(d4);
+			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+			qualityControl.setDate(xmlCalendar);
 		} catch (DatatypeConfigurationException e) {
 			e.printStackTrace();
 		}
 		
+		qualityControl.setInspector(faker.name().fullName());
+		qualityControl.setType((String) selectRandomElement(new String[] {"checked_minor_faults", "checked_no_faults"}));
+		consent.setQualityControl(qualityControl);
 		return consent;
 	}
 	
