@@ -13,10 +13,12 @@
  */
 package org.avatar.himsa.rest;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.service.example.api.PatientService;
+import org.gecko.emf.utilities.UtilitiesFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -74,11 +76,28 @@ public class DemoResource {
 		}
 		Patient p = patientService.getPatient(id);
 		if (Objects.isNull(p)) {
-			System.out.println("Na patient found with id " + id);
+			System.out.println("No patient found with id " + id);
 			return Response.noContent().build();
 		} else {
 			return Response.ok(p).build();
 		}
 	}
-
+	
+	@GET
+	@Path("/patient/with/consent/{domainId}/{policyId}/{policyVersion}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response patientWithConsent(@PathParam("domainId") String domainId, @PathParam("policyId") String policyId,
+			@PathParam("policyVersion") String policyVersion) {
+		if (Objects.isNull(domainId) || Objects.isNull(policyId)) {
+			return Response.noContent().build();
+		}
+		List<Patient> patientsWithConsent = patientService.getPatientsWithConsent(domainId, policyId, policyVersion == null ? "1.0" : policyVersion);
+		if(patientsWithConsent.isEmpty()) {
+			System.out.println("No patients with consent found");
+			return Response.noContent().build();
+		}
+		org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
+		emfResponse.getData().addAll(patientsWithConsent);
+		return Response.ok(emfResponse).build();
+	}
 }

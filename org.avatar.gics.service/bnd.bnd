@@ -1,0 +1,9 @@
+-library: enable-emf
+
+javac.source: 17
+javac.target: 17
+
+Bundle-Version: ${project-version}
+-buildpath: \
+	org.xmlsoap.model,\
+	org.emau.icmvc.ganimed.ttp.cm2

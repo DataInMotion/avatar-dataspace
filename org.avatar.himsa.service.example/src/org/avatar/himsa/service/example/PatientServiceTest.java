@@ -13,14 +13,19 @@
  */
 package org.avatar.himsa.service.example;
 
+import java.util.List;
 import java.util.Objects;
 
+import org.avatar.gics.service.api.GICSService;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.export.PatientExportFactory;
 import org.avatar.himsa.export.PatientExportPackage;
 import org.avatar.himsa.service.example.api.PatientService;
+import org.emau.icmvc.ganimed.ttp.cm2.GetAllConsentedIdsForResponse;
 import org.gecko.emf.repository.EMFRepository;
-import org.osgi.service.component.annotations.Activate;
+import org.gecko.emf.repository.query.IQuery;
+import org.gecko.emf.repository.query.QueryRepository;
+import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -37,20 +42,22 @@ public class PatientServiceTest implements PatientService {
 	private PatientExportFactory modelFactory;
 	@Reference
 	private PatientExportPackage modelPackage;
+	@Reference(target="(repo_id=test1.test)")
+	ComponentServiceObjects<EMFRepository> repoSO;
 	@Reference
-	private EMFRepository repo;
+	GICSService gicsService;
 	
-	@Activate
-	public void activate() {
-		Patient patient = modelFactory.createPatient();
-//		patient.setPatientGUID(UUID.randomUUID().toString());
-		patient.setPatientGUID("etester");
-		patient.setFirstName("Emil");
-		patient.setLastName("Tester");
-		System.out.println("Ready to do something with " + patient);
-		// untested!!!!
-		repo.save(patient);
-	}
+//	@Activate
+//	public void activate() {
+//		Patient patient = modelFactory.createPatient();
+////		patient.setPatientGUID(UUID.randomUUID().toString());
+//		patient.setPatientGUID("etester");
+//		patient.setFirstName("Emil");
+//		patient.setLastName("Tester");
+//		System.out.println("Ready to do something with " + patient);
+//		// untested!!!!
+//		repo.save(patient);
+//	}
 
 	/* 
 	 * (non-Javadoc)
@@ -61,10 +68,28 @@ public class PatientServiceTest implements PatientService {
 		if (Objects.isNull(id)) {
 			return null;
 		}
-		return repo.getEObject(modelPackage.getPatient(), id);
+		EMFRepository repo = repoSO.getService();
+		try {
+			return repo.getEObject(modelPackage.getPatient(), id);
+		} finally {
+			repoSO.ungetService(repo);
+		}
 	}
-	
-	
 
-
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.himsa.service.example.api.PatientService#getPatientsWithConsent(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<Patient> getPatientsWithConsent(String domainId, String policyId, String policyVersion) {
+		GetAllConsentedIdsForResponse allConsentedIdsFor = gicsService.getAllConsentedIdsFor(domainId, policyId, policyVersion, "Patient ID");
+		List<String> patientIdsWithConsent = allConsentedIdsFor.getReturn().getConsentIds();
+		QueryRepository repo = (QueryRepository) repoSO.getService();
+		try {
+			IQuery query = repo.createQueryBuilder().column(modelPackage.getPatient_PatientGUID()).in(patientIdsWithConsent.toArray()).build();	
+			return repo.getEObjectsByQuery(modelPackage.getPatient(), query);
+		} finally {
+			repoSO.ungetService(repo);
+		}
+	}
 }

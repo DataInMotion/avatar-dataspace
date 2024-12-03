@@ -11,21 +11,15 @@
  * Contributors:
  *     Data In Motion - initial API and implementation
  */
-package org.avatar.himsa.service.example.api;
-
-import java.util.List;
-
-import org.avatar.himsa.export.Patient;
+package org.avatar.gics.service.api;
 
 /**
  * 
- * @author mark
- * @since 24.01.2024
+ * @author ilenia
+ * @since Nov 29, 2024
  */
-public interface PatientService {
-	
-	Patient getPatient(String id);
-	
-	List<Patient> getPatientsWithConsent(String domainId, String policyId, String policyVersion);
+public @interface GICSServiceConfig {
 
+	String url() default "";
+	
 }
