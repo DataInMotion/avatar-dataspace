@@ -5,7 +5,9 @@
 	org.gecko.emf.json;version=latest,\
 	org.avatar.himsa.model;version=project,\
 	org.avatar.himsa.service.example,\
-	org.gecko.emf.util.model
+	org.gecko.emf.util.model,\
+	de.avatar.connector.model,\
+	org.gecko.emf.repository.api
 	
 -library: \
 	enableJakartaREST,\

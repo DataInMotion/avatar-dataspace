@@ -86,5 +86,6 @@
 	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
 	org.osgi.service.metatype;version='[1.4.1,1.4.2)',\
 	org.xmlsoap.model;version='[1.0.0,1.0.1)',\
-	org.gecko.emf.util.model;version='[2.2.2,2.2.3)'
+	org.gecko.emf.util.model;version='[2.2.2,2.2.3)',\
+	de.avatar.connector.model;version='[1.0.0,1.0.1)'
 -runblacklist: bnd.identity;id='org.apache.felix.http.jetty'

@@ -16,6 +16,9 @@ package org.avatar.himsa.service.example.api;
 import java.util.List;
 
 import org.avatar.himsa.export.Patient;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.gecko.emf.repository.query.IQuery;
 
 /**
  * 
@@ -27,5 +30,10 @@ public interface PatientService {
 	Patient getPatient(String id);
 	
 	List<Patient> getPatientsWithConsent(String domainId, String policyId, String policyVersion);
+		
+	List<Patient> getPatientsByRangeQuery(EAttribute columnName, Object startValue, Object endValue, boolean isStartIncluded, boolean isEndIncluded, 
+			EStructuralFeature[] ... projectionFeaturePaths);
+	
+	List<Patient> getPatientsByQuery(IQuery query, EStructuralFeature[] ... projectionFeaturePaths);
 
 }
