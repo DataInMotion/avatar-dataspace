@@ -18,40 +18,6 @@ package org.avatar.himsa.service.example.api;
  * @author ilenia
  * @since Jan 22, 2025
  */
-public class QueryWhere {
+public record QueryWhere(String queryType, String featureName, String comparatorName, String comparatorType, 
+		String startValue, String endValue, boolean includeStartValue, boolean includeEndValue) { }
 
-	String type; 
-	String featureName;
-	String comparator;
-	String value;
-	
-	public QueryWhere() {
-		
-	}
-	
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
-	public String getFeatureName() {
-		return featureName;
-	}
-	public void setFeatureName(String featureName) {
-		this.featureName = featureName;
-	}
-	public String getComparator() {
-		return comparator;
-	}
-	public void setComparator(String comparator) {
-		this.comparator = comparator;
-	}
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-}

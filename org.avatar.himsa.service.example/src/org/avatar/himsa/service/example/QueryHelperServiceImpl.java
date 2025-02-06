@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.avatar.himsa.service.example.api.QueryHelperService;
 import org.avatar.himsa.service.example.api.QueryWhere;
@@ -39,7 +40,8 @@ public class QueryHelperServiceImpl implements QueryHelperService {
 	@Reference(target="(repo_id=test1.test)")
 	ComponentServiceObjects<EMFRepository> repoSO;
 	
-	private final static DateFormat DATE_FORMAT = new SimpleDateFormat("dd-mm-yyyy");
+	private static final Logger LOGGER = Logger.getLogger(QueryHelperServiceImpl.class.getName());
+	private final static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
 
 	/* 
@@ -52,12 +54,15 @@ public class QueryHelperServiceImpl implements QueryHelperService {
 		try {
 			IQueryBuilder queryBuilder = repo.createQueryBuilder();
 			for(QueryWhere w : where) {
-				IQueryBuilder qb = getQueryBuilderByComparator(w.getComparator(), queryBuilder);
-				qb = qb.column(w.getFeatureName());
-				qb = setQueryValueByComparator(w.getComparator(), w.getValue(), queryBuilder);
+				IQueryBuilder qb = getQueryBuilderByComparatorName(w.comparatorName(), queryBuilder);
+				qb = qb.column(w.featureName());
+				qb = setQueryValueByComparatorType(w.comparatorType(), w.startValue(), w.endValue(), w.includeStartValue(), w.includeEndValue(), queryBuilder);
 				
-				if("AND".equals(w.getType())) queryBuilder.and(qb.build());
-				else if("OR".equals(w.getType())) queryBuilder.or(qb.build());
+				if("AND".equals(w.queryType())) queryBuilder.and(qb.build());
+				else if("OR".equals(w.queryType())) queryBuilder.or(qb.build());
+				else LOGGER.warning(String.format("Query Type %s currently not supported. Adding an AND query.", w.queryType()));
+//				TODO: what if we have NOT as query Type????
+				
 			}
 			return queryBuilder.build();
 		} finally {
@@ -65,29 +70,38 @@ public class QueryHelperServiceImpl implements QueryHelperService {
 		}
 	}
 	
-	private IQueryBuilder getQueryBuilderByComparator(String comparator, IQueryBuilder builder) {
-		switch(comparator) {
-		case "isBefore": case "isAfter": case "isBeforeOrEqual": case "isAfterOrEqual": 
-			case "lt": case "lte": case "gt": case "gte":
+	
+	private IQueryBuilder getQueryBuilderByComparatorName(String comparatorName, IQueryBuilder builder) {
+		switch(comparatorName) {
+		case "IsBefore": case "IsAfter": case "IsBeforeOrEqual": case "IsAfterOrEqual": 
+			case "Lt": case "Lte": case "Gt": case "Gte": case "IsInRange":
 				return builder.rangeQuery();
 		default:
 			return builder.allQuery();
 		}
 	}
 	
-	private IQueryBuilder setQueryValueByComparator(String comparator, String value, IQueryBuilder builder) throws ParseException{
-		switch(comparator) {
-		case "isBefore": case "lt":
-			return builder.endValue(comparator.equals("lt") ? Float.valueOf(value) : DATE_FORMAT.parse(value));
-		case "isBeforeOrEqual": case "lte": 
-			return builder.endValue(comparator.equals("lte") ? Float.valueOf(value) : DATE_FORMAT.parse(value));
-		case "isAfter": case "gt":
-				return builder.startValue(comparator.equals("gt") ? Float.valueOf(value) : DATE_FORMAT.parse(value));
-		case "isAfterOrEqual": case "gte":
-			return builder.startValue(comparator.equals("gte") ? Float.valueOf(value) : DATE_FORMAT.parse(value));
+	
+	
+	private IQueryBuilder setQueryValueByComparatorType(String comparatorType,
+			String start, String end, boolean includeStart, boolean includeEnd, 
+			IQueryBuilder builder) throws ParseException{
+		switch(comparatorType) {
+		case "NUMERIC": 
+			if(start != null) builder.startValue(Float.valueOf(start), includeStart ? true : false);
+			if(end != null) builder.endValue(Float.valueOf(end), includeEnd ? true : false);		
+			break;
+		case "DATE":
+			if(start != null) builder.startValue(DATE_FORMAT.parse(start), includeStart ? true : false);
+			if(end != null) builder.endValue(DATE_FORMAT.parse(end), includeEnd ? true : false);
+			break;
 		default:
-			return builder.simpleValue(value);
+			builder.simpleValue(start != null ? start : end);
+			break;
 		}
+		return builder;
 	}
+
+	
 
 }

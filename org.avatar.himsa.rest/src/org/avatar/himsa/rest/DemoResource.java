@@ -13,30 +13,26 @@
  */
 package org.avatar.himsa.rest;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.avatar.himsa.export.Patient;
-import org.avatar.himsa.export.PatientExportFactory;
-import org.avatar.himsa.export.PatientExportPackage;
 import org.avatar.himsa.service.example.api.PatientService;
 import org.avatar.himsa.service.example.api.QueryHelperService;
-import org.avatar.himsa.service.example.api.QueryWhere;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.gecko.emf.utilities.UtilitiesFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsName;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsResource;
+import org.osgi.util.promise.Deferred;
+import org.osgi.util.promise.Promise;
 
 import de.avatar.model.connector.AConnectorFactory;
 import de.avatar.model.connector.DryRunResult;
@@ -45,7 +41,6 @@ import de.avatar.model.connector.EndpointResponse;
 import de.avatar.model.connector.ErrorResult;
 import de.avatar.model.connector.PendingResult;
 import de.avatar.model.connector.ResponseCode;
-import de.avatar.model.connector.ResponseResult;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -53,7 +48,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.gecko.emf.repository.query.IQuery;
 
 /**
  * 
@@ -75,14 +69,14 @@ import org.gecko.emf.repository.query.IQuery;
 @Component(service = DemoResource.class, enabled = true, scope = ServiceScope.PROTOTYPE)
 @Path("/")
 public class DemoResource {
-	
-	private final static DateFormat DATE_FORMAT = new SimpleDateFormat("dd-mm-yyyy");
-	
+		
 	@Reference
 	private PatientService patientService;
 	
 	@Reference
 	private QueryHelperService queryHelperService;
+	
+	private static Map<String, Promise<List<Patient>>> REQUEST_PROMISE_MAP = new ConcurrentHashMap<>();
 
 	@GET
 	@Path("/hello")
@@ -97,7 +91,6 @@ public class DemoResource {
 			@QueryParam("distinct") boolean distinct) {
 		System.out.println("Got a request for " + requestId);
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setSourceId(requestId);
 		response.setCode(ResponseCode.PENDING);
 		response.setTimestamp(Instant.now().toEpochMilli());
 		PendingResult result = AConnectorFactory.eINSTANCE.createPendingResult();;
@@ -106,152 +99,75 @@ public class DemoResource {
 		return Response.ok(response).build();
 	}
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/patient/query")
-	public Response patientByQuery(@QueryParam("where") String[] where, @QueryParam("projections") String[] projections) {
-		
-		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-
-		List<QueryWhere> qwhere = new ArrayList<>(where.length);
-		for(String w : where) {
-			String[] wSplit = w.split(",");
-			if(wSplit.length != 4) {
-				response.setCode(ResponseCode.ERROR);
-				ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
-				errRes.setError(String.format("Expected 4 attributes for every 'where' parameter"));
-				errRes.setErrorText(String.format("Expected 4 attributes for every 'where' parameter"));
-				response.setResult(errRes);
-				return Response.ok(response).build();
-			} else {
-				QueryWhere qw = new QueryWhere();
-				qw.setType(wSplit[0]);
-				qw.setFeatureName(wSplit[1]);
-				qw.setComparator(wSplit[2]);
-				qw.setValue(wSplit[3]);
-				qwhere.add(qw);
-			}
-		}
-		EStructuralFeature[][] projectionsFeatures = new EStructuralFeature[projections.length][];
-		int i = 0, j = 0;
-		for(String proj : projections) {
-			String[] projSplit = proj.split("-");
-			j = 0;
-			for(String projName : projSplit) {
-				projectionsFeatures[i] = new EStructuralFeature[projSplit.length];
-				EStructuralFeature f = PatientExportPackage.Literals.PATIENT.getEStructuralFeature(projName);
-				if(f != null) {
-					projectionsFeatures[i][j] = f;
-					j++;
-				}
-			}
-			i++;				
-		}
-		try {
-			IQuery query = queryHelperService.buildQuery(qwhere);
-			List<Patient> patients = patientService.getPatientsByQuery(query, projectionsFeatures);
-			response.setCode(patients == null || patients.isEmpty() ? ResponseCode.NO_CONTENT : ResponseCode.OK);
-			response.setTimestamp(Instant.now().toEpochMilli());
-			org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-			emfResponse.getData().addAll(patients);
-			
-			EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
-			result.setValue(emfResponse);
-			response.setResult(result);			
-			return Response.ok(response).build();
-		} catch(ParseException e) {
-			response.setCode(ResponseCode.ERROR);
-			ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
-			errRes.setThrowable(e);
-			errRes.setError("Error parsing dates from query parameters. Format should be 'dd-mm-yyyy'");
-			errRes.setErrorText("Error parsing dates from query parameters. Format should be 'dd-mm-yyyy'");
-			response.setResult(errRes);
-			return Response.ok(response).build();
-		}	
-		
-	}
-	
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("/patient/query")
+//	public Response patientByQuery(@QueryParam("where") String[] where, @QueryParam("projections") String[] projections) {
+//		
+//		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
+//		response.setId(UUID.randomUUID().toString());
+//		
+//		List<QueryWhere> qwhere = new ArrayList<>(where.length);
+//		for(String w : where) {
+//			qwhere.add(extractQWhereFromRequest(w));
+//		}
+//		EStructuralFeature[][] projectionsFeatures = new EStructuralFeature[projections.length][];
+//		int i = 0, j = 0;
+//		for(String proj : projections) {
+//			String[] projSplit = proj.split("-");
+//			j = 0;
+//			for(String projName : projSplit) {
+//				projectionsFeatures[i] = new EStructuralFeature[projSplit.length];
+//				EStructuralFeature f = PatientExportPackage.Literals.PATIENT.getEStructuralFeature(projName);
+//				if(f != null) {
+//					projectionsFeatures[i][j] = f;
+//					j++;
+//				}
+//			}
+//			i++;				
+//		}
+//		try {
+//			IQuery query = queryHelperService.buildQuery(qwhere);
+//			List<Patient> patients = patientService.getPatientsByQuery(query, projectionsFeatures);
+//			response.setCode(patients == null || patients.isEmpty() ? ResponseCode.NO_CONTENT : ResponseCode.OK);
+//			response.setTimestamp(Instant.now().toEpochMilli());
+//			org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
+//			emfResponse.getData().addAll(patients);
+//			
+//			EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
+//			result.setValue(emfResponse);
+//			response.setResult(result);			
+//			return Response.ok(response).build();
+//		} catch(ParseException e) {
+//			response.setCode(ResponseCode.ERROR);
+//			ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
+//			errRes.setThrowable(e);
+//			errRes.setError("Error parsing dates from query parameters. Format should be 'dd-mm-yyyy'");
+//			errRes.setErrorText("Error parsing dates from query parameters. Format should be 'dd-mm-yyyy'");
+//			response.setResult(errRes);
+//			return Response.ok(response).build();
+//		}			
+//	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/patient/range")
-	public Response patientByRangeQuery(@QueryParam("type") String type, @QueryParam("feature") String feature, 
-			@QueryParam("start") String start, @QueryParam("end") String end, @QueryParam("includeStart") boolean includeStart, 
-			@QueryParam("includeEnd") boolean includeEnd, @QueryParam("projections") String[] projections) {
-
+	@Path("/patient/query/{requestId}")
+	public Response patientByQuery(@PathParam("requestId") String requestId,
+			@QueryParam("where") String[] where, @QueryParam("projections") String[] projections) {
+		
+		Promise<List<Patient>> promise = getPromiseResult(where, projections);
+		REQUEST_PROMISE_MAP.put(requestId, promise);
+		
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		try {
-			EAttribute queryAttribute = (EAttribute) PatientExportPackage.Literals.PATIENT.getEStructuralFeature(feature);
-			if(queryAttribute == null) {
-				response.setCode(ResponseCode.ERROR);
-				ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
-				errRes.setError(String.format("No EAttribute with name %s found in PatiendExport Package!", feature));
-				errRes.setErrorText(String.format("No EAttribute with name %s found in PatiendExport Package!", feature));
-				response.setResult(errRes);
-				return Response.ok(response).build();
-			}
-			EStructuralFeature[][] projectionsFeatures = new EStructuralFeature[projections.length][];
-			int i = 0, j = 0;
-			for(String proj : projections) {
-				String[] projSplit = proj.split("-");
-				j = 0;
-				for(String projName : projSplit) {
-					projectionsFeatures[i] = new EStructuralFeature[projSplit.length];
-					EStructuralFeature f = PatientExportPackage.Literals.PATIENT.getEStructuralFeature(projName);
-					if(f != null) {
-						projectionsFeatures[i][j] = f;
-						j++;
-					}
-				}
-				i++;				
-			}
-			List<Patient> patients = null;
-			if("numeric".equals(type)) {
-				Float startNum = start == null ? null : Float.valueOf(start);
-				Float endNum = end == null ? null : Float.valueOf(end);
-				patients = patientService.getPatientsByRangeQuery(queryAttribute, startNum, endNum, includeEnd, includeEnd, projectionsFeatures);					
-			} else if("date".equals(type)) {
-				try {
-					Date startDate = start == null ? null : DATE_FORMAT.parse(start);
-					Date endDate = end == null ? null : DATE_FORMAT.parse(end);
-					patients = patientService.getPatientsByRangeQuery(queryAttribute, startDate, endDate, includeEnd, includeEnd, projectionsFeatures);					
-				} catch(ParseException e) {
-					response.setCode(ResponseCode.ERROR);
-					ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
-					errRes.setThrowable(e);
-					errRes.setError("Error parsing dates from query parameters. Format should be 'dd-mm-yyyy'");
-					errRes.setErrorText("Error parsing dates from query parameters. Format should be 'dd-mm-yyyy'");
-					response.setResult(errRes);
-					return Response.ok(response).build();
-				}				
-			} else {
-				response.setCode(ResponseCode.ERROR);
-				ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
-				errRes.setError("The 'type' query parameter should either be 'numeric' or 'date'");
-				errRes.setErrorText("The 'type' query parameter should either be 'numeric' or 'date'");
-				response.setResult(errRes);
-				return Response.ok(response).build();
-			}
-			
-			response.setCode(patients == null || patients.isEmpty() ? ResponseCode.NO_CONTENT : ResponseCode.OK);
-			response.setTimestamp(Instant.now().toEpochMilli());
-			org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-			emfResponse.getData().addAll(patients);
-			
-			EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
-			result.setValue(emfResponse);
-			response.setResult(result);			
-			return Response.ok(response).build();
-		} catch(ClassCastException e) {
-			response.setCode(ResponseCode.ERROR);
-			ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
-			errRes.setThrowable(e);
-			errRes.setError("Query parameter 'feature' should be an EAttribute!");
-			errRes.setErrorText("Query parameter 'feature' should be an EAttribute!");
-			response.setResult(errRes);
-			return Response.ok(response).build();
-		}
+		response.setId(UUID.randomUUID().toString());
+		response.setCode(ResponseCode.PENDING);
+		PendingResult pendingRes = AConnectorFactory.eINSTANCE.createPendingResult();
+		pendingRes.setEstRuntime(7);
+		response.setResult(pendingRes);
+		return Response.ok(response).build();
 	}
+	
+
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -259,37 +175,59 @@ public class DemoResource {
 	public Response status(@PathParam("requestId") String requestId) {
 		System.out.println("Got a status request for " + requestId);
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setSourceId(requestId);
-		response.setCode((ResponseCode) selectRandomElement(ResponseCode.values()));
 		response.setTimestamp(Instant.now().toEpochMilli());
-		ResponseResult result = null;
-		switch(response.getCode()) {
-		case ERROR: case NO_CONTENT: case TIMEOUT: case OTHER: default:
-			result = AConnectorFactory.eINSTANCE.createErrorResult();
-			((ErrorResult) result).setError("An error occurred");
-			break;
-		case OK:
-			result = AConnectorFactory.eINSTANCE.createEcoreResult();
-			((EcoreResult) result).setValue(PatientExportFactory.eINSTANCE.createPatient());
-			break;		
-		case PENDING:
-			result = AConnectorFactory.eINSTANCE.createPendingResult();
-			((PendingResult) result).setEstRuntime(50);
-			break;			
+		
+		Promise<List<Patient>> promise = REQUEST_PROMISE_MAP.get(requestId);
+		if(promise == null) {
+			response.setCode(ResponseCode.ERROR);
+			ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
+			errResult.setError(String.format("No query is running for request %s", requestId));
+			response.setResult(errResult);
+			return Response.ok(response).build();			
 		}
-		response.setResult(result);
-		return Response.ok(response).build();
+		
+		if(!promise.isDone()) {
+			response.setCode(ResponseCode.PENDING);
+			PendingResult pendingResult = AConnectorFactory.eINSTANCE.createPendingResult();
+			pendingResult.setEstRuntime(7);
+			response.setResult(pendingResult);
+			return Response.ok(response).build();	
+		}
+		else {
+			try {
+				if(promise.getFailure() != null) {
+					response.setCode(ResponseCode.ERROR);
+					ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
+					errResult.setError(String.format("Query failed for request %s", requestId));
+					response.setResult(errResult);					
+				} else {
+					List<Patient> patients = promise.getValue();
+					if(patients.isEmpty()) {
+						response.setCode(ResponseCode.NO_CONTENT);
+					} else {
+						response.setCode(ResponseCode.OK);
+						org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
+						emfResponse.getData().addAll(patients);
+						
+						EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
+						result.setValue(emfResponse);
+						response.setResult(result);			
+					}
+				}				
+				REQUEST_PROMISE_MAP.remove(requestId);
+				return Response.ok(response).build();	
+			} catch(InterruptedException | InvocationTargetException e) {
+				return Response.serverError().build();
+			}			
+		}
 	}
 	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/dryrun/{requestId}")
-	public Response dryrun(@PathParam("requestId") String requestId, @QueryParam("count") boolean count, 
-			@QueryParam("distinct") boolean distinct) {
-		System.out.println(String.format("Got a dry run request with id %s, count %s, distinct %s", requestId, count, distinct));
+	@Path("/dryrun")
+	public Response dryrun(@QueryParam("where") String[] where, @QueryParam("projections") String[] projections) {
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setSourceId(requestId);
 		response.setCode(ResponseCode.OK);
 		response.setTimestamp(Instant.now().toEpochMilli());
 		DryRunResult result = AConnectorFactory.eINSTANCE.createDryRunResult();
@@ -338,13 +276,28 @@ public class DemoResource {
 		return Response.ok(emfResponse).build();
 	}
 	
-	
-	
-	private <T extends Object> Object selectRandomElement(T[] elements)  {
-		Random rndm = new Random();
-		int rndmIndx = rndm.nextInt(elements.length);
-		Object rndmElem = elements[rndmIndx];
-		return rndmElem;
+	private Promise<List<Patient>> getPromiseResult(String[] where, String[] projections) {
+		
+		Deferred<List<Patient>> def = new Deferred<>();
+		Callable<List<Patient>> callable = new RequestExecutor(where, projections, patientService, queryHelperService);
+		try {
+			def.resolve(callable.call());
+		} catch (Exception e) {
+			def.fail(e);
+		}		
+		return def.getPromise();
 	}
+	
+	
+	
+	
+	
+	
+//	private <T extends Object> Object selectRandomElement(T[] elements)  {
+//		Random rndm = new Random();
+//		int rndmIndx = rndm.nextInt(elements.length);
+//		Object rndmElem = elements[rndmIndx];
+//		return rndmElem;
+//	}
 	
 }

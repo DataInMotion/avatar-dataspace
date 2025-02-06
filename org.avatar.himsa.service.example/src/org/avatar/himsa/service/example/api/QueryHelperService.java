@@ -26,5 +26,5 @@ import org.gecko.emf.repository.query.IQuery;
 public interface QueryHelperService {
 	
 	IQuery buildQuery(List<QueryWhere> where) throws ParseException;
-
+	
 }

@@ -8,7 +8,8 @@
 	bnd.identity;id='org.apache.felix.gogo.shell',\
 	bnd.identity;id='org.avatar.himsa.rest',\
 	bnd.identity;id='org.avatar.himsa.service.example',\
-	bnd.identity;id='org.avatar.himsa.runtime.config'
+	bnd.identity;id='org.avatar.himsa.runtime.config',\
+	bnd.identity;id='org.avatar.himsa.dummy.data.component'
 -runbundles: \
 	jakarta.activation-api;version='[2.1.2,2.1.3)',\
 	jakarta.annotation-api;version='[2.1.1,2.1.2)',\
@@ -87,5 +88,8 @@
 	org.osgi.service.metatype;version='[1.4.1,1.4.2)',\
 	org.xmlsoap.model;version='[1.0.0,1.0.1)',\
 	org.gecko.emf.util.model;version='[2.2.2,2.2.3)',\
-	de.avatar.connector.model;version='[1.0.0,1.0.1)'
+	de.avatar.connector.model;version='[1.0.0,1.0.1)',\
+	com.googlecode.libphonenumber;version='[8.13.50,8.13.51)',\
+	net.datafaker;version='[2.4.2,2.4.3)',\
+	org.avatar.himsa.dummy.data.component;version=snapshot
 -runblacklist: bnd.identity;id='org.apache.felix.http.jetty'

@@ -7,7 +7,8 @@
 	org.avatar.himsa.service.example,\
 	org.gecko.emf.util.model,\
 	de.avatar.connector.model,\
-	org.gecko.emf.repository.api
+	org.gecko.emf.repository.api,\
+	org.osgi.util.promise
 	
 -library: \
 	enableJakartaREST,\

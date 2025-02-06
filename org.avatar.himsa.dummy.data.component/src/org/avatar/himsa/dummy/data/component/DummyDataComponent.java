@@ -54,6 +54,8 @@ public class DummyDataComponent {
 	GICSService gicsService;
 	
 	private static final Logger LOGGER = Logger.getLogger(DummyDataComponent.class.getName());
+	
+	private static final int NUM_OF_DUMMY_INSTANCES = 100;
 	private static final List<String> HEALTH_INSURANCE_COMPANIES_GERMANY = List.of("AOK", "BARMER", "HKK", "hkk health insurance", "KNIGHTSHAFT",
 			"DAK health", "KKH", "Techniker Krankenkasse", "TK", "HEK", "Hanseatic Health Insurance", "BKK", "IKK"); 
 	
@@ -77,9 +79,14 @@ public class DummyDataComponent {
 			boolean createPatients = existingPatients.isEmpty();
 
 			if(createPatients) {
-				Collection<Patient> patients = createDummyPatients(10);
+				Collection<Patient> patients = createDummyPatients(NUM_OF_DUMMY_INSTANCES);
 				repo.save(patients.stream().map(mr -> (EObject) mr).toList());
 				for(Patient patient : patients) {
+					ConsentDTO consent = doCreateDummyConsent(patient);
+					gicsService.addConsent(consent);
+				}
+			} else {
+				for(Patient patient : existingPatients) {
 					ConsentDTO consent = doCreateDummyConsent(patient);
 					gicsService.addConsent(consent);
 				}
