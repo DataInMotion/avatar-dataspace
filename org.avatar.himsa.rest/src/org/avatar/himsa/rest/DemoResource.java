@@ -153,9 +153,9 @@ public class DemoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/patient/query/{requestId}")
 	public Response patientByQuery(@PathParam("requestId") String requestId,
-			@QueryParam("where") String[] where, @QueryParam("projections") String[] projections) {
+			@QueryParam("where") String[] where, @QueryParam("subject") String[] subjects) {
 		
-		Promise<List<Patient>> promise = getPromiseResult(where, projections);
+		Promise<List<Patient>> promise = getPromiseResult(where, subjects);
 		REQUEST_PROMISE_MAP.put(requestId, promise);
 		
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
@@ -198,7 +198,7 @@ public class DemoResource {
 				if(promise.getFailure() != null) {
 					response.setCode(ResponseCode.ERROR);
 					ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
-					errResult.setError(String.format("Query failed for request %s", requestId));
+					errResult.setError(String.format("Query failed for request %s with msg %s", requestId, promise.getFailure().getMessage()));
 					response.setResult(errResult);					
 				} else {
 					List<Patient> patients = promise.getValue();
@@ -225,8 +225,8 @@ public class DemoResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/dryrun")
-	public Response dryrun(@QueryParam("where") String[] where, @QueryParam("projections") String[] projections) {
+	@Path("/dryrun/{requestId}")
+	public Response dryrun(@PathParam("requestId") String requestId, @QueryParam("where") String[] where, @QueryParam("subject") String[] subjects) {
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
 		response.setCode(ResponseCode.OK);
 		response.setTimestamp(Instant.now().toEpochMilli());
@@ -276,10 +276,10 @@ public class DemoResource {
 		return Response.ok(emfResponse).build();
 	}
 	
-	private Promise<List<Patient>> getPromiseResult(String[] where, String[] projections) {
+	private Promise<List<Patient>> getPromiseResult(String[] where, String[] subjects) {
 		
 		Deferred<List<Patient>> def = new Deferred<>();
-		Callable<List<Patient>> callable = new RequestExecutor(where, projections, patientService, queryHelperService);
+		Callable<List<Patient>> callable = new RequestExecutor(where, subjects, patientService, queryHelperService);
 		try {
 			def.resolve(callable.call());
 		} catch (Exception e) {

@@ -16,8 +16,8 @@ package org.avatar.himsa.service.example.api;
 /**
  * 
  * @author ilenia
- * @since Jan 22, 2025
+ * @since Feb 7, 2025
  */
-public record QueryWhere(String queryType, String featureName, String comparatorName, String comparatorType, 
-		String startValue, String endValue, boolean includeStartValue, boolean includeEndValue, String operation) { }
+public record QuerySubject(String[] projections, String operation) {
 
+}

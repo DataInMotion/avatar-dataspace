@@ -94,7 +94,6 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public List<Patient> getPatientsByRangeQuery(EAttribute columnName, Object startValue, Object endValue,
 			 boolean isStartIncluded, boolean isEndIncluded, EStructuralFeature[]... projectionFeatures) {
-//		TODO: add first (or last) call to gICS to see which one has consent
 		
 		GetAllConsentedIdsForResponse allConsentedIdsFor = gicsService.getAllConsentedIdsFor("avatar", "hearing_policy", "1.0", "Patient ID");
 		List<String> patientIdsWithConsent = allConsentedIdsFor.getReturn().getConsentIds();		

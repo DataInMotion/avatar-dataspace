@@ -56,7 +56,7 @@ public class QueryHelperServiceImpl implements QueryHelperService {
 			for(QueryWhere w : where) {
 				IQueryBuilder qb = getQueryBuilderByComparatorName(w.comparatorName(), queryBuilder);
 				qb = qb.column(w.featureName());
-				qb = setQueryValueByComparatorType(w.comparatorType(), w.startValue(), w.endValue(), w.includeStartValue(), w.includeEndValue(), queryBuilder);
+				qb = setQueryValueByComparatorType(w.comparatorType(), w.operation(), w.startValue(), w.endValue(), w.includeStartValue(), w.includeEndValue(), queryBuilder);
 				
 				if("AND".equals(w.queryType())) queryBuilder.and(qb.build());
 				else if("OR".equals(w.queryType())) queryBuilder.or(qb.build());
@@ -83,7 +83,7 @@ public class QueryHelperServiceImpl implements QueryHelperService {
 	
 	
 	
-	private IQueryBuilder setQueryValueByComparatorType(String comparatorType,
+	private IQueryBuilder setQueryValueByComparatorType(String comparatorType, String operation,
 			String start, String end, boolean includeStart, boolean includeEnd, 
 			IQueryBuilder builder) throws ParseException{
 		switch(comparatorType) {
@@ -96,10 +96,22 @@ public class QueryHelperServiceImpl implements QueryHelperService {
 			if(end != null) builder.endValue(DATE_FORMAT.parse(end), includeEnd ? true : false);
 			break;
 		default:
-			builder.simpleValue(start != null ? start : end);
+			builder.simpleValue(start != null ? doApplyPreQueryOperation(operation, start) :doApplyPreQueryOperation(operation, end));
 			break;
 		}
 		return builder;
+	}
+	
+	private String doApplyPreQueryOperation(String operation, String value) {
+		if(operation == null) return value;
+		switch(operation) {
+		case "ToLowerCase":
+			return value.toLowerCase();
+		case "ToUpperCase":
+			return value.toUpperCase();
+		default:
+			return value;
+		}
 	}
 
 	
