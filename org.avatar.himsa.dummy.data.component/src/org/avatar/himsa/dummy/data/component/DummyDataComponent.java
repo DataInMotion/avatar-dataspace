@@ -85,11 +85,6 @@ public class DummyDataComponent {
 					ConsentDTO consent = doCreateDummyConsent(patient);
 					gicsService.addConsent(consent);
 				}
-			} else {
-				for(Patient patient : existingPatients) {
-					ConsentDTO consent = doCreateDummyConsent(patient);
-					gicsService.addConsent(consent);
-				}
 			}
 		} finally {
 			repoSO.ungetService(repo);

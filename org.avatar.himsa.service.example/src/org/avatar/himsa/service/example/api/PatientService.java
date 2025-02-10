@@ -34,6 +34,6 @@ public interface PatientService {
 	List<Patient> getPatientsByRangeQuery(EAttribute columnName, Object startValue, Object endValue, boolean isStartIncluded, boolean isEndIncluded, 
 			EStructuralFeature[] ... projectionFeaturePaths);
 	
-	List<Patient> getPatientsByQuery(IQuery query, EStructuralFeature[] ... projectionFeaturePaths);
+	List<Patient> getPatientsByQuery(IQuery query, int limit, int skip, List<Query.Sort> sort, EStructuralFeature[] ... projectionFeaturePaths);
 
 }

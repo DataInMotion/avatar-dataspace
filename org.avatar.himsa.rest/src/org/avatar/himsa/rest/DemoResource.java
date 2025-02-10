@@ -153,16 +153,18 @@ public class DemoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/patient/query/{requestId}")
 	public Response patientByQuery(@PathParam("requestId") String requestId,
-			@QueryParam("where") String[] where, @QueryParam("subject") String[] subjects) {
+			@QueryParam("where") String[] where, @QueryParam("subject") String[] subjects, 
+			@QueryParam("sort") String[] sort, 
+			@QueryParam("limit") int limit, @QueryParam("skip") int skip) {
 		
-		Promise<List<Patient>> promise = getPromiseResult(where, subjects);
+		Promise<List<Patient>> promise = getPromiseResult(where, subjects, sort, limit, skip);
 		REQUEST_PROMISE_MAP.put(requestId, promise);
 		
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
 		response.setId(UUID.randomUUID().toString());
 		response.setCode(ResponseCode.PENDING);
 		PendingResult pendingRes = AConnectorFactory.eINSTANCE.createPendingResult();
-		pendingRes.setEstRuntime(7);
+		pendingRes.setEstRuntime(77);
 		response.setResult(pendingRes);
 		return Response.ok(response).build();
 	}
@@ -226,12 +228,15 @@ public class DemoResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/dryrun/{requestId}")
-	public Response dryrun(@PathParam("requestId") String requestId, @QueryParam("where") String[] where, @QueryParam("subject") String[] subjects) {
+	public Response dryrun(@PathParam("requestId") String requestId, @QueryParam("where") String[] where, 
+			@QueryParam("subject") String[] subjects, 
+			@QueryParam("sort") String[] sort, 
+			@QueryParam("limit") int limit, @QueryParam("skip") int skip) {
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
 		response.setCode(ResponseCode.OK);
 		response.setTimestamp(Instant.now().toEpochMilli());
 		DryRunResult result = AConnectorFactory.eINSTANCE.createDryRunResult();
-		result.setEstRuntime(7);
+		result.setEstRuntime(77);
 		result.setResultCount(77);
 		response.setResult(result);
 		return Response.ok(response).build();
@@ -276,10 +281,10 @@ public class DemoResource {
 		return Response.ok(emfResponse).build();
 	}
 	
-	private Promise<List<Patient>> getPromiseResult(String[] where, String[] subjects) {
+	private Promise<List<Patient>> getPromiseResult(String[] where, String[] subjects, String[] sort, int limit, int skip) {
 		
 		Deferred<List<Patient>> def = new Deferred<>();
-		Callable<List<Patient>> callable = new RequestExecutor(where, subjects, patientService, queryHelperService);
+		Callable<List<Patient>> callable = new RequestExecutor(where, subjects, sort, limit, skip, patientService, queryHelperService);
 		try {
 			def.resolve(callable.call());
 		} catch (Exception e) {

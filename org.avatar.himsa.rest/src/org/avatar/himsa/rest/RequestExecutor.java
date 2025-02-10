@@ -22,9 +22,11 @@ import java.util.concurrent.Callable;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.export.PatientExportPackage;
 import org.avatar.himsa.service.example.api.PatientService;
+import org.avatar.himsa.service.example.api.Query;
 import org.avatar.himsa.service.example.api.QueryHelperService;
 import org.avatar.himsa.service.example.api.QuerySubject;
 import org.avatar.himsa.service.example.api.QueryWhere;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.gecko.emf.repository.query.IQuery;
 
@@ -39,10 +41,16 @@ public class RequestExecutor implements Callable<List<Patient>> {
 	private String[] subjects;
 	private PatientService patientService;
 	private QueryHelperService queryHelperService;
+	private String[] sort;
+	private int limit;
+	private int skip;
 
-	public RequestExecutor(String[] where, String[] subjects, PatientService patientService, QueryHelperService queryHelperService) {
+	public RequestExecutor(String[] where, String[] subjects, String[] sort, int limit, int skip, PatientService patientService, QueryHelperService queryHelperService) {
 		this.where = where;
 		this.subjects = subjects;
+		this.sort = sort;
+		this.limit = limit;
+		this.skip = skip;
 		this.patientService = patientService;
 		this.queryHelperService = queryHelperService;
 
@@ -62,6 +70,7 @@ public class RequestExecutor implements Callable<List<Patient>> {
 		for(String s : subjects) {
 			qsubj.add(extractQSubjectFromRequest(s));
 		}
+		Query q = extractQueryParamFromRequest();
 		
 //		Patient.address-Address.street
 		EStructuralFeature[][] projectionsFeatures = new EStructuralFeature[subjects.length][];
@@ -70,6 +79,7 @@ public class RequestExecutor implements Callable<List<Patient>> {
 			String[] projections = subj.projections();
 			j = 0;
 			for(String projName : projections) {
+				
 				projectionsFeatures[i] = new EStructuralFeature[projections.length];
 				EStructuralFeature f = PatientExportPackage.Literals.PATIENT.getEStructuralFeature(projName);
 				if(f != null) {
@@ -82,7 +92,7 @@ public class RequestExecutor implements Callable<List<Patient>> {
 		
 		try {
 			IQuery query = queryHelperService.buildQuery(qwhere);
-			List<Patient> patients = patientService.getPatientsByQuery(query, projectionsFeatures);
+			List<Patient> patients = patientService.getPatientsByQuery(query, q.limit(), q.skip(), q.sort(), projectionsFeatures);
 			applyPostOperations(patients, projectionsFeatures, qsubj);
 			return patients;
 		} catch(ParseException e) {
@@ -92,6 +102,31 @@ public class RequestExecutor implements Callable<List<Patient>> {
 	}
 
 	
+	/**
+	 * @param sort2
+	 * @param limit2
+	 * @param skip2
+	 * @return
+	 */
+	private Query extractQueryParamFromRequest() {
+		List<Query.Sort> qSort = new ArrayList<>(sort.length);
+		for(String s : sort) {
+			String[] sSplit = s.split(",");
+			EAttribute sortFeature = null;
+			String sortOrder = null;
+			for(String split : sSplit) {
+				if(split.contains("sortFeature=")) {
+					sortFeature = (EAttribute) PatientExportPackage.Literals.PATIENT.getEStructuralFeature(split.replaceFirst("sortFeature=", ""));
+				} else if(split.contains("sortOrder=")) {
+					sortOrder = split.replaceFirst("sortOrder=", "");
+				}
+			}
+			qSort.add(new Query.Sort(sortFeature, sortOrder));
+		}
+		
+		return new Query(limit, skip, qSort);
+	}
+
 	/**
 	 * @param patients
 	 * @param projectionsFeatures

@@ -21,6 +21,7 @@ import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.export.PatientExportFactory;
 import org.avatar.himsa.export.PatientExportPackage;
 import org.avatar.himsa.service.example.api.PatientService;
+import org.avatar.himsa.service.example.api.Query;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.emau.icmvc.ganimed.ttp.cm2.GetAllConsentedIdsForResponse;
@@ -28,6 +29,7 @@ import org.gecko.emf.repository.EMFRepository;
 import org.gecko.emf.repository.query.IQuery;
 import org.gecko.emf.repository.query.IQueryBuilder;
 import org.gecko.emf.repository.query.QueryRepository;
+import org.gecko.emf.repository.query.SortType;
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -111,6 +113,7 @@ public class PatientServiceImpl implements PatientService {
 			IQueryBuilder queryBuilder = repo.createQueryBuilder().and(query, consentQuery);
 			for(EStructuralFeature[] projection : projectionFeatures) {
 				queryBuilder = queryBuilder.projectionPath(projection);
+				
 			}
 			return repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilder.build());
 		} finally {
@@ -123,7 +126,7 @@ public class PatientServiceImpl implements PatientService {
 	 * @see org.avatar.himsa.service.example.api.PatientService#getPatientsByQuery(org.gecko.emf.repository.query.IQueryBuilder, org.eclipse.emf.ecore.EStructuralFeature[][])
 	 */
 	@Override
-	public List<Patient> getPatientsByQuery(IQuery query, EStructuralFeature[]... projectionFeaturePaths) {
+	public List<Patient> getPatientsByQuery(IQuery query, int limit, int skip, List<Query.Sort> sort, EStructuralFeature[]... projectionFeaturePaths) {
 		GetAllConsentedIdsForResponse allConsentedIdsFor = gicsService.getAllConsentedIdsFor("avatar", "hearing_policy", "1.0", "Patient ID");
 		List<String> patientIdsWithConsent = allConsentedIdsFor.getReturn().getConsentIds();		
 		
@@ -134,7 +137,10 @@ public class PatientServiceImpl implements PatientService {
 			for(EStructuralFeature[] projection : projectionFeaturePaths) {
 				queryBuilder = queryBuilder.projectionPath(projection);
 			}
-			return repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilder.build());
+			for(Query.Sort s : sort) {
+				queryBuilder = queryBuilder.sort(s.sortAttribute(), "ASC".equals(s.sortOrder()) ? SortType.ASCENDING : SortType.DESCENDING);
+			}
+			return repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilder.limit(limit).skip(skip).build());
 		} finally {
 			repoSO.ungetService(repo);
 		}

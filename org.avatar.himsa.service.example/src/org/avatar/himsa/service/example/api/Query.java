@@ -1,0 +1,29 @@
+/**
+ * Copyright (c) 2012 - 2025 Data In Motion and others.
+ * All rights reserved. 
+ * 
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ * 
+ * Contributors:
+ *     Data In Motion - initial API and implementation
+ */
+package org.avatar.himsa.service.example.api;
+
+import java.util.List;
+
+import org.eclipse.emf.ecore.EAttribute;
+
+/**
+ * 
+ * @author ilenia
+ * @since Feb 10, 2025
+ */
+public record Query(int limit, int skip, List<Sort> sort) {
+	
+	public record Sort(EAttribute sortAttribute, String sortOrder) {}
+
+}

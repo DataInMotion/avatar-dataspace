@@ -16,6 +16,7 @@ package org.avatar.himsa.service.example;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -53,17 +54,22 @@ public class QueryHelperServiceImpl implements QueryHelperService {
 		QueryRepository repo = (QueryRepository) repoSO.getService();
 		try {
 			IQueryBuilder queryBuilder = repo.createQueryBuilder();
+			List<IQuery> andQueries = new LinkedList<>();
+			List<IQuery> orQueries = new LinkedList<>();
 			for(QueryWhere w : where) {
-				IQueryBuilder qb = getQueryBuilderByComparatorName(w.comparatorName(), queryBuilder);
+				IQueryBuilder qb = getQueryBuilderByComparatorName(w.comparatorName(), repo);
 				qb = qb.column(w.featureName());
-				qb = setQueryValueByComparatorType(w.comparatorType(), w.operation(), w.startValue(), w.endValue(), w.includeStartValue(), w.includeEndValue(), queryBuilder);
+				qb = setQueryValueByComparatorType(w.comparatorType(), w.operation(), w.startValue(), w.endValue(), w.includeStartValue(), w.includeEndValue(), qb);
 				
-				if("AND".equals(w.queryType())) queryBuilder.and(qb.build());
-				else if("OR".equals(w.queryType())) queryBuilder.or(qb.build());
+				if("AND".equals(w.queryType())) andQueries.add(qb.build());
+				else if("OR".equals(w.queryType())) orQueries.add(qb.build());
 				else LOGGER.warning(String.format("Query Type %s currently not supported. Adding an AND query.", w.queryType()));
 //				TODO: what if we have NOT as query Type????
 				
 			}
+			
+			if(!andQueries.isEmpty()) queryBuilder = queryBuilder.and(andQueries.toArray(s -> new IQuery[] {}));
+			if(!orQueries.isEmpty()) queryBuilder = queryBuilder.or(orQueries.toArray(s -> new IQuery[] {}));
 			return queryBuilder.build();
 		} finally {
 			repoSO.ungetService(repo);
@@ -71,13 +77,13 @@ public class QueryHelperServiceImpl implements QueryHelperService {
 	}
 	
 	
-	private IQueryBuilder getQueryBuilderByComparatorName(String comparatorName, IQueryBuilder builder) {
+	private IQueryBuilder getQueryBuilderByComparatorName(String comparatorName, QueryRepository repo) {
 		switch(comparatorName) {
 		case "IsBefore": case "IsAfter": case "IsBeforeOrEqual": case "IsAfterOrEqual": 
 			case "Lt": case "Lte": case "Gt": case "Gte": case "IsInRange":
-				return builder.rangeQuery();
+				return repo.createQueryBuilder().rangeQuery();
 		default:
-			return builder.allQuery();
+			return repo.createQueryBuilder().allQuery();
 		}
 	}
 	
