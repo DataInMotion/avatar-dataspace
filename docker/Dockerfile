@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jre-alpine
 
-ENV USERNAME=idmt \
+ENV USERNAME=avatar \
 	HOME_DIR=/avatar \
 	OPT_DIR=/opt/avatar \
 	GECKO_VERSION=2.0.0
@@ -9,7 +9,7 @@ RUN mkdir -p ${OPT_DIR} && \
     mkdir -p ${OPT_DIR}/logs && \
     mkdir -p /tmp
 
-COPY avatar-dataspace.jar ${OPT_DIR}/avatar-dataspace.jar
+COPY content/de.avatar.himsa.runtime.jar ${OPT_DIR}/de.avatar.himsa.runtime.jar
 
 RUN mkdir ${HOME_DIR}
 
@@ -29,4 +29,4 @@ EXPOSE 8088
 WORKDIR ${OPT_DIR}
 USER ${USERNAME}
 
-CMD ["java", "-Dgosh.args=--nointeractive", "-jar", "avatar-dataspace.jar"]
+CMD ["java", "-Dgosh.args=--nointeractive", "-jar", "de.avatar.himsa.runtime.jar"]

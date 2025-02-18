@@ -19,7 +19,7 @@
     {
  		"mongo.instances": "test1",
 	    "test1.baseUris": "mongodb://localhost:27017",
-	    "test1.databases": "test",
+	    "test1.databases": "avatar",
 	    "test1.test.repoType": "PROTOTYPE"
   	},
   	"GICSService~test":
