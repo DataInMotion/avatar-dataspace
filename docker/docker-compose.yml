@@ -1,0 +1,10 @@
+services:
+    idmt:
+        image: avatar-dataspace:latest
+        ports:
+            - "8088:8088"
+        volumes:
+            - avatar-volume:/opt/avatar
+
+volumes:
+    avatar-volume:

@@ -72,5 +72,16 @@ pipeline  {
                 sh "./gradlew :org.avatar.himsa.runtime:export.launch --info --stacktrace -Dmaven.repo.local=${WORKSPACE}/.m2"
             }
         }
+        stage('Prepare Docker') {
+//            when {
+//                branch 'main'
+//            }
+            steps  {
+                echo "I am preparing docker: ${env.GIT_BRANCH}"
+                sh "./gradlew prepareDocker --info --stacktrace -Dmaven.repo.local=${WORKSPACE}/.m2"
+            }
+
+        }
+
     }
 }
