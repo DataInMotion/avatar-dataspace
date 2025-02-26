@@ -47,7 +47,7 @@ public class PatientServiceImpl implements PatientService {
 	private PatientExportFactory modelFactory;
 	@Reference
 	private PatientExportPackage modelPackage;
-	@Reference(target="(repo_id=test1.test)")
+	@Reference(target="(repo_id=avatar.avatar)")
 	ComponentServiceObjects<EMFRepository> repoSO;
 	@Reference
 	GICSService gicsService;

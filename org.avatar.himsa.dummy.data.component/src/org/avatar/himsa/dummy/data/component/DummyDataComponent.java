@@ -47,7 +47,7 @@ import net.datafaker.Faker;
 @Component(immediate=true, name="DummyDataComponent")
 public class DummyDataComponent {
 
-	@Reference(target="(repo_id=test1.test)")
+	@Reference(target="(repo_id=avatar.avatar)")
 	ComponentServiceObjects<EMFRepository> repoSO;
 	
 	@Reference

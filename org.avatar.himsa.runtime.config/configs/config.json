@@ -20,9 +20,9 @@
  		"mongo.instances": "avatar",
 	    "avatar.baseUris": "mongodb://mongodb:27017",
 	    "avatar.databases": "avatar",
-	    "avatar.user": "avatar",
-	    "avatar.password": "init@ava_",
-	    "avatar.test.repoType": "PROTOTYPE"
+//	    "avatar.user": "avatar",
+//	    "avatar.password": "init@ava_",
+	    "avatar.avatar.repoType": "PROTOTYPE"
   	},
   	"GICSService~test":
   	{

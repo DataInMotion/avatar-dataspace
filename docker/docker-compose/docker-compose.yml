@@ -1,6 +1,7 @@
 services:
     mongodb:
         image: mongo:4.2
+        container_name: avatar-mongodb
         entrypoint: /usr/bin/mongod --dbpath /data --journal --bind_ip 0.0.0.0
         environment:
         - MONGO_INITDB_ROOT_USERNAME=avatar
@@ -15,11 +16,15 @@ services:
         - avatar
 
     himsa:
-        image: avatar-himsa:latest
+        image: devel.data-in-motion.biz:6000/scj/avatar-himsa:latest
+        container_name: avatar-himsa
         ports:
         - "8088:8088"
         volumes:
         - avatar-volume:/opt/avatar
+        networks:
+        - avatar
+
     mysql:
         image: mysql:8
         container_name: gics-mysql
@@ -27,12 +32,14 @@ services:
 #      - "3306:3306"
         env_file:
         - ./envs/mysql.env
+        networks:
+        - avatar
         volumes:
         - ./sqls:/docker-entrypoint-initdb.d
 #      - ./data/mysql:/var/lib/mysql
         command: --max_allowed_packet=20M --default-time-zone=Europe/Berlin
 
-    gics:
+    wildfly:
         image: mosaicgreifswald/wildfly:34
         container_name: gics-wildfly
         ports:
@@ -48,6 +55,8 @@ services:
         - ./envs/wf_commons.env
         depends_on:
         - mysql
+        networks:
+        - avatar
         volumes:
         - ./jboss:/entrypoint-wildfly-cli
         - ./deployments:/entrypoint-wildfly-deployments
