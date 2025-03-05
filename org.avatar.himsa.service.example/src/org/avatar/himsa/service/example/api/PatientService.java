@@ -42,19 +42,19 @@ public interface PatientService {
 	class PatientResponse {
 		
 		private Patient patient;
-		private Map<String, Object> metadata = new HashMap<>();
+		private Map<String, String> metadata = new HashMap<>();
 		private List<Patient> patients = new LinkedList<>();
 		
 		public PatientResponse() {
 			
 		}
 
-		public PatientResponse(Patient patient, Map<String, Object> metadata) {
+		public PatientResponse(Patient patient, Map<String, String> metadata) {
 			this.patient = patient;
 			this.metadata = metadata;			
 		}
 		
-		public PatientResponse(List<Patient> patients, Map<String, Object> metadata) {
+		public PatientResponse(List<Patient> patients, Map<String, String> metadata) {
 			this.patients = patients;
 			this.metadata = metadata;			
 		}
@@ -63,7 +63,7 @@ public interface PatientService {
 			this.patient = patient;
 		}
 		
-		public Map<String, Object> getMetadata() {
+		public Map<String, String> getMetadata() {
 			return metadata;
 		}
 		

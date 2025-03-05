@@ -37,6 +37,7 @@ import de.avatar.model.connector.DryRunResult;
 import de.avatar.model.connector.EcoreResult;
 import de.avatar.model.connector.EndpointResponse;
 import de.avatar.model.connector.ErrorResult;
+import de.avatar.model.connector.Metadata;
 import de.avatar.model.connector.PendingResult;
 import de.avatar.model.connector.ResponseCode;
 import jakarta.ws.rs.GET;
@@ -130,6 +131,7 @@ public class DemoResource {
 		
 		Promise<PatientResponse> promise = REQUEST_PROMISE_MAP.get(requestId);
 		if(promise == null) {
+			System.out.println("Status ERROR");
 			response.setCode(ResponseCode.ERROR);
 			ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
 			errResult.setError(String.format("No query is running for request %s", requestId));
@@ -138,6 +140,7 @@ public class DemoResource {
 		}
 		
 		if(!promise.isDone()) {
+			System.out.println("Status PENDING");
 			response.setCode(ResponseCode.PENDING);
 			PendingResult pendingResult = AConnectorFactory.eINSTANCE.createPendingResult();
 			pendingResult.setEstRuntime(7);
@@ -147,18 +150,19 @@ public class DemoResource {
 		else {
 			try {
 				if(promise.getFailure() != null) {
+					System.out.println("Status DONE BUT ERROR");
 					response.setCode(ResponseCode.ERROR);
 					ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
 					errResult.setError(String.format("Query failed for request %s with msg %s", requestId, promise.getFailure().getMessage()));
 					response.setResult(errResult);			
 				} else {
+					System.out.println("Status SUCCESS");
 					PatientResponse patientResponse = promise.getValue();
+					addResponseMetadata(response, patientResponse.getMetadata());
 					if(patientResponse.getPatients().isEmpty()) {
 						response.setCode(ResponseCode.NO_CONTENT);
-						response.setMetadata(patientResponse.getMetadata());
 					} else {
 						response.setCode(ResponseCode.OK);
-						response.setMetadata(patientResponse.getMetadata());
 						org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
 						emfResponse.getData().addAll(patientResponse.getPatients());
 						
@@ -175,6 +179,14 @@ public class DemoResource {
 		}
 	}
 	
+	private void addResponseMetadata(EndpointResponse response, Map<String, String> metadata) {
+		metadata.forEach((k,v) -> {
+			Metadata responseMD = AConnectorFactory.eINSTANCE.createMetadata();
+			responseMD.setKey(k);
+			responseMD.setValue(v);
+			response.getMetadata().add(responseMD);
+		});
+	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

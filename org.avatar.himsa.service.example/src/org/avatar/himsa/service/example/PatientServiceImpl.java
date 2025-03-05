@@ -87,15 +87,15 @@ public class PatientServiceImpl implements PatientService {
 		try {
 			Patient patient = repo.getEObject(modelPackage.getPatient(), id);
 			if(patient != null) {
-				patientResponse.getMetadata().put("total.results.before.consent.filter", 1);
+				patientResponse.getMetadata().put("total.results.before.consent.filter", "1");
 			} else {
-				patientResponse.getMetadata().put("total.results.before.consent.filter", 0);
+				patientResponse.getMetadata().put("total.results.before.consent.filter", "0");
 			}
 			if(consentIds.contains(id)) {
-				patientResponse.getMetadata().put("total.results.after.consent.filter", 1);
+				patientResponse.getMetadata().put("total.results.after.consent.filter", "1");
 				patientResponse.setPatient(patient);
 			} else {
-				patientResponse.getMetadata().put("total.results.after.consent.filter", 0);
+				patientResponse.getMetadata().put("total.results.after.consent.filter", "0");
 			}
 		} finally {
 			repoSO.ungetService(repo);
@@ -121,7 +121,6 @@ public class PatientServiceImpl implements PatientService {
 		
 		QueryRepository repo = (QueryRepository) repoSO.getService();
 		try {		
-			IQuery consentQuery = repo.createQueryBuilder().build();	
 			IQuery query = repo.
 					createQueryBuilder().
 					rangeQuery().
@@ -129,7 +128,7 @@ public class PatientServiceImpl implements PatientService {
 					startValue(startValue, isStartIncluded).
 					endValue(endValue, isEndIncluded).
 					build();				
-			IQueryBuilder queryBuilder = repo.createQueryBuilder().and(query, consentQuery);
+			IQueryBuilder queryBuilder = repo.createQueryBuilder().and(query);
 			for(EStructuralFeature[] projection : projectionFeatures) {
 				queryBuilder = queryBuilder.projectionPath(projection);
 				
@@ -137,8 +136,8 @@ public class PatientServiceImpl implements PatientService {
 			List<Patient> patients = repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilder.build());
 			List<Patient> filteredPatients = patients.stream().filter(p -> consentIds.contains(p.getPatientGUID())).toList();
 			PatientResponse patientResponse = new PatientResponse();
-			patientResponse.getMetadata().put("total.results.before.consent.filter", patients.size());
-			patientResponse.getMetadata().put("total.results.after.consent.filter", filteredPatients.size());
+			patientResponse.getMetadata().put("total.results.before.consent.filter", String.valueOf(patients.size()));
+			patientResponse.getMetadata().put("total.results.after.consent.filter", String.valueOf(filteredPatients.size()));
 			patientResponse.getPatients().addAll(filteredPatients);
 			return patientResponse;
 		} finally {
@@ -159,19 +158,25 @@ public class PatientServiceImpl implements PatientService {
 		
 		QueryRepository repo = (QueryRepository) repoSO.getService();
 		try {
-			IQuery consentQuery = repo.createQueryBuilder().build();	
-			IQueryBuilder queryBuilder = repo.createQueryBuilder().and(query, consentQuery);
+			IQuery consentQuery = repo.createQueryBuilder().column(modelPackage.getPatient_PatientGUID()).in(consentIds.toArray()).build();
+			IQueryBuilder queryBuilderNoFilter = repo.createQueryBuilder().and(query);
+			IQueryBuilder queryBuilderFilter = repo.createQueryBuilder().and(query, consentQuery);
 			for(EStructuralFeature[] projection : projectionFeaturePaths) {
-				queryBuilder = queryBuilder.projectionPath(projection);
+				queryBuilderNoFilter = queryBuilderNoFilter.projectionPath(projection);
+				queryBuilderFilter = queryBuilderFilter.projectionPath(projection);
 			}
 			for(Query.Sort s : sort) {
-				queryBuilder = queryBuilder.sort(s.sortAttribute(), "ASC".equals(s.sortOrder()) ? SortType.ASCENDING : SortType.DESCENDING);
+				queryBuilderNoFilter = queryBuilderNoFilter.sort(s.sortAttribute(), "ASC".equals(s.sortOrder()) ? SortType.ASCENDING : SortType.DESCENDING);
+				queryBuilderFilter = queryBuilderFilter.sort(s.sortAttribute(), "ASC".equals(s.sortOrder()) ? SortType.ASCENDING : SortType.DESCENDING);
 			}
-			List<Patient> patients =  repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilder.limit(limit).skip(skip).build());
-			List<Patient> filteredPatients = patients.stream().filter(p -> consentIds.contains(p.getPatientGUID())).toList();
+			List<Patient> patients =  repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilderNoFilter.limit(limit).skip(skip).build());
+//			queryBuilder = queryBuilder.and(query, repo.createQueryBuilder().column(PatientExportPackage.Literals.PATIENT__PATIENT_GUID).in(consentIds).build());
+//			List<Patient> filteredPatients = patients.stream().filter(p -> consentIds.contains(p.getPatientGUID())).toList();
+			IQuery q = repo.createQueryBuilder().allQuery().and(query, consentQuery).build();
+			List<Patient> filteredPatients = repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilderFilter.limit(limit).skip(skip).build());
 			PatientResponse patientResponse = new PatientResponse();
-			patientResponse.getMetadata().put("total.results.before.consent.filter", patients.size());
-			patientResponse.getMetadata().put("total.results.after.consent.filter", filteredPatients.size());
+			patientResponse.getMetadata().put("total.results.before.consent.filter", String.valueOf(patients.size()));
+			patientResponse.getMetadata().put("total.results.after.consent.filter", String.valueOf(filteredPatients.size()));
 			patientResponse.getPatients().addAll(filteredPatients);
 			return patientResponse;
 		} finally {
