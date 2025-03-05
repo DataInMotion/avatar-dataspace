@@ -15,13 +15,13 @@ package org.avatar.himsa.rest;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.export.PatientExportPackage;
 import org.avatar.himsa.service.example.api.PatientService;
+import org.avatar.himsa.service.example.api.PatientService.PatientResponse;
 import org.avatar.himsa.service.example.api.Query;
 import org.avatar.himsa.service.example.api.QueryHelperService;
 import org.avatar.himsa.service.example.api.QuerySubject;
@@ -35,7 +35,7 @@ import org.gecko.emf.repository.query.IQuery;
  * @author ilenia
  * @since Feb 6, 2025
  */
-public class RequestExecutor implements Callable<List<Patient>> {
+public class RequestExecutor implements Callable<PatientResponse> {
 
 	private String[] where;
 	private String[] subjects;
@@ -61,7 +61,7 @@ public class RequestExecutor implements Callable<List<Patient>> {
 	 * @see java.util.concurrent.Callable#call()
 	 */
 	@Override
-	public List<Patient> call()  {
+	public PatientResponse call()  {
 		List<QueryWhere> qwhere = new ArrayList<>(where.length);
 		for(String w : where) {
 			qwhere.add(extractQWhereFromRequest(w));
@@ -92,12 +92,12 @@ public class RequestExecutor implements Callable<List<Patient>> {
 		
 		try {
 			IQuery query = queryHelperService.buildQuery(qwhere);
-			List<Patient> patients = patientService.getPatientsByQuery(query, q.limit(), q.skip(), q.sort(), projectionsFeatures);
-			applyPostOperations(patients, projectionsFeatures, qsubj);
-			return patients;
+			PatientResponse response = patientService.getPatientsByQuery(query, q.limit(), q.skip(), q.sort(), projectionsFeatures);
+			applyPostOperations(response.getPatients(), projectionsFeatures, qsubj);
+			return response;
 		} catch(ParseException e) {
 			e.printStackTrace();
-			return Collections.emptyList();
+			return null;
 		}			
 	}
 

@@ -15,15 +15,13 @@ package org.avatar.himsa.rest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.service.example.api.PatientService;
+import org.avatar.himsa.service.example.api.PatientService.PatientResponse;
 import org.avatar.himsa.service.example.api.QueryHelperService;
 import org.gecko.emf.utilities.UtilitiesFactory;
 import org.osgi.service.component.annotations.Component;
@@ -76,7 +74,7 @@ public class DemoResource {
 	@Reference
 	private QueryHelperService queryHelperService;
 	
-	private static Map<String, Promise<List<Patient>>> REQUEST_PROMISE_MAP = new ConcurrentHashMap<>();
+	private static Map<String, Promise<PatientResponse>> REQUEST_PROMISE_MAP = new ConcurrentHashMap<>();
 
 	@GET
 	@Path("/hello")
@@ -99,55 +97,6 @@ public class DemoResource {
 		return Response.ok(response).build();
 	}
 	
-//	@GET
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Path("/patient/query")
-//	public Response patientByQuery(@QueryParam("where") String[] where, @QueryParam("projections") String[] projections) {
-//		
-//		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-//		response.setId(UUID.randomUUID().toString());
-//		
-//		List<QueryWhere> qwhere = new ArrayList<>(where.length);
-//		for(String w : where) {
-//			qwhere.add(extractQWhereFromRequest(w));
-//		}
-//		EStructuralFeature[][] projectionsFeatures = new EStructuralFeature[projections.length][];
-//		int i = 0, j = 0;
-//		for(String proj : projections) {
-//			String[] projSplit = proj.split("-");
-//			j = 0;
-//			for(String projName : projSplit) {
-//				projectionsFeatures[i] = new EStructuralFeature[projSplit.length];
-//				EStructuralFeature f = PatientExportPackage.Literals.PATIENT.getEStructuralFeature(projName);
-//				if(f != null) {
-//					projectionsFeatures[i][j] = f;
-//					j++;
-//				}
-//			}
-//			i++;				
-//		}
-//		try {
-//			IQuery query = queryHelperService.buildQuery(qwhere);
-//			List<Patient> patients = patientService.getPatientsByQuery(query, projectionsFeatures);
-//			response.setCode(patients == null || patients.isEmpty() ? ResponseCode.NO_CONTENT : ResponseCode.OK);
-//			response.setTimestamp(Instant.now().toEpochMilli());
-//			org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-//			emfResponse.getData().addAll(patients);
-//			
-//			EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
-//			result.setValue(emfResponse);
-//			response.setResult(result);			
-//			return Response.ok(response).build();
-//		} catch(ParseException e) {
-//			response.setCode(ResponseCode.ERROR);
-//			ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
-//			errRes.setThrowable(e);
-//			errRes.setError("Error parsing dates from query parameters. Format should be 'dd-mm-yyyy'");
-//			errRes.setErrorText("Error parsing dates from query parameters. Format should be 'dd-mm-yyyy'");
-//			response.setResult(errRes);
-//			return Response.ok(response).build();
-//		}			
-//	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -157,7 +106,7 @@ public class DemoResource {
 			@QueryParam("sort") String[] sort, 
 			@QueryParam("limit") int limit, @QueryParam("skip") int skip) {
 		
-		Promise<List<Patient>> promise = getPromiseResult(where, subjects, sort, limit, skip);
+		Promise<PatientResponse> promise = getPromiseResult(where, subjects, sort, limit, skip);
 		REQUEST_PROMISE_MAP.put(requestId, promise);
 		
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
@@ -179,7 +128,7 @@ public class DemoResource {
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
 		response.setTimestamp(Instant.now().toEpochMilli());
 		
-		Promise<List<Patient>> promise = REQUEST_PROMISE_MAP.get(requestId);
+		Promise<PatientResponse> promise = REQUEST_PROMISE_MAP.get(requestId);
 		if(promise == null) {
 			response.setCode(ResponseCode.ERROR);
 			ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
@@ -201,15 +150,17 @@ public class DemoResource {
 					response.setCode(ResponseCode.ERROR);
 					ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
 					errResult.setError(String.format("Query failed for request %s with msg %s", requestId, promise.getFailure().getMessage()));
-					response.setResult(errResult);					
+					response.setResult(errResult);			
 				} else {
-					List<Patient> patients = promise.getValue();
-					if(patients.isEmpty()) {
+					PatientResponse patientResponse = promise.getValue();
+					if(patientResponse.getPatients().isEmpty()) {
 						response.setCode(ResponseCode.NO_CONTENT);
+						response.setMetadata(patientResponse.getMetadata());
 					} else {
 						response.setCode(ResponseCode.OK);
+						response.setMetadata(patientResponse.getMetadata());
 						org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-						emfResponse.getData().addAll(patients);
+						emfResponse.getData().addAll(patientResponse.getPatients());
 						
 						EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
 						result.setValue(emfResponse);
@@ -251,40 +202,17 @@ public class DemoResource {
 	@Path("/patient/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response patient(@PathParam("id") String id) {
-		if (Objects.isNull(id)) {
-			return Response.noContent().build();
+		PatientResponse response = patientService.getPatient(id);
+		if(response == null) {
+			return Response.serverError().build();
 		}
-		Patient p = patientService.getPatient(id);
-		if (Objects.isNull(p)) {
-			System.out.println("No patient found with id " + id);
-			return Response.noContent().build();
-		} else {
-			return Response.ok(p).build();
-		}
+		return Response.ok(response).build();
 	}
 	
-	@GET
-	@Path("/patient/with/consent/{domainId}/{policyId}/{policyVersion}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response patientWithConsent(@PathParam("domainId") String domainId, @PathParam("policyId") String policyId,
-			@PathParam("policyVersion") String policyVersion) {
-		if (Objects.isNull(domainId) || Objects.isNull(policyId)) {
-			return Response.noContent().build();
-		}
-		List<Patient> patientsWithConsent = patientService.getPatientsWithConsent(domainId, policyId, policyVersion == null ? "1.0" : policyVersion);
-		if(patientsWithConsent.isEmpty()) {
-			System.out.println("No patients with consent found");
-			return Response.noContent().build();
-		}
-		org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-		emfResponse.getData().addAll(patientsWithConsent);
-		return Response.ok(emfResponse).build();
-	}
-	
-	private Promise<List<Patient>> getPromiseResult(String[] where, String[] subjects, String[] sort, int limit, int skip) {
+	private Promise<PatientResponse> getPromiseResult(String[] where, String[] subjects, String[] sort, int limit, int skip) {
 		
-		Deferred<List<Patient>> def = new Deferred<>();
-		Callable<List<Patient>> callable = new RequestExecutor(where, subjects, sort, limit, skip, patientService, queryHelperService);
+		Deferred<PatientResponse> def = new Deferred<>();
+		Callable<PatientResponse> callable = new RequestExecutor(where, subjects, sort, limit, skip, patientService, queryHelperService);
 		try {
 			def.resolve(callable.call());
 		} catch (Exception e) {
@@ -292,17 +220,5 @@ public class DemoResource {
 		}		
 		return def.getPromise();
 	}
-	
-	
-	
-	
-	
-	
-//	private <T extends Object> Object selectRandomElement(T[] elements)  {
-//		Random rndm = new Random();
-//		int rndmIndx = rndm.nextInt(elements.length);
-//		Object rndmElem = elements[rndmIndx];
-//		return rndmElem;
-//	}
 	
 }

@@ -13,7 +13,10 @@
  */
 package org.avatar.himsa.service.example.api;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.avatar.himsa.export.Patient;
 import org.eclipse.emf.ecore.EAttribute;
@@ -27,13 +30,49 @@ import org.gecko.emf.repository.query.IQuery;
  */
 public interface PatientService {
 	
-	Patient getPatient(String id);
+	PatientResponse getPatient(String id);
 	
-	List<Patient> getPatientsWithConsent(String domainId, String policyId, String policyVersion);
+//	PatientResponse getPatientsWithConsent(String domainId, String policyId, String policyVersion);
 		
-	List<Patient> getPatientsByRangeQuery(EAttribute columnName, Object startValue, Object endValue, boolean isStartIncluded, boolean isEndIncluded, 
+	PatientResponse getPatientsByRangeQuery(EAttribute columnName, Object startValue, Object endValue, boolean isStartIncluded, boolean isEndIncluded, 
 			EStructuralFeature[] ... projectionFeaturePaths);
 	
-	List<Patient> getPatientsByQuery(IQuery query, int limit, int skip, List<Query.Sort> sort, EStructuralFeature[] ... projectionFeaturePaths);
+	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<Query.Sort> sort, EStructuralFeature[] ... projectionFeaturePaths);
+	
+	class PatientResponse {
+		
+		private Patient patient;
+		private Map<String, Object> metadata = new HashMap<>();
+		private List<Patient> patients = new LinkedList<>();
+		
+		public PatientResponse() {
+			
+		}
 
+		public PatientResponse(Patient patient, Map<String, Object> metadata) {
+			this.patient = patient;
+			this.metadata = metadata;			
+		}
+		
+		public PatientResponse(List<Patient> patients, Map<String, Object> metadata) {
+			this.patients = patients;
+			this.metadata = metadata;			
+		}
+		
+		public void setPatient(Patient patient) {
+			this.patient = patient;
+		}
+		
+		public Map<String, Object> getMetadata() {
+			return metadata;
+		}
+		
+		public Patient getPatient() {
+			return patient;
+		}
+		
+		public List<Patient> getPatients() {
+			return patients;
+		}
+	}
 }
