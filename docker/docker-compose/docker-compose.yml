@@ -4,8 +4,10 @@ services:
         container_name: avatar-mongodb
         entrypoint: /usr/bin/mongod --dbpath /data --journal --bind_ip 0.0.0.0
         environment:
-        - MONGO_INITDB_ROOT_USERNAME=avatar
-        - MONGO_INITDB_ROOT_PASSWORD=init@ava_
+          #        - MONGO_INITDB_ROOT_USERNAME=avatar
+          #        - MONGO_INITDB_ROOT_PASSWORD=init@ava_
+        ports:
+        - "27017:27017"
         healthcheck:
             test: echo 'db.runCommand("ping").ok' | mongo localhost:27017 --quiet
             interval: 5s
@@ -20,6 +22,11 @@ services:
         container_name: avatar-himsa
         ports:
         - "8088:8088"
+        depends_on:
+          mongodb:
+            condition: service_healthy
+          gics:
+            condition: service_healthy
         volumes:
         - avatar-volume:/opt/avatar
         networks:
@@ -39,7 +46,7 @@ services:
 #      - ./data/mysql:/var/lib/mysql
         command: --max_allowed_packet=20M --default-time-zone=Europe/Berlin
 
-    wildfly:
+    gics:
         image: mosaicgreifswald/wildfly:34
         container_name: gics-wildfly
         ports:

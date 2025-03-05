@@ -17,10 +17,10 @@
 	},
 	"EMFMongoRepositoryConfigurator": 
     {
- 		"mongo.instances": "avatar",
-	    "avatar.baseUris": "mongodb://localhost:27017",
-	    "avatar.databases": "avatar",
-	    "avatar.avatar.repoType": "PROTOTYPE"
+        "mongo.instances": "avatar",
+        "avatar.baseUris": "mongodb://mongodb:27017",
+        "avatar.databases": "avatar",
+        "avatar.avatar.repoType": "PROTOTYPE"
   	},
   	"GICSService~test":
   	{
