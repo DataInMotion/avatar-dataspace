@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(name = "QueryHelperService")
 public class QueryHelperServiceImpl implements QueryHelperService {
 	
-	@Reference(target="(repo_id=test1.test)")
+	@Reference(target="(repo_id=avatar.avatar)")
 	ComponentServiceObjects<EMFRepository> repoSO;
 	
 	private static final Logger LOGGER = Logger.getLogger(QueryHelperServiceImpl.class.getName());

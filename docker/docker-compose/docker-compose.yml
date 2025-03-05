@@ -1,0 +1,74 @@
+services:
+    mongodb:
+        image: mongo:4.2
+        container_name: avatar-mongodb
+        entrypoint: /usr/bin/mongod --dbpath /data --journal --bind_ip 0.0.0.0
+        environment:
+        - MONGO_INITDB_ROOT_USERNAME=avatar
+        - MONGO_INITDB_ROOT_PASSWORD=init@ava_
+        healthcheck:
+            test: echo 'db.runCommand("ping").ok' | mongo localhost:27017 --quiet
+            interval: 5s
+            timeout: 5s
+            retries: 3
+            start_period: 5s
+        networks:
+        - avatar
+
+    himsa:
+        image: devel.data-in-motion.biz:6000/scj/avatar-himsa:latest
+        container_name: avatar-himsa
+        ports:
+        - "8088:8088"
+        volumes:
+        - avatar-volume:/opt/avatar
+        networks:
+        - avatar
+
+    mysql:
+        image: mysql:8
+        container_name: gics-mysql
+#    ports:
+#      - "3306:3306"
+        env_file:
+        - ./envs/mysql.env
+        networks:
+        - avatar
+        volumes:
+        - ./sqls:/docker-entrypoint-initdb.d
+#      - ./data/mysql:/var/lib/mysql
+        command: --max_allowed_packet=20M --default-time-zone=Europe/Berlin
+
+    wildfly:
+        image: mosaicgreifswald/wildfly:34
+        container_name: gics-wildfly
+        ports:
+#    - "8787:8787"
+        - "8080:8080"
+        - "9990:9990"
+        env_file:
+        - ./envs/ttp_commons.env
+        - ./envs/ttp_gics.env
+        - ./envs/ttp_fhir.env
+        - ./envs/ttp_gras.env
+        - ./envs/ttp_noti.env
+        - ./envs/wf_commons.env
+        depends_on:
+        - mysql
+        networks:
+        - avatar
+        volumes:
+        - ./jboss:/entrypoint-wildfly-cli
+        - ./deployments:/entrypoint-wildfly-deployments
+        - ./logs:/entrypoint-wildfly-logs
+        - ./addins:/entrypoint-wildfly-addins
+        entrypoint: /bin/bash
+        command: -c "./wait-for-it.sh mysql:3306 -t 120 && ./run.sh"
+
+
+volumes:
+    avatar-volume:
+
+networks:
+    avatar:
+      name: avatar

@@ -1,0 +1,21 @@
+/*                                                                                                                                                                
+ * build Gradle build script
+ */
+
+task prepareDocker(){
+    def stageDir = file('content')
+    doFirst {
+        stageDir.deleteDir()
+    }
+    doLast {
+        println "Prepare Docker build"
+        stageDir.mkdirs()
+         // copy all necessary files to  build/docker/ dir
+        copy {
+            from new File("../org.avatar.himsa.runtime/generated/distributions/executable/launch.jar")
+            into stageDir
+            rename("launch.jar", "de.avatar.himsa.runtime.jar")
+        }
+    }
+}
+
