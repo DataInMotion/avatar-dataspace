@@ -1,0 +1,9 @@
+-library: enable-emf
+-buildpath: \
+	de.avatar.connector.model,\
+	org.avatar.himsa.patient.service,\
+	org.gecko.emf.mongo.api,\
+	org.avatar.himsa.model,\
+	org.gecko.emf.repository.api,\
+	org.osgi.util.promise,\
+	org.gecko.emf.util.model

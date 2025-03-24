@@ -31,5 +31,8 @@
   		"consent.policy.id": "hearing_policy",
   		"consent.policy.version": "1.0",
   		"consent.id.type": "Patient ID"
+  	},
+  	"DummyDataComponent": {
+  		"collection.name": "Patient"
   	}
 }

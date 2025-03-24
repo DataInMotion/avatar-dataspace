@@ -1,0 +1,20 @@
+-buildpath: \
+	org.osgi.service.component.annotations;version=latest,\
+	org.osgi.service.http.whiteboard;version=latest,\
+	org.gecko.emf.rest.jakartars;version=latest,\
+	org.gecko.emf.json;version=latest,\
+	org.avatar.himsa.model;version=project,\
+	org.gecko.emf.util.model,\
+	de.avatar.connector.model,\
+	org.gecko.emf.repository.api,\
+	org.osgi.util.promise,\
+	org.avatar.himsa.patient.service;version=latest,\
+	org.gecko.emf.mongo.api,\
+	org.avatar.other.backend
+	
+-library: \
+	enableJakartaREST,\
+	enable-emf
+
+Bundle-Version: 1.0.0.SNAPSHOT
+Private-Package: org.avatar.other.rest

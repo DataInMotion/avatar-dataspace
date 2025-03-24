@@ -13,33 +13,13 @@
  */
 package org.avatar.himsa.rest;
 
-import java.lang.reflect.InvocationTargetException;
-import java.time.Instant;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.avatar.himsa.service.example.api.PatientService;
-import org.avatar.himsa.service.example.api.PatientService.PatientResponse;
-import org.avatar.himsa.service.example.api.QueryHelperService;
-import org.gecko.emf.utilities.UtilitiesFactory;
+import org.avatar.himsa.backend.api.HimsaBackendService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsName;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsResource;
-import org.osgi.util.promise.Deferred;
-import org.osgi.util.promise.Promise;
 
-import de.avatar.model.connector.AConnectorFactory;
-import de.avatar.model.connector.DryRunResult;
-import de.avatar.model.connector.EcoreResult;
-import de.avatar.model.connector.EndpointResponse;
-import de.avatar.model.connector.ErrorResult;
-import de.avatar.model.connector.Metadata;
-import de.avatar.model.connector.PendingResult;
-import de.avatar.model.connector.ResponseCode;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -65,37 +45,19 @@ import jakarta.ws.rs.core.Response;
  */
 @JakartarsResource
 @JakartarsName("demo")
-@Component(service = DemoResource.class, enabled = true, scope = ServiceScope.PROTOTYPE)
+@Component(name = "HimsaProviderResource", service = DemoResource.class, enabled = true, scope = ServiceScope.PROTOTYPE)
 @Path("/")
 public class DemoResource {
 		
 	@Reference
-	private PatientService patientService;
+	private HimsaBackendService backendService;
 	
-	@Reference
-	private QueryHelperService queryHelperService;
 	
-	private static Map<String, Promise<PatientResponse>> REQUEST_PROMISE_MAP = new ConcurrentHashMap<>();
 
 	@GET
 	@Path("/hello")
 	public String hello() {
 		return "Hello World!";
-	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/request/{requestId}")
-	public Response request(@PathParam("requestId") String requestId, @QueryParam("count") boolean count, 
-			@QueryParam("distinct") boolean distinct) {
-		System.out.println("Got a request for " + requestId);
-		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setCode(ResponseCode.PENDING);
-		response.setTimestamp(Instant.now().toEpochMilli());
-		PendingResult result = AConnectorFactory.eINSTANCE.createPendingResult();;
-		result.setEstRuntime(77);
-		response.setResult(result);
-		return Response.ok(response).build();
 	}
 	
 	
@@ -106,17 +68,7 @@ public class DemoResource {
 			@QueryParam("where") String[] where, @QueryParam("subject") String[] subjects, 
 			@QueryParam("sort") String[] sort, 
 			@QueryParam("limit") int limit, @QueryParam("skip") int skip) {
-		
-		Promise<PatientResponse> promise = getPromiseResult(where, subjects, sort, limit, skip);
-		REQUEST_PROMISE_MAP.put(requestId, promise);
-		
-		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setId(UUID.randomUUID().toString());
-		response.setCode(ResponseCode.PENDING);
-		PendingResult pendingRes = AConnectorFactory.eINSTANCE.createPendingResult();
-		pendingRes.setEstRuntime(77);
-		response.setResult(pendingRes);
-		return Response.ok(response).build();
+		return Response.ok(backendService.executeQuery(requestId, where, subjects, sort, limit, skip)).build();
 	}
 	
 
@@ -125,68 +77,10 @@ public class DemoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/status/{requestId}")
 	public Response status(@PathParam("requestId") String requestId) {
-		System.out.println("Got a status request for " + requestId);
-		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setTimestamp(Instant.now().toEpochMilli());
-		
-		Promise<PatientResponse> promise = REQUEST_PROMISE_MAP.get(requestId);
-		if(promise == null) {
-			System.out.println("Status ERROR");
-			response.setCode(ResponseCode.ERROR);
-			ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
-			errResult.setError(String.format("No query is running for request %s", requestId));
-			response.setResult(errResult);
-			return Response.ok(response).build();			
-		}
-		
-		if(!promise.isDone()) {
-			System.out.println("Status PENDING");
-			response.setCode(ResponseCode.PENDING);
-			PendingResult pendingResult = AConnectorFactory.eINSTANCE.createPendingResult();
-			pendingResult.setEstRuntime(7);
-			response.setResult(pendingResult);
-			return Response.ok(response).build();	
-		}
-		else {
-			try {
-				if(promise.getFailure() != null) {
-					System.out.println("Status DONE BUT ERROR");
-					response.setCode(ResponseCode.ERROR);
-					ErrorResult errResult = AConnectorFactory.eINSTANCE.createErrorResult();
-					errResult.setError(String.format("Query failed for request %s with msg %s", requestId, promise.getFailure().getMessage()));
-					response.setResult(errResult);			
-				} else {
-					System.out.println("Status SUCCESS");
-					PatientResponse patientResponse = promise.getValue();
-					addResponseMetadata(response, patientResponse.getMetadata());
-					if(patientResponse.getPatients().isEmpty()) {
-						response.setCode(ResponseCode.NO_CONTENT);
-					} else {
-						response.setCode(ResponseCode.OK);
-						org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-						emfResponse.getData().addAll(patientResponse.getPatients());
-						
-						EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
-						result.setValue(emfResponse);
-						response.setResult(result);			
-					}
-				}				
-				REQUEST_PROMISE_MAP.remove(requestId);
-				return Response.ok(response).build();	
-			} catch(InterruptedException | InvocationTargetException e) {
-				return Response.serverError().build();
-			}			
-		}
+		return Response.ok(backendService.executeStatus(requestId)).build();
 	}
 	
-	private void addResponseMetadata(EndpointResponse response, Map<String, String> metadata) {
-		metadata.forEach((k,v) -> {
-			Metadata responseMD = AConnectorFactory.eINSTANCE.createMetadata();
-			responseMD.setKey(k);
-			responseMD.setValue(v);
-			response.getMetadata().add(responseMD);
-		});
-	}
+	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -195,42 +89,7 @@ public class DemoResource {
 			@QueryParam("subject") String[] subjects, 
 			@QueryParam("sort") String[] sort, 
 			@QueryParam("limit") int limit, @QueryParam("skip") int skip) {
-		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setCode(ResponseCode.OK);
-		response.setTimestamp(Instant.now().toEpochMilli());
-		DryRunResult result = AConnectorFactory.eINSTANCE.createDryRunResult();
-		result.setEstRuntime(77);
-		result.setResultCount(77);
-		response.setResult(result);
-		return Response.ok(response).build();
-	}
-	
-	/**
-	 * http://localhost:8088/himsa/rest/patient/etester
-	 * @param id
-	 * @return
-	 */
-	@GET
-	@Path("/patient/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response patient(@PathParam("id") String id) {
-		PatientResponse response = patientService.getPatient(id);
-		if(response == null) {
-			return Response.serverError().build();
-		}
-		return Response.ok(response).build();
-	}
-	
-	private Promise<PatientResponse> getPromiseResult(String[] where, String[] subjects, String[] sort, int limit, int skip) {
-		
-		Deferred<PatientResponse> def = new Deferred<>();
-		Callable<PatientResponse> callable = new RequestExecutor(where, subjects, sort, limit, skip, patientService, queryHelperService);
-		try {
-			def.resolve(callable.call());
-		} catch (Exception e) {
-			def.fail(e);
-		}		
-		return def.getPromise();
+		return Response.ok(backendService.executeDryRun(requestId, where, subjects, sort, limit, skip)).build();
 	}
 	
 }

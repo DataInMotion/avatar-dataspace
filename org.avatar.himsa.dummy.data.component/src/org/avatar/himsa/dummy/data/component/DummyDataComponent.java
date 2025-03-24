@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Executors;
@@ -35,16 +37,18 @@ import org.emau.icmvc.ganimed.ttp.cm2.ModuleStateDTO;
 import org.emau.icmvc.ganimed.ttp.cm2.ModuleStatesType;
 import org.emau.icmvc.ganimed.ttp.cm2.Qcdto;
 import org.emau.icmvc.ganimed.ttp.cm2.SignerIdDTO;
+import org.gecko.emf.mongo.Options;
 import org.gecko.emf.repository.EMFRepository;
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.promise.PromiseFactory;
 
 import net.datafaker.Faker;
 
-@Component(immediate=true, name="DummyDataComponent")
+@Component(immediate=true, name="DummyDataComponent", configurationPid = "DummyDataComponent", configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class DummyDataComponent {
 
 	@Reference(target="(repo_id=avatar.avatar)")
@@ -61,9 +65,12 @@ public class DummyDataComponent {
 	
 	private Faker faker = new Faker(new Locale("de"));
 	private PromiseFactory factory = new PromiseFactory(Executors.newFixedThreadPool(4));
+
+	private Map<String, Object> properties;
 	
 	@Activate
-	public void activate() {		
+	public void activate(Map<String, Object> properties) {		
+		this.properties = properties;
 		factory.submit(() -> {
 			doCreateDummyData();
 			return true;
@@ -75,12 +82,13 @@ public class DummyDataComponent {
 	private void doCreateDummyData() {
 		EMFRepository repo = repoSO.getService();
 		try {
-			List<Patient> existingPatients = repo.getAllEObjects(PatientExportPackage.eINSTANCE.getPatient());
+			Map<String, Object> loadOptions = new HashMap<>();
+			if(properties.containsKey("collection.name")) loadOptions.put(Options.OPTION_COLLECTION_NAME, (String) properties.get("collection.name"));
+			List<Patient> existingPatients = repo.getAllEObjects(PatientExportPackage.eINSTANCE.getPatient(), loadOptions);
 			boolean createPatients = existingPatients.isEmpty();
-
 			if(createPatients) {
-				Collection<Patient> patients = createDummyPatients(NUM_OF_DUMMY_INSTANCES);
-				repo.save(patients.stream().map(mr -> (EObject) mr).toList());
+				Collection<Patient> patients = createDummyPatients(NUM_OF_DUMMY_INSTANCES);				
+				repo.save(patients.stream().map(mr -> (EObject) mr).toList(), loadOptions);
 				for(Patient patient : patients) {
 					ConsentDTO consent = doCreateDummyConsent(patient);
 					gicsService.addConsent(consent);
@@ -135,6 +143,8 @@ public class DummyDataComponent {
 		patient.setPatientGUID(UUID.randomUUID().toString());
 		patient.setUserId(UUID.randomUUID().toString());
 		patient.setActivePatient((Boolean) selectRandomElement(new Boolean[] {Boolean.TRUE, Boolean.FALSE}));
+		
+		
 		
 		try {
 			GregorianCalendar c = new GregorianCalendar();

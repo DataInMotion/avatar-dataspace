@@ -1,0 +1,38 @@
+{
+  ":configurator:resource-version": 1,
+  
+	"org.apache.felix.http~httpOTHER":
+	{
+		"org.osgi.service.http.port": "8091",
+		"org.osgi.service.http.host": "localhost",
+		"org.apache.felix.http.context_path": "/other",
+		"org.apache.felix.http.name": "OtherHTTP",
+		"org.apache.felix.http.runtime.init.id": "httpOTHER"
+	},
+	"JakartarsServletWhiteboardRuntimeComponent~restOTHER":
+	{
+		"jersey.jakartars.whiteboard.name" : "OtherREST",
+		"jersey.context.path" : "rest",
+		"osgi.http.whiteboard.target" : "(id=httpOTHER)"
+	},
+	"EMFMongoRepositoryConfigurator": 
+    {
+ 		"mongo.instances": "avatar",
+	    "avatar.baseUris": "mongodb://localhost:27017",
+	    "avatar.databases": "avatar",
+	    "avatar.avatar.repoType": "PROTOTYPE"
+  	},
+  	"GICSService~test":
+  	{
+  		"url": "http://localhost:8087/gics/gicsService"
+  	},
+  	"HIMSAConsentManagement": {
+  		"consent.domain.id": "avatar",
+  		"consent.policy.id": "hearing_policy",
+  		"consent.policy.version": "1.0",
+  		"consent.id.type": "Patient ID"
+  	},
+  	"DummyDataComponent": {
+  		"collection.name": "PatientOther"
+  	}
+}

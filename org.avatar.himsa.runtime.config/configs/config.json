@@ -27,5 +27,8 @@
   	"GICSService~test":
   	{
   		"url": "http://gics:8080/gics/gicsService"
+  	}, 
+  	"DummyDataComponent": {
+  		"collection.name": "Patient"
   	}
 }
