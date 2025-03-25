@@ -92,4 +92,6 @@
 	slf4j.jcl;version='[1.7.36,1.7.37)',\
 	org.avatar.himsa.patient.service;version=snapshot,\
 	org.avatar.other.local.config;version=snapshot,\
-	org.avatar.other.rest;version=snapshot
+	org.avatar.other.rest;version=snapshot,\
+	org.avatar.anonymization.api;version=snapshot,\
+	org.avatar.other.backend;version=snapshot

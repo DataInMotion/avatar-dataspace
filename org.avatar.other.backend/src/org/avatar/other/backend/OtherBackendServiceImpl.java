@@ -4,12 +4,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.avatar.himsa.export.Patient;
+import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
 import org.avatar.himsa.patient.service.api.PatientService;
 import org.avatar.himsa.patient.service.api.QueryHelperService;
 import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
@@ -31,6 +34,9 @@ import de.avatar.model.connector.ResponseCode;
 
 @Component(name = "OtherBackendService")
 public class OtherBackendServiceImpl implements OtherBackendService{
+	
+	@Reference(target = "(component.name=PatientAnonymizationService)")
+	PatientAnonymizationService anonymizationService;
 	
 	@Reference
 	private PatientService patientService;
@@ -122,7 +128,12 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 					} else {
 						response.setCode(ResponseCode.OK);
 						org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-						emfResponse.getData().addAll(patientResponse.getPatients());
+//						Call the anonymization service to anonymize data before sending them back
+						List<Patient> anonymizedPatients = anonymizationService.anonymizePatients(patientResponse.getPatients());
+						List<Metadata> anonymizationMetadata = anonymizationService.getAnonymizationMetadata();
+						anonymizationMetadata.addAll(anonymizationService.getAnonymizationMetadataForFeatures(patientResponse.getProjections()));
+						response.getMetadata().addAll(anonymizationMetadata);
+						emfResponse.getData().addAll(anonymizedPatients);
 
 						EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
 						result.setValue(emfResponse);

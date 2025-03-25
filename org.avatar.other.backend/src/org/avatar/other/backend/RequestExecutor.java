@@ -100,6 +100,7 @@ public class RequestExecutor implements Callable<PatientResponse> {
 			IQuery query = queryHelperService.buildQuery(qwhere);
 			
 			PatientResponse response = patientService.getPatientsByQuery(query, q.limit(), q.skip(), q.sort(), loadOptions, projectionsFeatures);
+			response.setProjections(projectionsFeatures);
 			applyPostOperations(response.getPatients(), projectionsFeatures, qsubj);
 			return response;
 		} catch(ParseException e) {

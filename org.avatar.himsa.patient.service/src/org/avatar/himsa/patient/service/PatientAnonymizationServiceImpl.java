@@ -18,9 +18,10 @@ import java.util.List;
 
 import org.avatar.anonymization.api.AnonymizationService;
 import org.avatar.himsa.export.Patient;
-import org.avatar.himsa.export.PatientExportPackage;
 import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 import de.avatar.model.connector.AConnectorFactory;
@@ -33,6 +34,11 @@ import de.avatar.model.connector.Metadata;
  */
 @Component(name = "PatientAnonymizationService", service = {PatientAnonymizationService.class, AnonymizationService.class})
 public class PatientAnonymizationServiceImpl implements PatientAnonymizationService {
+	
+	@Activate
+	public void activate() {
+		System.out.println("AnonymizationService is up");
+	}
 
 	/* 
 	 * (non-Javadoc)
@@ -47,8 +53,8 @@ public class PatientAnonymizationServiceImpl implements PatientAnonymizationServ
 		metadatas.add(metadata);
 		
 		metadata = AConnectorFactory.eINSTANCE.createMetadata();
-		metadata.setKey("anonymization.model.name");
-		metadata.setValue("idmt");
+		metadata.setKey("anonymization.model.version");
+		metadata.setValue("1.0");
 		metadatas.add(metadata);
 		return metadatas;
 	}
@@ -74,10 +80,19 @@ public class PatientAnonymizationServiceImpl implements PatientAnonymizationServ
 			
 			metadata = AConnectorFactory.eINSTANCE.createMetadata();
 			metadata.setKey("anonymization.feature.metric."+feature.getName());
-			metadata.setValue("ANONYMIZE");
+			if(feature instanceof EAttribute att) {
+				System.out.println(att.getName() + " " +  att.getEAttributeType().getInstanceClassName());
+				switch(att.getEAttributeType().getInstanceClassName()) {
+				case "java.lang.String": case "javax.xml.datatype.XMLGregorianCalendar":
+					metadata.setValue("CATEGORICAL_DISTANCE_100");
+				case "java.lang.int": case "java.lang.Integer":
+					metadata.setValue("DISTANCE_SQUARED");
+				}
+			}
+			
 			metadatas.add(metadata);
 		}
-		return null;
+		return metadatas;
 	}
 
 	/* 

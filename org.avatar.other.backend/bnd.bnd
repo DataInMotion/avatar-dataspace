@@ -6,4 +6,5 @@
 	org.avatar.himsa.model,\
 	org.gecko.emf.repository.api,\
 	org.osgi.util.promise,\
-	org.gecko.emf.util.model
+	org.gecko.emf.util.model,\
+	org.avatar.anonymization.api
