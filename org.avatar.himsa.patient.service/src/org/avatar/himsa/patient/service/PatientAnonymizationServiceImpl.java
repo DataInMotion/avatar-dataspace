@@ -81,7 +81,6 @@ public class PatientAnonymizationServiceImpl implements PatientAnonymizationServ
 			metadata = AConnectorFactory.eINSTANCE.createMetadata();
 			metadata.setKey("anonymization.feature.metric."+feature.getName());
 			if(feature instanceof EAttribute att) {
-				System.out.println(att.getName() + " " +  att.getEAttributeType().getInstanceClassName());
 				switch(att.getEAttributeType().getInstanceClassName()) {
 				case "java.lang.String": case "javax.xml.datatype.XMLGregorianCalendar":
 					metadata.setValue("CATEGORICAL_DISTANCE_100");

@@ -113,33 +113,33 @@ public class DummyDataComponent {
 	
 	private Patient doCreateDummyPatient() {
 		Patient patient = PatientExportFactory.eINSTANCE.createPatient();
-		patient.setFirstName(faker.name().firstName());
-		patient.setLastName(faker.name().lastName());
-		patient.setMiddleName(faker.name().firstName());
+		patient.setFirstName(getRandomDouble() < 0.7 ? faker.name().firstName() : null);
+		patient.setLastName(getRandomDouble() < 0.7 ? faker.name().lastName() : null);
+		patient.setMiddleName(getRandomDouble() < 0.7 ? faker.name().firstName() : null);
 //		patient.setGender((GenderType) selectRandomElement(GenderType.values()));
-		patient.setTitle(faker.name().title());
+		patient.setTitle(getRandomDouble() < 0.7 ? faker.name().title() : null);
 		
-		patient.setCity(faker.address().city());
-		patient.setZip(faker.address().zipCode());
-		patient.setProvince(faker.address().state());
-		patient.setCountry("Germany");
-		StringBuilder sb = new StringBuilder(patient.getCity());
-		sb.append(","+patient.getZip());
-		sb.append(","+patient.getProvince());
-		sb.append(","+patient.getCountry());
-		patient.setAddress1(sb.toString());
+		patient.setCity(getRandomDouble() < 0.7 ? faker.address().city() : null);
+		patient.setZip(getRandomDouble() < 0.7 ? faker.address().zipCode() : null);
+		patient.setProvince(getRandomDouble() < 0.7 ? faker.address().state() : null);
+		patient.setCountry(getRandomDouble() < 0.7 ? "Germany" : null);
+		StringBuilder sb = new StringBuilder(patient.getCity() != null ? patient.getCity() : "");
+		sb.append(","+ (patient.getZip() != null ? patient.getZip() : ""));
+		sb.append(","+ (patient.getProvince() != null ? patient.getProvince() : ""));
+		sb.append(","+ (patient.getCountry() != null ? patient.getCountry() : ""));
+		patient.setAddress1(getRandomDouble() < 0.7 ? sb.toString() : null);
 		
-		patient.setEMail(faker.internet().emailAddress());
-		patient.setHomeTelephone(faker.phoneNumber().phoneNumber());
-		patient.setWorkTelephone(faker.phoneNumber().phoneNumber());
+		patient.setEMail(getRandomDouble() < 0.7 ? faker.internet().emailAddress() : null);
+		patient.setHomeTelephone(getRandomDouble() < 0.7 ? faker.phoneNumber().phoneNumber() : null);
+		patient.setWorkTelephone(getRandomDouble() < 0.7 ? faker.phoneNumber().phoneNumber() : null);
 		
-		patient.setInsurance1((String) selectRandomElement(HEALTH_INSURANCE_COMPANIES_GERMANY.toArray(new String[] {})));
-		patient.setSSNumber(faker.idNumber().ssnValid());
+		patient.setInsurance1(getRandomDouble() < 0.7 ? (String) selectRandomElement(HEALTH_INSURANCE_COMPANIES_GERMANY.toArray(new String[] {})) : null);
+		patient.setSSNumber(getRandomDouble() < 0.7 ? faker.idNumber().ssnValid() : null);
 		
-		patient.setPhysician("Dr ".concat(faker.name().firstName().concat(" " + faker.name().lastName())));
-		patient.setReferral(faker.name().fullName());
+		patient.setPhysician(getRandomDouble() < 0.7 ? "Dr ".concat(faker.name().firstName().concat(" " + faker.name().lastName())) : null);
+		patient.setReferral(getRandomDouble() < 0.7 ? faker.name().fullName() : null);
 		
-		patient.setPatientNo(faker.number().digits(6));
+		patient.setPatientNo(getRandomDouble() < 0.7 ? faker.number().digits(6) : null);
 		patient.setPatientGUID(UUID.randomUUID().toString());
 		patient.setUserId(UUID.randomUUID().toString());
 		patient.setActivePatient((Boolean) selectRandomElement(new Boolean[] {Boolean.TRUE, Boolean.FALSE}));
@@ -257,6 +257,11 @@ public class DummyDataComponent {
 		int rndmIndx = rndm.nextInt(elements.length);
 		Object rndmElem = elements[rndmIndx];
 		return rndmElem;
+	}
+	
+	private double getRandomDouble() {
+		Random rand = new Random();
+		return (double)Math.abs(rand.nextInt())/Integer.MAX_VALUE;
 	}
 
 }

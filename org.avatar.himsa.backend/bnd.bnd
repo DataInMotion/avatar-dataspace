@@ -6,4 +6,5 @@
 	org.gecko.emf.util.model,\
 	org.avatar.himsa.model;version=latest,\
 	org.gecko.emf.repository.api,\
-	org.avatar.anonymization.api
+	org.avatar.anonymization.api,\
+	org.avatar.data.quality.api;version=latest

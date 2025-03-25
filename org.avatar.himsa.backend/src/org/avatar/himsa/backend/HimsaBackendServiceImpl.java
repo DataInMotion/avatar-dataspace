@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.avatar.himsa.backend.api.HimsaBackendService;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
+import org.avatar.himsa.patient.service.api.PatientDataQualityService;
 import org.avatar.himsa.patient.service.api.PatientService;
 import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
 import org.avatar.himsa.patient.service.api.QueryHelperService;
@@ -37,6 +38,9 @@ public class HimsaBackendServiceImpl implements HimsaBackendService{
 	
 	@Reference(target = "(component.name=PatientAnonymizationService)")
 	PatientAnonymizationService anonymizationService;
+	
+	@Reference(target = "(component.name=PatientDataQualityService)")
+	PatientDataQualityService dataQualityService;
 
 	@Reference
 	private PatientService patientService;
@@ -135,6 +139,10 @@ public class HimsaBackendServiceImpl implements HimsaBackendService{
 					} else {
 						response.setCode(ResponseCode.OK);
 						org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
+//						Call the dataquality service
+						List<Metadata> dataQualityMD = dataQualityService.getDataQualityMetadata();
+						dataQualityMD.addAll(dataQualityService.getQualityMetadataForPatients(patientResponse.getPatients(), patientResponse.getProjections()));
+						response.getMetadata().addAll(dataQualityMD);
 //						Call the anonymization service to anonymize data before sending them back
 						List<Patient> anonymizedPatients = anonymizationService.anonymizePatients(patientResponse.getPatients());
 						List<Metadata> anonymizationMetadata = anonymizationService.getAnonymizationMetadata();
