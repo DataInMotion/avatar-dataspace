@@ -95,4 +95,5 @@
 	org.avatar.other.rest;version=snapshot,\
 	org.avatar.anonymization.api;version=snapshot,\
 	org.avatar.other.backend;version=snapshot,\
-	org.avatar.data.quality.api;version=snapshot
+	org.avatar.data.quality.api;version=snapshot,\
+	de.avatar.metadata.model;version='[1.0.0,1.0.1)'

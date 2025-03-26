@@ -13,19 +13,22 @@
  */
 package org.avatar.himsa.patient.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.avatar.anonymization.api.AnonymizationService;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
-import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
-import de.avatar.model.connector.AConnectorFactory;
-import de.avatar.model.connector.Metadata;
+import de.avatar.metadata.AnonymizationInfo;
+import de.avatar.metadata.AnonymizationMetadata;
+import de.avatar.metadata.AnonymizationModelConfig;
+import de.avatar.metadata.AnonymizationModelFeatureConfig;
+import de.avatar.metadata.MetadataFactory;
 
 /**
  * 
@@ -45,65 +48,50 @@ public class PatientAnonymizationServiceImpl implements PatientAnonymizationServ
 	 * @see org.avatar.anonymization.api.AnonymizationService#getAnonymizationMetadata()
 	 */
 	@Override
-	public List<Metadata> getAnonymizationMetadata() {
-		List<Metadata> metadatas = new ArrayList<>(2);
-		Metadata metadata = AConnectorFactory.eINSTANCE.createMetadata();
-		metadata.setKey("anonymization.model.name");
-		metadata.setValue("idmt");
-		metadatas.add(metadata);
+	public AnonymizationMetadata getAnonymizationMetadata() {
+		AnonymizationMetadata metadata = MetadataFactory.eINSTANCE.createAnonymizationMetadata();
+		metadata.setId(UUID.randomUUID().toString());
+		metadata.setDescription("Metadata relative to the anonymization process");
+		AnonymizationInfo anInfo = MetadataFactory.eINSTANCE.createAnonymizationInfo();
+		anInfo.setModelName("IDMT-ot");
+		anInfo.setModelProvider("Fraunhofer IDMT");
+		anInfo.setModelVersion("1.0");
+		anInfo.setModelDescription("IDMT optimal transport anonymization algorithm");
+		metadata.setAnonymizationInfo(anInfo);
+		return metadata;
+	}
+
+
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.himsa.patient.service.api.PatientAnonymizationService#getAnonymizationMetadataForFeatures(org.eclipse.emf.ecore.EStructuralFeature[][])
+	 */
+	@Override
+	public AnonymizationMetadata getAnonymizationMetadataForFeatures(EStructuralFeature[]... projections) {
 		
-		metadata = AConnectorFactory.eINSTANCE.createMetadata();
-		metadata.setKey("anonymization.model.version");
-		metadata.setValue("1.0");
-		metadatas.add(metadata);
-		return metadatas;
-	}
-	
-	/* 
-	 * (non-Javadoc)
-	 * @see org.avatar.anonymization.api.AnonymizationService#getAnonymizationMetadataForFeatures(org.eclipse.emf.ecore.EStructuralFeature[][])
-	 */
-	@Override
-	public List<Metadata> getAnonymizationMetadataForFeatures(EStructuralFeature[]... eStructuralFeatures) {
-		List<Metadata> metadatas = new ArrayList<>(eStructuralFeatures.length*3);
-		for(EStructuralFeature[] projPath : eStructuralFeatures) {
+		AnonymizationMetadata metadata = getAnonymizationMetadata();
+		AnonymizationModelConfig modelConfig = MetadataFactory.eINSTANCE.createAnonymizationModelConfig();
+		for(EStructuralFeature[] projPath : projections) {
 			EStructuralFeature feature = projPath[projPath.length-1];
-			Metadata metadata = AConnectorFactory.eINSTANCE.createMetadata();
-			metadata.setKey("anonymization.feature.name");
-			metadata.setValue(feature.getName());
-			metadatas.add(metadata);
-			
-			metadata = AConnectorFactory.eINSTANCE.createMetadata();
-			metadata.setKey("anonymization.feature.strategy."+feature.getName());
-			metadata.setValue("ANONYMIZE");
-			metadatas.add(metadata);
-			
-			metadata = AConnectorFactory.eINSTANCE.createMetadata();
-			metadata.setKey("anonymization.feature.metric."+feature.getName());
-			if(feature instanceof EAttribute att) {
-				switch(att.getEAttributeType().getInstanceClassName()) {
-				case "java.lang.String": case "javax.xml.datatype.XMLGregorianCalendar":
-					metadata.setValue("CATEGORICAL_DISTANCE_100");
-				case "java.lang.int": case "java.lang.Integer":
-					metadata.setValue("DISTANCE_SQUARED");
-				}
-			}
-			
-			metadatas.add(metadata);
+//			This is just an example. The actual meaningful config should be provided accordingly to the anonymization algorithm
+			AnonymizationModelFeatureConfig featureConfig = MetadataFactory.eINSTANCE.createAnonymizationModelFeatureConfig();
+			featureConfig.setFeatureName(feature.getName());
+			featureConfig.setStrategy("ANONYMIZE");
+			featureConfig.setMetric("CATEGORICAL_DISTANCE_100");
+			modelConfig.getFeatureConfig().add(featureConfig);
 		}
-		return metadatas;
+		metadata.getAnonymizationInfo().setModelConfig(modelConfig);
+		return metadata;
 	}
 
 	/* 
 	 * (non-Javadoc)
-	 * @see org.avatar.himsa.patient.service.api.PatientAnonymizationService#anonymizePatients(java.util.List)
+	 * @see org.avatar.anonymization.api.AnonymizationService#anonymizeEObjects(java.util.List)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Patient> anonymizePatients(List<Patient> patients) {
-		// it was not our responsibility to implement anonymization so we simply do not do anything here
-		return patients;
+	public List<Patient> anonymizeEObjects(List<? extends EObject> eObjects) {
+//		We are not doing anything in particular here because is not our responsibility to implement the anonymization algorithm
+		return (List<Patient>) eObjects;
 	}
-
-	
-
 }

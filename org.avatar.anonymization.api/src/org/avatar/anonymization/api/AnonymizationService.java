@@ -15,10 +15,10 @@ package org.avatar.anonymization.api;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EObject;
 import org.osgi.annotation.versioning.ProviderType;
 
-import de.avatar.model.connector.Metadata;
+import de.avatar.metadata.AnonymizationMetadata;
 
 
 /**
@@ -29,8 +29,8 @@ import de.avatar.model.connector.Metadata;
 @ProviderType
 public interface AnonymizationService {
 	
-	List<Metadata> getAnonymizationMetadata();
+	AnonymizationMetadata getAnonymizationMetadata();
 	
-	List<Metadata> getAnonymizationMetadataForFeatures(EStructuralFeature[] ...eStructuralFeatures );
-
+	List<? extends EObject> anonymizeEObjects(List<? extends EObject> eObjects);
+	
 }

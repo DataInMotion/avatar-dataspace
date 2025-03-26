@@ -19,15 +19,15 @@ import org.avatar.data.quality.api.DataQualityService;
 import org.avatar.himsa.export.Patient;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import de.avatar.model.connector.Metadata;
+import de.avatar.metadata.DataQualityMetadata;
 
 /**
  * 
  * @author ilenia
  * @since Mar 25, 2025
  */
-public interface PatientDataQualityService extends DataQualityService{
+public interface PatientDataQualityService extends DataQualityService{	
 	
-	List<Metadata> getQualityMetadataForPatients(List<Patient> patients, EStructuralFeature[] ... projections);
+	DataQualityMetadata getDataQualityMetadataForPatients(List<Patient> patients, EStructuralFeature[] ... projections);
 
 }

@@ -13,10 +13,10 @@
  */
 package org.avatar.himsa.patient.service.api;
 
-import java.util.List;
-
 import org.avatar.anonymization.api.AnonymizationService;
-import org.avatar.himsa.export.Patient;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+import de.avatar.metadata.AnonymizationMetadata;
 
 /**
  * 
@@ -25,6 +25,6 @@ import org.avatar.himsa.export.Patient;
  */
 public interface PatientAnonymizationService extends AnonymizationService {
 	
-	List<Patient> anonymizePatients(List<Patient> patients);
+	AnonymizationMetadata getAnonymizationMetadataForFeatures(EStructuralFeature[] ... projections);
 
 }

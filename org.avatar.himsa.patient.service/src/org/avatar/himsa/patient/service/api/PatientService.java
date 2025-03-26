@@ -13,7 +13,6 @@
  */
 package org.avatar.himsa.patient.service.api;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +20,9 @@ import java.util.Map;
 import org.avatar.himsa.export.Patient;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.gecko.emf.repository.query.IQuery;
+
+import de.avatar.metadata.ConsentMetadata;
+import de.avatar.metadata.MetadataFactory;
 
 /**
  * 
@@ -41,7 +43,7 @@ public interface PatientService {
 	class PatientResponse {
 		
 		private Patient patient;
-		private Map<String, String> metadata = new HashMap<>();
+		private ConsentMetadata metadata = MetadataFactory.eINSTANCE.createConsentMetadata();
 		private List<Patient> patients = new LinkedList<>();
 		private EStructuralFeature[][] projections;
 		
@@ -49,12 +51,12 @@ public interface PatientService {
 			
 		}
 
-		public PatientResponse(Patient patient, Map<String, String> metadata) {
+		public PatientResponse(Patient patient, ConsentMetadata metadata) {
 			this.patient = patient;
 			this.metadata = metadata;			
 		}
 		
-		public PatientResponse(List<Patient> patients, Map<String, String> metadata) {
+		public PatientResponse(List<Patient> patients, ConsentMetadata metadata) {
 			this.patients = patients;
 			this.metadata = metadata;			
 		}
@@ -63,7 +65,7 @@ public interface PatientService {
 			this.patient = patient;
 		}
 		
-		public Map<String, String> getMetadata() {
+		public ConsentMetadata getMetadata() {
 			return metadata;
 		}
 		

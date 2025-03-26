@@ -37,6 +37,9 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
+import de.avatar.metadata.ConsentInfo;
+import de.avatar.metadata.MetadataFactory;
+
 /**
  * !!!!! SEE ALL REQUIRE DECLARATION IN package-info.java !!!!!
  * @author Mark Hoffmann
@@ -83,27 +86,30 @@ public class PatientServiceImpl implements PatientService {
 				getAllConsentedIdsFor(consentDomainId, consentPolicyId, consentPolicyVersion, consentIdType).
 				getReturn().
 				getConsentIds();
+		
 		EMFRepository repo = repoSO.getService();
 		try {
 			Patient patient = repo.getEObject(modelPackage.getPatient(), id, loadOptions);
 			if(patient != null) {
-				patientResponse.getMetadata().put("total.results.before.consent.filter", "1");
+				patientResponse.getMetadata().setResultsBeforeConsentFilter(1);
 			} else {
-				patientResponse.getMetadata().put("total.results.before.consent.filter", "0");
+				patientResponse.getMetadata().setResultsBeforeConsentFilter(0);
 			}
 			if(consentIds.contains(id)) {
-				patientResponse.getMetadata().put("total.results.after.consent.filter", "1");
+				patientResponse.getMetadata().setResultsAfterConsentFilter(1);
 				patientResponse.setPatient(patient);
 			} else {
-				patientResponse.getMetadata().put("total.results.after.consent.filter", "0");
+				patientResponse.getMetadata().setResultsAfterConsentFilter(0);
 			}
 		} finally {
 			repoSO.ungetService(repo);
 		}
-		patientResponse.getMetadata().put("consent.filter.domain.id", consentDomainId);
-		patientResponse.getMetadata().put("consent.filter.policy.id", consentPolicyId);
-		patientResponse.getMetadata().put("consent.filter.policy.version", consentPolicyVersion);
-		patientResponse.getMetadata().put("consent.filter.id.type", consentIdType);
+		ConsentInfo consentInfo = MetadataFactory.eINSTANCE.createConsentInfo();
+		consentInfo.setDomainId(consentDomainId);
+		consentInfo.setPolicyId(consentPolicyId);
+		consentInfo.setPolicyVersion(consentPolicyVersion);
+		consentInfo.setConsentIdType(consentIdType);
+		patientResponse.getMetadata().setConsentInfo(consentInfo);
 		return patientResponse;
 	}
 	
@@ -168,6 +174,7 @@ public class PatientServiceImpl implements PatientService {
 			IQueryBuilder queryBuilderNoFilter = repo.createQueryBuilder().and(query);
 			IQueryBuilder queryBuilderFilter = repo.createQueryBuilder().and(query, consentQuery);
 			for(EStructuralFeature[] projection : projectionFeaturePaths) {
+				System.out.println("Projection in query " + projection);
 				queryBuilderNoFilter = queryBuilderNoFilter.projectionPath(projection);
 				queryBuilderFilter = queryBuilderFilter.projectionPath(projection);
 			}
@@ -178,12 +185,14 @@ public class PatientServiceImpl implements PatientService {
 			List<Patient> patients =  repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilderNoFilter.limit(limit).skip(skip).build(), loadOptions);
 			List<Patient> filteredPatients = repo.getEObjectsByQuery(modelPackage.getPatient(), queryBuilderFilter.limit(limit).skip(skip).build(), loadOptions);
 			PatientResponse patientResponse = new PatientResponse();
-			patientResponse.getMetadata().put("total.results.before.consent.filter", String.valueOf(patients.size()));
-			patientResponse.getMetadata().put("total.results.after.consent.filter", String.valueOf(filteredPatients.size()));
-			patientResponse.getMetadata().put("consent.filter.domain.id", consentDomainId);
-			patientResponse.getMetadata().put("consent.filter.policy.id", consentPolicyId);
-			patientResponse.getMetadata().put("consent.filter.policy.version", consentPolicyVersion);
-			patientResponse.getMetadata().put("consent.filter.id.type", consentIdType);
+			patientResponse.getMetadata().setResultsBeforeConsentFilter(patients.size());
+			patientResponse.getMetadata().setResultsAfterConsentFilter(filteredPatients.size());
+			ConsentInfo consentInfo = MetadataFactory.eINSTANCE.createConsentInfo();
+			consentInfo.setDomainId(consentDomainId);
+			consentInfo.setPolicyId(consentPolicyId);
+			consentInfo.setPolicyVersion(consentPolicyVersion);
+			consentInfo.setConsentIdType(consentIdType);
+			patientResponse.getMetadata().setConsentInfo(consentInfo);
 			patientResponse.getPatients().addAll(filteredPatients);
 			return patientResponse;
 		} finally {

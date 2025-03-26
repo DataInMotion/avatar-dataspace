@@ -1,15 +1,12 @@
 package org.avatar.data.quality.api;
 
-import java.util.List;
-
 import org.osgi.annotation.versioning.ProviderType;
 
-import de.avatar.model.connector.Metadata;
+import de.avatar.metadata.DataQualityMetadata;
 
 @ProviderType
 public interface DataQualityService {
 
-    List<Metadata> getDataQualityMetadata();
-
+    DataQualityMetadata getDataQualityMetadata();
 
 }

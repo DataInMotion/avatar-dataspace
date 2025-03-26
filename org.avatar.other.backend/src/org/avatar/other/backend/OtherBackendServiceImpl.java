@@ -15,8 +15,8 @@ import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
 import org.avatar.himsa.patient.service.api.PatientDataQualityService;
 import org.avatar.himsa.patient.service.api.PatientService;
-import org.avatar.himsa.patient.service.api.QueryHelperService;
 import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
+import org.avatar.himsa.patient.service.api.QueryHelperService;
 import org.avatar.other.backend.api.OtherBackendService;
 import org.gecko.emf.utilities.UtilitiesFactory;
 import org.osgi.service.component.annotations.Component;
@@ -24,12 +24,13 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
 
+import de.avatar.metadata.MetadataFactory;
+import de.avatar.metadata.ResponseMetadata;
 import de.avatar.model.connector.AConnectorFactory;
 import de.avatar.model.connector.DryRunResult;
 import de.avatar.model.connector.EcoreResult;
 import de.avatar.model.connector.EndpointResponse;
 import de.avatar.model.connector.ErrorResult;
-import de.avatar.model.connector.Metadata;
 import de.avatar.model.connector.PendingResult;
 import de.avatar.model.connector.ResponseCode;
 
@@ -50,7 +51,7 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 
 	private static Map<String, Promise<PatientResponse>> REQUEST_PROMISE_MAP = new ConcurrentHashMap<>();
 	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss'Z'")
-			.withZone(ZoneId.systemDefault());
+			.withZone(ZoneId.of("Europe/Berlin"));
 
 	/* 
 	 * (non-Javadoc)
@@ -63,7 +64,7 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 		REQUEST_PROMISE_MAP.put(requestId, promise);
 
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setId(UUID.randomUUID().toString());
+		addResponseMetadata(response, requestId);
 		response.setCode(ResponseCode.PENDING);
 		PendingResult pendingRes = AConnectorFactory.eINSTANCE.createPendingResult();
 		pendingRes.setEstRuntime(new Random().nextInt(300 - 5) + 5);
@@ -80,7 +81,7 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 			int skip) {
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
 		response.setCode(ResponseCode.DRYRUN_OK);
-		response.setTimestamp(Instant.now().toEpochMilli());
+		addResponseMetadata(response, requestId);
 		DryRunResult result = AConnectorFactory.eINSTANCE.createDryRunResult();
 		result.setEstRuntime(new Random().nextInt(300 - 5) + 5);
 		result.setResultCount(new Random().nextInt(300 - 5) + 5);
@@ -95,7 +96,7 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 	@Override
 	public EndpointResponse executeStatus(String requestId) {
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setTimestamp(Instant.now().toEpochMilli());
+		addResponseMetadata(response, requestId);
 
 		Promise<PatientResponse> promise = REQUEST_PROMISE_MAP.get(requestId);
 		if(promise == null) {
@@ -126,21 +127,18 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 				} else {
 					System.out.println("Status SUCCESS");
 					PatientResponse patientResponse = promise.getValue();
-					addResponseMetadata(response, patientResponse.getMetadata());
+					response.getMetadata().add(patientResponse.getMetadata());
 					if(patientResponse.getPatients().isEmpty()) {
 						response.setCode(ResponseCode.NO_CONTENT);
 					} else {
 						response.setCode(ResponseCode.OK);
 						org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
 //						Call the dataquality service
-						List<Metadata> dataQualityMD = dataQualityService.getDataQualityMetadata();
-						dataQualityMD.addAll(dataQualityService.getQualityMetadataForPatients(patientResponse.getPatients(), patientResponse.getProjections()));
-						response.getMetadata().addAll(dataQualityMD);
+						response.getMetadata().add(dataQualityService.getDataQualityMetadataForPatients(patientResponse.getPatients(), patientResponse.getProjections()));
 //						Call the anonymization service to anonymize data before sending them back
-						List<Patient> anonymizedPatients = anonymizationService.anonymizePatients(patientResponse.getPatients());
-						List<Metadata> anonymizationMetadata = anonymizationService.getAnonymizationMetadata();
-						anonymizationMetadata.addAll(anonymizationService.getAnonymizationMetadataForFeatures(patientResponse.getProjections()));
-						response.getMetadata().addAll(anonymizationMetadata);
+						@SuppressWarnings("unchecked")
+						List<Patient> anonymizedPatients = (List<Patient>) anonymizationService.anonymizeEObjects(patientResponse.getPatients());
+						response.getMetadata().add(anonymizationService.getAnonymizationMetadataForFeatures(patientResponse.getProjections()));
 						emfResponse.getData().addAll(anonymizedPatients);
 
 						EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
@@ -160,17 +158,15 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 		}
 	}
 
-	private void addResponseMetadata(EndpointResponse response, Map<String, String> metadata) {
-		metadata.forEach((k,v) -> {
-			Metadata responseMD = AConnectorFactory.eINSTANCE.createMetadata();
-			responseMD.setKey(k);
-			responseMD.setValue(v);
-			response.getMetadata().add(responseMD);
-		});
-		Metadata responseTimeMD = AConnectorFactory.eINSTANCE.createMetadata();
-		responseTimeMD.setKey("response.time");
-		responseTimeMD.setValue(DATE_TIME_FORMATTER.format(Instant.now()));
-		response.getMetadata().add(responseTimeMD);
+	private void addResponseMetadata(EndpointResponse response, String requestId) {
+		ResponseMetadata metadata = MetadataFactory.eINSTANCE.createResponseMetadata();
+		metadata.setId(UUID.randomUUID().toString());
+		metadata.setRequestId(requestId);
+		if(response.getId() == null) response.setId(UUID.randomUUID().toString());
+		metadata.setResponseId(response.getId());
+		response.setTimestamp(Instant.now().toEpochMilli());
+		metadata.setResponseTime(DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(response.getTimestamp())));
+		response.getMetadata().add(metadata);
 	}
 
 	private Promise<PatientResponse> getPromiseResult(String[] where, String[] subjects, String[] sort, int limit, int skip) {

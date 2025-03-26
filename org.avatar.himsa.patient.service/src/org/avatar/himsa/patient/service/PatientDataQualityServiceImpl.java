@@ -13,11 +13,8 @@
  */
 package org.avatar.himsa.patient.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 import org.avatar.data.quality.api.DataQualityService;
 import org.avatar.himsa.export.Patient;
@@ -26,8 +23,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
-import de.avatar.model.connector.AConnectorFactory;
-import de.avatar.model.connector.Metadata;
+import de.avatar.metadata.DataQualityFilter;
+import de.avatar.metadata.DataQualityMetadata;
+import de.avatar.metadata.DataQualityResult;
+import de.avatar.metadata.MetadataFactory;
 
 /**
  * 
@@ -47,71 +46,88 @@ public class PatientDataQualityServiceImpl implements PatientDataQualityService 
 	 * @see org.avatar.data.quality.api.DataQualityService#getDataQualityMetadata()
 	 */
 	@Override
-	public List<Metadata> getDataQualityMetadata() {
-		List<Metadata> metadatas = new ArrayList<>(2);
-		Metadata metadata = AConnectorFactory.eINSTANCE.createMetadata();
-		metadata.setKey("data.quality.startegy");
-		metadata.setValue("check-null-object");
-		metadatas.add(metadata);
+	public DataQualityMetadata getDataQualityMetadata() {
+		DataQualityMetadata metadata = MetadataFactory.eINSTANCE.createDataQualityMetadata();
+		metadata.setId(UUID.randomUUID().toString());
+		metadata.setDescription("Metadata containing data quality information");
 
-		metadata = AConnectorFactory.eINSTANCE.createMetadata();
-		metadata.setKey("data.quality.startegy");
-		metadata.setValue("check-empty-string");
-		metadatas.add(metadata);
+		DataQualityFilter filter = MetadataFactory.eINSTANCE.createDataQualityFilter();
+		filter.setName("check-null-obj");
+		filter.setDescription("Check for null objecs");
+		metadata.getDataQualityFilter().add(filter);
 
-		return metadatas;
+		filter = MetadataFactory.eINSTANCE.createDataQualityFilter();
+		filter.setName("check-empty-string");
+		filter.setDescription("Check for empty strings");
+		metadata.getDataQualityFilter().add(filter);		
+
+		return metadata;
 	}
-
 
 	/* 
 	 * (non-Javadoc)
-	 * @see org.avatar.himsa.patient.service.api.PatientDataQualityService#getQualityMetadataForPatients(java.util.List, org.eclipse.emf.ecore.EStructuralFeature[][])
+	 * @see org.avatar.himsa.patient.service.api.PatientDataQualityService#getDataQualityMetadataForPatients(java.util.List, org.eclipse.emf.ecore.EStructuralFeature[][])
 	 */
 	@Override
-	public List<Metadata> getQualityMetadataForPatients(List<Patient> patients, EStructuralFeature[] ... projections) {
-		Map<String, Map<EStructuralFeature, Integer>> qualityDataMap = new HashMap<>();
+	public DataQualityMetadata getDataQualityMetadataForPatients(List<Patient> patients,
+			EStructuralFeature[]... projections) {
+
+		DataQualityMetadata metadata = getDataQualityMetadata();
+		DataQualityFilter f1 = metadata.getDataQualityFilter().stream().filter(f -> "check-null-obj".equals(f.getName())).findAny().orElse(null);
+		DataQualityFilter f2 = metadata.getDataQualityFilter().stream().filter(f -> "check-empty-string".equals(f.getName())).findAny().orElse(null);
 		for(EStructuralFeature[] projPath : projections) {
 			EStructuralFeature feature = projPath[projPath.length-1];
-			System.out.println("Data Quality for feature " + feature.getName());
 			for(Patient patient : patients) {
 				Object obj = patient.eGet(feature);
 				if(obj == null) {
-					if(!qualityDataMap.containsKey("check-null-object")) {
-						qualityDataMap.put("check-null-object", new HashMap<EStructuralFeature, Integer>());
+
+					if(f1 != null) {
+						DataQualityResult result = f1.getDataQualityResult().stream().filter(r -> feature.getName().equals(r.getFeatureName())).findAny().orElse(null);
+						if(result == null) {
+							result = MetadataFactory.eINSTANCE.createDataQualityResult();
+							result.setFeatureName(feature.getName());
+							result.setElementsBeforeQualityFilter(patients.size());
+							result.setElementsAfterQualityFilter(patients.size());
+							f1.getDataQualityResult().add(result);
+						}
+						result.setElementsAfterQualityFilter(result.getElementsAfterQualityFilter() - 1);
 					}
-					if(!qualityDataMap.get("check-null-object").containsKey(feature)) {
-						qualityDataMap.get("check-null-object").put(feature, 0);
-					}
-					Integer counter = qualityDataMap.get("check-null-object").get(feature);
-					counter = counter + 1;
-					qualityDataMap.get("check-null-object").put(feature, counter);
 				}
 				if(obj instanceof String str) {
-					if(str.isEmpty()) {
-						if(!qualityDataMap.containsKey("check-empty-string")) {
-							qualityDataMap.put("check-empty-string", new HashMap<EStructuralFeature, Integer>());
+					if(str.isEmpty()) {						
+						if(f2 != null) {
+							DataQualityResult result = f2.getDataQualityResult().stream().filter(r -> feature.getName().equals(r.getFeatureName())).findAny().orElse(null);
+							if(result == null) {
+								result = MetadataFactory.eINSTANCE.createDataQualityResult();
+								result.setFeatureName(feature.getName());
+								result.setElementsBeforeQualityFilter(patients.size());
+								result.setElementsAfterQualityFilter(patients.size());
+								f2.getDataQualityResult().add(result);
+							}
+							result.setElementsAfterQualityFilter(result.getElementsAfterQualityFilter() - 1);
 						}
-						if(!qualityDataMap.get("check-empty-string").containsKey(feature)) {
-							qualityDataMap.get("check-empty-string").put(feature, 0);
-						}
-						Integer counter = qualityDataMap.get("check-empty-string").get(feature);
-						counter = counter + 1;
-						qualityDataMap.get("check-empty-string").put(feature, counter);
 					}						
 				}
 			}
+
+			DataQualityResult result = f1.getDataQualityResult().stream().filter(r -> feature.getName().equals(r.getFeatureName())).findAny().orElse(null);
+			if(result == null) {
+				result = MetadataFactory.eINSTANCE.createDataQualityResult();
+				result.setFeatureName(feature.getName());
+				result.setElementsBeforeQualityFilter(patients.size());
+				result.setElementsAfterQualityFilter(patients.size());
+				f1.getDataQualityResult().add(result);
+			}
+			result = f2.getDataQualityResult().stream().filter(r -> feature.getName().equals(r.getFeatureName())).findAny().orElse(null);
+			if(result == null) {
+				result = MetadataFactory.eINSTANCE.createDataQualityResult();
+				result.setFeatureName(feature.getName());
+				result.setElementsBeforeQualityFilter(patients.size());
+				result.setElementsAfterQualityFilter(patients.size());
+				f2.getDataQualityResult().add(result);
+			}
 		}
-		List<Metadata> metadatas = new LinkedList<>();
-		qualityDataMap.forEach((strategy, dataQuality) -> {
-			dataQuality.forEach((feature, counter) -> {
-				Metadata metadata = AConnectorFactory.eINSTANCE.createMetadata();
-				metadata.setKey("data.quality." + strategy + "." + feature.getName());
-				metadata.setValue(String.valueOf(counter));
-				metadatas.add(metadata);
-			});
-		});
 
-		return metadatas;
+		return metadata;
 	}
-
 }
