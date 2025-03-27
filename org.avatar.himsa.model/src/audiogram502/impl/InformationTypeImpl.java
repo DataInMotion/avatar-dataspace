@@ -37,7 +37,7 @@ public class InformationTypeImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Object COMMENTS_EDEFAULT = null;
+	protected static final String COMMENTS_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getComments() <em>Comments</em>}' attribute.
@@ -47,7 +47,7 @@ public class InformationTypeImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 * @ordered
 	 */
-	protected Object comments = COMMENTS_EDEFAULT;
+	protected String comments = COMMENTS_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
@@ -94,7 +94,7 @@ public class InformationTypeImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 */
 	@Override
-	public Object getComments() {
+	public String getComments() {
 		return comments;
 	}
 
@@ -104,8 +104,8 @@ public class InformationTypeImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 */
 	@Override
-	public void setComments(Object newComments) {
-		Object oldComments = comments;
+	public void setComments(String newComments) {
+		String oldComments = comments;
 		comments = newComments;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, Audiogram502Package.INFORMATION_TYPE__COMMENTS, oldComments, comments));
@@ -159,7 +159,7 @@ public class InformationTypeImpl extends MinimalEObjectImpl.Container implements
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case Audiogram502Package.INFORMATION_TYPE__COMMENTS:
-				setComments(newValue);
+				setComments((String)newValue);
 				return;
 			case Audiogram502Package.INFORMATION_TYPE__VERSION:
 				setVersion((BigInteger)newValue);

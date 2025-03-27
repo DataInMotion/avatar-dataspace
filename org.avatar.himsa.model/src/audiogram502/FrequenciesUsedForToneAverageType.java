@@ -36,14 +36,16 @@ public interface FrequenciesUsedForToneAverageType extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Left Ear1</b></em>' attribute list.
 	 * The list contents are of type {@link audiogram502.ToneAverageType}.
+	 * The literals are from the enumeration {@link audiogram502.ToneAverageType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Frequencies used to calculate the average for LeftEar1
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Left Ear1</em>' attribute list.
+	 * @see audiogram502.ToneAverageType
 	 * @see audiogram502.Audiogram502Package#getFrequenciesUsedForToneAverageType_LeftEar1()
-	 * @model unique="false" dataType="audiogram502.LeftEar1Type" upper="13"
+	 * @model unique="false" upper="13"
 	 *        extendedMetaData="kind='element' name='LeftEar1' namespace='##targetNamespace'"
 	 * @generated
 	 */

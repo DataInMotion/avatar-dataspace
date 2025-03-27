@@ -35,13 +35,12 @@ public interface InformationType extends EObject {
 	 * General Comments about  the data from the developer of the data
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Comments</em>' attribute.
-	 * @see #setComments(Object)
+	 * @see #setComments(String)
 	 * @see audiogram502.Audiogram502Package#getInformationType_Comments()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.AnySimpleType"
-	 *        extendedMetaData="kind='attribute' name='Comments'"
+	 * @model extendedMetaData="kind='attribute' name='Comments'"
 	 * @generated
 	 */
-	Object getComments();
+	String getComments();
 
 	/**
 	 * Sets the value of the '{@link audiogram502.InformationType#getComments <em>Comments</em>}' attribute.
@@ -51,7 +50,7 @@ public interface InformationType extends EObject {
 	 * @see #getComments()
 	 * @generated
 	 */
-	void setComments(Object value);
+	void setComments(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Version</b></em>' attribute.

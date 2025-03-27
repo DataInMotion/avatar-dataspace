@@ -1,5 +1,6 @@
 package org.avatar.himsa.dummy.data.component;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -21,10 +22,18 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.avatar.gics.service.api.GICSService;
+import org.avatar.himsa.dummy.data.component.helper.DummyDataHelper;
+import org.avatar.himsa.export.ActionDataType;
+import org.avatar.himsa.export.ActionsType;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.export.PatientExportFactory;
 import org.avatar.himsa.export.PatientExportPackage;
+import org.avatar.himsa.export.PatientType1;
+import org.avatar.himsa.export.PubliclyFormattedData;
+import org.avatar.himsa.export.TypeOfDataType;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.emau.icmvc.ganimed.ttp.cm2.Cm2Factory;
 import org.emau.icmvc.ganimed.ttp.cm2.ConsentDTO;
 import org.emau.icmvc.ganimed.ttp.cm2.ConsentKeyDTO;
@@ -44,8 +53,11 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.util.promise.PromiseFactory;
 
+import audiogram502.DocumentRoot;
+import audiogram502.HIMSAAudiometricStandardType;
 import net.datafaker.Faker;
 
 @Component(immediate=true, name="DummyDataComponent", configurationPid = "DummyDataComponent", configurationPolicy = ConfigurationPolicy.REQUIRE)
@@ -67,15 +79,29 @@ public class DummyDataComponent {
 	private PromiseFactory factory = new PromiseFactory(Executors.newFixedThreadPool(4));
 
 	private Map<String, Object> properties;
+	private ResourceSet resourceSet;
+	private HIMSAAudiometricStandardType sampleAudiogram;
 	
 	@Activate
-	public void activate(Map<String, Object> properties) {		
+	public DummyDataComponent(Map<String, Object> properties, @Reference(cardinality = ReferenceCardinality.MANDATORY)
+	ResourceSet resourceSet) {		
 		this.properties = properties;
+		this.resourceSet = resourceSet;
 		factory.submit(() -> {
+			loadSampleAudiogram();
 			doCreateDummyData();
 			return true;
 		}).onSuccess(t -> LOGGER.info("Finished creating dummy data!"))
 		.onFailure(t -> LOGGER.log(Level.SEVERE, String.format("Something went wrong when creating dummy data!"), t));		
+	}
+	
+	private void loadSampleAudiogram() {
+		EObject eObj = DummyDataHelper.loadXMLResource(System.getProperty("data")+"Format502AudSample.xml", resourceSet);
+		if(eObj != null && eObj instanceof DocumentRoot root) {
+			sampleAudiogram = root.getHIMSAAudiometricStandard();
+		} else {
+			LOGGER.severe(String.format("Error while loading sample audiogram. Cannot include that in sample data!"));
+		}
 	}
 
 	
@@ -111,8 +137,8 @@ public class DummyDataComponent {
 	}
 
 	
-	private Patient doCreateDummyPatient() {
-		Patient patient = PatientExportFactory.eINSTANCE.createPatient();
+	private PatientType1 doCreateDummyPatient() {
+		PatientType1 patient = PatientExportFactory.eINSTANCE.createPatientType1();
 		patient.setFirstName(getRandomDouble() < 0.7 ? faker.name().firstName() : null);
 		patient.setLastName(getRandomDouble() < 0.7 ? faker.name().lastName() : null);
 		patient.setMiddleName(getRandomDouble() < 0.7 ? faker.name().firstName() : null);
@@ -144,8 +170,6 @@ public class DummyDataComponent {
 		patient.setUserId(UUID.randomUUID().toString());
 		patient.setActivePatient((Boolean) selectRandomElement(new Boolean[] {Boolean.TRUE, Boolean.FALSE}));
 		
-		
-		
 		try {
 			GregorianCalendar c = new GregorianCalendar();
 			c.setTime(faker.date().birthday());
@@ -159,8 +183,21 @@ public class DummyDataComponent {
 		} catch (DatatypeConfigurationException e) {
 			e.printStackTrace();
 		}
-		
+		addAudiogramToPatient(patient);		
 		return patient;
+	}
+	
+	private void addAudiogramToPatient(PatientType1 patient) {
+		ActionDataType actionData = PatientExportFactory.eINSTANCE.createActionDataType();
+		actionData.setDescription("A sample audiogram");
+		actionData.setTypeOfData(TypeOfDataType.AUDIOGRAM);
+		actionData.setDataFormat(BigInteger.valueOf(1));
+		PubliclyFormattedData data = PatientExportFactory.eINSTANCE.createPubliclyFormattedData();
+		data.setHIMSAAudiometricStandard1(EcoreUtil.copy(sampleAudiogram));
+		actionData.setPublicData(data);
+		ActionsType actions = PatientExportFactory.eINSTANCE.createActionsType();	
+		patient.setActions(actions);
+		patient.getActions().getAction().add(actionData);
 	}
 	
 	private ConsentDTO doCreateDummyConsent(Patient patient) {

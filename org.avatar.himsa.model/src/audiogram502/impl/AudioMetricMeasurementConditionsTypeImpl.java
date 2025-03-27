@@ -3,7 +3,6 @@
 package audiogram502.impl;
 
 import audiogram502.AudioMetricMeasurementConditionsType;
-import audiogram502.Audiogram502Factory;
 import audiogram502.Audiogram502Package;
 import audiogram502.AuxiliaryParameterType;
 import audiogram502.DBweightingType;
@@ -91,7 +90,7 @@ public class AudioMetricMeasurementConditionsTypeImpl extends MinimalEObjectImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final SignalType STIMULUS_SIGNAL_TYPE_EDEFAULT = (SignalType)Audiogram502Factory.eINSTANCE.createFromString(Audiogram502Package.eINSTANCE.getStimulusSignalTypeType(), "NoSignalApplied");
+	protected static final SignalType STIMULUS_SIGNAL_TYPE_EDEFAULT = SignalType.NO_SIGNAL_APPLIED;
 
 	/**
 	 * The cached value of the '{@link #getStimulusSignalType() <em>Stimulus Signal Type</em>}' attribute.
@@ -265,7 +264,7 @@ public class AudioMetricMeasurementConditionsTypeImpl extends MinimalEObjectImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final PresentationType STIMULUS_PRESENTATION_TYPE_EDEFAULT = (PresentationType)Audiogram502Factory.eINSTANCE.createFromString(Audiogram502Package.eINSTANCE.getStimulusPresentationTypeType(), "NoPresentationType");
+	protected static final PresentationType STIMULUS_PRESENTATION_TYPE_EDEFAULT = PresentationType.NO_PRESENTATION_TYPE;
 
 	/**
 	 * The cached value of the '{@link #getStimulusPresentationType() <em>Stimulus Presentation Type</em>}' attribute.
@@ -1110,7 +1109,7 @@ public class AudioMetricMeasurementConditionsTypeImpl extends MinimalEObjectImpl
 	@Override
 	public void setStimulusSignalType(SignalType newStimulusSignalType) {
 		SignalType oldStimulusSignalType = stimulusSignalType;
-		stimulusSignalType = newStimulusSignalType;
+		stimulusSignalType = newStimulusSignalType == null ? STIMULUS_SIGNAL_TYPE_EDEFAULT : newStimulusSignalType;
 		boolean oldStimulusSignalTypeESet = stimulusSignalTypeESet;
 		stimulusSignalTypeESet = true;
 		if (eNotificationRequired())
@@ -1410,7 +1409,7 @@ public class AudioMetricMeasurementConditionsTypeImpl extends MinimalEObjectImpl
 	@Override
 	public void setStimulusPresentationType(PresentationType newStimulusPresentationType) {
 		PresentationType oldStimulusPresentationType = stimulusPresentationType;
-		stimulusPresentationType = newStimulusPresentationType;
+		stimulusPresentationType = newStimulusPresentationType == null ? STIMULUS_PRESENTATION_TYPE_EDEFAULT : newStimulusPresentationType;
 		boolean oldStimulusPresentationTypeESet = stimulusPresentationTypeESet;
 		stimulusPresentationTypeESet = true;
 		if (eNotificationRequired())

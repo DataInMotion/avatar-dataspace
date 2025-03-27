@@ -75,17 +75,19 @@ public interface AudioMetricMeasurementConditionsType extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Stimulus Signal Type</b></em>' attribute.
 	 * The default value is <code>"NoSignalApplied"</code>.
+	 * The literals are from the enumeration {@link audiogram502.SignalType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * Stimulus signal is the sound being presented to the patient, in the ear being tested, that you want them to respond to. (e.g. Pure Tone)
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Stimulus Signal Type</em>' attribute.
+	 * @see audiogram502.SignalType
 	 * @see #isSetStimulusSignalType()
 	 * @see #unsetStimulusSignalType()
 	 * @see #setStimulusSignalType(SignalType)
 	 * @see audiogram502.Audiogram502Package#getAudioMetricMeasurementConditionsType_StimulusSignalType()
-	 * @model default="NoSignalApplied" unsettable="true" dataType="audiogram502.StimulusSignalTypeType" required="true"
+	 * @model default="NoSignalApplied" unsettable="true" required="true"
 	 *        extendedMetaData="kind='element' name='StimulusSignalType' namespace='##targetNamespace'"
 	 * @generated
 	 */
@@ -96,6 +98,7 @@ public interface AudioMetricMeasurementConditionsType extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Stimulus Signal Type</em>' attribute.
+	 * @see audiogram502.SignalType
 	 * @see #isSetStimulusSignalType()
 	 * @see #unsetStimulusSignalType()
 	 * @see #getStimulusSignalType()
@@ -431,6 +434,7 @@ public interface AudioMetricMeasurementConditionsType extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Stimulus Presentation Type</b></em>' attribute.
 	 * The default value is <code>"NoPresentationType"</code>.
+	 * The literals are from the enumeration {@link audiogram502.PresentationType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -439,11 +443,12 @@ public interface AudioMetricMeasurementConditionsType extends EObject {
 	 * See annotations for Presentation_Type for more information
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Stimulus Presentation Type</em>' attribute.
+	 * @see audiogram502.PresentationType
 	 * @see #isSetStimulusPresentationType()
 	 * @see #unsetStimulusPresentationType()
 	 * @see #setStimulusPresentationType(PresentationType)
 	 * @see audiogram502.Audiogram502Package#getAudioMetricMeasurementConditionsType_StimulusPresentationType()
-	 * @model default="NoPresentationType" unsettable="true" dataType="audiogram502.StimulusPresentationTypeType"
+	 * @model default="NoPresentationType" unsettable="true"
 	 *        extendedMetaData="kind='element' name='StimulusPresentationType' namespace='##targetNamespace'"
 	 * @generated
 	 */
@@ -454,6 +459,7 @@ public interface AudioMetricMeasurementConditionsType extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Stimulus Presentation Type</em>' attribute.
+	 * @see audiogram502.PresentationType
 	 * @see #isSetStimulusPresentationType()
 	 * @see #unsetStimulusPresentationType()
 	 * @see #getStimulusPresentationType()

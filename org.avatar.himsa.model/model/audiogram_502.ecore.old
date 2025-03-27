@@ -176,7 +176,7 @@
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stimulusSignalType" lowerBound="1"
-        eType="#//SignalType" defaultValueLiteral="NoSignalApplied" unsettable="true">
+        eType="#//StimulusSignalTypeType" defaultValueLiteral="NoSignalApplied" unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Stimulus signal is the sound being presented to the patient, in the ear being tested, that you want them to respond to. (e.g. Pure Tone)"/>
       </eAnnotations>
@@ -242,7 +242,8 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stimulusPresentationType"
-        eType="#//PresentationType" defaultValueLiteral="NoPresentationType" unsettable="true">
+        eType="#//StimulusPresentationTypeType" defaultValueLiteral="NoPresentationType"
+        unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Presentation Type for the Stimulus signal&#xA;&#xA;See annotations for Presentation_Type for more information"/>
       </eAnnotations>
@@ -1158,7 +1159,7 @@
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="leftEar1" unique="false"
-        upperBound="13" eType="#//ToneAverageType">
+        upperBound="13" eType="#//LeftEar1Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Frequencies used to calculate the average for LeftEar1"/>
       </eAnnotations>
@@ -1490,7 +1491,7 @@
       <details key="name" value="Information_._type"/>
       <details key="kind" value="empty"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comments" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comments" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//AnySimpleType">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="General Comments about  the data from the developer of the data"/>
       </eAnnotations>
