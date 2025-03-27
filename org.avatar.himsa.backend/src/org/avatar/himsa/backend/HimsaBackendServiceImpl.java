@@ -1,10 +1,10 @@
 package org.avatar.himsa.backend;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -12,13 +12,13 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.avatar.himsa.backend.api.HimsaBackendService;
-import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
 import org.avatar.himsa.patient.service.api.PatientDataQualityService;
 import org.avatar.himsa.patient.service.api.PatientService;
 import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
-import org.avatar.himsa.patient.service.api.QueryHelperService;
+import org.gecko.emf.repository.EMFRepository;
 import org.gecko.emf.utilities.UtilitiesFactory;
+import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.promise.Deferred;
@@ -33,6 +33,7 @@ import de.avatar.model.connector.EndpointResponse;
 import de.avatar.model.connector.ErrorResult;
 import de.avatar.model.connector.PendingResult;
 import de.avatar.model.connector.ResponseCode;
+import de.avatar.query.Query;
 
 @Component(name = "HimsaBackendService")
 public class HimsaBackendServiceImpl implements HimsaBackendService{
@@ -45,58 +46,20 @@ public class HimsaBackendServiceImpl implements HimsaBackendService{
 
 	@Reference
 	private PatientService patientService;
+	
+	@Reference(target="(repo_id=avatar.avatar)")
+	ComponentServiceObjects<EMFRepository> repoSO;
 
-	@Reference
-	private QueryHelperService queryHelperService;
 
 	private static Map<String, Promise<PatientResponse>> REQUEST_PROMISE_MAP = new ConcurrentHashMap<>();
 	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss'Z'")
 			.withZone(ZoneId.of("Europe/Berlin"));
-
-	
-	/* 
-	 * (non-Javadoc)
-	 * @see org.avatar.himsa.backend.api.HimsaBackendService#executeQuery(java.lang.String, java.lang.String[], java.lang.String[], java.lang.String[], int, int)
-	 */
-	@Override
-	public EndpointResponse executeQuery(String requestId, String[] where, String[] subjects, String[] sort, int limit,
-			int skip) {
-		Promise<PatientResponse> promise = getPromiseResult(where, subjects, sort, limit, skip);
-		REQUEST_PROMISE_MAP.put(requestId, promise);
-
-		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setCode(ResponseCode.PENDING);
-		addResponseMetadata(response, requestId);
-		PendingResult pendingRes = AConnectorFactory.eINSTANCE.createPendingResult();
-		pendingRes.setEstRuntime(new Random().nextInt(300 - 5) + 5);
-		response.setResult(pendingRes);
-		return response;
-	}
-
-	
-	/* 
-	 * (non-Javadoc)
-	 * @see org.avatar.himsa.backend.api.HimsaBackendService#executeDryRun(java.lang.String, java.lang.String[], java.lang.String[], java.lang.String[], int, int)
-	 */
-	@Override
-	public EndpointResponse executeDryRun(String requestId, String[] where, String[] subjects, String[] sort, int limit,
-			int skip) {
-		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-		response.setCode(ResponseCode.DRYRUN_OK);
-		addResponseMetadata(response, requestId);
-		DryRunResult result = AConnectorFactory.eINSTANCE.createDryRunResult();
-		result.setEstRuntime(new Random().nextInt(300 - 5) + 5);
-		result.setResultCount(new Random().nextInt(300 - 5) + 5);
-		response.setResult(result);
-		return response;
-	}
 
 
 	/* 
 	 * (non-Javadoc)
 	 * @see org.avatar.himsa.backend.api.HimsaBackendService#executeStatus(java.lang.String)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public EndpointResponse executeStatus(String requestId) {
 		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();		
@@ -131,19 +94,13 @@ public class HimsaBackendServiceImpl implements HimsaBackendService{
 				} else {
 					System.out.println("Status SUCCESS");
 					PatientResponse patientResponse = promise.getValue();
-					response.getMetadata().add(patientResponse.getMetadata());
+					response.getMetadata().addAll(patientResponse.getMetadata());
 					if(patientResponse.getPatients().isEmpty()) {
 						response.setCode(ResponseCode.NO_CONTENT);
 					} else {
 						response.setCode(ResponseCode.OK);
 						org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-//						Call the dataquality service
-						response.getMetadata().add(dataQualityService.getDataQualityMetadataForPatients(patientResponse.getPatients(), patientResponse.getProjections()));
-//						Call the anonymization service to anonymize data before sending them back
-						List<Patient> anonymizedPatients = (List<Patient>) anonymizationService.anonymizeEObjects(patientResponse.getPatients());
-						response.getMetadata().add(anonymizationService.getAnonymizationMetadataForFeatures(patientResponse.getProjections()));
-						emfResponse.getData().addAll(anonymizedPatients);
-
+						emfResponse.getData().addAll(patientResponse.getPatients());
 						EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
 						result.setValue(emfResponse);
 						response.setResult(result);			
@@ -173,10 +130,11 @@ public class HimsaBackendServiceImpl implements HimsaBackendService{
 	}
 
 
-	private Promise<PatientResponse> getPromiseResult(String[] where, String[] subjects, String[] sort, int limit, int skip) {
+	private Promise<PatientResponse> getPromiseResult(Query query) throws ParseException {
 
 		Deferred<PatientResponse> def = new Deferred<>();
-		Callable<PatientResponse> callable = new RequestExecutor(where, subjects, sort, limit, skip, patientService, queryHelperService);
+		
+		Callable<PatientResponse> callable = new RequestExecutor(query, patientService, anonymizationService, dataQualityService, repoSO);
 		try {
 			def.resolve(callable.call());
 		} catch (Exception e) {
@@ -184,5 +142,58 @@ public class HimsaBackendServiceImpl implements HimsaBackendService{
 			def.fail(e);
 		}		
 		return def.getPromise();
+	}
+
+
+
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.himsa.backend.api.HimsaBackendService#executeQuery(java.lang.String, de.avatar.query.Query)
+	 */
+	@Override
+	public EndpointResponse executeQuery(String requestId, Query query) {
+		Promise<PatientResponse> promise;
+		try {
+			promise = getPromiseResult(query);
+			REQUEST_PROMISE_MAP.put(requestId, promise);
+
+			EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
+			addResponseMetadata(response, requestId);
+			response.setCode(ResponseCode.PENDING);
+			PendingResult pendingRes = AConnectorFactory.eINSTANCE.createPendingResult();
+			pendingRes.setEstRuntime(new Random().nextInt(300 - 5) + 5);
+			response.setResult(pendingRes);
+			return response;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return createErrorResponse(requestId, e);
+		}		
+	}
+
+	private EndpointResponse createErrorResponse(String requestId, Throwable errCause) {
+		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
+		addResponseMetadata(response, requestId);
+		response.setCode(ResponseCode.ERROR);
+		ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
+		errRes.setError(errCause.getMessage());
+		errRes.setErrorText(errCause.getMessage());
+		response.setResult(errRes);
+		return response;
+	}
+	
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.himsa.backend.api.HimsaBackendService#executeDryRun(java.lang.String, de.avatar.query.Query)
+	 */
+	@Override
+	public EndpointResponse executeDryRun(String requestId, Query query) {
+		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
+		response.setCode(ResponseCode.DRYRUN_OK);
+		addResponseMetadata(response, requestId);
+		DryRunResult result = AConnectorFactory.eINSTANCE.createDryRunResult();
+		result.setEstRuntime(new Random().nextInt(300 - 5) + 5);
+		result.setResultCount(new Random().nextInt(300 - 5) + 5);
+		response.setResult(result);
+		return response;
 	}
 }

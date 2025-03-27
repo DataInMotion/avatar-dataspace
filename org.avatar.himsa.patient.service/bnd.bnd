@@ -10,4 +10,6 @@
 	org.avatar.anonymization.api;version=latest,\
 	de.avatar.connector.model,\
 	org.avatar.data.quality.api;version=latest,\
-	de.avatar.metadata.model
+	de.avatar.metadata.model,\
+	de.avatar.query.model,\
+	org.gecko.emf.util.model

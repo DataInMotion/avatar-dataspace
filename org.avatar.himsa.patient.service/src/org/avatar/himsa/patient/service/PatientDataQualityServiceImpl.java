@@ -77,10 +77,14 @@ public class PatientDataQualityServiceImpl implements PatientDataQualityService 
 		DataQualityFilter f2 = metadata.getDataQualityFilter().stream().filter(f -> "check-empty-string".equals(f.getName())).findAny().orElse(null);
 		for(EStructuralFeature[] projPath : projections) {
 			EStructuralFeature feature = projPath[projPath.length-1];
+			String featureName = "";
+			for(EStructuralFeature f : projPath) {
+				featureName += f.getName() + ".";
+			}
+			featureName = featureName.substring(0, featureName.length());
 			for(Patient patient : patients) {
 				Object obj = patient.eGet(feature);
 				if(obj == null) {
-
 					if(f1 != null) {
 						DataQualityResult result = f1.getDataQualityResult().stream().filter(r -> feature.getName().equals(r.getFeatureName())).findAny().orElse(null);
 						if(result == null) {
@@ -113,7 +117,7 @@ public class PatientDataQualityServiceImpl implements PatientDataQualityService 
 			DataQualityResult result = f1.getDataQualityResult().stream().filter(r -> feature.getName().equals(r.getFeatureName())).findAny().orElse(null);
 			if(result == null) {
 				result = MetadataFactory.eINSTANCE.createDataQualityResult();
-				result.setFeatureName(feature.getName());
+				result.setFeatureName(featureName);
 				result.setElementsBeforeQualityFilter(patients.size());
 				result.setElementsAfterQualityFilter(patients.size());
 				f1.getDataQualityResult().add(result);
@@ -121,7 +125,7 @@ public class PatientDataQualityServiceImpl implements PatientDataQualityService 
 			result = f2.getDataQualityResult().stream().filter(r -> feature.getName().equals(r.getFeatureName())).findAny().orElse(null);
 			if(result == null) {
 				result = MetadataFactory.eINSTANCE.createDataQualityResult();
-				result.setFeatureName(feature.getName());
+				result.setFeatureName(featureName);
 				result.setElementsBeforeQualityFilter(patients.size());
 				result.setElementsAfterQualityFilter(patients.size());
 				f2.getDataQualityResult().add(result);

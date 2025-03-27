@@ -9,7 +9,9 @@
 	org.gecko.emf.repository.api,\
 	org.osgi.util.promise,\
 	org.avatar.himsa.patient.service;version=latest,\
-	org.avatar.himsa.backend
+	org.avatar.himsa.backend,\
+	de.avatar.query.model,\
+	de.avatar.query.status.model
 	
 -library: \
 	enableJakartaREST,\

@@ -14,17 +14,22 @@
 package org.avatar.himsa.rest;
 
 import org.avatar.himsa.backend.api.HimsaBackendService;
+import org.gecko.emf.json.constants.EMFJs;
+import org.gecko.emf.rest.annotations.EMFResourceOptions;
+import org.gecko.emf.rest.annotations.ResourceOption;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsName;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsResource;
 
+import de.avatar.query.Query;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -45,33 +50,38 @@ import jakarta.ws.rs.core.Response;
  */
 @JakartarsResource
 @JakartarsName("demo")
-@Component(name = "HimsaProviderResource", service = DemoResource.class, enabled = true, scope = ServiceScope.PROTOTYPE)
+@Component(name = "HimsaProviderResource", service = HimsaRESTResource.class, enabled = true, scope = ServiceScope.PROTOTYPE)
 @Path("/")
-public class DemoResource {
+public class HimsaRESTResource {
 		
 	@Reference
 	private HimsaBackendService backendService;
 	
-	
-
 	@GET
 	@Path("/hello")
 	public String hello() {
-		return "Hello World!";
+		return "Hello HimsaProviderResource!";
+	}
+
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/dryrun/{requestId}")
+	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
+	public Response dryrun(@PathParam("requestId") String requestId, Query query) {
+		return Response.ok(backendService.executeDryRun(requestId, query)).build();
 	}
 	
-	
-	@GET
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/patient/query/{requestId}")
-	public Response patientByQuery(@PathParam("requestId") String requestId,
-			@QueryParam("where") String[] where, @QueryParam("subject") String[] subjects, 
-			@QueryParam("sort") String[] sort, 
-			@QueryParam("limit") int limit, @QueryParam("skip") int skip) {
-		return Response.ok(backendService.executeQuery(requestId, where, subjects, sort, limit, skip)).build();
+	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
+	public Response patientByQuery(@PathParam("requestId") String requestId, Query query) {
+		return Response.ok(backendService.executeQuery(requestId, query)).build();
 	}
 	
-
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -79,17 +89,4 @@ public class DemoResource {
 	public Response status(@PathParam("requestId") String requestId) {
 		return Response.ok(backendService.executeStatus(requestId)).build();
 	}
-	
-	
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/dryrun/{requestId}")
-	public Response dryrun(@PathParam("requestId") String requestId, @QueryParam("where") String[] where, 
-			@QueryParam("subject") String[] subjects, 
-			@QueryParam("sort") String[] sort, 
-			@QueryParam("limit") int limit, @QueryParam("skip") int skip) {
-		return Response.ok(backendService.executeDryRun(requestId, where, subjects, sort, limit, skip)).build();
-	}
-	
 }

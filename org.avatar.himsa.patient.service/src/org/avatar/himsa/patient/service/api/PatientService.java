@@ -22,7 +22,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.gecko.emf.repository.query.IQuery;
 
 import de.avatar.metadata.ConsentMetadata;
-import de.avatar.metadata.MetadataFactory;
+import de.avatar.metadata.Metadata;
+import de.avatar.query.SortEntity;
 
 /**
  * 
@@ -38,14 +39,15 @@ public interface PatientService {
 //	PatientResponse getPatientsByRangeQuery(EAttribute columnName, Object startValue, Object endValue, boolean isStartIncluded, boolean isEndIncluded, 
 //			EStructuralFeature[] ... projectionFeaturePaths);
 	
-	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<Query.Sort> sort, Map<Object, Object> loadOptions, EStructuralFeature[] ... projectionFeaturePaths);
+//	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<Query.Sort> sort, Map<Object, Object> loadOptions, EStructuralFeature[] ... projectionFeaturePaths);
+	PatientResponse getPatientsByQuery2(IQuery query, int limit, int skip, List<SortEntity> sort, Map<Object, Object> loadOptions, EStructuralFeature[] ... projectionFeaturePaths);
+	
 	
 	class PatientResponse {
 		
 		private Patient patient;
-		private ConsentMetadata metadata = MetadataFactory.eINSTANCE.createConsentMetadata();
+		private List<Metadata> metadata = new LinkedList<>();
 		private List<Patient> patients = new LinkedList<>();
-		private EStructuralFeature[][] projections;
 		
 		public PatientResponse() {
 			
@@ -53,19 +55,24 @@ public interface PatientService {
 
 		public PatientResponse(Patient patient, ConsentMetadata metadata) {
 			this.patient = patient;
-			this.metadata = metadata;			
+			this.metadata.add(metadata);	
 		}
 		
 		public PatientResponse(List<Patient> patients, ConsentMetadata metadata) {
 			this.patients = patients;
-			this.metadata = metadata;			
+			this.metadata.add(metadata);		
+		}
+		
+		public PatientResponse(List<Patient> patients, List<Metadata> metadata) {
+			this.patients = patients;
+			this.metadata.addAll(metadata);		
 		}
 		
 		public void setPatient(Patient patient) {
 			this.patient = patient;
 		}
 		
-		public ConsentMetadata getMetadata() {
+		public List<Metadata> getMetadata() {
 			return metadata;
 		}
 		
@@ -75,14 +82,6 @@ public interface PatientService {
 		
 		public List<Patient> getPatients() {
 			return patients;
-		}
-		
-		public void setProjections(EStructuralFeature[]...  projections) {
-			this.projections = projections;
-		}
-		
-		public EStructuralFeature[][] getProjections() {
-			return projections;
 		}
 	}
 }

@@ -9,4 +9,6 @@
 	org.gecko.emf.util.model,\
 	org.avatar.anonymization.api,\
 	org.avatar.data.quality.api;version=latest,\
-	de.avatar.metadata.model
+	de.avatar.metadata.model,\
+	de.avatar.query.model,\
+	org.osgi.service.component

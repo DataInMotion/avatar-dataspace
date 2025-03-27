@@ -14,6 +14,7 @@
 package org.avatar.other.backend.api;
 
 import de.avatar.model.connector.EndpointResponse;
+import de.avatar.query.Query;
 
 /**
  * 
@@ -22,9 +23,13 @@ import de.avatar.model.connector.EndpointResponse;
  */
 public interface OtherBackendService {
 	
-	EndpointResponse executeQuery(String requestId, String[] where, String[] subjects, String[] sort, int limit, int skip);
+	EndpointResponse executeQuery(String requestId, Query query);
 	
-	EndpointResponse executeDryRun(String requestId, String[] where, String[] subjects, String[] sort, int limit, int skip);
+	EndpointResponse executeDryRun(String requestId, Query query);
+
+//	EndpointResponse executeQuery(String requestId, String[] where, String[] subjects, String[] sort, int limit, int skip);
+//	
+//	EndpointResponse executeDryRun(String requestId, String[] where, String[] subjects, String[] sort, int limit, int skip);
 	
 	EndpointResponse executeStatus(String requestId);
 

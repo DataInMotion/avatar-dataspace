@@ -10,7 +10,8 @@
 	org.osgi.util.promise,\
 	org.avatar.himsa.patient.service;version=latest,\
 	org.gecko.emf.mongo.api,\
-	org.avatar.other.backend
+	org.avatar.other.backend,\
+	de.avatar.query.model
 	
 -library: \
 	enableJakartaREST,\

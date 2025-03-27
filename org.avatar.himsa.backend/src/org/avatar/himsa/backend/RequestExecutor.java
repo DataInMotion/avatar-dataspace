@@ -14,21 +14,28 @@
 package org.avatar.himsa.backend;
 
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 import org.avatar.himsa.export.Patient;
-import org.avatar.himsa.export.PatientExportPackage;
+import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
+import org.avatar.himsa.patient.service.api.PatientDataQualityService;
 import org.avatar.himsa.patient.service.api.PatientService;
 import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
-import org.avatar.himsa.patient.service.api.Query;
-import org.avatar.himsa.patient.service.api.QueryHelperService;
-import org.avatar.himsa.patient.service.api.QuerySubject;
-import org.avatar.himsa.patient.service.api.QueryWhere;
-import org.eclipse.emf.ecore.EAttribute;
+import org.avatar.himsa.patient.service.api.QueryHelper;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.gecko.emf.mongo.Options;
+import org.gecko.emf.repository.EMFRepository;
 import org.gecko.emf.repository.query.IQuery;
+import org.osgi.service.component.ComponentServiceObjects;
+
+import de.avatar.query.Operation;
+import de.avatar.query.QSubject;
+
+
 
 /**
  * 
@@ -37,193 +44,78 @@ import org.gecko.emf.repository.query.IQuery;
  */
 public class RequestExecutor implements Callable<PatientResponse> {
 
-	private String[] where;
-	private String[] subjects;
+	private static final Logger LOGGER = Logger.getLogger(RequestExecutor.class.getName());
 	private PatientService patientService;
-	private QueryHelperService queryHelperService;
-	private String[] sort;
-	private int limit;
-	private int skip;
+	private de.avatar.query.Query query;
 
-	public RequestExecutor(String[] where, String[] subjects, String[] sort, int limit, int skip, PatientService patientService, QueryHelperService queryHelperService) {
-		this.where = where;
-		this.subjects = subjects;
-		this.sort = sort;
-		this.limit = limit;
-		this.skip = skip;
+	Map<Object, Object> loadOptions = new HashMap<>();
+	private ComponentServiceObjects<EMFRepository> repoSO;
+	private PatientAnonymizationService anonymizationService;
+	private PatientDataQualityService dataQualityService;
+
+
+	public RequestExecutor(de.avatar.query.Query query, PatientService patientService, PatientAnonymizationService anonymizationService, 
+			PatientDataQualityService dataQualityService, ComponentServiceObjects<EMFRepository> repoSO) throws ParseException {
+		this.query = query;
 		this.patientService = patientService;
-		this.queryHelperService = queryHelperService;
-
+		this.anonymizationService = anonymizationService;
+		this.dataQualityService = dataQualityService;
+		this.repoSO = repoSO;
 	}
 
 	/* 
 	 * (non-Javadoc)
 	 * @see java.util.concurrent.Callable#call()
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public PatientResponse call()  {
-		List<QueryWhere> qwhere = new ArrayList<>(where.length);
-		for(String w : where) {
-			qwhere.add(extractQWhereFromRequest(w));
+	public PatientResponse call() throws Exception {
+		IQuery iQuery = QueryHelper.buildQuery(query, repoSO);
+		EStructuralFeature[][] projections =  new EStructuralFeature[query.getSubject().size()][];
+		int i = 0;
+		for(QSubject subj : query.getSubject()) {
+			projections[i] = subj.getFeaturePath().getFeature().toArray(new EStructuralFeature[subj.getFeaturePath().getFeature().size()]);
+			i++;
 		}
-		List<QuerySubject> qsubj = new ArrayList<>(subjects.length);
-		for(String s : subjects) {
-			qsubj.add(extractQSubjectFromRequest(s));
-		}
-		Query q = extractQueryParamFromRequest();
+		Map<Object, Object> loadOptions = new HashMap<>();
+		loadOptions.put(Options.OPTION_COLLECTION_NAME, "Patient");
+		PatientResponse response = patientService.getPatientsByQuery2(iQuery, query.getLimit(), query.getSkip(), query.getSortBy(), loadOptions, projections);
+		applyPostOperations(response.getPatients(), query.getSubject());
 		
-//		Patient.address-Address.street
-		EStructuralFeature[][] projectionsFeatures = new EStructuralFeature[subjects.length][];
-		int i = 0, j = 0;
-		for(QuerySubject subj : qsubj) {
-			String[] projections = subj.projections();
-			j = 0;
-			for(String projName : projections) {
-				
-				projectionsFeatures[i] = new EStructuralFeature[projections.length];
-				EStructuralFeature f = PatientExportPackage.Literals.PATIENT.getEStructuralFeature(projName);
-				if(f != null) {
-					projectionsFeatures[i][j] = f;
-					j++;
-				}
-			}
-			i++;				
-		}
+		LOGGER.info(String.format("Start data quality..."));		
+		response.getMetadata().add(dataQualityService.getDataQualityMetadataForPatients(response.getPatients(), projections));
 		
-		try {
-			IQuery query = queryHelperService.buildQuery(qwhere);
-			PatientResponse response = patientService.getPatientsByQuery(query, q.limit(), q.skip(), q.sort(), null, projectionsFeatures);
-			response.setProjections(projectionsFeatures);
-			applyPostOperations(response.getPatients(), projectionsFeatures, qsubj);
-			return response;
-		} catch(ParseException e) {
-			e.printStackTrace();
-			return null;
-		}			
+		LOGGER.info(String.format("Start anonymizing data..."));
+		List<Patient> anonymizedPatients = (List<Patient>) anonymizationService.anonymizeEObjects(response.getPatients());
+		response.getMetadata().add(anonymizationService.getAnonymizationMetadataForFeatures(projections));
+		
+		PatientResponse anonymResponse = new PatientResponse(anonymizedPatients, response.getMetadata());
+		return anonymResponse;
 	}
 
-	
-	/**
-	 * @param sort2
-	 * @param limit2
-	 * @param skip2
-	 * @return
-	 */
-	private Query extractQueryParamFromRequest() {
-		List<Query.Sort> qSort = new ArrayList<>(sort.length);
-		for(String s : sort) {
-			String[] sSplit = s.split(",");
-			EAttribute sortFeature = null;
-			String sortOrder = null;
-			for(String split : sSplit) {
-				if(split.contains("sortFeature=")) {
-					sortFeature = (EAttribute) PatientExportPackage.Literals.PATIENT.getEStructuralFeature(split.replaceFirst("sortFeature=", ""));
-				} else if(split.contains("sortOrder=")) {
-					sortOrder = split.replaceFirst("sortOrder=", "");
-				}
-			}
-			qSort.add(new Query.Sort(sortFeature, sortOrder));
-		}
-		
-		return new Query(limit, skip, qSort);
-	}
 
-	/**
-	 * @param patients
-	 * @param projectionsFeatures
-	 * @param qsubj
-	 */
-	private void applyPostOperations(List<Patient> patients, EStructuralFeature[][] projectionsFeatures,
-			List<QuerySubject> qsubj) {
-		
+
+
+	private void applyPostOperations(List<Patient> patients, List<QSubject> subjects) {
+
 		for(Patient patient : patients) {
-			int i = 0;
-			for(QuerySubject subj : qsubj) {
-				String[] projections = subj.projections();
-				for(int j = 0; j < projections.length; j++) {
-					EStructuralFeature f = projectionsFeatures[i][j];
-					if(subj.operation() != null) {
-						patient.eSet(f, doApplyPostOperation(patient.eGet(f), subj.operation()));
-					}
-				}
-				i++;				
+			for(QSubject subj : subjects) {
+				EStructuralFeature feature = subj.getFeaturePath().getFeature().get(subj.getFeaturePath().getFeature().size()-1);
+				patient.eSet(feature, doApplyPostOperation(patient.eGet(feature), subj.getOperation()));
 			}
 		}		
 	}
 
-	/**
-	 * @param eGet
-	 * @param operation
-	 * @return
-	 */
-	private Object doApplyPostOperation(Object featureValue, String operation) {
-		switch(operation) {
+	private Object doApplyPostOperation(Object featureValue, Operation operation) {
+		if(operation == null) return featureValue;
+		switch(operation.eClass().getName()) {
 		case "ToLowerCase":
 			return ((String) featureValue).toLowerCase();
 		case "ToUpperCase":
 			return ((String) featureValue).toUpperCase();		
 		}
+		LOGGER.warning(String.format("Post Query Operation %s currently not supported. Ignoring it!", operation.eClass().getName()));
 		return featureValue;
-	}
-
-	/**
-	 * @param s
-	 * @return
-	 */
-	private QuerySubject extractQSubjectFromRequest(String subject) {
-		String[] sSplit = subject.split(",");
-		String[] projections = null;
-		String operation = null;
-		
-		for(String s : sSplit) {
-			if(s.startsWith("projections=")) {
-				projections = s.replaceFirst("projections=", "").split("-");
-			} 
-			if(s.startsWith("operation=")) {
-				operation = s.replaceFirst("operation=", "");
-			}
-		}
-		return new QuerySubject(projections, operation);
-	}
-
-	private QueryWhere extractQWhereFromRequest(String where) {
-
-		String[] wSplit = where.split(",");
-		String queryType = null, featureName = null, comparatorName = null, start = null, end = null, 
-				comparatorType = null, operation = null;
-		boolean includeStart = false, includeEnd = false;
-
-		for(String w : wSplit) {
-			if(w.startsWith("queryType=")) {
-				queryType = w.replaceFirst("queryType=", "");
-			}
-			if(w.startsWith("operation=")) {
-				operation = w.replaceFirst("operation=", "");
-			}
-			if(w.startsWith("feature=")) {
-				featureName = w.replaceFirst("feature=", "");
-			}
-			if(w.startsWith("comparatorName=")) {
-				comparatorName = w.replaceFirst("comparatorName=", "");
-			}
-			if(w.startsWith("start=")) {
-				start = w.replaceFirst("start=", "");
-			}
-			if(w.startsWith("end=")) {
-				end = w.replaceFirst("end=", "");
-			}
-			if(w.startsWith("comparatorType=")) {
-				comparatorType = w.replaceFirst("comparatorType=", "");
-			}
-			if(w.startsWith("includeStart=")) {
-				includeStart = Boolean.valueOf(w.replaceFirst("includeStart=", ""));
-			}
-			if(w.startsWith("includeEnd=")) {
-				includeEnd = Boolean.valueOf(w.replaceFirst("includeEnd=", ""));
-			}
-		}
-		return new QueryWhere(queryType, featureName, comparatorName, comparatorType, start, end, 
-				includeStart, includeEnd, operation);
 	}
 
 }
