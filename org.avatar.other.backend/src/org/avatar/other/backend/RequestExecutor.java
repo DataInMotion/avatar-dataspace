@@ -80,7 +80,7 @@ public class RequestExecutor implements Callable<PatientResponse> {
 		}
 		Map<Object, Object> loadOptions = new HashMap<>();
 		loadOptions.put(Options.OPTION_COLLECTION_NAME, "Patient");
-		PatientResponse response = patientService.getPatientsByQuery2(iQuery, query.getLimit(), query.getSkip(), query.getSortBy(), loadOptions, projections);
+		PatientResponse response = patientService.getPatientsByQuery(iQuery, query.getLimit(), query.getSkip(), query.getSortBy(), loadOptions, projections);
 		applyPostOperations(response.getPatients(), query.getSubject());
 		
 		LOGGER.info(String.format("Start data quality..."));		

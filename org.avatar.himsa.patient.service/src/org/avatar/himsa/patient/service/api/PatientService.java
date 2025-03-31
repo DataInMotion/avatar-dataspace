@@ -40,7 +40,7 @@ public interface PatientService {
 //			EStructuralFeature[] ... projectionFeaturePaths);
 	
 //	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<Query.Sort> sort, Map<Object, Object> loadOptions, EStructuralFeature[] ... projectionFeaturePaths);
-	PatientResponse getPatientsByQuery2(IQuery query, int limit, int skip, List<SortEntity> sort, Map<Object, Object> loadOptions, EStructuralFeature[] ... projectionFeaturePaths);
+	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<SortEntity> sort, Map<Object, Object> loadOptions, EStructuralFeature[] ... projectionFeaturePaths);
 	
 	
 	class PatientResponse {

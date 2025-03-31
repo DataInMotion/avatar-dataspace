@@ -123,7 +123,7 @@ public class PatientServiceImpl implements PatientService {
 	 * @see org.avatar.himsa.patient.service.api.PatientService#getPatientsByQuery2(org.gecko.emf.repository.query.IQuery, int, int, java.util.List, java.util.Map, org.eclipse.emf.ecore.EStructuralFeature[][])
 	 */
 	@Override
-	public PatientResponse getPatientsByQuery2(IQuery query, int limit, int skip, List<SortEntity> sort,
+	public PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<SortEntity> sort,
 			Map<Object, Object> loadOptions, EStructuralFeature[]... projectionFeaturePaths) {
 		List<String> consentIds = gicsService.
 				getAllConsentedIdsFor(consentDomainId, consentPolicyId, consentPolicyVersion, consentIdType).
