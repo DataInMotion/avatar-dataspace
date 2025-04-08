@@ -56,41 +56,6 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss'Z'")
 			.withZone(ZoneId.of("Europe/Berlin"));
 
-//	/* 
-//	 * (non-Javadoc)
-//	 * @see org.avatar.other.backend.api.OtherBackendApi#executeQuery(java.lang.String, java.lang.String[], java.lang.String[], java.lang.String[], int, int)
-//	 */
-//	@Override
-//	public EndpointResponse executeQuery(String requestId, String[] where, String[] subjects, String[] sort, int limit,
-//			int skip) {
-//		Promise<PatientResponse> promise = getPromiseResult(where, subjects, sort, limit, skip);
-//		REQUEST_PROMISE_MAP.put(requestId, promise);
-//
-//		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-//		addResponseMetadata(response, requestId);
-//		response.setCode(ResponseCode.PENDING);
-//		PendingResult pendingRes = AConnectorFactory.eINSTANCE.createPendingResult();
-//		pendingRes.setEstRuntime(new Random().nextInt(300 - 5) + 5);
-//		response.setResult(pendingRes);
-//		return response;
-//	}
-//
-//	/* 
-//	 * (non-Javadoc)
-//	 * @see org.avatar.other.backend.api.OtherBackendApi#executeDryRun(java.lang.String, java.lang.String[], java.lang.String[], java.lang.String[], int, int)
-//	 */
-//	@Override
-//	public EndpointResponse executeDryRun(String requestId, String[] where, String[] subjects, String[] sort, int limit,
-//			int skip) {
-//		EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-//		response.setCode(ResponseCode.DRYRUN_OK);
-//		addResponseMetadata(response, requestId);
-//		DryRunResult result = AConnectorFactory.eINSTANCE.createDryRunResult();
-//		result.setEstRuntime(new Random().nextInt(300 - 5) + 5);
-//		result.setResultCount(new Random().nextInt(300 - 5) + 5);
-//		response.setResult(result);
-//		return response;
-//	}
 
 	/* 
 	 * (non-Javadoc)
@@ -164,19 +129,6 @@ public class OtherBackendServiceImpl implements OtherBackendService{
 		metadata.setResponseTime(DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(response.getTimestamp())));
 		response.getMetadata().add(metadata);
 	}
-
-//	private Promise<PatientResponse> getPromiseResult(String[] where, String[] subjects, String[] sort, int limit, int skip) {
-//
-//		Deferred<PatientResponse> def = new Deferred<>();
-//		Callable<PatientResponse> callable = new RequestExecutor(where, subjects, sort, limit, skip, patientService, queryHelperService);
-//		try {
-//			def.resolve(callable.call());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			def.fail(e);
-//		}		
-//		return def.getPromise();
-//	}
 
 	private Promise<PatientResponse> getPromiseResult(Query query) throws ParseException {
 

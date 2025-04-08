@@ -27,10 +27,6 @@ public interface OtherBackendService {
 	
 	EndpointResponse executeDryRun(String requestId, Query query);
 
-//	EndpointResponse executeQuery(String requestId, String[] where, String[] subjects, String[] sort, int limit, int skip);
-//	
-//	EndpointResponse executeDryRun(String requestId, String[] where, String[] subjects, String[] sort, int limit, int skip);
-	
 	EndpointResponse executeStatus(String requestId);
 
 }

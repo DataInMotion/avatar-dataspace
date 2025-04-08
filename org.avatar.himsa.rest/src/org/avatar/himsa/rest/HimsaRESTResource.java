@@ -79,6 +79,7 @@ public class HimsaRESTResource {
 	@Path("/patient/query/{requestId}")
 	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
 	public Response patientByQuery(@PathParam("requestId") String requestId, Query query) {
+		System.out.println("GOT QUery");
 		return Response.ok(backendService.executeQuery(requestId, query)).build();
 	}
 	
