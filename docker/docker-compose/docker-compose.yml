@@ -31,6 +31,21 @@ services:
         - avatar-volume:/opt/avatar
         networks:
         - avatar
+        
+    other:
+        image: devel.data-in-motion.biz:6000/scj/avatar-other:latest
+        container_name: avatar-other
+        ports:
+        - "8091:8091"
+        depends_on:
+          mongodb:
+            condition: service_healthy
+          gics:
+            condition: service_healthy
+        volumes:
+        - avatar-volume:/opt/avatar
+        networks:
+        - avatar
 
     mysql:
         image: mysql:8
