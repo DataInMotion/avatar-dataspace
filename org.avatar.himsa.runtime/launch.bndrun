@@ -101,7 +101,7 @@
 	org.avatar.anonymization.api;version=snapshot,\
 	org.avatar.data.quality.api;version=snapshot,\
 	org.avatar.himsa.backend;version=snapshot,\
-	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
 	org.gecko.emf.osgi.api;version='[6.1.1,6.1.2)',\
-	org.gecko.emf.osgi.component.minimal;version='[6.1.1,6.1.2)'
+	org.gecko.emf.osgi.component.minimal;version='[6.1.1,6.1.2)',\
+	org.apache.felix.configadmin.plugin.interpolation;version='[1.2.8,1.2.9)'
 -runblacklist: bnd.identity;id='org.apache.felix.http.jetty'

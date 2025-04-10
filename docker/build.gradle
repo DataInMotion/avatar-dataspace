@@ -2,36 +2,28 @@
  * build Gradle build script
  */
 
-task prepareDockerHimsa(){
-    def stageDir = file('himsa/content')
+task prepareDocker(){
+    def himsaStageDir = file('himsa/content')
+    def otherStageDir = file('other/content')
     doFirst {
-        stageDir.deleteDir()
+        himsaStageDir.deleteDir()
+        otherStageDir.deleteDir()
     }
     doLast {
-        println "Prepare Docker build for HIMSA data provider"
-        stageDir.mkdirs()
+        println "Prepare Docker build for HIMSA/other data provider"
+        himsaStageDir.mkdirs()
+        otherStageDir.mkdirs()
          // copy all necessary files to  build/docker/ dir
         copy {
-            from new File("../org.avatar.himsa.runtime/generated/distributions/executable/launch_himsa.jar")
-            into stageDir
-            rename("launch_himsa.jar", "de.avatar.himsa.runtime.jar")
+            from new File("../org.avatar.himsa.runtime/generated/distributions/executable/launch.jar")
+            into himsaStageDir
+            rename("launch.jar", "de.avatar.himsa.runtime.jar")
+        }
+        copy {
+            from new File("../org.avatar.other.runtime/generated/distributions/executable/launch.jar")
+            into otherStageDir
+            rename("launch.jar", "de.avatar.other.runtime.jar")
         }
     }
 }
 
-task prepareDockerOther(){
-    def stageDir = file('other/content')
-    doFirst {
-        stageDir.deleteDir()
-    }
-    doLast {
-        println "Prepare Docker build for Other data provider"
-        stageDir.mkdirs()
-         // copy all necessary files to  build/docker/ dir
-        copy {
-            from new File("../org.avatar.other.runtime/generated/distributions/executable/launch_other.jar")
-            into stageDir
-            rename("launch_other.jar", "de.avatar.other.runtime.jar")
-        }
-    }
-}

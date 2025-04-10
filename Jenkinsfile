@@ -62,22 +62,16 @@ pipeline  {
                 } 
             }
         }
-        stage('Resolve Avatar HIMSA') {
+        stage('Resolve and Export') {
             steps {
-                echo "I am resolving app on branch: ${env.GIT_BRANCH}"
+                echo "I am resolving exporting app on branch: ${env.GIT_BRANCH}"
                 sh "./gradlew :org.avatar.himsa.runtime:resolve.launch --info --stacktrace -Dmaven.repo.local=${WORKSPACE}/.m2"
+                sh "./gradlew :org.avatar.other.runtime:resolve.launch --info --stacktrace -Dmaven.repo.local=${WORKSPACE}/.m2"
+                sh "./gradlew :org.avatar.himsa.runtime:export.launch --info --stacktrace -Dmaven.repo.local=${WORKSPACE}/.m2"
+                sh "./gradlew :org.avatar.other.runtime:export.launch --info --stacktrace -Dmaven.repo.local=${WORKSPACE}/.m2"
             }
         }                                                                         
 
-        stage('Avatar HIMSA Export') {
-//            when {
-//                branch 'main'
-//            }
-            steps {
-                echo "I am exporting app on branch: ${env.GIT_BRANCH}"
-                sh "./gradlew :org.avatar.himsa.runtime:export.launch --info --stacktrace -Dmaven.repo.local=${WORKSPACE}/.m2"
-            }
-        }
         stage('Prepare Docker') {
 //            when {
 //                branch 'main'
@@ -88,7 +82,7 @@ pipeline  {
             }
 
         }
-        stage('Docker HIMSA Image build'){
+        stage('Docker Image build'){
 //            when {
 //                branch 'main'
 //            }
@@ -96,10 +90,17 @@ pipeline  {
                 echo "I am building and publishing a docker image on branch: ${env.GIT_BRANCH}"
 
                 step([$class: 'DockerBuilderPublisher',
-                      dockerFileDirectory: 'docker',
+                      dockerFileDirectory: 'docker/himsa',
                             cloud: 'docker',
                             tagsString: """devel.data-in-motion.biz:6000/scj/avatar-himsa:latest
                                         devel.data-in-motion.biz:6000/scj/avatar-himsa:0.1.0.${VERSION}""",
+                            pushOnSuccess: true,
+                            pushCredentialsId: 'dim-nexus'])
+                step([$class: 'DockerBuilderPublisher',
+                      dockerFileDirectory: 'docker/other',
+                            cloud: 'docker',
+                            tagsString: """devel.data-in-motion.biz:6000/scj/avatar-other:latest
+                                        devel.data-in-motion.biz:6000/scj/avatar-other:0.1.0.${VERSION}""",
                             pushOnSuccess: true,
                             pushCredentialsId: 'dim-nexus'])
             }
