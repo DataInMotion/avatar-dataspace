@@ -20,8 +20,9 @@
  		"mongo.instances": "avatar",
 	    "avatar.baseUris": "mongodb://mongodb:27017",
 	    "avatar.databases": "avatar",
-	    "avatar.user": "$[env:MONGO_USER;default=$[prop:MONGO_USER;default=]]",
-	    "avatar.password": "$[env:MONGO_PWD;default=$[prop:MONGO_PWD;default=]]",
+	    "avatar.user.env": "MONGO_USER",
+	    "avatar.password.env": "MONGO_PWD",
+	    "avatar.authSource": "admin",
 	    "avatar.avatar.repoType": "PROTOTYPE"
   	},
   	"GICSService~test":
