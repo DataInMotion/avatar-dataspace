@@ -35,7 +35,8 @@ import audiogram502.Audiogram502Package;
 public class DummyDataHelper {
 	
 	public static EObject loadXMLResource(String filePath, ResourceSet resourceSet) {
-		Resource resource = resourceSet.createResource(URI.createFileURI(System.getProperty("data")+"Format502AudSample.xml"), "application/xml");
+		String data = System.getProperty("data","/opt/avatar/data/");
+		Resource resource = resourceSet.createResource(URI.createFileURI(data+"Format502AudSample.xml"), "application/xml");
 		try {
 			Map<String, Object> options = new HashMap<>();
 			options.put(XMLResource.OPTION_ENCODING, "UTF-8");
