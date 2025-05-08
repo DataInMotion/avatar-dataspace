@@ -10,7 +10,8 @@
 	bnd.identity;id='org.avatar.himsa.rest',\
 	bnd.identity;id='org.avatar.himsa.local.config',\
 	bnd.identity;id='org.avatar.himsa.dummy.data.component',\
-	bnd.identity;id='org.avatar.himsa.patient.service'
+	bnd.identity;id='org.avatar.himsa.patient.service',\
+	bnd.identity;id='org.avatar.himsa.backend'
 	
 -runblacklist: bnd.identity;id='org.apache.felix.http.jetty'
 -runbundles: \
@@ -92,11 +93,11 @@
 	slf4j.api;version='[1.7.36,1.7.37)',\
 	slf4j.jcl;version='[1.7.36,1.7.37)',\
 	org.avatar.himsa.patient.service;version=snapshot,\
-	org.avatar.anonymization.api;version=snapshot,\
-	org.avatar.himsa.backend;version=snapshot,\
-	org.avatar.data.quality.api;version=snapshot,\
 	de.avatar.metadata.model;version='[1.0.0,1.0.1)',\
-	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
 	org.gecko.emf.osgi.api;version='[6.1.1,6.1.2)',\
 	org.gecko.emf.osgi.component.minimal;version='[6.1.1,6.1.2)',\
-	de.avatar.query.model;version='[1.0.0,1.0.1)'
+	de.avatar.query.model;version='[1.0.0,1.0.1)',\
+	de.avatar.query.status.model;version='[1.0.0,1.0.1)',\
+	org.avatar.provider.backend.api;version=snapshot,\
+	org.avatar.himsa.backend;version=snapshot,\
+	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)'

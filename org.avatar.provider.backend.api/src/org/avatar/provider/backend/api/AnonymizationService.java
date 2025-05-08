@@ -11,20 +11,26 @@
  * Contributors:
  *     Data In Motion - initial API and implementation
  */
-package org.avatar.himsa.patient.service.api;
+package org.avatar.provider.backend.api;
 
-import org.avatar.provider.backend.api.AnonymizationService;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.osgi.annotation.versioning.ProviderType;
 
 import de.avatar.metadata.AnonymizationMetadata;
+
 
 /**
  * 
  * @author ilenia
  * @since Mar 24, 2025
  */
-public interface PatientAnonymizationService extends AnonymizationService {
+@ProviderType
+public interface AnonymizationService {
 	
-	AnonymizationMetadata getAnonymizationMetadataForFeatures(EStructuralFeature[] ... projections);
-
+	AnonymizationMetadata getAnonymizationMetadata();
+	
+	List<? extends EObject> anonymizeEObjects(List<? extends EObject> eObjects);
+	
 }

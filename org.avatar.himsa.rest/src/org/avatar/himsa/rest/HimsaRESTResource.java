@@ -13,7 +13,7 @@
  */
 package org.avatar.himsa.rest;
 
-import org.avatar.himsa.backend.api.HimsaBackendService;
+import org.avatar.provider.backend.api.ProviderBackendService;
 import org.gecko.emf.json.constants.EMFJs;
 import org.gecko.emf.rest.annotations.EMFResourceOptions;
 import org.gecko.emf.rest.annotations.ResourceOption;
@@ -23,12 +23,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsName;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsResource;
 
-import de.avatar.query.Query;
+import de.avatar.status.QueryRequest;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -54,8 +53,8 @@ import jakarta.ws.rs.core.Response;
 @Path("/")
 public class HimsaRESTResource {
 		
-	@Reference
-	private HimsaBackendService backendService;
+	@Reference(target = "(provider.id=himsa)")
+	private ProviderBackendService backendService;
 	
 	@GET
 	@Path("/hello")
@@ -64,30 +63,31 @@ public class HimsaRESTResource {
 	}
 
 	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/dryrun/{requestId}")
-	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
-	public Response dryrun(@PathParam("requestId") String requestId, Query query) {
-		return Response.ok(backendService.executeDryRun(requestId, query)).build();
-	}
+//	@POST
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("/dryrun/{requestId}")
+//	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
+//	public Response dryrun(@PathParam("requestId") String requestId, Query query) {
+//		return Response.ok(backendService.executeDryRun(requestId, query)).build();
+//	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/patient/query/{requestId}")
+	@Path("/patient/query")
 	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
-	public Response patientByQuery(@PathParam("requestId") String requestId, Query query) {
+	public Response patientByQuery(QueryRequest queryRequest) {
 		System.out.println("GOT QUery");
-		return Response.ok(backendService.executeQuery(requestId, query)).build();
+		backendService.executeQuery(queryRequest);
+		return Response.ok("Query sent with success for Provider Himsa").build();
 	}
 	
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/status/{requestId}")
-	public Response status(@PathParam("requestId") String requestId) {
-		return Response.ok(backendService.executeStatus(requestId)).build();
-	}
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Path("/status/{requestId}")
+//	public Response status(@PathParam("requestId") String requestId) {
+//		return Response.ok(backendService.executeStatus(requestId)).build();
+//	}
 }

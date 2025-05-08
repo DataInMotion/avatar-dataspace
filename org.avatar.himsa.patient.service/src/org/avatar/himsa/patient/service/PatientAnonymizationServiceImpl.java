@@ -16,9 +16,9 @@ package org.avatar.himsa.patient.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.avatar.anonymization.api.AnonymizationService;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
+import org.avatar.provider.backend.api.AnonymizationService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.osgi.service.component.annotations.Activate;

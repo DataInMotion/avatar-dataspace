@@ -16,9 +16,9 @@ package org.avatar.himsa.patient.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.avatar.data.quality.api.DataQualityService;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientDataQualityService;
+import org.avatar.provider.backend.api.DataQualityService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.osgi.service.component.annotations.Activate;

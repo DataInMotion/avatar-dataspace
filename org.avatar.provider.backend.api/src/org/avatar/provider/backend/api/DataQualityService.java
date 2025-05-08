@@ -1,4 +1,4 @@
-package org.avatar.data.quality.api;
+package org.avatar.provider.backend.api;
 
 import org.osgi.annotation.versioning.ProviderType;
 

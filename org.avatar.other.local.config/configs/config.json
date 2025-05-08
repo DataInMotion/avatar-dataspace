@@ -32,7 +32,15 @@
   		"consent.policy.version": "1.0",
   		"consent.id.type": "Patient ID"
   	},
-  	"DummyDataComponent": {
+  	"DataLoadOptions": {
   		"collection.name": "PatientOther"
+  	}, 
+  	"DataStorageService~json": {
+  		"data.format": "json", 
+  		"data.storage.folder": "data"
+  	},
+  	"DataStorageService~xml": {
+  		"data.format": "xml", 
+  		"data.storage.folder": "data"
   	}
 }

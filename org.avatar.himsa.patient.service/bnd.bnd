@@ -7,9 +7,12 @@
 	org.avatar.gics.service;version=latest,\
 	org.emau.icmvc.ganimed.ttp.cm2,\
 	osgi.cmpn,\
-	org.avatar.anonymization.api;version=latest,\
 	de.avatar.connector.model,\
-	org.avatar.data.quality.api;version=latest,\
 	de.avatar.metadata.model,\
 	de.avatar.query.model,\
-	org.gecko.emf.util.model
+	org.gecko.emf.util.model,\
+	org.gecko.emf.mongo.api,\
+	org.avatar.provider.backend.api;version=latest,\
+	com.fasterxml.jackson.core.jackson-databind,\
+	com.fasterxml.jackson.core.jackson-core,\
+	de.avatar.query.status.model

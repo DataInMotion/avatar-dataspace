@@ -29,4 +29,4 @@ EXPOSE 8088
 WORKDIR ${OPT_DIR}
 USER ${USERNAME}
 
-CMD ["java", "-Dgosh.args=--nointeractive", "-jar", "de.avatar.himsa.runtime.jar"]
+CMD ["java", "-Dgosh.args=--nointeractive", "-Dgecko.data.dir=/opt/avatar/runtime/data", "-jar", "de.avatar.himsa.runtime.jar"]

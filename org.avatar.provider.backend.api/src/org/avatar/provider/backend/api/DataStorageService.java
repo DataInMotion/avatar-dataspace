@@ -11,26 +11,17 @@
  * Contributors:
  *     Data In Motion - initial API and implementation
  */
-package org.avatar.anonymization.api;
+package org.avatar.provider.backend.api;
 
-import java.util.List;
-
-import org.eclipse.emf.ecore.EObject;
-import org.osgi.annotation.versioning.ProviderType;
-
-import de.avatar.metadata.AnonymizationMetadata;
-
+import de.avatar.model.connector.EndpointResponse;
 
 /**
  * 
  * @author ilenia
- * @since Mar 24, 2025
+ * @since May 8, 2025
  */
-@ProviderType
-public interface AnonymizationService {
+public interface DataStorageService {
 	
-	AnonymizationMetadata getAnonymizationMetadata();
-	
-	List<? extends EObject> anonymizeEObjects(List<? extends EObject> eObjects);
-	
+	void saveEndpointResponse(EndpointResponse response);
+
 }

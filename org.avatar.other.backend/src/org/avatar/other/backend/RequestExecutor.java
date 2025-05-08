@@ -14,9 +14,7 @@
 package org.avatar.other.backend;
 
 import java.text.ParseException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -27,7 +25,6 @@ import org.avatar.himsa.patient.service.api.PatientService;
 import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
 import org.avatar.himsa.patient.service.api.QueryHelper;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.gecko.emf.mongo.Options;
 import org.gecko.emf.repository.EMFRepository;
 import org.gecko.emf.repository.query.IQuery;
 import org.osgi.service.component.ComponentServiceObjects;
@@ -48,7 +45,6 @@ public class RequestExecutor implements Callable<PatientResponse> {
 	private PatientService patientService;
 	private de.avatar.query.Query query;
 
-	Map<Object, Object> loadOptions = new HashMap<>();
 	private ComponentServiceObjects<EMFRepository> repoSO;
 	private PatientAnonymizationService anonymizationService;
 	private PatientDataQualityService dataQualityService;
@@ -78,9 +74,8 @@ public class RequestExecutor implements Callable<PatientResponse> {
 			projections[i] = subj.getFeaturePath().getFeature().toArray(new EStructuralFeature[subj.getFeaturePath().getFeature().size()]);
 			i++;
 		}
-		Map<Object, Object> loadOptions = new HashMap<>();
-		loadOptions.put(Options.OPTION_COLLECTION_NAME, "Patient");
-		PatientResponse response = patientService.getPatientsByQuery(iQuery, query.getLimit(), query.getSkip(), query.getSortBy(), loadOptions, projections);
+
+		PatientResponse response = patientService.getPatientsByQuery(iQuery, query.getLimit(), query.getSkip(), query.getSortBy(), projections);
 		applyPostOperations(response.getPatients(), query.getSubject());
 		
 		LOGGER.info(String.format("Start data quality..."));		

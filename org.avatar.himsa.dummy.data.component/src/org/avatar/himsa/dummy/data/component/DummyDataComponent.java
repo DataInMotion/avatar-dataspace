@@ -60,7 +60,7 @@ import audiogram502.DocumentRoot;
 import audiogram502.HIMSAAudiometricStandardType;
 import net.datafaker.Faker;
 
-@Component(immediate=true, name="DummyDataComponent", configurationPid = "DummyDataComponent", configurationPolicy = ConfigurationPolicy.REQUIRE)
+@Component(immediate=true, name="DummyDataComponent", configurationPid = "DataLoadOptions", configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class DummyDataComponent {
 
 	@Reference(target="(repo_id=avatar.avatar)")

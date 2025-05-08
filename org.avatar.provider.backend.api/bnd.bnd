@@ -1,0 +1,6 @@
+-library: enable-emf
+-buildpath: \
+	de.avatar.metadata.model,\
+	de.avatar.query.model,\
+	de.avatar.connector.model,\
+	de.avatar.query.status.model

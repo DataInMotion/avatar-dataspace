@@ -11,7 +11,8 @@
 	org.avatar.himsa.patient.service;version=latest,\
 	org.avatar.himsa.backend,\
 	de.avatar.query.model,\
-	de.avatar.query.status.model
+	de.avatar.query.status.model,\
+	org.avatar.provider.backend.api
 	
 -library: \
 	enableJakartaREST,\

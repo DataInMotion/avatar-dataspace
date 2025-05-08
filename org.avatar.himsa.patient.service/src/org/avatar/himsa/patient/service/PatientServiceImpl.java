@@ -13,6 +13,7 @@
  */
 package org.avatar.himsa.patient.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -24,6 +25,7 @@ import org.avatar.himsa.export.PatientExportPackage;
 import org.avatar.himsa.patient.service.api.PatientService;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.gecko.emf.mongo.Options;
 import org.gecko.emf.repository.EMFRepository;
 import org.gecko.emf.repository.query.IQuery;
 import org.gecko.emf.repository.query.IQueryBuilder;
@@ -46,8 +48,13 @@ import de.avatar.query.SortEntity;
  * @author Mark Hoffmann
  * @since 19.01.2024
  */
+/**
+ * 
+ * @author ilenia
+ * @since May 8, 2025
+ */
 @Component(name ="PatientService", scope = ServiceScope.PROTOTYPE, 
-configurationPid = "HIMSAConsentManagement", configurationPolicy = ConfigurationPolicy.REQUIRE)
+configurationPid = {"HIMSAConsentManagement", "DataLoadOptions"}, configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class PatientServiceImpl implements PatientService {
 	
 	@Reference
@@ -64,6 +71,8 @@ public class PatientServiceImpl implements PatientService {
 	private String consentPolicyId;
 	private String consentPolicyVersion;
 	private String consentIdType;
+	Map<Object, Object> loadOptions = new HashMap<>();
+	
 	
 	@Activate
 	public void activate(Map<String, Object> properties) {
@@ -71,14 +80,16 @@ public class PatientServiceImpl implements PatientService {
 		consentPolicyId = (String) properties.get("consent.policy.id");
 		consentPolicyVersion = (String) properties.get("consent.policy.version");
 		consentIdType = (String) properties.get("consent.id.type");
+		if(properties.containsKey("collection.name")) loadOptions.put(Options.OPTION_COLLECTION_NAME, (String) properties.get("collection.name"));
 	}
+	
 	
 	/* 
 	 * (non-Javadoc)
-	 * @see org.avatar.himsa.service.example.api.PatientService#getPatient(java.lang.String, java.util.Map)
+	 * @see org.avatar.himsa.patient.service.api.PatientService#getPatient(java.lang.String)
 	 */
 	@Override
-	public PatientResponse getPatient(String id, Map<Object, Object> loadOptions) {
+	public PatientResponse getPatient(String id) {
 		if (Objects.isNull(id)) {
 			return null;
 		}
@@ -90,6 +101,7 @@ public class PatientServiceImpl implements PatientService {
 		
 		EMFRepository repo = repoSO.getService();
 		ConsentMetadata metadata = MetadataFactory.eINSTANCE.createConsentMetadata();
+		
 		try {
 			Patient patient = repo.getEObject(modelPackage.getPatient(), id, loadOptions);
 			if(patient != null) {
@@ -117,14 +129,13 @@ public class PatientServiceImpl implements PatientService {
 	}
 	
 
-
 	/* 
 	 * (non-Javadoc)
-	 * @see org.avatar.himsa.patient.service.api.PatientService#getPatientsByQuery2(org.gecko.emf.repository.query.IQuery, int, int, java.util.List, java.util.Map, org.eclipse.emf.ecore.EStructuralFeature[][])
+	 * @see org.avatar.himsa.patient.service.api.PatientService#getPatientsByQuery(org.gecko.emf.repository.query.IQuery, int, int, java.util.List, org.eclipse.emf.ecore.EStructuralFeature[][])
 	 */
 	@Override
 	public PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<SortEntity> sort,
-			Map<Object, Object> loadOptions, EStructuralFeature[]... projectionFeaturePaths) {
+			EStructuralFeature[]... projectionFeaturePaths) {
 		List<String> consentIds = gicsService.
 				getAllConsentedIdsFor(consentDomainId, consentPolicyId, consentPolicyVersion, consentIdType).
 				getReturn().

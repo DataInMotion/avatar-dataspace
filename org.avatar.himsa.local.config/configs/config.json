@@ -32,7 +32,17 @@
   		"consent.policy.version": "1.0",
   		"consent.id.type": "Patient ID"
   	},
-  	"DummyDataComponent": {
+  	"DataLoadOptions": {
   		"collection.name": "Patient"
+  	}, 
+  	"DataStorageService~json": {
+  		"data.format": "json", 
+  		"data.storage.folder": "data",
+  		"rsFactory.target": "(emf.fileExtension=json)"
+  	},
+  	"DataStorageService~xml": {
+  		"data.format": "xml", 
+  		"data.storage.folder": "data",
+  		"rsFactory.target": "(emf.fileExtension=xml)"
   	}
 }

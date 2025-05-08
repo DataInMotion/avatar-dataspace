@@ -13,21 +13,15 @@
  */
 package org.avatar.himsa.patient.service.api;
 
-import java.util.List;
-
-import org.avatar.himsa.export.Patient;
-import org.avatar.provider.backend.api.DataQualityService;
-import org.eclipse.emf.ecore.EStructuralFeature;
-
-import de.avatar.metadata.DataQualityMetadata;
+import de.avatar.status.QueryRequest;
 
 /**
  * 
  * @author ilenia
- * @since Mar 25, 2025
+ * @since May 8, 2025
  */
-public interface PatientDataQualityService extends DataQualityService{	
+public interface QueryRequestExecutorService {
 	
-	DataQualityMetadata getDataQualityMetadataForPatients(List<Patient> patients, EStructuralFeature[] ... projections);
+	void executeQueryRequest(QueryRequest queryRequest);
 
 }

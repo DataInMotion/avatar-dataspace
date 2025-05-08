@@ -15,7 +15,6 @@ package org.avatar.himsa.patient.service.api;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.avatar.himsa.export.Patient;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -32,15 +31,9 @@ import de.avatar.query.SortEntity;
  */
 public interface PatientService {
 	
-	PatientResponse getPatient(String id, Map<Object, Object> loadOptions);
+	PatientResponse getPatient(String id);
 	
-//	PatientResponse getPatientsWithConsent(String domainId, String policyId, String policyVersion);
-		
-//	PatientResponse getPatientsByRangeQuery(EAttribute columnName, Object startValue, Object endValue, boolean isStartIncluded, boolean isEndIncluded, 
-//			EStructuralFeature[] ... projectionFeaturePaths);
-	
-//	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<Query.Sort> sort, Map<Object, Object> loadOptions, EStructuralFeature[] ... projectionFeaturePaths);
-	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<SortEntity> sort, Map<Object, Object> loadOptions, EStructuralFeature[] ... projectionFeaturePaths);
+	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<SortEntity> sort, EStructuralFeature[] ... projectionFeaturePaths);
 	
 	
 	class PatientResponse {
