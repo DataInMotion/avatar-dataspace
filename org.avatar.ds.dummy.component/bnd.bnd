@@ -1,0 +1,9 @@
+-library: enable-emf
+-buildpath: \
+	org.avatar.dataspace.asset.model;version=latest,\
+	org.avatar.provider.backend.api;version=latest
+	
+-includeresource: OSGI-INF/configurator/=config/
+Require-Capability: \
+	osgi.extender;filter:='(osgi.extender=osgi.configurator)',\
+	osgi.implementation;filter:='(&(osgi.implementation=osgi.cm)(version>=1.6.0)(!(version>=2.0.0)))'

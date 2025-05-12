@@ -13,6 +13,7 @@
  */
 package org.avatar.himsa.patient.service;
 
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -31,6 +32,7 @@ import org.avatar.himsa.patient.service.api.PatientService;
 import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
 import org.avatar.himsa.patient.service.api.QueryHelper;
 import org.avatar.himsa.patient.service.api.QueryRequestExecutorService;
+import org.avatar.provider.backend.api.DataAssetService;
 import org.avatar.provider.backend.api.DataStorageService;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.gecko.emf.repository.EMFRepository;
@@ -68,10 +70,9 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 	private ComponentServiceObjects<EMFRepository> repoSO;
 	private PatientAnonymizationService anonymizationService;
 	private PatientDataQualityService dataQualityService;
-
 	private DataStorageService jsonDataStorage;
-
 	private DataStorageService xmlDataStorage;
+	private DataAssetService dataAssetService;
 
 
 	@Activate
@@ -80,13 +81,15 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			@Reference(cardinality = ReferenceCardinality.MANDATORY) PatientDataQualityService dataQualityService, 
 			@Reference(cardinality = ReferenceCardinality.MANDATORY) ComponentServiceObjects<EMFRepository> repoSO, 
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=json)") DataStorageService jsonDataStorage,
-			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=xml)") DataStorageService xmlDataStorage) throws ParseException {
+			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=xml)") DataStorageService xmlDataStorage, 
+			@Reference(cardinality = ReferenceCardinality.MANDATORY) DataAssetService dataAssetService) throws ParseException {
 		this.patientService = patientService;
 		this.anonymizationService = anonymizationService;
 		this.dataQualityService = dataQualityService;
 		this.repoSO = repoSO;
 		this.jsonDataStorage = jsonDataStorage;
 		this.xmlDataStorage = xmlDataStorage;
+		this.dataAssetService = dataAssetService;
 	}
 
 
@@ -169,14 +172,21 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			} 
 			LOGGER.info(String.format("Start saving data..."));
 			try {
+				Path dataFilePath = null;
 				switch(contentType) {
 				case "json", "application/json": default:
-					jsonDataStorage.saveEndpointResponse(response);
+					dataFilePath = jsonDataStorage.saveEndpointResponse(response);
+					
 					break;
 				case "xml", "application/xml", "text/xml":
-					xmlDataStorage.saveEndpointResponse(response);
+					dataFilePath = xmlDataStorage.saveEndpointResponse(response);
 					break;			
 				}
+				if(dataFilePath != null) {
+					LOGGER.info(String.format("Start creating asset..."));
+					dataAssetService.createAssetInDataSpace(requestId, dataFilePath, "Asset for Patient Query Result");
+				}
+				
 			} catch(Exception e) {
 				response = createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while saving the data", e));
 			}

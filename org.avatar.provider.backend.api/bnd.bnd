@@ -3,4 +3,5 @@
 	de.avatar.metadata.model,\
 	de.avatar.query.model,\
 	de.avatar.connector.model,\
-	de.avatar.query.status.model
+	de.avatar.query.status.model,\
+	org.avatar.dataspace.asset.model;version=latest

@@ -15,15 +15,21 @@ package org.avatar.provider.backend.api;
 
 import java.nio.file.Path;
 
-import de.avatar.model.connector.EndpointResponse;
+import org.avatar.ds.model.asset.Asset;
+import org.avatar.ds.model.asset.AssetPolicy;
+import org.avatar.ds.model.asset.ContractDefinition;
 
 /**
  * 
  * @author ilenia
- * @since May 8, 2025
+ * @since May 12, 2025
  */
-public interface DataStorageService {
+public interface DataAssetService {
 	
-	Path saveEndpointResponse(EndpointResponse response);
+	Asset createAssetInDataSpace(String requestId, Path dataFilePath, String assetName);
+	
+	AssetPolicy createAssetPolicyInDataSpace(String policyId);
+	
+	ContractDefinition createContractDefinitionInDataSpace(String policyId);
 
 }

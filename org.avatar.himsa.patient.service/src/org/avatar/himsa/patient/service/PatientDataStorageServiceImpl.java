@@ -15,6 +15,8 @@ package org.avatar.himsa.patient.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -68,7 +70,7 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 	 * @see org.avatar.provider.backend.api.DataStorageService#saveEndpointResponse(de.avatar.model.connector.EndpointResponse)
 	 */
 	@Override
-	public void saveEndpointResponse(EndpointResponse response) {
+	public Path saveEndpointResponse(EndpointResponse response) {
 		String requestId = response.getSourceId();
 		String responseId = response.getId(); 
 		Objects.requireNonNull(requestId, "Request ID cannot be null!");
@@ -115,7 +117,11 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 				responseFile.delete();
 			}
 		}
-
+		if(Files.exists(responseFile.toPath())) {
+			return responseFile.toPath();
+		} else {
+			return null;
+		}
 	}
 
 }

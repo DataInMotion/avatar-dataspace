@@ -15,4 +15,5 @@
 	org.avatar.provider.backend.api;version=latest,\
 	com.fasterxml.jackson.core.jackson-databind,\
 	com.fasterxml.jackson.core.jackson-core,\
-	de.avatar.query.status.model
+	de.avatar.query.status.model,\
+	org.avatar.dataspace.asset.model
