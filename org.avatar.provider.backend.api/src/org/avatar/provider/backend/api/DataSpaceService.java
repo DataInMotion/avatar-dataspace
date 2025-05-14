@@ -15,8 +15,8 @@ package org.avatar.provider.backend.api;
 
 import java.nio.file.Path;
 
-import org.avatar.ds.model.asset.AssetPolicy;
-import org.avatar.ds.model.asset.DataSpaceResponse;
+import org.avatar.ds.model.dataspace.AssetPolicy;
+import org.avatar.ds.model.dataspace.DataSpaceResponse;
 
 /**
  * 

@@ -2,8 +2,8 @@ package org.avatar.ds.dummy.component;
 
 import java.nio.file.Path;
 
-import org.avatar.ds.model.asset.AssetPolicy;
-import org.avatar.ds.model.asset.DataSpaceResponse;
+import org.avatar.ds.model.dataspace.AssetPolicy;
+import org.avatar.ds.model.dataspace.DataSpaceResponse;
 import org.avatar.provider.backend.api.DataSpaceService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

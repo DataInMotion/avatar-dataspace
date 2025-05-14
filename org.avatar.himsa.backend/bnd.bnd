@@ -12,5 +12,5 @@
 	org.osgi.service.component,\
 	org.avatar.provider.backend.api,\
 	de.avatar.query.status.model,\
-	org.avatar.dataspace.asset.model;version=latest,\
-	org.gecko.emf.json
+	org.gecko.emf.json,\
+	org.avatar.dataspace.model;version=latest

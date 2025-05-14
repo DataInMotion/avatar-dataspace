@@ -24,7 +24,6 @@ import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsName;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsResource;
 
 import de.avatar.model.connector.EndpointResponse;
-import de.avatar.model.connector.ErrorResult;
 import de.avatar.model.connector.ResponseCode;
 import de.avatar.status.QueryRequest;
 import jakarta.ws.rs.Consumes;
@@ -60,6 +59,7 @@ public class HimsaRESTResource {
 	@Reference(target = "(provider.id=himsa)")
 	private ProviderBackendService backendService;
 	
+	
 	@GET
 	@Path("/hello")
 	public String hello() {
@@ -85,11 +85,10 @@ public class HimsaRESTResource {
 		System.out.println("GOT QUery");
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
-			ErrorResult errRes = (ErrorResult) response.getResult();
-			return Response.status(500, errRes.getError()).build();
-		} else {			
-			return Response.ok(String.format("Query executed with success for request id %s", queryRequest.getRequestId())).build();
-		}
+			return Response.serverError().entity(response).build();
+		} else {
+			return Response.ok(response).build();
+		}		
 	}
 	
 	@POST
@@ -101,18 +100,12 @@ public class HimsaRESTResource {
 		System.out.println("GOT QUery");
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
-			ErrorResult errRes = (ErrorResult) response.getResult();
-			return Response.status(577, errRes.getError()).build();
-		} else {			
-			return Response.ok(String.format("Query executed with success for request id %s", reqId)).build();
+			return Response.serverError().entity(response).build();
+		} else {
+			return Response.ok(response).build();
 		}		
 	}
 	
 	
-//	@GET
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Path("/status/{requestId}")
-//	public Response status(@PathParam("requestId") String requestId) {
-//		return Response.ok(backendService.executeStatus(requestId)).build();
-//	}
+
 }

@@ -103,4 +103,4 @@
 	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
 	assertj-core;version='[3.26.3,3.26.4)',\
 	net.bytebuddy.byte-buddy;version='[1.14.18,1.14.19)',\
-	org.avatar.dataspace.asset.model;version=snapshot
+	org.avatar.dataspace.model;version=snapshot

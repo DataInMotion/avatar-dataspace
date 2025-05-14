@@ -26,6 +26,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
+import org.avatar.ds.model.dataspace.DataSpaceResponse;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
 import org.avatar.himsa.patient.service.api.PatientDataQualityService;
@@ -48,6 +49,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import de.avatar.metadata.MetadataFactory;
 import de.avatar.metadata.ResponseMetadata;
 import de.avatar.model.connector.AConnectorFactory;
+import de.avatar.model.connector.AConnectorPackage;
 import de.avatar.model.connector.EcoreResult;
 import de.avatar.model.connector.EndpointResponse;
 import de.avatar.model.connector.ErrorResult;
@@ -180,16 +182,20 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 				Path dataFilePath = null;
 				switch(contentType) {
 				case "json", "application/json": default:
-					dataFilePath = jsonDataStorage.saveEndpointResponse(response);
-					
+					dataFilePath = jsonDataStorage.saveEndpointResponse(response);					
 					break;
 				case "xml", "application/xml", "text/xml":
 					dataFilePath = xmlDataStorage.saveEndpointResponse(response);
 					break;			
 				}
+//				Unset the data now because we do not want to send it back
+				response.eUnset(AConnectorPackage.Literals.ENDPOINT_RESPONSE__RESULT);
 				if(dataFilePath != null) {
 					LOGGER.info(String.format("Start creating asset..."));
-					dataSpaceService.createAssetInDataSpace(requestId, dataFilePath, "Asset for Patient Query Result");
+					DataSpaceResponse dsResponse = dataSpaceService.createAssetInDataSpace(requestId, dataFilePath, "Asset for Patient Query Result");
+					if(dsResponse == null) {
+						response = createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while creating a new Asset in the DataSpace"));
+					}
 				}				
 			} catch(Exception e) {
 				response = createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while saving the data", e));

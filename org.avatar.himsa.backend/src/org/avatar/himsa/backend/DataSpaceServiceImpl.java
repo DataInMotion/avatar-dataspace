@@ -20,11 +20,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import org.avatar.ds.model.asset.Asset;
-import org.avatar.ds.model.asset.AssetPolicy;
-import org.avatar.ds.model.asset.ContractDefinition;
-import org.avatar.ds.model.asset.DataSpaceAssetPackage;
-import org.avatar.ds.model.asset.DataSpaceResponse;
+import org.avatar.ds.model.dataspace.Asset;
+import org.avatar.ds.model.dataspace.AssetPolicy;
+import org.avatar.ds.model.dataspace.ContractDefinition;
+import org.avatar.ds.model.dataspace.DataSpaceResponse;
+import org.avatar.ds.model.dataspace.DataspacePackage;
 import org.avatar.provider.backend.api.DataSpaceHelper;
 import org.avatar.provider.backend.api.DataSpaceService;
 import org.eclipse.emf.common.util.URI;
@@ -133,7 +133,7 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 		headers.put("Method", "GET");
 		options.put(EMFUriHandlerConstants.OPTION_HTTP_METHOD, "GET");	
 		options.put(EMFUriHandlerConstants.OPTION_HTTP_HEADERS, headers);
-		options.put(EMFJs.OPTION_ROOT_ELEMENT, DataSpaceAssetPackage.Literals.ASSET_POLICY);
+		options.put(EMFJs.OPTION_ROOT_ELEMENT, DataspacePackage.Literals.ASSET_POLICY);
 		try {
 			requestRes.load(options);
 			if(!requestRes.getContents().isEmpty()) {
@@ -162,7 +162,7 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 		options.put(EMFUriHandlerConstants.OPTION_HTTP_HEADERS, headers);
 		options.put(EMFUriHandlerConstants.OPTIONS_EXPECTED_RESPONSE_RESOURCE, responseRes);
 		Map<String, Object> responseOptions = new HashMap<>();
-		responseOptions.put(EMFJs.OPTION_ROOT_ELEMENT, DataSpaceAssetPackage.Literals.DATA_SPACE_RESPONSE);
+		responseOptions.put(EMFJs.OPTION_ROOT_ELEMENT, DataspacePackage.Literals.DATA_SPACE_RESPONSE);
 		responseOptions.put("Accepts", "application/json");
 		options.put(EMFUriHandlerConstants.OPTIONS_EXPECTED_RESPONSE_RESOURCE_OPTIONS, responseOptions);
 		try {

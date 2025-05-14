@@ -17,14 +17,14 @@ import java.nio.file.Path;
 import java.util.UUID;
 
 import org.assertj.core.util.Files;
-import org.avatar.ds.model.asset.Asset;
-import org.avatar.ds.model.asset.AssetPolicy;
-import org.avatar.ds.model.asset.Context;
-import org.avatar.ds.model.asset.ContractDefinition;
-import org.avatar.ds.model.asset.DataAddress;
-import org.avatar.ds.model.asset.DataSpaceAssetFactory;
-import org.avatar.ds.model.asset.Policy;
-import org.avatar.ds.model.asset.PolicyContext;
+import org.avatar.ds.model.dataspace.Asset;
+import org.avatar.ds.model.dataspace.AssetPolicy;
+import org.avatar.ds.model.dataspace.Context;
+import org.avatar.ds.model.dataspace.ContractDefinition;
+import org.avatar.ds.model.dataspace.DataAddress;
+import org.avatar.ds.model.dataspace.DataspaceFactory;
+import org.avatar.ds.model.dataspace.Policy;
+import org.avatar.ds.model.dataspace.PolicyContext;
 
 /**
  * 
@@ -34,12 +34,12 @@ import org.avatar.ds.model.asset.PolicyContext;
 public class DataSpaceHelper {
 	
 	public static Asset createAsset(String requestId, Path dataFilePath, String name) {
-		Asset asset = DataSpaceAssetFactory.eINSTANCE.createAsset();
+		Asset asset = DataspaceFactory.eINSTANCE.createAsset();
 		asset.setId(requestId);
-		Context ctxt = DataSpaceAssetFactory.eINSTANCE.createContext();
+		Context ctxt = DataspaceFactory.eINSTANCE.createContext();
 		ctxt.setVocab("https://w3id.org/edc/v0.0.1/ns/");
 		asset.setContext(ctxt);
-		DataAddress dataAddress = DataSpaceAssetFactory.eINSTANCE.createDataAddress();
+		DataAddress dataAddress = DataspaceFactory.eINSTANCE.createDataAddress();
 		dataAddress.setBaseUrl(dataFilePath.toString());
 		String extension = Files.getFileNameExtension(dataFilePath.getFileName().toString()).orElse("xml");
 		dataAddress.setType(extension);
@@ -51,13 +51,13 @@ public class DataSpaceHelper {
 	}
 	
 	public static AssetPolicy createAssetPolicy(String policyId) {
-		AssetPolicy assetPolicy = DataSpaceAssetFactory.eINSTANCE.createAssetPolicy();
-		PolicyContext ctxt = DataSpaceAssetFactory.eINSTANCE.createPolicyContext();
+		AssetPolicy assetPolicy = DataspaceFactory.eINSTANCE.createAssetPolicy();
+		PolicyContext ctxt = DataspaceFactory.eINSTANCE.createPolicyContext();
 		ctxt.setVocab("https://w3id.org/edc/v0.0.1/ns/");
 		ctxt.setOdrl("http://www.w3.org/ns/odrl/2/");
 		assetPolicy.setContext(ctxt);
 		assetPolicy.setId(policyId);
-		Policy policy = DataSpaceAssetFactory.eINSTANCE.createPolicy();
+		Policy policy = DataspaceFactory.eINSTANCE.createPolicy();
 		policy.setContext("http://www.w3.org/ns/odrl.jsonld");
 		policy.setType("Set");
 		assetPolicy.setPolicy(policy);
@@ -65,9 +65,9 @@ public class DataSpaceHelper {
 	}
 	
 	public static ContractDefinition createContractDefinition(String policyId) {
-		ContractDefinition contract = DataSpaceAssetFactory.eINSTANCE.createContractDefinition();
+		ContractDefinition contract = DataspaceFactory.eINSTANCE.createContractDefinition();
 		contract.setId(UUID.randomUUID().toString());
-		Context ctxt = DataSpaceAssetFactory.eINSTANCE.createContext();
+		Context ctxt = DataspaceFactory.eINSTANCE.createContext();
 		ctxt.setVocab("https://w3id.org/edc/v0.0.1/ns/");
 		contract.setContext(ctxt);
 		contract.setAccessPolicyId(policyId);

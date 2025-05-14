@@ -26,6 +26,7 @@ import org.avatar.provider.backend.api.DataStorageService;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -91,7 +92,7 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 		}
 
 		ResponseResult result = response.getResult();
-		List<Metadata> metadatas = response.getMetadata();
+		List<Metadata> metadatas = (List<Metadata>) EcoreUtil.copyAll(response.getMetadata());
 		ResourceSet resourceSet = rsFactory.getService();
 		Resource resource = resourceSet.createResource(URI.createFileURI(filePath));
 		resource.getContents().addAll(metadatas);
