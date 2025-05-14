@@ -17,8 +17,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.avatar.ds.model.asset.Policy#getContext <em>Context</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.Policy#getId <em>Id</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.Policy#getType <em>Type</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.Policy#getContext <em>Context</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.Policy#getPermission <em>Permission</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.Policy#getProhibition <em>Prohibition</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.Policy#getObligation <em>Obligation</em>}</li>
@@ -31,26 +32,26 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Policy extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Context</b></em>' attribute.
+	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Context</em>' attribute.
-	 * @see #setContext(String)
-	 * @see org.avatar.ds.model.asset.DataSpaceAssetPackage#getPolicy_Context()
-	 * @model annotation="JsonProperty value='@context'"
+	 * @return the value of the '<em>Id</em>' attribute.
+	 * @see #setId(String)
+	 * @see org.avatar.ds.model.asset.DataSpaceAssetPackage#getPolicy_Id()
+	 * @model annotation="JsonProperty value='@id'"
 	 * @generated
 	 */
-	String getContext();
+	String getId();
 
 	/**
-	 * Sets the value of the '{@link org.avatar.ds.model.asset.Policy#getContext <em>Context</em>}' attribute.
+	 * Sets the value of the '{@link org.avatar.ds.model.asset.Policy#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Context</em>' attribute.
-	 * @see #getContext()
+	 * @param value the new value of the '<em>Id</em>' attribute.
+	 * @see #getId()
 	 * @generated
 	 */
-	void setContext(String value);
+	void setId(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
@@ -73,6 +74,28 @@ public interface Policy extends EObject {
 	 * @generated
 	 */
 	void setType(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Context</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Context</em>' attribute.
+	 * @see #setContext(String)
+	 * @see org.avatar.ds.model.asset.DataSpaceAssetPackage#getPolicy_Context()
+	 * @model annotation="JsonProperty value='@context'"
+	 * @generated
+	 */
+	String getContext();
+
+	/**
+	 * Sets the value of the '{@link org.avatar.ds.model.asset.Policy#getContext <em>Context</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Context</em>' attribute.
+	 * @see #getContext()
+	 * @generated
+	 */
+	void setContext(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Permission</b></em>' attribute list.

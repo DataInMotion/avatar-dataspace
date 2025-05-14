@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link org.avatar.ds.model.asset.impl.PolicyContextImpl#getOdrl <em>Odrl</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.impl.PolicyContextImpl#getEdc <em>Edc</em>}</li>
  * </ul>
  *
  * @generated
@@ -44,6 +45,26 @@ public class PolicyContextImpl extends ContextImpl implements PolicyContext {
 	 * @ordered
 	 */
 	protected String odrl = ODRL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getEdc() <em>Edc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEdc()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String EDC_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getEdc() <em>Edc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEdc()
+	 * @generated
+	 * @ordered
+	 */
+	protected String edc = EDC_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -93,10 +114,35 @@ public class PolicyContextImpl extends ContextImpl implements PolicyContext {
 	 * @generated
 	 */
 	@Override
+	public String getEdc() {
+		return edc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setEdc(String newEdc) {
+		String oldEdc = edc;
+		edc = newEdc;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.POLICY_CONTEXT__EDC, oldEdc, edc));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case DataSpaceAssetPackage.POLICY_CONTEXT__ODRL:
 				return getOdrl();
+			case DataSpaceAssetPackage.POLICY_CONTEXT__EDC:
+				return getEdc();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,6 +157,9 @@ public class PolicyContextImpl extends ContextImpl implements PolicyContext {
 		switch (featureID) {
 			case DataSpaceAssetPackage.POLICY_CONTEXT__ODRL:
 				setOdrl((String)newValue);
+				return;
+			case DataSpaceAssetPackage.POLICY_CONTEXT__EDC:
+				setEdc((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,6 +176,9 @@ public class PolicyContextImpl extends ContextImpl implements PolicyContext {
 			case DataSpaceAssetPackage.POLICY_CONTEXT__ODRL:
 				setOdrl(ODRL_EDEFAULT);
 				return;
+			case DataSpaceAssetPackage.POLICY_CONTEXT__EDC:
+				setEdc(EDC_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -141,6 +193,8 @@ public class PolicyContextImpl extends ContextImpl implements PolicyContext {
 		switch (featureID) {
 			case DataSpaceAssetPackage.POLICY_CONTEXT__ODRL:
 				return ODRL_EDEFAULT == null ? odrl != null : !ODRL_EDEFAULT.equals(odrl);
+			case DataSpaceAssetPackage.POLICY_CONTEXT__EDC:
+				return EDC_EDEFAULT == null ? edc != null : !EDC_EDEFAULT.equals(edc);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -157,6 +211,8 @@ public class PolicyContextImpl extends ContextImpl implements PolicyContext {
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (odrl: ");
 		result.append(odrl);
+		result.append(", edc: ");
+		result.append(edc);
 		result.append(')');
 		return result.toString();
 	}

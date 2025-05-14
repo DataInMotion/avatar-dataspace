@@ -26,8 +26,9 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.avatar.ds.model.asset.impl.PolicyImpl#getContext <em>Context</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.impl.PolicyImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.impl.PolicyImpl#getType <em>Type</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.impl.PolicyImpl#getContext <em>Context</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.impl.PolicyImpl#getPermission <em>Permission</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.impl.PolicyImpl#getProhibition <em>Prohibition</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.impl.PolicyImpl#getObligation <em>Obligation</em>}</li>
@@ -37,24 +38,24 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  */
 public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 	/**
-	 * The default value of the '{@link #getContext() <em>Context</em>}' attribute.
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getContext()
+	 * @see #getId()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String CONTEXT_EDEFAULT = null;
+	protected static final String ID_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getContext() <em>Context</em>}' attribute.
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getContext()
+	 * @see #getId()
 	 * @generated
 	 * @ordered
 	 */
-	protected String context = CONTEXT_EDEFAULT;
+	protected String id = ID_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -75,6 +76,26 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 	 * @ordered
 	 */
 	protected String type = TYPE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getContext() <em>Context</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getContext()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CONTEXT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getContext() <em>Context</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getContext()
+	 * @generated
+	 * @ordered
+	 */
+	protected String context = CONTEXT_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getPermission() <em>Permission</em>}' attribute list.
@@ -131,8 +152,8 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 	 * @generated
 	 */
 	@Override
-	public String getContext() {
-		return context;
+	public String getId() {
+		return id;
 	}
 
 	/**
@@ -141,11 +162,11 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 	 * @generated
 	 */
 	@Override
-	public void setContext(String newContext) {
-		String oldContext = context;
-		context = newContext;
+	public void setId(String newId) {
+		String oldId = id;
+		id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.POLICY__CONTEXT, oldContext, context));
+			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.POLICY__ID, oldId, id));
 	}
 
 	/**
@@ -169,6 +190,29 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 		type = newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.POLICY__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getContext() {
+		return context;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setContext(String newContext) {
+		String oldContext = context;
+		context = newContext;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.POLICY__CONTEXT, oldContext, context));
 	}
 
 	/**
@@ -218,10 +262,12 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case DataSpaceAssetPackage.POLICY__CONTEXT:
-				return getContext();
+			case DataSpaceAssetPackage.POLICY__ID:
+				return getId();
 			case DataSpaceAssetPackage.POLICY__TYPE:
 				return getType();
+			case DataSpaceAssetPackage.POLICY__CONTEXT:
+				return getContext();
 			case DataSpaceAssetPackage.POLICY__PERMISSION:
 				return getPermission();
 			case DataSpaceAssetPackage.POLICY__PROHIBITION:
@@ -241,11 +287,14 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case DataSpaceAssetPackage.POLICY__CONTEXT:
-				setContext((String)newValue);
+			case DataSpaceAssetPackage.POLICY__ID:
+				setId((String)newValue);
 				return;
 			case DataSpaceAssetPackage.POLICY__TYPE:
 				setType((String)newValue);
+				return;
+			case DataSpaceAssetPackage.POLICY__CONTEXT:
+				setContext((String)newValue);
 				return;
 			case DataSpaceAssetPackage.POLICY__PERMISSION:
 				getPermission().clear();
@@ -271,11 +320,14 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case DataSpaceAssetPackage.POLICY__CONTEXT:
-				setContext(CONTEXT_EDEFAULT);
+			case DataSpaceAssetPackage.POLICY__ID:
+				setId(ID_EDEFAULT);
 				return;
 			case DataSpaceAssetPackage.POLICY__TYPE:
 				setType(TYPE_EDEFAULT);
+				return;
+			case DataSpaceAssetPackage.POLICY__CONTEXT:
+				setContext(CONTEXT_EDEFAULT);
 				return;
 			case DataSpaceAssetPackage.POLICY__PERMISSION:
 				getPermission().clear();
@@ -298,10 +350,12 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case DataSpaceAssetPackage.POLICY__CONTEXT:
-				return CONTEXT_EDEFAULT == null ? context != null : !CONTEXT_EDEFAULT.equals(context);
+			case DataSpaceAssetPackage.POLICY__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case DataSpaceAssetPackage.POLICY__TYPE:
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+			case DataSpaceAssetPackage.POLICY__CONTEXT:
+				return CONTEXT_EDEFAULT == null ? context != null : !CONTEXT_EDEFAULT.equals(context);
 			case DataSpaceAssetPackage.POLICY__PERMISSION:
 				return permission != null && !permission.isEmpty();
 			case DataSpaceAssetPackage.POLICY__PROHIBITION:
@@ -322,10 +376,12 @@ public class PolicyImpl extends MinimalEObjectImpl.Container implements Policy {
 		if (eIsProxy()) return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (context: ");
-		result.append(context);
+		result.append(" (id: ");
+		result.append(id);
 		result.append(", type: ");
 		result.append(type);
+		result.append(", context: ");
+		result.append(context);
 		result.append(", permission: ");
 		result.append(permission);
 		result.append(", prohibition: ");

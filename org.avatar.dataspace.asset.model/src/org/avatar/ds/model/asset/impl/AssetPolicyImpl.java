@@ -25,8 +25,10 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link org.avatar.ds.model.asset.impl.AssetPolicyImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.impl.AssetPolicyImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.impl.AssetPolicyImpl#getContext <em>Context</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.impl.AssetPolicyImpl#getPolicy <em>Policy</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.impl.AssetPolicyImpl#getCreatedAt <em>Created At</em>}</li>
  * </ul>
  *
  * @generated
@@ -53,6 +55,26 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	protected String id = ID_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String type = TYPE_EDEFAULT;
+
+	/**
 	 * The cached value of the '{@link #getContext() <em>Context</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -71,6 +93,26 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	 * @ordered
 	 */
 	protected Policy policy;
+
+	/**
+	 * The default value of the '{@link #getCreatedAt() <em>Created At</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCreatedAt()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final long CREATED_AT_EDEFAULT = 0L;
+
+	/**
+	 * The cached value of the '{@link #getCreatedAt() <em>Created At</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCreatedAt()
+	 * @generated
+	 * @ordered
+	 */
+	protected long createdAt = CREATED_AT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -112,6 +154,29 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 		id = newId;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.ASSET_POLICY__ID, oldId, id));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setType(String newType) {
+		String oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.ASSET_POLICY__TYPE, oldType, type));
 	}
 
 	/**
@@ -210,6 +275,29 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	 * @generated
 	 */
 	@Override
+	public long getCreatedAt() {
+		return createdAt;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCreatedAt(long newCreatedAt) {
+		long oldCreatedAt = createdAt;
+		createdAt = newCreatedAt;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.ASSET_POLICY__CREATED_AT, oldCreatedAt, createdAt));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case DataSpaceAssetPackage.ASSET_POLICY__CONTEXT:
@@ -230,10 +318,14 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 		switch (featureID) {
 			case DataSpaceAssetPackage.ASSET_POLICY__ID:
 				return getId();
+			case DataSpaceAssetPackage.ASSET_POLICY__TYPE:
+				return getType();
 			case DataSpaceAssetPackage.ASSET_POLICY__CONTEXT:
 				return getContext();
 			case DataSpaceAssetPackage.ASSET_POLICY__POLICY:
 				return getPolicy();
+			case DataSpaceAssetPackage.ASSET_POLICY__CREATED_AT:
+				return getCreatedAt();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -249,11 +341,17 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 			case DataSpaceAssetPackage.ASSET_POLICY__ID:
 				setId((String)newValue);
 				return;
+			case DataSpaceAssetPackage.ASSET_POLICY__TYPE:
+				setType((String)newValue);
+				return;
 			case DataSpaceAssetPackage.ASSET_POLICY__CONTEXT:
 				setContext((PolicyContext)newValue);
 				return;
 			case DataSpaceAssetPackage.ASSET_POLICY__POLICY:
 				setPolicy((Policy)newValue);
+				return;
+			case DataSpaceAssetPackage.ASSET_POLICY__CREATED_AT:
+				setCreatedAt((Long)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -270,11 +368,17 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 			case DataSpaceAssetPackage.ASSET_POLICY__ID:
 				setId(ID_EDEFAULT);
 				return;
+			case DataSpaceAssetPackage.ASSET_POLICY__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
 			case DataSpaceAssetPackage.ASSET_POLICY__CONTEXT:
 				setContext((PolicyContext)null);
 				return;
 			case DataSpaceAssetPackage.ASSET_POLICY__POLICY:
 				setPolicy((Policy)null);
+				return;
+			case DataSpaceAssetPackage.ASSET_POLICY__CREATED_AT:
+				setCreatedAt(CREATED_AT_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -290,10 +394,14 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 		switch (featureID) {
 			case DataSpaceAssetPackage.ASSET_POLICY__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case DataSpaceAssetPackage.ASSET_POLICY__TYPE:
+				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case DataSpaceAssetPackage.ASSET_POLICY__CONTEXT:
 				return context != null;
 			case DataSpaceAssetPackage.ASSET_POLICY__POLICY:
 				return policy != null;
+			case DataSpaceAssetPackage.ASSET_POLICY__CREATED_AT:
+				return createdAt != CREATED_AT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -310,6 +418,10 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (id: ");
 		result.append(id);
+		result.append(", type: ");
+		result.append(type);
+		result.append(", createdAt: ");
+		result.append(createdAt);
 		result.append(')');
 		return result.toString();
 	}

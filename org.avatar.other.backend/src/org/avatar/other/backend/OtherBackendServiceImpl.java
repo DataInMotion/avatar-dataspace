@@ -5,6 +5,7 @@ import org.avatar.provider.backend.api.ProviderBackendService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import de.avatar.model.connector.EndpointResponse;
 import de.avatar.status.QueryRequest;
 
 @Component(name = "OtherBackendService", property = "provider.id=other")
@@ -19,8 +20,8 @@ public class OtherBackendServiceImpl implements ProviderBackendService{
 	 * @see org.avatar.provider.backend.api.ProviderBackendService#executeQuery(de.avatar.status.QueryRequest)
 	 */
 	@Override
-	public void executeQuery(QueryRequest queryRequest) {
-		queryExecutorService.executeQueryRequest(queryRequest);
+	public EndpointResponse executeQuery(QueryRequest queryRequest) {
+		return queryExecutorService.executeQueryRequest(queryRequest);
 	}
 
 

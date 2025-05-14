@@ -100,4 +100,7 @@
 	de.avatar.query.status.model;version='[1.0.0,1.0.1)',\
 	org.avatar.provider.backend.api;version=snapshot,\
 	org.avatar.himsa.backend;version=snapshot,\
-	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)'
+	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
+	assertj-core;version='[3.26.3,3.26.4)',\
+	net.bytebuddy.byte-buddy;version='[1.14.18,1.14.19)',\
+	org.avatar.dataspace.asset.model;version=snapshot

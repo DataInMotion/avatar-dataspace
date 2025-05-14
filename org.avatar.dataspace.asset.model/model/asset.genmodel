@@ -28,18 +28,22 @@
     </genClasses>
     <genClasses ecoreClass="asset.ecore#//AssetPolicy">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//AssetPolicy/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//AssetPolicy/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference asset.ecore#//AssetPolicy/context"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference asset.ecore#//AssetPolicy/policy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//AssetPolicy/createdAt"/>
     </genClasses>
     <genClasses ecoreClass="asset.ecore#//Policy">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//Policy/context"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//Policy/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//Policy/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//Policy/context"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//Policy/permission"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//Policy/prohibition"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//Policy/obligation"/>
     </genClasses>
     <genClasses ecoreClass="asset.ecore#//PolicyContext">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//PolicyContext/odrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//PolicyContext/edc"/>
     </genClasses>
     <genClasses ecoreClass="asset.ecore#//ContractDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//ContractDefinition/id"/>
@@ -52,6 +56,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//DataSpaceResponse/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//DataSpaceResponse/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference asset.ecore#//DataSpaceResponse/context"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute asset.ecore#//DataSpaceResponse/createdAt"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.avatar.ds.model.asset.impl.DataSpaceResponseImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.impl.DataSpaceResponseImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.impl.DataSpaceResponseImpl#getContext <em>Context</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.impl.DataSpaceResponseImpl#getCreatedAt <em>Created At</em>}</li>
  * </ul>
  *
  * @generated
@@ -80,6 +81,26 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 	 * @ordered
 	 */
 	protected Context context;
+
+	/**
+	 * The default value of the '{@link #getCreatedAt() <em>Created At</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCreatedAt()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final long CREATED_AT_EDEFAULT = 0L;
+
+	/**
+	 * The cached value of the '{@link #getCreatedAt() <em>Created At</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCreatedAt()
+	 * @generated
+	 * @ordered
+	 */
+	protected long createdAt = CREATED_AT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -197,6 +218,29 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 	 * @generated
 	 */
 	@Override
+	public long getCreatedAt() {
+		return createdAt;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCreatedAt(long newCreatedAt) {
+		long oldCreatedAt = createdAt;
+		createdAt = newCreatedAt;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CREATED_AT, oldCreatedAt, createdAt));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CONTEXT:
@@ -219,6 +263,8 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return getType();
 			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CONTEXT:
 				return getContext();
+			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CREATED_AT:
+				return getCreatedAt();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -239,6 +285,9 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return;
 			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CONTEXT:
 				setContext((Context)newValue);
+				return;
+			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CREATED_AT:
+				setCreatedAt((Long)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -261,6 +310,9 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CONTEXT:
 				setContext((Context)null);
 				return;
+			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CREATED_AT:
+				setCreatedAt(CREATED_AT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -279,6 +331,8 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CONTEXT:
 				return context != null;
+			case DataSpaceAssetPackage.DATA_SPACE_RESPONSE__CREATED_AT:
+				return createdAt != CREATED_AT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -297,6 +351,8 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 		result.append(id);
 		result.append(", type: ");
 		result.append(type);
+		result.append(", createdAt: ");
+		result.append(createdAt);
 		result.append(')');
 		return result.toString();
 	}

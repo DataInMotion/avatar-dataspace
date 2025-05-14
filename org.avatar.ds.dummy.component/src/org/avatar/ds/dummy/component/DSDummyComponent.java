@@ -2,10 +2,9 @@ package org.avatar.ds.dummy.component;
 
 import java.nio.file.Path;
 
-import org.avatar.ds.model.asset.Asset;
 import org.avatar.ds.model.asset.AssetPolicy;
-import org.avatar.ds.model.asset.ContractDefinition;
-import org.avatar.provider.backend.api.DataAssetService;
+import org.avatar.ds.model.asset.DataSpaceResponse;
+import org.avatar.provider.backend.api.DataSpaceService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -14,28 +13,33 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.scope=ds", //
 		"osgi.command.function=addAsset", 
 		"osgi.command.function=addPolicy",
-		"osgi.command.function=addContract"
+		"osgi.command.function=addContract",
+		"osgi.command.function=getPolicy"
 })
 public class DSDummyComponent {
 
 	@Reference
-	DataAssetService dsService;
+	DataSpaceService dsService;
 	
 	@Activate
 	public void activate() {
 		System.out.println("DSDummyComponent is active!");
 	}
 	
-	public Asset addAsset(String id, String path, String name) {
+	public DataSpaceResponse addAsset(String id, String path, String name) {
 		return dsService.createAssetInDataSpace(id, Path.of(path), name);
 	}
 	
-	public AssetPolicy addPolicy(String policyId) {
+	public DataSpaceResponse addPolicy(String policyId) {
 		return dsService.createAssetPolicyInDataSpace(policyId);
 	}
 	
-	public ContractDefinition addContract(String policyId) {
+	public DataSpaceResponse addContract(String policyId) {
 		return dsService.createContractDefinitionInDataSpace(policyId);
+	}
+	
+	public AssetPolicy getPolicy(String policyId) {
+		return dsService.getAssetPolicy(policyId);
 	}
 
 }

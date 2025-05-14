@@ -25,9 +25,10 @@ import org.avatar.ds.model.asset.AssetPolicy;
 import org.avatar.ds.model.asset.ContractDefinition;
 import org.avatar.ds.model.asset.DataSpaceAssetPackage;
 import org.avatar.ds.model.asset.DataSpaceResponse;
-import org.avatar.provider.backend.api.DataAssetHelper;
-import org.avatar.provider.backend.api.DataAssetService;
+import org.avatar.provider.backend.api.DataSpaceHelper;
+import org.avatar.provider.backend.api.DataSpaceService;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.gecko.emf.json.constants.EMFJs;
@@ -44,10 +45,10 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  * @author ilenia
  * @since May 12, 2025
  */
-@Component(name = "DataAssetService", configurationPid = "DataAssetService", configurationPolicy = ConfigurationPolicy.REQUIRE)
-public class DataAssetServiceImpl implements DataAssetService {
+@Component(name = "DataSpaceService", configurationPid = "DataSpaceService", configurationPolicy = ConfigurationPolicy.REQUIRE)
+public class DataSpaceServiceImpl implements DataSpaceService {
 	
-	private static final Logger LOGGER = Logger.getLogger(DataAssetServiceImpl.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(DataSpaceServiceImpl.class.getName());
 	
 	private String policyId;
 	private ResourceSet resSet;
@@ -55,15 +56,17 @@ public class DataAssetServiceImpl implements DataAssetService {
 	private String baseDSUrl;
 	
 	@Activate
-	public DataAssetServiceImpl(
+	public DataSpaceServiceImpl(
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target="("+EMFNamespaces.EMF_MODEL_FILE_EXT + "=json)") 
 	ResourceSet resSet,
 	Map<String, Object> properties) {		
 		this.resSet = resSet;
 		baseDSUrl = (String) properties.getOrDefault("base.ds.url", null);
 		policyId = (String) properties.getOrDefault("start.policy.id", null);
-		if(policyId != null) {
+		if(policyId != null && getAssetPolicy(policyId) == null) {
+			LOGGER.info(String.format("Creating policy %s in data space", policyId));
 			createAssetPolicyInDataSpace(policyId);
+			createContractDefinitionInDataSpace(policyId);
 		}
 	}
 
@@ -73,13 +76,12 @@ public class DataAssetServiceImpl implements DataAssetService {
 	 * @see org.avatar.provider.backend.api.DataAssetService#createAssetInDataSpace(java.lang.String, java.nio.file.Path, java.lang.String)
 	 */
 	@Override
-	public Asset createAssetInDataSpace(String requestId, Path dataFilePath, String assetName) {
-		Asset asset = DataAssetHelper.createAsset(requestId, dataFilePath, assetName);
+	public DataSpaceResponse createAssetInDataSpace(String requestId, Path dataFilePath, String assetName) {
+		Asset asset = DataSpaceHelper.createAsset(requestId, dataFilePath, assetName);
 		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "assets"), "application/json");
 		requestRes.getContents().add(asset);
 		Resource responseRes = resSet.createResource(URI.createURI(UUID.randomUUID().toString().concat(".json")), "application/json");
-		sendRequestToDataSpace(requestRes, responseRes);
-		return asset;
+		return sendPOSTRequestToDataSpace(requestRes, responseRes);
 	}
 
 
@@ -89,13 +91,12 @@ public class DataAssetServiceImpl implements DataAssetService {
 	 * @see org.avatar.provider.backend.api.DataAssetService#createAssetPolicyInDataSpace(java.lang.String)
 	 */
 	@Override
-	public AssetPolicy createAssetPolicyInDataSpace(String policyId) {
-		AssetPolicy policy = DataAssetHelper.createAssetPolicy(policyId);
+	public DataSpaceResponse createAssetPolicyInDataSpace(String policyId) {
+		AssetPolicy policy = DataSpaceHelper.createAssetPolicy(policyId);
 		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "policydefinitions"), "application/json");
 		requestRes.getContents().add(policy);
 		Resource responseRes = resSet.createResource(URI.createURI(UUID.randomUUID().toString().concat(".json")), "application/json");
-		sendRequestToDataSpace(requestRes, responseRes);
-		return policy;
+		return sendPOSTRequestToDataSpace(requestRes, responseRes);
 	}
 
 
@@ -105,22 +106,57 @@ public class DataAssetServiceImpl implements DataAssetService {
 	 * @see org.avatar.provider.backend.api.DataAssetService#createContractDefinitionInDataSpace(java.lang.String)
 	 */
 	@Override
-	public ContractDefinition createContractDefinitionInDataSpace(String policyId) {
-		ContractDefinition contract = DataAssetHelper.createContractDefinition(policyId);
+	public DataSpaceResponse createContractDefinitionInDataSpace(String policyId) {
+		ContractDefinition contract = DataSpaceHelper.createContractDefinition(policyId);
 		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "contractdefinitions"), "application/json");
 		requestRes.getContents().add(contract);
 		Resource responseRes = resSet.createResource(URI.createURI(UUID.randomUUID().toString().concat(".json")), "application/json");
-		sendRequestToDataSpace(requestRes, responseRes);
-		return contract;
+		return sendPOSTRequestToDataSpace(requestRes, responseRes);
 	}
 	
-	private DataSpaceResponse sendRequestToDataSpace(Resource requestRes, Resource responseRes) {
-		
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.provider.backend.api.DataSpaceService#getAssetPolicy(java.lang.String)
+	 */
+	@Override
+	public AssetPolicy getAssetPolicy(String policyId) {
+		if(policyId == null) return null;
+		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "policydefinitions/" + policyId), "application/json");
+		return (AssetPolicy) sendGETRequestToDataSpace(requestRes);
+	}
+	
+	private EObject sendGETRequestToDataSpace(Resource requestRes) {
 		Map<String, Object> options = new HashMap<>();
 		Map<String, Object> headers = new HashMap<>();		
 		headers.put("Accept", "application/json");
 		headers.put("Content-Type", "application/json");
+		headers.put("Method", "GET");
+		options.put(EMFUriHandlerConstants.OPTION_HTTP_METHOD, "GET");	
+		options.put(EMFUriHandlerConstants.OPTION_HTTP_HEADERS, headers);
+		options.put(EMFJs.OPTION_ROOT_ELEMENT, DataSpaceAssetPackage.Literals.ASSET_POLICY);
+		try {
+			requestRes.load(options);
+			if(!requestRes.getContents().isEmpty()) {
+				if(requestRes.getContents().get(0) instanceof EObject response) {
+					return response;
+				} else {
+					LOGGER.severe(String.format("Response object is not of expected type EObject"));
+				}
+			} else {
+				LOGGER.severe(String.format("Response does NOT contain any object"));
+			}
+		} catch(IOException e) {
+			LOGGER.severe(String.format("IOException while sending request to data space: %s", e));
+		}
+		return null;
+	}
+	
+	private DataSpaceResponse sendPOSTRequestToDataSpace(Resource requestRes, Resource responseRes) {
 		
+		Map<String, Object> options = new HashMap<>();
+		Map<String, Object> headers = new HashMap<>();		
+		headers.put("Accept", "application/json");
+		headers.put("Content-Type", "application/json");		
 		headers.put("Method", "POST");
 		options.put(EMFUriHandlerConstants.OPTION_HTTP_METHOD, "POST");	
 		options.put(EMFUriHandlerConstants.OPTION_HTTP_HEADERS, headers);
@@ -130,7 +166,6 @@ public class DataAssetServiceImpl implements DataAssetService {
 		responseOptions.put("Accepts", "application/json");
 		options.put(EMFUriHandlerConstants.OPTIONS_EXPECTED_RESPONSE_RESOURCE_OPTIONS, responseOptions);
 		try {
-			requestRes.save(System.out, options);
 			requestRes.save(options);
 			if(!responseRes.getContents().isEmpty()) {
 				if(responseRes.getContents().get(0) instanceof DataSpaceResponse response) {
@@ -146,5 +181,4 @@ public class DataAssetServiceImpl implements DataAssetService {
 		}
 		return null;
 	}
-
 }

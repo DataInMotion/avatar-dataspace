@@ -295,13 +295,22 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	int ASSET_POLICY__ID = 0;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET_POLICY__TYPE = 1;
+
+	/**
 	 * The feature id for the '<em><b>Context</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY__CONTEXT = 1;
+	int ASSET_POLICY__CONTEXT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Policy</b></em>' containment reference.
@@ -310,7 +319,16 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY__POLICY = 2;
+	int ASSET_POLICY__POLICY = 3;
+
+	/**
+	 * The feature id for the '<em><b>Created At</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET_POLICY__CREATED_AT = 4;
 
 	/**
 	 * The number of structural features of the '<em>Asset Policy</em>' class.
@@ -319,7 +337,7 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY_FEATURE_COUNT = 3;
+	int ASSET_POLICY_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Asset Policy</em>' class.
@@ -341,13 +359,13 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	int POLICY = 5;
 
 	/**
-	 * The feature id for the '<em><b>Context</b></em>' attribute.
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int POLICY__CONTEXT = 0;
+	int POLICY__ID = 0;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -359,13 +377,22 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	int POLICY__TYPE = 1;
 
 	/**
+	 * The feature id for the '<em><b>Context</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLICY__CONTEXT = 2;
+
+	/**
 	 * The feature id for the '<em><b>Permission</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int POLICY__PERMISSION = 2;
+	int POLICY__PERMISSION = 3;
 
 	/**
 	 * The feature id for the '<em><b>Prohibition</b></em>' attribute list.
@@ -374,7 +401,7 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int POLICY__PROHIBITION = 3;
+	int POLICY__PROHIBITION = 4;
 
 	/**
 	 * The feature id for the '<em><b>Obligation</b></em>' attribute list.
@@ -383,7 +410,7 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int POLICY__OBLIGATION = 4;
+	int POLICY__OBLIGATION = 5;
 
 	/**
 	 * The number of structural features of the '<em>Policy</em>' class.
@@ -392,7 +419,7 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int POLICY_FEATURE_COUNT = 5;
+	int POLICY_FEATURE_COUNT = 6;
 
 	/**
 	 * The number of operations of the '<em>Policy</em>' class.
@@ -432,13 +459,22 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	int POLICY_CONTEXT__ODRL = CONTEXT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Edc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLICY_CONTEXT__EDC = CONTEXT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Policy Context</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int POLICY_CONTEXT_FEATURE_COUNT = CONTEXT_FEATURE_COUNT + 1;
+	int POLICY_CONTEXT_FEATURE_COUNT = CONTEXT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Policy Context</em>' class.
@@ -560,13 +596,22 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	int DATA_SPACE_RESPONSE__CONTEXT = 2;
 
 	/**
+	 * The feature id for the '<em><b>Created At</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__CREATED_AT = 3;
+
+	/**
 	 * The number of structural features of the '<em>Data Space Response</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE_FEATURE_COUNT = 3;
+	int DATA_SPACE_RESPONSE_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>Data Space Response</em>' class.
@@ -763,6 +808,17 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	EAttribute getAssetPolicy_Id();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.asset.AssetPolicy#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.avatar.ds.model.asset.AssetPolicy#getType()
+	 * @see #getAssetPolicy()
+	 * @generated
+	 */
+	EAttribute getAssetPolicy_Type();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.avatar.ds.model.asset.AssetPolicy#getContext <em>Context</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -785,6 +841,17 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	EReference getAssetPolicy_Policy();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.asset.AssetPolicy#getCreatedAt <em>Created At</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Created At</em>'.
+	 * @see org.avatar.ds.model.asset.AssetPolicy#getCreatedAt()
+	 * @see #getAssetPolicy()
+	 * @generated
+	 */
+	EAttribute getAssetPolicy_CreatedAt();
+
+	/**
 	 * Returns the meta object for class '{@link org.avatar.ds.model.asset.Policy <em>Policy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -795,15 +862,15 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	EClass getPolicy();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.asset.Policy#getContext <em>Context</em>}'.
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.asset.Policy#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Context</em>'.
-	 * @see org.avatar.ds.model.asset.Policy#getContext()
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.avatar.ds.model.asset.Policy#getId()
 	 * @see #getPolicy()
 	 * @generated
 	 */
-	EAttribute getPolicy_Context();
+	EAttribute getPolicy_Id();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.asset.Policy#getType <em>Type</em>}'.
@@ -815,6 +882,17 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 */
 	EAttribute getPolicy_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.asset.Policy#getContext <em>Context</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Context</em>'.
+	 * @see org.avatar.ds.model.asset.Policy#getContext()
+	 * @see #getPolicy()
+	 * @generated
+	 */
+	EAttribute getPolicy_Context();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.avatar.ds.model.asset.Policy#getPermission <em>Permission</em>}'.
@@ -869,6 +947,17 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 */
 	EAttribute getPolicyContext_Odrl();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.asset.PolicyContext#getEdc <em>Edc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Edc</em>'.
+	 * @see org.avatar.ds.model.asset.PolicyContext#getEdc()
+	 * @see #getPolicyContext()
+	 * @generated
+	 */
+	EAttribute getPolicyContext_Edc();
 
 	/**
 	 * Returns the meta object for class '{@link org.avatar.ds.model.asset.ContractDefinition <em>Contract Definition</em>}'.
@@ -977,6 +1066,17 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 */
 	EReference getDataSpaceResponse_Context();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.asset.DataSpaceResponse#getCreatedAt <em>Created At</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Created At</em>'.
+	 * @see org.avatar.ds.model.asset.DataSpaceResponse#getCreatedAt()
+	 * @see #getDataSpaceResponse()
+	 * @generated
+	 */
+	EAttribute getDataSpaceResponse_CreatedAt();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1148,6 +1248,14 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 		EAttribute ASSET_POLICY__ID = eINSTANCE.getAssetPolicy_Id();
 
 		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ASSET_POLICY__TYPE = eINSTANCE.getAssetPolicy_Type();
+
+		/**
 		 * The meta object literal for the '<em><b>Context</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1164,6 +1272,14 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 		EReference ASSET_POLICY__POLICY = eINSTANCE.getAssetPolicy_Policy();
 
 		/**
+		 * The meta object literal for the '<em><b>Created At</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ASSET_POLICY__CREATED_AT = eINSTANCE.getAssetPolicy_CreatedAt();
+
+		/**
 		 * The meta object literal for the '{@link org.avatar.ds.model.asset.impl.PolicyImpl <em>Policy</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1174,12 +1290,12 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 		EClass POLICY = eINSTANCE.getPolicy();
 
 		/**
-		 * The meta object literal for the '<em><b>Context</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute POLICY__CONTEXT = eINSTANCE.getPolicy_Context();
+		EAttribute POLICY__ID = eINSTANCE.getPolicy_Id();
 
 		/**
 		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
@@ -1188,6 +1304,14 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 		 * @generated
 		 */
 		EAttribute POLICY__TYPE = eINSTANCE.getPolicy_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Context</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute POLICY__CONTEXT = eINSTANCE.getPolicy_Context();
 
 		/**
 		 * The meta object literal for the '<em><b>Permission</b></em>' attribute list feature.
@@ -1230,6 +1354,14 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 		 * @generated
 		 */
 		EAttribute POLICY_CONTEXT__ODRL = eINSTANCE.getPolicyContext_Odrl();
+
+		/**
+		 * The meta object literal for the '<em><b>Edc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute POLICY_CONTEXT__EDC = eINSTANCE.getPolicyContext_Edc();
 
 		/**
 		 * The meta object literal for the '{@link org.avatar.ds.model.asset.impl.ContractDefinitionImpl <em>Contract Definition</em>}' class.
@@ -1314,6 +1446,14 @@ public interface DataSpaceAssetPackage extends org.eclipse.emf.ecore.EPackage {
 		 * @generated
 		 */
 		EReference DATA_SPACE_RESPONSE__CONTEXT = eINSTANCE.getDataSpaceResponse_Context();
+
+		/**
+		 * The meta object literal for the '<em><b>Created At</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_SPACE_RESPONSE__CREATED_AT = eINSTANCE.getDataSpaceResponse_CreatedAt();
 
 	}
 

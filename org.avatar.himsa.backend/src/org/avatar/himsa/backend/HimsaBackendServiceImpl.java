@@ -7,6 +7,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 
+import de.avatar.model.connector.EndpointResponse;
 import de.avatar.status.QueryRequest;
 
 @Component(name = "HimsaBackendService", property = {"provider.id=himsa"})
@@ -24,8 +25,8 @@ public class HimsaBackendServiceImpl implements ProviderBackendService{
 	 * @see org.avatar.provider.backend.api.ProviderBackendService#executeQuery(de.avatar.status.QueryRequest)
 	 */
 	@Override
-	public void executeQuery(QueryRequest queryRequest) {
-		queryExecutorService.executeQueryRequest(queryRequest);		
+	public EndpointResponse executeQuery(QueryRequest queryRequest) {
+		return queryExecutorService.executeQueryRequest(queryRequest);		
 	}
 
 	/* 

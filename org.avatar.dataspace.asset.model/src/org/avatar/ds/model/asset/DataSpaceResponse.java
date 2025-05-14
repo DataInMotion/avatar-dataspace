@@ -18,6 +18,7 @@ import org.osgi.annotation.versioning.ProviderType;
  *   <li>{@link org.avatar.ds.model.asset.DataSpaceResponse#getId <em>Id</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.DataSpaceResponse#getType <em>Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.asset.DataSpaceResponse#getContext <em>Context</em>}</li>
+ *   <li>{@link org.avatar.ds.model.asset.DataSpaceResponse#getCreatedAt <em>Created At</em>}</li>
  * </ul>
  *
  * @see org.avatar.ds.model.asset.DataSpaceAssetPackage#getDataSpaceResponse()
@@ -92,5 +93,27 @@ public interface DataSpaceResponse extends EObject {
 	 * @generated
 	 */
 	void setContext(Context value);
+
+	/**
+	 * Returns the value of the '<em><b>Created At</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Created At</em>' attribute.
+	 * @see #setCreatedAt(long)
+	 * @see org.avatar.ds.model.asset.DataSpaceAssetPackage#getDataSpaceResponse_CreatedAt()
+	 * @model
+	 * @generated
+	 */
+	long getCreatedAt();
+
+	/**
+	 * Sets the value of the '{@link org.avatar.ds.model.asset.DataSpaceResponse#getCreatedAt <em>Created At</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Created At</em>' attribute.
+	 * @see #getCreatedAt()
+	 * @generated
+	 */
+	void setCreatedAt(long value);
 
 } // DataSpaceResponse

@@ -1,6 +1,6 @@
 {
   ":configurator:resource-version": 1,
-  "DataAssetService~test": {
+  "DataSpaceService~test": {
   	"base.ds.url": "http://localhost:9081/management/v3/"
   }	  
 }

@@ -23,6 +23,7 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.avatar.himsa.export.Patient;
@@ -32,7 +33,7 @@ import org.avatar.himsa.patient.service.api.PatientService;
 import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
 import org.avatar.himsa.patient.service.api.QueryHelper;
 import org.avatar.himsa.patient.service.api.QueryRequestExecutorService;
-import org.avatar.provider.backend.api.DataAssetService;
+import org.avatar.provider.backend.api.DataSpaceService;
 import org.avatar.provider.backend.api.DataStorageService;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.gecko.emf.repository.EMFRepository;
@@ -72,7 +73,7 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 	private PatientDataQualityService dataQualityService;
 	private DataStorageService jsonDataStorage;
 	private DataStorageService xmlDataStorage;
-	private DataAssetService dataAssetService;
+	private DataSpaceService dataSpaceService;
 
 
 	@Activate
@@ -82,14 +83,14 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			@Reference(cardinality = ReferenceCardinality.MANDATORY) ComponentServiceObjects<EMFRepository> repoSO, 
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=json)") DataStorageService jsonDataStorage,
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=xml)") DataStorageService xmlDataStorage, 
-			@Reference(cardinality = ReferenceCardinality.MANDATORY) DataAssetService dataAssetService) throws ParseException {
+			@Reference(cardinality = ReferenceCardinality.MANDATORY) DataSpaceService dataSpaceService) throws ParseException {
 		this.patientService = patientService;
 		this.anonymizationService = anonymizationService;
 		this.dataQualityService = dataQualityService;
 		this.repoSO = repoSO;
 		this.jsonDataStorage = jsonDataStorage;
 		this.xmlDataStorage = xmlDataStorage;
-		this.dataAssetService = dataAssetService;
+		this.dataSpaceService = dataSpaceService;
 	}
 
 
@@ -98,17 +99,21 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 	 * @see org.avatar.himsa.patient.service.api.QueryRequestExecutorService#executeQueryRequest(de.avatar.status.QueryRequest)
 	 */
 	@Override
-	public void executeQueryRequest(QueryRequest queryRequest) {
+	public EndpointResponse executeQueryRequest(QueryRequest queryRequest) {
 		ExecutorService executor = Executors.newSingleThreadExecutor();
 		QueryTask task = new QueryTask(queryRequest);
 		try {
-			executor.submit(task);			
+			Future<EndpointResponse> submit = executor.submit(task);
+			EndpointResponse response = submit.get();
+			return response;
+		} catch(Exception e) {
+			return task.createErrorResponse(queryRequest.getRequestId(), e);
 		} finally {
 			executor.shutdown();
 		}		
 	}
 	
-	class QueryTask implements Callable<Void> {
+	class QueryTask implements Callable<EndpointResponse> {
 		
 		private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss'Z'")
 				.withZone(ZoneId.of("Europe/Berlin"));
@@ -129,7 +134,7 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 		 */
 		@SuppressWarnings("unchecked")
 		@Override
-		public Void call() throws Exception {
+		public EndpointResponse call() throws Exception {
 			EndpointResponse response;
 			
 			try {
@@ -184,13 +189,12 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 				}
 				if(dataFilePath != null) {
 					LOGGER.info(String.format("Start creating asset..."));
-					dataAssetService.createAssetInDataSpace(requestId, dataFilePath, "Asset for Patient Query Result");
-				}
-				
+					dataSpaceService.createAssetInDataSpace(requestId, dataFilePath, "Asset for Patient Query Result");
+				}				
 			} catch(Exception e) {
 				response = createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while saving the data", e));
 			}
-			return null;
+			return response;
 		}
 		
 		private EndpointResponse createErrorResponse(String requestId, Throwable errCause) {

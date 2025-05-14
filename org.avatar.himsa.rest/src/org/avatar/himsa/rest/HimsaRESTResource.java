@@ -23,11 +23,15 @@ import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsName;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsResource;
 
+import de.avatar.model.connector.EndpointResponse;
+import de.avatar.model.connector.ErrorResult;
+import de.avatar.model.connector.ResponseCode;
 import de.avatar.status.QueryRequest;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -79,8 +83,29 @@ public class HimsaRESTResource {
 	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
 	public Response patientByQuery(QueryRequest queryRequest) {
 		System.out.println("GOT QUery");
-		backendService.executeQuery(queryRequest);
-		return Response.ok("Query sent with success for Provider Himsa").build();
+		EndpointResponse response = backendService.executeQuery(queryRequest);
+		if(ResponseCode.ERROR.equals(response.getCode())) {
+			ErrorResult errRes = (ErrorResult) response.getResult();
+			return Response.status(500, errRes.getError()).build();
+		} else {			
+			return Response.ok(String.format("Query executed with success for request id %s", queryRequest.getRequestId())).build();
+		}
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/patient/query/{reqId}")
+	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
+	public Response patientByQuery2(@PathParam("reqId") String reqId,  QueryRequest queryRequest) {
+		System.out.println("GOT QUery");
+		EndpointResponse response = backendService.executeQuery(queryRequest);
+		if(ResponseCode.ERROR.equals(response.getCode())) {
+			ErrorResult errRes = (ErrorResult) response.getResult();
+			return Response.status(577, errRes.getError()).build();
+		} else {			
+			return Response.ok(String.format("Query executed with success for request id %s", reqId)).build();
+		}		
 	}
 	
 	

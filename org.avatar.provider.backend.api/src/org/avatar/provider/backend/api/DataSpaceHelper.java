@@ -31,7 +31,7 @@ import org.avatar.ds.model.asset.PolicyContext;
  * @author ilenia
  * @since May 12, 2025
  */
-public class DataAssetHelper {
+public class DataSpaceHelper {
 	
 	public static Asset createAsset(String requestId, Path dataFilePath, String name) {
 		Asset asset = DataSpaceAssetFactory.eINSTANCE.createAsset();
