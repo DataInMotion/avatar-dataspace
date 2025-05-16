@@ -1,1 +1,3 @@
--buildpath: org.gecko.emf.repository.mongo
+-buildpath: \
+	org.gecko.emf.repository.mongo,\
+	de.avatar.connector.cleanup.impl
