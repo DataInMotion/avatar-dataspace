@@ -13,8 +13,6 @@
  */
 package org.avatar.provider.backend.api;
 
-import java.nio.file.Path;
-
 import org.avatar.ds.model.dataspace.AssetPolicy;
 import org.avatar.ds.model.dataspace.DataSpaceResponse;
 
@@ -25,7 +23,7 @@ import org.avatar.ds.model.dataspace.DataSpaceResponse;
  */
 public interface DataSpaceService {
 	
-	DataSpaceResponse createAssetInDataSpace(String requestId, Path dataFilePath, String assetName);
+	DataSpaceResponse createAssetInDataSpace(String requestId, String url, String type, String name);
 	
 	DataSpaceResponse createAssetPolicyInDataSpace(String policyId);
 	

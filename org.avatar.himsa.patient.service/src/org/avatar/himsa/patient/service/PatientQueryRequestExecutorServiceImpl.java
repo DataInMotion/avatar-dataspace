@@ -180,19 +180,21 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			LOGGER.info(String.format("Start saving data..."));
 			try {
 				Path dataFilePath = null;
+				String assetType = "json";
 				switch(contentType) {
 				case "json", "application/json": default:
 					dataFilePath = jsonDataStorage.saveEndpointResponse(response);					
 					break;
 				case "xml", "application/xml", "text/xml":
 					dataFilePath = xmlDataStorage.saveEndpointResponse(response);
+					assetType = "xml";
 					break;			
 				}
 //				Unset the data now because we do not want to send it back
 				response.eUnset(AConnectorPackage.Literals.ENDPOINT_RESPONSE__RESULT);
 				if(dataFilePath != null) {
 					LOGGER.info(String.format("Start creating asset..."));
-					DataSpaceResponse dsResponse = dataSpaceService.createAssetInDataSpace(requestId, dataFilePath, "Asset for Patient Query Result");
+					DataSpaceResponse dsResponse = dataSpaceService.createAssetInDataSpace(requestId, dataFilePath.toString(), assetType, "Asset for Patient Query Result");
 					if(dsResponse == null) {
 						response = createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while creating a new Asset in the DataSpace"));
 					}

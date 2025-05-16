@@ -1,7 +1,5 @@
 package org.avatar.ds.dummy.component;
 
-import java.nio.file.Path;
-
 import org.avatar.ds.model.dataspace.AssetPolicy;
 import org.avatar.ds.model.dataspace.DataSpaceResponse;
 import org.avatar.provider.backend.api.DataSpaceService;
@@ -27,7 +25,7 @@ public class DSDummyComponent {
 	}
 	
 	public DataSpaceResponse addAsset(String id, String path, String name) {
-		return dsService.createAssetInDataSpace(id, Path.of(path), name);
+		return dsService.createAssetInDataSpace(id, path, path.endsWith(".json") ? "json" : "xml", name);
 	}
 	
 	public DataSpaceResponse addPolicy(String policyId) {

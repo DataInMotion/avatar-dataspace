@@ -14,7 +14,6 @@
 package org.avatar.himsa.backend;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -47,37 +46,42 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  */
 @Component(name = "DataSpaceService", configurationPid = "DataSpaceService", configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class DataSpaceServiceImpl implements DataSpaceService {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(DataSpaceServiceImpl.class.getName());
-	
+
 	private String policyId;
 	private ResourceSet resSet;
 
 	private String baseDSUrl;
-	
+
 	@Activate
 	public DataSpaceServiceImpl(
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target="("+EMFNamespaces.EMF_MODEL_FILE_EXT + "=json)") 
-	ResourceSet resSet,
-	Map<String, Object> properties) {		
+			ResourceSet resSet,
+			Map<String, Object> properties) {		
 		this.resSet = resSet;
 		baseDSUrl = (String) properties.getOrDefault("base.ds.url", null);
+		if(baseDSUrl == null) {
+			throw new IllegalArgumentException("Property base.ds.url must be set!");
+		}
 		policyId = (String) properties.getOrDefault("start.policy.id", null);
 		if(policyId != null && getAssetPolicy(policyId) == null) {
-			LOGGER.info(String.format("Creating policy %s in data space", policyId));
+			LOGGER.info(String.format("Creating policy %s  and initial assets in data space", policyId));
 			createAssetPolicyInDataSpace(policyId);
 			createContractDefinitionInDataSpace(policyId);
+			createInitialAssets();
 		}
 	}
 
 
+	
 	/* 
 	 * (non-Javadoc)
-	 * @see org.avatar.provider.backend.api.DataAssetService#createAssetInDataSpace(java.lang.String, java.nio.file.Path, java.lang.String)
+	 * @see org.avatar.provider.backend.api.DataSpaceService#createAssetInDataSpace(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public DataSpaceResponse createAssetInDataSpace(String requestId, Path dataFilePath, String assetName) {
-		Asset asset = DataSpaceHelper.createAsset(requestId, dataFilePath, assetName);
+	public DataSpaceResponse createAssetInDataSpace(String requestId, String url, String type, String name) {
+		Asset asset = DataSpaceHelper.createAsset(requestId, url, type, name);
 		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "assets"), "application/json");
 		requestRes.getContents().add(asset);
 		Resource responseRes = resSet.createResource(URI.createURI(UUID.randomUUID().toString().concat(".json")), "application/json");
@@ -113,7 +117,7 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 		Resource responseRes = resSet.createResource(URI.createURI(UUID.randomUUID().toString().concat(".json")), "application/json");
 		return sendPOSTRequestToDataSpace(requestRes, responseRes);
 	}
-	
+
 	/* 
 	 * (non-Javadoc)
 	 * @see org.avatar.provider.backend.api.DataSpaceService#getAssetPolicy(java.lang.String)
@@ -124,7 +128,18 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "policydefinitions/" + policyId), "application/json");
 		return (AssetPolicy) sendGETRequestToDataSpace(requestRes);
 	}
-	
+
+	private void createInitialAssets() {
+		DataSpaceResponse response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/himsa/rest/patient/query/{requestId}", "json", "Patient hearing data in json format");
+		if(response == null) {
+			throw new IllegalArgumentException("Error while creating initial asset in dataspace");
+		}
+		response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/himsa/rest/patient/query/{requestId}", "xml", "Patient hearing data in xml format");
+		if(response == null) {
+			throw new IllegalArgumentException("Error while creating initial asset in dataspace");
+		}
+	}
+
 	private EObject sendGETRequestToDataSpace(Resource requestRes) {
 		Map<String, Object> options = new HashMap<>();
 		Map<String, Object> headers = new HashMap<>();		
@@ -150,9 +165,9 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 		}
 		return null;
 	}
-	
+
 	private DataSpaceResponse sendPOSTRequestToDataSpace(Resource requestRes, Resource responseRes) {
-		
+
 		Map<String, Object> options = new HashMap<>();
 		Map<String, Object> headers = new HashMap<>();		
 		headers.put("Accept", "application/json");

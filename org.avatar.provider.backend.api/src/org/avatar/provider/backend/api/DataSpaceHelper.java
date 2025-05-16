@@ -33,7 +33,23 @@ import org.avatar.ds.model.dataspace.PolicyContext;
  */
 public class DataSpaceHelper {
 	
-	public static Asset createAsset(String requestId, Path dataFilePath, String name) {
+	public static Asset createAsset(String requestId, String url, String type, String name) {
+		Asset asset = DataspaceFactory.eINSTANCE.createAsset();
+		asset.setId(requestId);
+		Context ctxt = DataspaceFactory.eINSTANCE.createContext();
+		ctxt.setVocab("https://w3id.org/edc/v0.0.1/ns/");
+		asset.setContext(ctxt);
+		DataAddress dataAddress = DataspaceFactory.eINSTANCE.createDataAddress();
+		dataAddress.setBaseUrl(url);
+		dataAddress.setType(type);
+		dataAddress.setName(name);
+		asset.setDataAddress(dataAddress);
+		asset.getProperties().put("name", name);
+		asset.getProperties().put("contenttype", type);
+		return asset;		
+	}
+	
+	public static Asset createQueryResultAsset(String requestId, Path dataFilePath, String name) {
 		Asset asset = DataspaceFactory.eINSTANCE.createAsset();
 		asset.setId(requestId);
 		Context ctxt = DataspaceFactory.eINSTANCE.createContext();
