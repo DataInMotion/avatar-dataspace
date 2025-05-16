@@ -40,10 +40,12 @@
   	}, 
   	"DataStorageService~json": {
   		"data.format": "json", 
-  		"data.storage.folder": "data"
+  		"data.storage.folder": "data",
+  		"rsFactory.target": "(emf.fileExtension=json)"
   	},
   	"DataStorageService~xml": {
   		"data.format": "xml", 
-  		"data.storage.folder": "data"
+  		"data.storage.folder": "data",
+  		"rsFactory.target": "(emf.fileExtension=xml)"
   	}
 }

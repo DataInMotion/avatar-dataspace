@@ -96,7 +96,7 @@ public class DummyDataComponent {
 	}
 	
 	private void loadSampleAudiogram() {
-		EObject eObj = DummyDataHelper.loadXMLResource(System.getProperty("data")+"Format502AudSample.xml", resourceSet);
+		EObject eObj = DummyDataHelper.loadXMLResource(System.getProperty("data")+"/sample-data/Format502AudSample.xml", resourceSet);
 		if(eObj != null && eObj instanceof DocumentRoot root) {
 			sampleAudiogram = root.getHIMSAAudiometricStandard();
 		} else {

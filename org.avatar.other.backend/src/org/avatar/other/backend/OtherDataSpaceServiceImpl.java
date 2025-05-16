@@ -11,7 +11,7 @@
  * Contributors:
  *     Data In Motion - initial API and implementation
  */
-package org.avatar.himsa.backend;
+package org.avatar.other.backend;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,12 +42,12 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 /**
  * 
  * @author ilenia
- * @since May 12, 2025
+ * @since May 16, 2025
  */
-@Component(name = "DataSpaceService", configurationPid = "DataSpaceService", configurationPolicy = ConfigurationPolicy.REQUIRE)
-public class DataSpaceServiceImpl implements DataSpaceService {
-
-	private static final Logger LOGGER = Logger.getLogger(DataSpaceServiceImpl.class.getName());
+@Component(name = "OtherDataSpaceService", configurationPid = "DataSpaceService", configurationPolicy = ConfigurationPolicy.REQUIRE)
+public class OtherDataSpaceServiceImpl implements DataSpaceService {
+	
+	private static final Logger LOGGER = Logger.getLogger(OtherDataSpaceServiceImpl.class.getName());
 
 	private String policyId;
 	private ResourceSet resSet;
@@ -55,7 +55,7 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 	private String baseDSUrl;
 
 	@Activate
-	public DataSpaceServiceImpl(
+	public OtherDataSpaceServiceImpl(
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target="("+EMFNamespaces.EMF_MODEL_FILE_EXT + "=json)") 
 			ResourceSet resSet,
 			Map<String, Object> properties) {		
@@ -73,8 +73,6 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 		}
 	}
 
-
-	
 	/* 
 	 * (non-Javadoc)
 	 * @see org.avatar.provider.backend.api.DataSpaceService#createAssetInDataSpace(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
@@ -130,11 +128,11 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 	}
 
 	private void createInitialAssets() {
-		DataSpaceResponse response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/himsa/rest/patient/query/{requestId}", "json", "Patient hearing data in json format");
+		DataSpaceResponse response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/other/rest/patient/query/{requestId}", "json", "Patient hearing data in json format");
 		if(response == null) {
 			throw new IllegalArgumentException("Error while creating initial asset in dataspace");
 		}
-		response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/himsa/rest/patient/query/{requestId}", "xml", "Patient hearing data in xml format");
+		response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/other/rest/patient/query/{requestId}", "xml", "Patient hearing data in xml format");
 		if(response == null) {
 			throw new IllegalArgumentException("Error while creating initial asset in dataspace");
 		}
@@ -196,4 +194,5 @@ public class DataSpaceServiceImpl implements DataSpaceService {
 		}
 		return null;
 	}
+
 }

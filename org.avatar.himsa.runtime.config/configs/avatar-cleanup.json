@@ -1,0 +1,13 @@
+{
+  ":configurator:resource-version": 1,
+  
+	"AvatarDataCleanup": {
+	    "cleanupRootFolder": "data",
+	    "cleanupExtensions": [".json", ".xml"],
+		"cleanupDelay": 0,
+		"cleanupRate": 10,
+		"cleanupUnit": "MINUTES",
+		"removeOlderThan": 10, 
+		"removeOlderThanUnit": "MINUTES"
+	}
+}

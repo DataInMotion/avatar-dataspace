@@ -18,7 +18,7 @@
 	"EMFMongoRepositoryConfigurator": 
     {
  		"mongo.instances": "avatar",
-	    "avatar.baseUris": "mongodb://localhost:27017",
+	    "avatar.baseUris": "mongodb://mongodb:27017",
 	    "avatar.databases": "avatar",
 	    "avatar.avatar.repoType": "PROTOTYPE"
   	},
@@ -37,10 +37,12 @@
   	}, 
   	"DataStorageService~json": {
   		"data.format": "json", 
-  		"data.storage.folder": "data"
+  		"data.storage.folder": "data",
+  		"rsFactory.target": "(emf.fileExtension=json)"
   	},
   	"DataStorageService~xml": {
   		"data.format": "xml", 
-  		"data.storage.folder": "data"
+  		"data.storage.folder": "data",
+  		"rsFactory.target": "(emf.fileExtension=xml)"
   	}
 }

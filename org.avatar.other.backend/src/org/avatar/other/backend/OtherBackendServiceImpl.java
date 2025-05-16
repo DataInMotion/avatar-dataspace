@@ -4,8 +4,10 @@ import java.util.UUID;
 
 import org.avatar.himsa.patient.service.api.QueryRequestExecutorService;
 import org.avatar.provider.backend.api.ProviderBackendService;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 import de.avatar.metadata.ConnectorMetadata;
 import de.avatar.metadata.MetadataFactory;
@@ -15,8 +17,13 @@ import de.avatar.status.QueryRequest;
 @Component(name = "OtherBackendService", property = "provider.id=other")
 public class OtherBackendServiceImpl implements ProviderBackendService{
 	
-	@Reference
-	QueryRequestExecutorService queryExecutorService;
+	
+	private QueryRequestExecutorService queryExecutorService;
+
+	@Activate
+	public OtherBackendServiceImpl(@Reference(cardinality = ReferenceCardinality.MANDATORY) QueryRequestExecutorService queryExecutorService) {
+		this.queryExecutorService = queryExecutorService;	
+	}
 
 
 	/* 

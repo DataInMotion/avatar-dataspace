@@ -1,5 +1,39 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="Local" increment="1743067623463">
+<repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="Local" increment="1747380958766">
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="license" value="Eclipse Public License 2.0"/>
+      <attribute name="copyright" value="Data In Motion Consulting GmbH - All rights reserved"/>
+      <attribute name="osgi.identity" value="de.avatar.connector.cleanup.api"/>
+      <attribute name="documentation" value="https://github.com/geckoprojects-org/org.gecko.playground"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" value="1.0.0.202505141229-SNAPSHOT" type="Version"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="bundle-symbolic-name" value="de.avatar.connector.cleanup.api"/>
+      <attribute name="bundle-version" value="1.0.0.202505141229-SNAPSHOT" type="Version"/>
+      <attribute name="osgi.wiring.package" value="de.avatar.connector.cleanup.api.api"/>
+      <attribute name="version" value="1.0.0" type="Version"/>
+      <attribute name="bnd.hashes" value="-470618015,31445763,-1923478059" type="List&lt;Long&gt;"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="bundle-version" value="1.0.0.202505141229-SNAPSHOT" type="Version"/>
+      <attribute name="osgi.wiring.bundle" value="de.avatar.connector.cleanup.api"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="bundle-version" value="1.0.0.202505141229-SNAPSHOT" type="Version"/>
+      <attribute name="osgi.wiring.host" value="de.avatar.connector.cleanup.api"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="13498" type="Long"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="url" value="de.avatar.connector.cleanup.api/de.avatar.connector.cleanup.api-1.0.0.jar"/>
+      <attribute name="osgi.content" value="608CC4DEC5431117C020CF4669D983722DC072D58F4F52EDAE2B8E381FA24BF9"/>
+    </capability>
+    <requirement namespace="osgi.ee">
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=17))"/>
+    </requirement>
+  </resource>
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="license" value="Eclipse Public License 2.0"/>
@@ -7,20 +41,20 @@
       <attribute name="osgi.identity" value="de.avatar.query.status.model"/>
       <attribute name="documentation" value="https://github.com/geckoprojects-org/org.gecko.playground"/>
       <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" value="1.0.0.202503261019-SNAPSHOT" type="Version"/>
+      <attribute name="version" value="1.0.0.202505160621-SNAPSHOT" type="Version"/>
     </capability>
     <capability namespace="osgi.wiring.package">
       <directive name="uses" value="de.avatar.metadata,de.avatar.model.connector,de.avatar.query,org.eclipse.emf.common.util,org.eclipse.emf.ecore"/>
       <attribute name="bundle-symbolic-name" value="de.avatar.query.status.model"/>
-      <attribute name="bundle-version" value="1.0.0.202503261019-SNAPSHOT" type="Version"/>
+      <attribute name="bundle-version" value="1.0.0.202505160621-SNAPSHOT" type="Version"/>
       <attribute name="osgi.wiring.package" value="de.avatar.status"/>
       <attribute name="version" value="1.0.0" type="Version"/>
-      <attribute name="bnd.hashes" value="-1947505686,-569450313,-69189178,-1591487289,-2038531831,-2007243493,357162260,1837060078,-1617268523,2088416408,1425955268,-1921730604,-2078762289,-2060798414,-1923478059" type="List&lt;Long&gt;"/>
+      <attribute name="bnd.hashes" value="-1947505686,-569450313,-69189178,-1591487289,-2038531831,-2007243493,357162260,-1617268523,2088416408,1425955268,-1921730604,-2078762289,-2060798414,-1923478059" type="List&lt;Long&gt;"/>
     </capability>
     <capability namespace="osgi.wiring.package">
       <directive name="uses" value="de.avatar.metadata,de.avatar.model.connector,de.avatar.query,de.avatar.status,org.eclipse.emf.common.notify,org.eclipse.emf.common.util,org.eclipse.emf.ecore,org.eclipse.emf.ecore.impl"/>
       <attribute name="bundle-symbolic-name" value="de.avatar.query.status.model"/>
-      <attribute name="bundle-version" value="1.0.0.202503261019-SNAPSHOT" type="Version"/>
+      <attribute name="bundle-version" value="1.0.0.202505160621-SNAPSHOT" type="Version"/>
       <attribute name="osgi.wiring.package" value="de.avatar.status.impl"/>
       <attribute name="version" value="1.0.0" type="Version"/>
       <attribute name="bnd.hashes" value="-1891484374,-2049670281,-1428110074,238088071,-1053056311,2139141595,2025772181,-1602126120,-770735084,1036218767,-406641806,-1923478059" type="List&lt;Long&gt;"/>
@@ -28,17 +62,17 @@
     <capability namespace="osgi.wiring.package">
       <directive name="uses" value="de.avatar.status,org.eclipse.emf.common.notify,org.eclipse.emf.common.notify.impl,org.eclipse.emf.common.util,org.eclipse.emf.ecore,org.eclipse.emf.ecore.resource,org.eclipse.emf.ecore.resource.impl,org.eclipse.emf.ecore.util,org.eclipse.emf.ecore.xmi.impl"/>
       <attribute name="bundle-symbolic-name" value="de.avatar.query.status.model"/>
-      <attribute name="bundle-version" value="1.0.0.202503261019-SNAPSHOT" type="Version"/>
+      <attribute name="bundle-version" value="1.0.0.202505160621-SNAPSHOT" type="Version"/>
       <attribute name="osgi.wiring.package" value="de.avatar.status.util"/>
       <attribute name="version" value="1.0.0" type="Version"/>
       <attribute name="bnd.hashes" value="-273375379,-1176666134,-905156480,-2033808922,-1923478059" type="List&lt;Long&gt;"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
-      <attribute name="bundle-version" value="1.0.0.202503261019-SNAPSHOT" type="Version"/>
+      <attribute name="bundle-version" value="1.0.0.202505160621-SNAPSHOT" type="Version"/>
       <attribute name="osgi.wiring.bundle" value="de.avatar.query.status.model"/>
     </capability>
     <capability namespace="osgi.wiring.host">
-      <attribute name="bundle-version" value="1.0.0.202503261019-SNAPSHOT" type="Version"/>
+      <attribute name="bundle-version" value="1.0.0.202505160621-SNAPSHOT" type="Version"/>
       <attribute name="osgi.wiring.host" value="de.avatar.query.status.model"/>
     </capability>
     <capability namespace="org.eclipse.emf.ecore.generated_package">
@@ -50,10 +84,10 @@
       <attribute name="genModelSourceLocations" value="model/query-status.genmodel,de.avatar.query.status.model/model/query-status.genmodel" type="List&lt;String&gt;"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="size" value="108923" type="Long"/>
+      <attribute name="size" value="233458" type="Long"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
       <attribute name="url" value="de.avatar.query.status.model/de.avatar.query.status.model-1.0.0.jar"/>
-      <attribute name="osgi.content" value="359D47CF38F83B2F6ECC54BE7B9D620C89FB1DCB35CE922A7C0481F83B5D25D3"/>
+      <attribute name="osgi.content" value="EFF6480A7E529AF2D96CF815B6212A57914855A2B8C528F53EADA001AF8A0A4A"/>
     </capability>
     <capability namespace="osgi.service">
       <directive name="uses" value="org.eclipse.emf.ecore,de.avatar.status"/>
@@ -809,6 +843,44 @@
     <requirement namespace="osgi.wiring.package">
       <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.condition)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
       <attribute name="osgi.wiring.package" value="org.osgi.service.condition"/>
+    </requirement>
+    <requirement namespace="osgi.ee">
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=17))"/>
+    </requirement>
+    <requirement namespace="osgi.extender">
+      <directive name="filter" value="(&amp;(osgi.extender=osgi.component)(version&gt;=1.4.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="license" value="Eclipse Public License 2.0"/>
+      <attribute name="copyright" value="Data In Motion Consulting GmbH - All rights reserved"/>
+      <attribute name="osgi.identity" value="de.avatar.connector.cleanup.impl"/>
+      <attribute name="documentation" value="https://github.com/geckoprojects-org/org.gecko.playground"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" value="1.0.0.202505141309-SNAPSHOT" type="Version"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="bundle-version" value="1.0.0.202505141309-SNAPSHOT" type="Version"/>
+      <attribute name="osgi.wiring.bundle" value="de.avatar.connector.cleanup.impl"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="bundle-version" value="1.0.0.202505141309-SNAPSHOT" type="Version"/>
+      <attribute name="osgi.wiring.host" value="de.avatar.connector.cleanup.impl"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="15824" type="Long"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="url" value="de.avatar.connector.cleanup.impl/de.avatar.connector.cleanup.impl-1.0.0.jar"/>
+      <attribute name="osgi.content" value="4F03262ECB7C576192095DFBA4DE4F10BD036A74B630A458F4C4BDC03C3172C9"/>
+    </capability>
+    <capability namespace="osgi.service">
+      <directive name="uses" value="de.avatar.connector.cleanup.api.api"/>
+      <attribute name="objectClass" value="de.avatar.connector.cleanup.api.api.AvatarDataCleanup" type="List&lt;String&gt;"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=de.avatar.connector.cleanup.api.api)(version&gt;=1.0.0)(!(version&gt;=1.1.0)))"/>
+      <attribute name="osgi.wiring.package" value="de.avatar.connector.cleanup.api.api"/>
     </requirement>
     <requirement namespace="osgi.ee">
       <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=17))"/>
