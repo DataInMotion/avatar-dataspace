@@ -74,7 +74,7 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 	}
 
 
-	
+
 	/* 
 	 * (non-Javadoc)
 	 * @see org.avatar.provider.backend.api.DataSpaceService#createAssetInDataSpace(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
@@ -152,11 +152,7 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 		try {
 			requestRes.load(options);
 			if(!requestRes.getContents().isEmpty()) {
-				if(requestRes.getContents().get(0) instanceof EObject response) {
-					return response;
-				} else {
-					LOGGER.severe(String.format("Response object is not of expected type EObject"));
-				}
+				return requestRes.getContents().get(0);
 			} else {
 				LOGGER.severe(String.format("Response does NOT contain any object"));
 			}
