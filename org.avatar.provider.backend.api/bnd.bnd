@@ -4,4 +4,5 @@
 	de.avatar.query.model,\
 	de.avatar.connector.model,\
 	de.avatar.query.status.model,\
-	org.avatar.dataspace.model;version=latest
+	org.avatar.dataspace.model;version=latest,\
+	assertj-core
