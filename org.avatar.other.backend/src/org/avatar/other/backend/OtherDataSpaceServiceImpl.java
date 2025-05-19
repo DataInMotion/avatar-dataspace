@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  */
 @Component(name = "OtherDataSpaceService", configurationPid = "DataSpaceService", configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class OtherDataSpaceServiceImpl implements DataSpaceService {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(OtherDataSpaceServiceImpl.class.getName());
 
 	private String policyId;
@@ -150,11 +150,7 @@ public class OtherDataSpaceServiceImpl implements DataSpaceService {
 		try {
 			requestRes.load(options);
 			if(!requestRes.getContents().isEmpty()) {
-				if(requestRes.getContents().get(0) instanceof EObject response) {
-					return response;
-				} else {
-					LOGGER.severe(String.format("Response object is not of expected type EObject"));
-				}
+				return requestRes.getContents().get(0);
 			} else {
 				LOGGER.severe(String.format("Response does NOT contain any object"));
 			}
