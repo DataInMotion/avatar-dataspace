@@ -56,6 +56,4 @@ public class HimsaBackendServiceImpl implements ProviderBackendService{
 		connMetadata.setId(UUID.randomUUID().toString());
 		response.getMetadata().add(connMetadata);
 	}
-	
-
 }

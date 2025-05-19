@@ -13,10 +13,8 @@
  */
 package org.avatar.provider.backend.api;
 
-import java.nio.file.Path;
 import java.util.UUID;
 
-import org.assertj.core.util.Files;
 import org.avatar.ds.model.dataspace.Asset;
 import org.avatar.ds.model.dataspace.AssetPolicy;
 import org.avatar.ds.model.dataspace.Context;
@@ -46,23 +44,6 @@ public class DataSpaceHelper {
 		asset.setDataAddress(dataAddress);
 		asset.getProperties().put("name", name);
 		asset.getProperties().put("contenttype", type);
-		return asset;		
-	}
-	
-	public static Asset createQueryResultAsset(String requestId, Path dataFilePath, String name) {
-		Asset asset = DataspaceFactory.eINSTANCE.createAsset();
-		asset.setId(requestId);
-		Context ctxt = DataspaceFactory.eINSTANCE.createContext();
-		ctxt.setVocab("https://w3id.org/edc/v0.0.1/ns/");
-		asset.setContext(ctxt);
-		DataAddress dataAddress = DataspaceFactory.eINSTANCE.createDataAddress();
-		dataAddress.setBaseUrl(dataFilePath.toString());
-		String extension = Files.getFileNameExtension(dataFilePath.getFileName().toString()).orElse("xml");
-		dataAddress.setType(extension);
-		dataAddress.setName(name);
-		asset.setDataAddress(dataAddress);
-		asset.getProperties().put("name", name);
-		asset.getProperties().put("contenttype", extension);
 		return asset;		
 	}
 	

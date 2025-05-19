@@ -13,8 +13,6 @@
  */
 package org.avatar.provider.backend.api;
 
-import java.nio.file.Path;
-
 import de.avatar.model.connector.EndpointResponse;
 
 /**
@@ -24,6 +22,6 @@ import de.avatar.model.connector.EndpointResponse;
  */
 public interface DataStorageService {
 	
-	Path saveEndpointResponse(EndpointResponse response);
+	String saveEndpointResponse(EndpointResponse response);
 
 }

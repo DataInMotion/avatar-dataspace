@@ -5,7 +5,8 @@
 # Avoid To have the default Jetty run at port 8080	
 -runproperties: \
 	org.osgi.service.http.port=-1,\
-	felix.cm.config.plugins=org.apache.felix.configadmin.plugin.interpolation
+	felix.cm.config.plugins=org.apache.felix.configadmin.plugin.interpolation,\
+	data=/opt/avatar/data/
 
 -runrequires.system: \
 	bnd.identity;id='org.apache.felix.configadmin.plugin.interpolation'

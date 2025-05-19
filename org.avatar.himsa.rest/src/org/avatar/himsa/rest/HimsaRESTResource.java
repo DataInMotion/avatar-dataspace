@@ -13,6 +13,10 @@
  */
 package org.avatar.himsa.rest;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import org.avatar.provider.backend.api.ProviderBackendService;
 import org.gecko.emf.json.constants.EMFJs;
 import org.gecko.emf.rest.annotations.EMFResourceOptions;
@@ -34,6 +38,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 /**
  * 
@@ -66,15 +71,7 @@ public class HimsaRESTResource {
 		return "Hello HimsaProviderResource!";
 	}
 
-	
-//	@POST
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Path("/dryrun/{requestId}")
-//	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
-//	public Response dryrun(@PathParam("requestId") String requestId, Query query) {
-//		return Response.ok(backendService.executeDryRun(requestId, query)).build();
-//	}
+
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -106,6 +103,23 @@ public class HimsaRESTResource {
 		}		
 	}
 	
-	
-
+	@GET
+	@Path("/downloads/{fileName}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
+	public Response download(@PathParam("fileName") String fileName) {
+		
+		File resultFile = new File(System.getProperty("data").concat(fileName));
+		if(resultFile.exists()) {
+			try(InputStream is = new FileInputStream(resultFile)) {
+				return Response.ok(is.readAllBytes()).
+						header("Content-Disposition", "attachment; filename=".concat(fileName)).
+						build();
+			} catch(Exception e) {
+				return Response.status(Status.INTERNAL_SERVER_ERROR.getStatusCode(), e.getMessage()).build();
+			}
+		} else {
+			return Response.noContent().build();
+		}
+	}
 }

@@ -13,7 +13,6 @@
  */
 package org.avatar.himsa.patient.service;
 
-import java.nio.file.Path;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -179,22 +178,22 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			} 
 			LOGGER.info(String.format("Start saving data..."));
 			try {
-				Path dataFilePath = null;
+				String dataFileUrl = null;
 				String assetType = "json";
 				switch(contentType) {
 				case "json", "application/json": default:
-					dataFilePath = jsonDataStorage.saveEndpointResponse(response);					
+					dataFileUrl = jsonDataStorage.saveEndpointResponse(response);					
 					break;
 				case "xml", "application/xml", "text/xml":
-					dataFilePath = xmlDataStorage.saveEndpointResponse(response);
+					dataFileUrl = xmlDataStorage.saveEndpointResponse(response);
 					assetType = "xml";
 					break;			
 				}
 //				Unset the data now because we do not want to send it back
 				response.eUnset(AConnectorPackage.Literals.ENDPOINT_RESPONSE__RESULT);
-				if(dataFilePath != null) {
+				if(dataFileUrl != null) {
 					LOGGER.info(String.format("Start creating asset..."));
-					DataSpaceResponse dsResponse = dataSpaceService.createAssetInDataSpace(requestId, dataFilePath.toString(), assetType, "Asset for Patient Query Result");
+					DataSpaceResponse dsResponse = dataSpaceService.createAssetInDataSpace(requestId, dataFileUrl, assetType, "Asset for Patient Query Result");
 					if(dsResponse == null) {
 						response = createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while creating a new Asset in the DataSpace"));
 					}

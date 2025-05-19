@@ -41,11 +41,13 @@
   	"DataStorageService~json": {
   		"data.format": "json", 
   		"data.storage.folder": "data",
-  		"rsFactory.target": "(emf.fileExtension=json)"
+  		"rsFactory.target": "(emf.fileExtension=json)",
+  		"base.url": "http://avatar-himsa:8088/himsa/rest/downloads/"
   	},
   	"DataStorageService~xml": {
   		"data.format": "xml", 
   		"data.storage.folder": "data",
-  		"rsFactory.target": "(emf.fileExtension=xml)"
+  		"rsFactory.target": "(emf.fileExtension=xml)",
+  		"base.url": "http://avatar-himsa:8088/himsa/rest/downloads/"
   	}
 }

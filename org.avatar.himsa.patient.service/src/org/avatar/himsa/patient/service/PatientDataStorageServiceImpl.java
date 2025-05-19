@@ -16,7 +16,6 @@ package org.avatar.himsa.patient.service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -57,13 +56,16 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 	private ObjectMapper mapper = new ObjectMapper();
 	private String dataFormat;
 	private String dataFolder;
+	private String baseUrl;
 	
 	@Activate()
 	public void activate(Map<String, Object> properties) {
 		dataFormat = (String) properties.getOrDefault("data.format", null);
 		Objects.requireNonNull(dataFormat, "Data Format for DataStorageService should be specified through configuration property data.format");
 		dataFolder = (String) properties.getOrDefault("data.storage.folder", null);
-		Objects.requireNonNull(dataFolder, "Data Format for DataStorageService should be specified through configuration property data.storage.folder");
+		Objects.requireNonNull(dataFolder, "Data Storage folder for DataStorageService should be specified through configuration property data.storage.folder");
+		baseUrl = (String) properties.getOrDefault("base.url", null);
+		Objects.requireNonNull(dataFolder, "Base url for DataStorageService should be specified through configuration property base.url");
 	}
 
 	/* 
@@ -71,7 +73,7 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 	 * @see org.avatar.provider.backend.api.DataStorageService#saveEndpointResponse(de.avatar.model.connector.EndpointResponse)
 	 */
 	@Override
-	public Path saveEndpointResponse(EndpointResponse response) {
+	public String saveEndpointResponse(EndpointResponse response) {
 		String requestId = response.getSourceId();
 		String responseId = response.getId(); 
 		Objects.requireNonNull(requestId, "Request ID cannot be null!");
@@ -119,7 +121,7 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 			}
 		}
 		if(Files.exists(responseFile.toPath())) {
-			return responseFile.toPath();
+			return baseUrl.concat(responseFile.getName());
 		} else {
 			return null;
 		}
