@@ -104,9 +104,7 @@
 	org.gecko.emf.osgi.api;version='[6.1.1,6.1.2)',\
 	org.gecko.emf.osgi.component.minimal;version='[6.1.1,6.1.2)',\
 	org.apache.felix.configadmin.plugin.interpolation;version='[1.2.8,1.2.9)',\
-	assertj-core;version='[3.26.3,3.26.4)',\
 	de.avatar.query.status.model;version='[1.0.0,1.0.1)',\
-	net.bytebuddy.byte-buddy;version='[1.14.18,1.14.19)',\
 	org.avatar.dataspace.model;version=snapshot,\
 	org.avatar.provider.backend.api;version=snapshot,\
 	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
