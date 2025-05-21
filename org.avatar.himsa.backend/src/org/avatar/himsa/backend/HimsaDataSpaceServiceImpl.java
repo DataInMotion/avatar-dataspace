@@ -71,14 +71,14 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 			if(assetPolicyInDataSpace == null) {
 				LOGGER.severe(String.format("Error sreating policy %s in data space", policyId));
 			}
-			DataSpaceResponse contractDefinitionInDataSpace = createContractDefinitionInDataSpace(policyId);
-			if(contractDefinitionInDataSpace == null) {
-				LOGGER.severe(String.format("Error sreating contract in data space"));
-			}
-			createInitialAssets();
 		} else {
 			LOGGER.info(String.format("Policy %s alrady exists", policyId));
 		}
+		DataSpaceResponse contractDefinitionInDataSpace = createContractDefinitionInDataSpace(policyId);
+		if(contractDefinitionInDataSpace == null) {
+			LOGGER.warning(String.format("Error sreating contract in data space"));
+		}
+		createInitialAssets();
 	}
 
 
@@ -140,11 +140,11 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 	private void createInitialAssets() {
 		DataSpaceResponse response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/himsa/rest/patient/query/{requestId}", "json", "Patient hearing data in json format");
 		if(response == null) {
-			throw new IllegalArgumentException("Error while creating initial asset in dataspace");
+			LOGGER.severe(String.format("Error while creating initial json asset in data space"));
 		}
 		response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/himsa/rest/patient/query/{requestId}", "xml", "Patient hearing data in xml format");
 		if(response == null) {
-			throw new IllegalArgumentException("Error while creating initial asset in dataspace");
+			LOGGER.severe(String.format("Error while creating initial xml asset in data space"));
 		}
 	}
 
