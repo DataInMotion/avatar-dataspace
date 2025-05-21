@@ -16,6 +16,7 @@ package org.avatar.himsa.patient.service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,17 +48,17 @@ import de.avatar.model.connector.ResponseResult;
  */
 @Component(name = "PatientDataStorageService", configurationPid = "DataStorageService", configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class PatientDataStorageServiceImpl implements DataStorageService {
-	
+
 	private final static Logger LOGGER = Logger.getLogger(PatientDataStorageServiceImpl.class.getName());
-	
+
 	@Reference
 	private ComponentServiceObjects<ResourceSet> rsFactory;
-	
+
 	private ObjectMapper mapper = new ObjectMapper();
 	private String dataFormat;
 	private String dataFolder;
 	private String baseUrl;
-	
+
 	@Activate()
 	public void activate(Map<String, Object> properties) {
 		dataFormat = (String) properties.getOrDefault("data.format", null);
@@ -78,7 +79,7 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 		String responseId = response.getId(); 
 		Objects.requireNonNull(requestId, "Request ID cannot be null!");
 		Objects.requireNonNull(responseId, "Source ID cannot be null!");
-		
+
 		String filePath = System.getProperty(dataFolder).
 				concat(requestId).
 				concat("_").
@@ -110,7 +111,7 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 		} finally {
 			rsFactory.ungetService(resourceSet);
 		}
-		
+
 		if(result instanceof JavaResult javaRes) {
 			try {
 				mapper.writeValue(responseFile, javaRes.getValue());				
@@ -126,5 +127,19 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 			return null;
 		}
 	}
+
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.provider.backend.api.DataStorageService#existEndpointResponse(java.lang.String)
+	 */
+	@Override
+	public boolean existEndpointResponse(String requestId) throws IOException {
+		Path filePath = Path.of(System.getProperty(dataFolder));
+		return Files.list(filePath).filter(p -> {
+			System.out.println(p.getFileName() + " " + Files.isRegularFile(p) + " " + p.getFileName().toString().startsWith(requestId.concat("_")) + " " + p.getFileName().toString().endsWith(dataFormat));
+			return Files.isRegularFile(p) && p.getFileName().toString().startsWith(requestId.concat("_")) && p.getFileName().toString().endsWith(dataFormat);
+		}).findFirst().isPresent();
+	}
+
 
 }

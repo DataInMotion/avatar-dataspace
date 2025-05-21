@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -52,6 +53,7 @@ import de.avatar.model.connector.AConnectorPackage;
 import de.avatar.model.connector.EcoreResult;
 import de.avatar.model.connector.EndpointResponse;
 import de.avatar.model.connector.ErrorResult;
+import de.avatar.model.connector.PendingResult;
 import de.avatar.model.connector.ResponseCode;
 import de.avatar.query.Operation;
 import de.avatar.query.QSubject;
@@ -67,7 +69,7 @@ import de.avatar.status.QueryRequest;
 public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecutorService{
 
 	private static final Logger LOGGER = Logger.getLogger(PatientQueryRequestExecutorServiceImpl.class.getName());
-	
+
 	private PatientService patientService;
 	private ComponentServiceObjects<EMFRepository> repoSO;
 	private PatientAnonymizationService anonymizationService;
@@ -102,7 +104,7 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 	@Override
 	public EndpointResponse executeQueryRequest(QueryRequest queryRequest) {
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-		QueryTask task = new QueryTask(queryRequest);
+		QueryTask task = new QueryTask(queryRequest, "request");
 		try {
 			Future<EndpointResponse> submit = executor.submit(task);
 			EndpointResponse response = submit.get();
@@ -113,20 +115,29 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			executor.shutdown();
 		}		
 	}
-	
+
 	class QueryTask implements Callable<EndpointResponse> {
-		
+
 		private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss'Z'")
 				.withZone(ZoneId.of("Europe/Berlin"));
-		
+
 		private Query query;
 		private String requestId;
 		private String contentType;
+		private String requestType;
 
-		public QueryTask(QueryRequest queryRequest) {
+		public QueryTask(QueryRequest queryRequest, String requestType) {
+			this.requestType = requestType;
 			this.requestId = queryRequest.getRequestId();
 			this.query = queryRequest.getQuery();
-			this.contentType = queryRequest.getContentType();
+			switch(queryRequest.getContentType()) {
+			case "json", "application/json": default:
+				contentType = "json";			
+				break;
+			case "xml", "application/xml", "text/xml":
+				contentType = "xml";
+				break;			
+			}
 		}
 
 		/* 
@@ -136,8 +147,13 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 		@SuppressWarnings("unchecked")
 		@Override
 		public EndpointResponse call() throws Exception {
+
+			boolean exists = "json".equals(contentType) ? jsonDataStorage.existEndpointResponse(requestId) : xmlDataStorage.existEndpointResponse(requestId);
+			if(exists) {
+				return createErrorResponse(requestId, new IllegalArgumentException(String.format("A query with id %s for format %s has already been sent and data are already available", requestId, contentType)));
+			}
 			EndpointResponse response;
-			
+
 			try {
 				IQuery iQuery = QueryHelper.buildQuery(query, repoSO);
 				EStructuralFeature[][] projections =  new EStructuralFeature[query.getSubject().size()][];
@@ -147,20 +163,29 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 					i++;
 				}
 				PatientResponse patientResponse = patientService.getPatientsByQuery(iQuery, query.getLimit(), query.getSkip(), query.getSortBy(), projections);
-				applyPostOperations(patientResponse.getPatients(), query.getSubject());
-				
-				LOGGER.info(String.format("Start data quality..."));		
-				patientResponse.getMetadata().add(dataQualityService.getDataQualityMetadataForPatients(patientResponse.getPatients(), projections));
-				
-				LOGGER.info(String.format("Start anonymizing data..."));
-				List<Patient> anonymizedPatients = (List<Patient>) anonymizationService.anonymizeEObjects(patientResponse.getPatients());
-				patientResponse.getMetadata().add(anonymizationService.getAnonymizationMetadataForFeatures(projections));
-				
-				PatientResponse anonymResponse = new PatientResponse(anonymizedPatients, patientResponse.getMetadata());
-				
+
 				response = AConnectorFactory.eINSTANCE.createEndpointResponse();
 				response.setSourceId(requestId);
 				addResponseMetadata(response, requestId);
+				response.getMetadata().addAll(patientResponse.getMetadata());
+				if("dryrun".equals(requestType)) {
+					response.setCode(ResponseCode.DRYRUN_OK);
+					PendingResult result = AConnectorFactory.eINSTANCE.createPendingResult();
+					result.setEstRuntime(77);
+					response.setResult(result);
+					return response;
+				}
+				applyPostOperations(patientResponse.getPatients(), query.getSubject());
+
+				LOGGER.info(String.format("Start data quality..."));		
+				patientResponse.getMetadata().add(dataQualityService.getDataQualityMetadataForPatients(patientResponse.getPatients(), projections));
+
+				LOGGER.info(String.format("Start anonymizing data..."));
+				List<Patient> anonymizedPatients = (List<Patient>) anonymizationService.anonymizeEObjects(patientResponse.getPatients());
+				patientResponse.getMetadata().add(anonymizationService.getAnonymizationMetadataForFeatures(projections));
+
+				PatientResponse anonymResponse = new PatientResponse(anonymizedPatients, Collections.emptyList());				
+
 				if(anonymResponse.getPatients().isEmpty()) {
 					response.setCode(ResponseCode.NO_CONTENT);
 				} else {
@@ -171,39 +196,37 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 					result.setValue(emfResponse);
 					response.setResult(result);		
 					response.getMetadata().addAll(anonymResponse.getMetadata());					
-				}			
-				
-			} catch(Exception e) {
-				response = createErrorResponse(requestId, e);
-			} 
-			LOGGER.info(String.format("Start saving data..."));
-			try {
-				String dataFileUrl = null;
-				String assetType = "json";
-				switch(contentType) {
-				case "json", "application/json": default:
-					dataFileUrl = jsonDataStorage.saveEndpointResponse(response);					
-					break;
-				case "xml", "application/xml", "text/xml":
-					dataFileUrl = xmlDataStorage.saveEndpointResponse(response);
-					assetType = "xml";
+				}	
+				LOGGER.info(String.format("Start saving data..."));
+				try {
+					String dataFileUrl = null;
+					switch(contentType) {
+					case "json":
+						dataFileUrl = jsonDataStorage.saveEndpointResponse(response);					
+						break;
+					case "xml":
+						dataFileUrl = xmlDataStorage.saveEndpointResponse(response);
 					break;			
-				}
-//				Unset the data now because we do not want to send it back
-				response.eUnset(AConnectorPackage.Literals.ENDPOINT_RESPONSE__RESULT);
-				if(dataFileUrl != null) {
-					LOGGER.info(String.format("Start creating asset..."));
-					DataSpaceResponse dsResponse = dataSpaceService.createAssetInDataSpace(requestId, dataFileUrl, assetType, "Asset for Patient Query Result");
-					if(dsResponse == null) {
-						response = createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while creating a new Asset in the DataSpace"));
 					}
-				}				
+					//					Unset the data now because we do not want to send it back
+					response.eUnset(AConnectorPackage.Literals.ENDPOINT_RESPONSE__RESULT);
+					if(dataFileUrl != null) {
+						LOGGER.info(String.format("Start creating asset..."));
+						DataSpaceResponse dsResponse = dataSpaceService.createAssetInDataSpace(requestId, dataFileUrl, contentType, "Asset for Patient Query Result");
+						if(dsResponse == null) {
+							return createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while creating a new Asset in the DataSpace"));
+						}
+					}				
+				} catch(Exception e) {
+					return createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while saving the data", e));
+				}
+				return response;
+
 			} catch(Exception e) {
-				response = createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while saving the data", e));
-			}
-			return response;
+				return createErrorResponse(requestId, e);
+			} 			
 		}
-		
+
 		private EndpointResponse createErrorResponse(String requestId, Throwable errCause) {
 			EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
 			addResponseMetadata(response, requestId);
@@ -215,7 +238,7 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			response.setResult(errRes);
 			return response;
 		}
-		
+
 		private void addResponseMetadata(EndpointResponse response, String requestId) {
 			ResponseMetadata metadata = MetadataFactory.eINSTANCE.createResponseMetadata();
 			metadata.setId(UUID.randomUUID().toString());
@@ -226,7 +249,7 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			metadata.setResponseTime(DATE_TIME_FORMATTER.format(Instant.ofEpochMilli(response.getTimestamp())));
 			response.getMetadata().add(metadata);
 		}
-		
+
 		private void applyPostOperations(List<Patient> patients, List<QSubject> subjects) {
 			for(Patient patient : patients) {
 				for(QSubject subj : subjects) {
@@ -247,5 +270,24 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			LOGGER.warning(String.format("Post Query Operation %s currently not supported. Ignoring it!", operation.eClass().getName()));
 			return featureValue;
 		}
+	}
+
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.himsa.patient.service.api.QueryRequestExecutorService#executeDryRunRequest(de.avatar.status.QueryRequest)
+	 */
+	@Override
+	public EndpointResponse executeDryRunRequest(QueryRequest queryRequest) {
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		QueryTask task = new QueryTask(queryRequest, "dryrun");
+		try {
+			Future<EndpointResponse> submit = executor.submit(task);
+			EndpointResponse response = submit.get();
+			return response;
+		} catch(Exception e) {
+			return task.createErrorResponse(queryRequest.getRequestId(), e);
+		} finally {
+			executor.shutdown();
+		}		
 	}
 }

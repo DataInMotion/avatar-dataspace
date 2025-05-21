@@ -45,9 +45,12 @@ public class OtherBackendServiceImpl implements ProviderBackendService{
 	 * @see org.avatar.provider.backend.api.ProviderBackendService#executeDryRun(de.avatar.status.QueryRequest)
 	 */
 	@Override
-	public void executeDryRun(QueryRequest queryRequest) {
-		// TODO Auto-generated method stub
-		
+	public EndpointResponse executeDryRun(QueryRequest queryRequest) {
+		EndpointResponse response = queryExecutorService.executeDryRunRequest(queryRequest);		
+		if(response != null) {
+			addConnectorMetadata(response);
+		}
+		return response;
 	}
 	
 	private void addConnectorMetadata(EndpointResponse response) {

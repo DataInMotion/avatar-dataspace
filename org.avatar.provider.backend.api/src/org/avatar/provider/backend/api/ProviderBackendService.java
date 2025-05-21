@@ -8,5 +8,5 @@ public interface ProviderBackendService {
 	
 	 EndpointResponse executeQuery(QueryRequest queryRequest);
 	 
-	 void executeDryRun(QueryRequest queryRequest);
+	 EndpointResponse executeDryRun(QueryRequest queryRequest);
 }

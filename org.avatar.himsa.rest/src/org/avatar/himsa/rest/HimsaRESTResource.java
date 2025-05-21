@@ -16,6 +16,7 @@ package org.avatar.himsa.rest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.avatar.provider.backend.api.ProviderBackendService;
 import org.gecko.emf.json.constants.EMFJs;
@@ -60,6 +61,8 @@ import jakarta.ws.rs.core.Response.Status;
 @Component(name = "HimsaProviderResource", service = HimsaRESTResource.class, enabled = true, scope = ServiceScope.PROTOTYPE)
 @Path("/")
 public class HimsaRESTResource {
+	
+	private static final Logger LOGGER = Logger.getLogger(HimsaRESTResource.class.getName());
 		
 	@Reference(target = "(provider.id=himsa)")
 	private ProviderBackendService backendService;
@@ -71,7 +74,20 @@ public class HimsaRESTResource {
 		return "Hello HimsaProviderResource!";
 	}
 
-
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/patient/dryrun")
+	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
+	public Response dryrun(QueryRequest queryRequest) {
+		LOGGER.info("GOT DryRun");
+		EndpointResponse response = backendService.executeDryRun(queryRequest);
+		if(ResponseCode.ERROR.equals(response.getCode())) {
+			return Response.status(Status.BAD_REQUEST).entity(response).build();
+		} else {
+			return Response.ok(response).build();
+		}		
+	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -79,10 +95,10 @@ public class HimsaRESTResource {
 	@Path("/patient/query")
 	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
 	public Response patientByQuery(QueryRequest queryRequest) {
-		System.out.println("GOT QUery");
+		LOGGER.info("GOT Query");
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
-			return Response.serverError().entity(response).build();
+			return Response.status(Status.BAD_REQUEST).entity(response).build();
 		} else {
 			return Response.ok(response).build();
 		}		
@@ -94,10 +110,10 @@ public class HimsaRESTResource {
 	@Path("/patient/query/{reqId}")
 	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
 	public Response patientByQuery2(@PathParam("reqId") String reqId,  QueryRequest queryRequest) {
-		System.out.println("GOT QUery");
+		LOGGER.info("GOT Query");
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
-			return Response.serverError().entity(response).build();
+			return Response.status(Status.BAD_REQUEST).entity(response).build();
 		} else {
 			return Response.ok(response).build();
 		}		

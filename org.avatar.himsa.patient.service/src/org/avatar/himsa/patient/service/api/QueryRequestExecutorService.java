@@ -24,5 +24,7 @@ import de.avatar.status.QueryRequest;
 public interface QueryRequestExecutorService {
 	
 	EndpointResponse executeQueryRequest(QueryRequest queryRequest);
+	
+	EndpointResponse executeDryRunRequest(QueryRequest queryRequest);
 
 }

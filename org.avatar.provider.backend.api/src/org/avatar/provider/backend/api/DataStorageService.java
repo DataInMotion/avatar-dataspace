@@ -13,6 +13,8 @@
  */
 package org.avatar.provider.backend.api;
 
+import java.io.IOException;
+
 import de.avatar.model.connector.EndpointResponse;
 
 /**
@@ -23,5 +25,7 @@ import de.avatar.model.connector.EndpointResponse;
 public interface DataStorageService {
 	
 	String saveEndpointResponse(EndpointResponse response);
+	
+	boolean existEndpointResponse(String requestId) throws IOException;
 
 }
