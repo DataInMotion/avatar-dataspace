@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  * @author ilenia
  * @since May 12, 2025
  */
-@Component(name = "HimsaDataSpaceService", configurationPid = "DataSpaceService", configurationPolicy = ConfigurationPolicy.REQUIRE)
+@Component(immediate = true, name = "HimsaDataSpaceService", configurationPid = "DataSpaceService", configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 
 	private static final Logger LOGGER = Logger.getLogger(HimsaDataSpaceServiceImpl.class.getName());
