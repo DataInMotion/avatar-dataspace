@@ -35,8 +35,7 @@ import audiogram502.Audiogram502Package;
 public class DummyDataHelper {
 	
 	public static EObject loadXMLResource(String filePath, ResourceSet resourceSet) {
-		String data = System.getProperty("data","/opt/avatar/data/");
-		Resource resource = resourceSet.createResource(URI.createFileURI(data+"Format502AudSample.xml"), "application/xml");
+		Resource resource = resourceSet.createResource(URI.createFileURI(filePath), "application/xml");
 		try {
 			Map<String, Object> options = new HashMap<>();
 			options.put(XMLResource.OPTION_ENCODING, "UTF-8");
@@ -52,12 +51,6 @@ public class DummyDataHelper {
 			if(resource.getContents() != null && !resource.getContents().isEmpty()) {
 				EObject eObj = resource.getContents().get(0);
 				return eObj;
-//				if(eObj instanceof DocumentRoot root) {
-//					himsaAudiometricStandard = root.getHIMSAAudiometricStandard();
-//					if(himsaAudiometricStandard != null) {
-//						System.out.println("Yeeeee!");
-//					}
-//				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
