@@ -71,6 +71,7 @@ public class DataspaceSwitch<T> extends Switch<T> {
 			case DataspacePackage.ASSET: {
 				Asset asset = (Asset)theEObject;
 				T result = caseAsset(asset);
+				if (result == null) result = caseDataSpaceResponse(asset);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -95,6 +96,7 @@ public class DataspaceSwitch<T> extends Switch<T> {
 			case DataspacePackage.ASSET_POLICY: {
 				AssetPolicy assetPolicy = (AssetPolicy)theEObject;
 				T result = caseAssetPolicy(assetPolicy);
+				if (result == null) result = caseDataSpaceResponse(assetPolicy);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -114,6 +116,7 @@ public class DataspaceSwitch<T> extends Switch<T> {
 			case DataspacePackage.CONTRACT_DEFINITION: {
 				ContractDefinition contractDefinition = (ContractDefinition)theEObject;
 				T result = caseContractDefinition(contractDefinition);
+				if (result == null) result = caseDataSpaceResponse(contractDefinition);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

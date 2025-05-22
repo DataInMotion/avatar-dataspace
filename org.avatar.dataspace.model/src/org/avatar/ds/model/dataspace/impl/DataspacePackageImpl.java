@@ -168,38 +168,8 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EAttribute getAsset_Id() {
-		return (EAttribute)assetEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getAsset_Type() {
-		return (EAttribute)assetEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getAsset_Context() {
-		return (EReference)assetEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EReference getAsset_DataAddress() {
-		return (EReference)assetEClass.getEStructuralFeatures().get(3);
+		return (EReference)assetEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -209,7 +179,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 */
 	@Override
 	public EReference getAsset_Properties() {
-		return (EReference)assetEClass.getEStructuralFeatures().get(4);
+		return (EReference)assetEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -328,48 +298,8 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EAttribute getAssetPolicy_Id() {
-		return (EAttribute)assetPolicyEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getAssetPolicy_Type() {
-		return (EAttribute)assetPolicyEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getAssetPolicy_Context() {
-		return (EReference)assetPolicyEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EReference getAssetPolicy_Policy() {
-		return (EReference)assetPolicyEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getAssetPolicy_CreatedAt() {
-		return (EAttribute)assetPolicyEClass.getEStructuralFeatures().get(4);
+		return (EReference)assetPolicyEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -488,7 +418,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EAttribute getContractDefinition_Id() {
+	public EAttribute getContractDefinition_AccessPolicyId() {
 		return (EAttribute)contractDefinitionEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -498,28 +428,8 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EReference getContractDefinition_Context() {
-		return (EReference)contractDefinitionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getContractDefinition_AccessPolicyId() {
-		return (EAttribute)contractDefinitionEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EAttribute getContractDefinition_ContractPolicyId() {
-		return (EAttribute)contractDefinitionEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)contractDefinitionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -529,7 +439,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 */
 	@Override
 	public EAttribute getContractDefinition_AssetsSelector() {
-		return (EAttribute)contractDefinitionEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)contractDefinitionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -578,7 +488,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EAttribute getDataSpaceResponse_CreatedAt() {
+	public EAttribute getDataSpaceResponse_ResponseType() {
 		return (EAttribute)dataSpaceResponseEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -588,8 +498,18 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EAttribute getDataSpaceResponse_Message() {
+	public EAttribute getDataSpaceResponse_CreatedAt() {
 		return (EAttribute)dataSpaceResponseEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getDataSpaceResponse_Message() {
+		return (EAttribute)dataSpaceResponseEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -622,9 +542,6 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 
 		// Create classes and their features
 		assetEClass = createEClass(ASSET);
-		createEAttribute(assetEClass, ASSET__ID);
-		createEAttribute(assetEClass, ASSET__TYPE);
-		createEReference(assetEClass, ASSET__CONTEXT);
 		createEReference(assetEClass, ASSET__DATA_ADDRESS);
 		createEReference(assetEClass, ASSET__PROPERTIES);
 
@@ -642,11 +559,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		createEAttribute(contextEClass, CONTEXT__VOCAB);
 
 		assetPolicyEClass = createEClass(ASSET_POLICY);
-		createEAttribute(assetPolicyEClass, ASSET_POLICY__ID);
-		createEAttribute(assetPolicyEClass, ASSET_POLICY__TYPE);
-		createEReference(assetPolicyEClass, ASSET_POLICY__CONTEXT);
 		createEReference(assetPolicyEClass, ASSET_POLICY__POLICY);
-		createEAttribute(assetPolicyEClass, ASSET_POLICY__CREATED_AT);
 
 		policyEClass = createEClass(POLICY);
 		createEAttribute(policyEClass, POLICY__ID);
@@ -661,8 +574,6 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		createEAttribute(policyContextEClass, POLICY_CONTEXT__EDC);
 
 		contractDefinitionEClass = createEClass(CONTRACT_DEFINITION);
-		createEAttribute(contractDefinitionEClass, CONTRACT_DEFINITION__ID);
-		createEReference(contractDefinitionEClass, CONTRACT_DEFINITION__CONTEXT);
 		createEAttribute(contractDefinitionEClass, CONTRACT_DEFINITION__ACCESS_POLICY_ID);
 		createEAttribute(contractDefinitionEClass, CONTRACT_DEFINITION__CONTRACT_POLICY_ID);
 		createEAttribute(contractDefinitionEClass, CONTRACT_DEFINITION__ASSETS_SELECTOR);
@@ -671,6 +582,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__ID);
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__TYPE);
 		createEReference(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__CONTEXT);
+		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__RESPONSE_TYPE);
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__CREATED_AT);
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__MESSAGE);
 	}
@@ -703,13 +615,13 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		assetEClass.getESuperTypes().add(this.getDataSpaceResponse());
+		assetPolicyEClass.getESuperTypes().add(this.getDataSpaceResponse());
 		policyContextEClass.getESuperTypes().add(this.getContext());
+		contractDefinitionEClass.getESuperTypes().add(this.getDataSpaceResponse());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(assetEClass, Asset.class, "Asset", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAsset_Id(), ecorePackage.getEString(), "id", null, 0, 1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAsset_Type(), ecorePackage.getEString(), "type", null, 0, 1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAsset_Context(), this.getContext(), null, "context", null, 0, 1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAsset_DataAddress(), this.getDataAddress(), null, "dataAddress", null, 0, 1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAsset_Properties(), this.getPropertyMap(), null, "properties", null, 0, -1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -727,11 +639,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		initEAttribute(getContext_Vocab(), ecorePackage.getEString(), "vocab", null, 0, 1, Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(assetPolicyEClass, AssetPolicy.class, "AssetPolicy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAssetPolicy_Id(), ecorePackage.getEString(), "id", null, 0, 1, AssetPolicy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAssetPolicy_Type(), ecorePackage.getEString(), "type", null, 0, 1, AssetPolicy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAssetPolicy_Context(), this.getPolicyContext(), null, "context", null, 0, 1, AssetPolicy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAssetPolicy_Policy(), this.getPolicy(), null, "policy", null, 0, 1, AssetPolicy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAssetPolicy_CreatedAt(), ecorePackage.getELong(), "createdAt", null, 0, 1, AssetPolicy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(policyEClass, Policy.class, "Policy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPolicy_Id(), ecorePackage.getEString(), "id", null, 0, 1, Policy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -746,8 +654,6 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		initEAttribute(getPolicyContext_Edc(), ecorePackage.getEString(), "edc", null, 0, 1, PolicyContext.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(contractDefinitionEClass, ContractDefinition.class, "ContractDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getContractDefinition_Id(), ecorePackage.getEString(), "id", null, 0, 1, ContractDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getContractDefinition_Context(), this.getContext(), null, "context", null, 0, 1, ContractDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getContractDefinition_AccessPolicyId(), ecorePackage.getEString(), "accessPolicyId", null, 0, 1, ContractDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getContractDefinition_ContractPolicyId(), ecorePackage.getEString(), "contractPolicyId", null, 0, 1, ContractDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getContractDefinition_AssetsSelector(), ecorePackage.getEString(), "assetsSelector", null, 0, -1, ContractDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -756,6 +662,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		initEAttribute(getDataSpaceResponse_Id(), ecorePackage.getEString(), "id", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataSpaceResponse_Type(), ecorePackage.getEString(), "type", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataSpaceResponse_Context(), this.getContext(), null, "context", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataSpaceResponse_ResponseType(), ecorePackage.getEString(), "responseType", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataSpaceResponse_CreatedAt(), ecorePackage.getELong(), "createdAt", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataSpaceResponse_Message(), ecorePackage.getEString(), "message", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -821,46 +728,10 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	protected void createJsonPropertyAnnotations() {
 		String source = "JsonProperty";
 		addAnnotation
-		  (getAsset_Id(),
-		   source,
-		   new String[] {
-			   "value", "@id"
-		   });
-		addAnnotation
-		  (getAsset_Type(),
-		   source,
-		   new String[] {
-			   "value", "@type"
-		   });
-		addAnnotation
-		  (getAsset_Context(),
-		   source,
-		   new String[] {
-			   "value", "@context"
-		   });
-		addAnnotation
 		  (getContext_Vocab(),
 		   source,
 		   new String[] {
 			   "value", "@vocab"
-		   });
-		addAnnotation
-		  (getAssetPolicy_Id(),
-		   source,
-		   new String[] {
-			   "value", "@id"
-		   });
-		addAnnotation
-		  (getAssetPolicy_Type(),
-		   source,
-		   new String[] {
-			   "value", "@type"
-		   });
-		addAnnotation
-		  (getAssetPolicy_Context(),
-		   source,
-		   new String[] {
-			   "value", "@context"
 		   });
 		addAnnotation
 		  (getPolicy_Id(),
@@ -876,18 +747,6 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		   });
 		addAnnotation
 		  (getPolicy_Context(),
-		   source,
-		   new String[] {
-			   "value", "@context"
-		   });
-		addAnnotation
-		  (getContractDefinition_Id(),
-		   source,
-		   new String[] {
-			   "value", "@id"
-		   });
-		addAnnotation
-		  (getContractDefinition_Context(),
 		   source,
 		   new String[] {
 			   "value", "@context"
@@ -909,6 +768,12 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		   source,
 		   new String[] {
 			   "value", "@context"
+		   });
+		addAnnotation
+		  (getDataSpaceResponse_ResponseType(),
+		   source,
+		   new String[] {
+			   "value", "type"
 		   });
 	}
 

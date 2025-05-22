@@ -5,7 +5,6 @@ package org.avatar.ds.model.dataspace.impl;
 import org.avatar.ds.model.dataspace.AssetPolicy;
 import org.avatar.ds.model.dataspace.DataspacePackage;
 import org.avatar.ds.model.dataspace.Policy;
-import org.avatar.ds.model.dataspace.PolicyContext;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -14,7 +13,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,66 +22,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetPolicyImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetPolicyImpl#getType <em>Type</em>}</li>
- *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetPolicyImpl#getContext <em>Context</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetPolicyImpl#getPolicy <em>Policy</em>}</li>
- *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetPolicyImpl#getCreatedAt <em>Created At</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements AssetPolicy {
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getContext() <em>Context</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getContext()
-	 * @generated
-	 * @ordered
-	 */
-	protected PolicyContext context;
-
+public class AssetPolicyImpl extends DataSpaceResponseImpl implements AssetPolicy {
 	/**
 	 * The cached value of the '{@link #getPolicy() <em>Policy</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -93,26 +37,6 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	 * @ordered
 	 */
 	protected Policy policy;
-
-	/**
-	 * The default value of the '{@link #getCreatedAt() <em>Created At</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCreatedAt()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final long CREATED_AT_EDEFAULT = 0L;
-
-	/**
-	 * The cached value of the '{@link #getCreatedAt() <em>Created At</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCreatedAt()
-	 * @generated
-	 * @ordered
-	 */
-	protected long createdAt = CREATED_AT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -131,97 +55,6 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	@Override
 	protected EClass eStaticClass() {
 		return DataspacePackage.Literals.ASSET_POLICY;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.ASSET_POLICY__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.ASSET_POLICY__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public PolicyContext getContext() {
-		return context;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetContext(PolicyContext newContext, NotificationChain msgs) {
-		PolicyContext oldContext = context;
-		context = newContext;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataspacePackage.ASSET_POLICY__CONTEXT, oldContext, newContext);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setContext(PolicyContext newContext) {
-		if (newContext != context) {
-			NotificationChain msgs = null;
-			if (context != null)
-				msgs = ((InternalEObject)context).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataspacePackage.ASSET_POLICY__CONTEXT, null, msgs);
-			if (newContext != null)
-				msgs = ((InternalEObject)newContext).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataspacePackage.ASSET_POLICY__CONTEXT, null, msgs);
-			msgs = basicSetContext(newContext, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.ASSET_POLICY__CONTEXT, newContext, newContext));
 	}
 
 	/**
@@ -275,33 +108,8 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	 * @generated
 	 */
 	@Override
-	public long getCreatedAt() {
-		return createdAt;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setCreatedAt(long newCreatedAt) {
-		long oldCreatedAt = createdAt;
-		createdAt = newCreatedAt;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.ASSET_POLICY__CREATED_AT, oldCreatedAt, createdAt));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case DataspacePackage.ASSET_POLICY__CONTEXT:
-				return basicSetContext(null, msgs);
 			case DataspacePackage.ASSET_POLICY__POLICY:
 				return basicSetPolicy(null, msgs);
 		}
@@ -316,16 +124,8 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case DataspacePackage.ASSET_POLICY__ID:
-				return getId();
-			case DataspacePackage.ASSET_POLICY__TYPE:
-				return getType();
-			case DataspacePackage.ASSET_POLICY__CONTEXT:
-				return getContext();
 			case DataspacePackage.ASSET_POLICY__POLICY:
 				return getPolicy();
-			case DataspacePackage.ASSET_POLICY__CREATED_AT:
-				return getCreatedAt();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -338,20 +138,8 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case DataspacePackage.ASSET_POLICY__ID:
-				setId((String)newValue);
-				return;
-			case DataspacePackage.ASSET_POLICY__TYPE:
-				setType((String)newValue);
-				return;
-			case DataspacePackage.ASSET_POLICY__CONTEXT:
-				setContext((PolicyContext)newValue);
-				return;
 			case DataspacePackage.ASSET_POLICY__POLICY:
 				setPolicy((Policy)newValue);
-				return;
-			case DataspacePackage.ASSET_POLICY__CREATED_AT:
-				setCreatedAt((Long)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -365,20 +153,8 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case DataspacePackage.ASSET_POLICY__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case DataspacePackage.ASSET_POLICY__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
-			case DataspacePackage.ASSET_POLICY__CONTEXT:
-				setContext((PolicyContext)null);
-				return;
 			case DataspacePackage.ASSET_POLICY__POLICY:
 				setPolicy((Policy)null);
-				return;
-			case DataspacePackage.ASSET_POLICY__CREATED_AT:
-				setCreatedAt(CREATED_AT_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -392,38 +168,10 @@ public class AssetPolicyImpl extends MinimalEObjectImpl.Container implements Ass
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case DataspacePackage.ASSET_POLICY__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case DataspacePackage.ASSET_POLICY__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-			case DataspacePackage.ASSET_POLICY__CONTEXT:
-				return context != null;
 			case DataspacePackage.ASSET_POLICY__POLICY:
 				return policy != null;
-			case DataspacePackage.ASSET_POLICY__CREATED_AT:
-				return createdAt != CREATED_AT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", createdAt: ");
-		result.append(createdAt);
-		result.append(')');
-		return result.toString();
 	}
 
 } //AssetPolicyImpl

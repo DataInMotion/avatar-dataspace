@@ -4,8 +4,6 @@ package org.avatar.ds.model.dataspace;
 
 import org.eclipse.emf.common.util.EMap;
 
-import org.eclipse.emf.ecore.EObject;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -17,9 +15,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.avatar.ds.model.dataspace.Asset#getId <em>Id</em>}</li>
- *   <li>{@link org.avatar.ds.model.dataspace.Asset#getType <em>Type</em>}</li>
- *   <li>{@link org.avatar.ds.model.dataspace.Asset#getContext <em>Context</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.Asset#getDataAddress <em>Data Address</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.Asset#getProperties <em>Properties</em>}</li>
  * </ul>
@@ -29,74 +24,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface Asset extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see org.avatar.ds.model.dataspace.DataspacePackage#getAsset_Id()
-	 * @model annotation="JsonProperty value='@id'"
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link org.avatar.ds.model.dataspace.Asset#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see #setType(String)
-	 * @see org.avatar.ds.model.dataspace.DataspacePackage#getAsset_Type()
-	 * @model annotation="JsonProperty value='@type'"
-	 * @generated
-	 */
-	String getType();
-
-	/**
-	 * Sets the value of the '{@link org.avatar.ds.model.dataspace.Asset#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see #getType()
-	 * @generated
-	 */
-	void setType(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Context</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Context</em>' containment reference.
-	 * @see #setContext(Context)
-	 * @see org.avatar.ds.model.dataspace.DataspacePackage#getAsset_Context()
-	 * @model containment="true"
-	 *        annotation="JsonProperty value='@context'"
-	 * @generated
-	 */
-	Context getContext();
-
-	/**
-	 * Sets the value of the '{@link org.avatar.ds.model.dataspace.Asset#getContext <em>Context</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Context</em>' containment reference.
-	 * @see #getContext()
-	 * @generated
-	 */
-	void setContext(Context value);
-
+public interface Asset extends DataSpaceResponse {
 	/**
 	 * Returns the value of the '<em><b>Data Address</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

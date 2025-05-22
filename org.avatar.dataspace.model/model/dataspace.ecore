@@ -10,23 +10,7 @@
     <details key="basePackage" value="org.avatar.ds.model"/>
     <details key="resource" value="XMI"/>
   </eAnnotations>
-  <eClassifiers xsi:type="ecore:EClass" name="Asset">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="JsonProperty">
-        <details key="value" value="@id"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="JsonProperty">
-        <details key="value" value="@type"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//Context"
-        containment="true">
-      <eAnnotations source="JsonProperty">
-        <details key="value" value="@context"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+  <eClassifiers xsi:type="ecore:EClass" name="Asset" eSuperTypes="#//DataSpaceResponse">
     <eStructuralFeatures xsi:type="ecore:EReference" name="dataAddress" eType="#//DataAddress"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
@@ -49,26 +33,9 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AssetPolicy">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="JsonProperty">
-        <details key="value" value="@id"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="JsonProperty">
-        <details key="value" value="@type"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//PolicyContext"
-        containment="true">
-      <eAnnotations source="JsonProperty">
-        <details key="value" value="@context"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+  <eClassifiers xsi:type="ecore:EClass" name="AssetPolicy" eSuperTypes="#//DataSpaceResponse">
     <eStructuralFeatures xsi:type="ecore:EReference" name="policy" eType="#//Policy"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Policy">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
@@ -97,18 +64,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="odrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="edc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ContractDefinition">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="JsonProperty">
-        <details key="value" value="@id"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//Context"
-        containment="true">
-      <eAnnotations source="JsonProperty">
-        <details key="value" value="@context"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+  <eClassifiers xsi:type="ecore:EClass" name="ContractDefinition" eSuperTypes="#//DataSpaceResponse">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="accessPolicyId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contractPolicyId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="assetsSelector" upperBound="-1"
@@ -133,6 +89,11 @@
         containment="true">
       <eAnnotations source="JsonProperty">
         <details key="value" value="@context"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="responseType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="JsonProperty">
+        <details key="value" value="type"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="createdAt" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>

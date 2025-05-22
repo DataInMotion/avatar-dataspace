@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getContext <em>Context</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getResponseType <em>Response Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getCreatedAt <em>Created At</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getMessage <em>Message</em>}</li>
  * </ul>
@@ -82,6 +83,26 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 	 * @ordered
 	 */
 	protected Context context;
+
+	/**
+	 * The default value of the '{@link #getResponseType() <em>Response Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResponseType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String RESPONSE_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getResponseType() <em>Response Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResponseType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String responseType = RESPONSE_TYPE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getCreatedAt() <em>Created At</em>}' attribute.
@@ -239,6 +260,29 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 	 * @generated
 	 */
 	@Override
+	public String getResponseType() {
+		return responseType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setResponseType(String newResponseType) {
+		String oldResponseType = responseType;
+		responseType = newResponseType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.DATA_SPACE_RESPONSE__RESPONSE_TYPE, oldResponseType, responseType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public long getCreatedAt() {
 		return createdAt;
 	}
@@ -307,6 +351,8 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return getType();
 			case DataspacePackage.DATA_SPACE_RESPONSE__CONTEXT:
 				return getContext();
+			case DataspacePackage.DATA_SPACE_RESPONSE__RESPONSE_TYPE:
+				return getResponseType();
 			case DataspacePackage.DATA_SPACE_RESPONSE__CREATED_AT:
 				return getCreatedAt();
 			case DataspacePackage.DATA_SPACE_RESPONSE__MESSAGE:
@@ -331,6 +377,9 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return;
 			case DataspacePackage.DATA_SPACE_RESPONSE__CONTEXT:
 				setContext((Context)newValue);
+				return;
+			case DataspacePackage.DATA_SPACE_RESPONSE__RESPONSE_TYPE:
+				setResponseType((String)newValue);
 				return;
 			case DataspacePackage.DATA_SPACE_RESPONSE__CREATED_AT:
 				setCreatedAt((Long)newValue);
@@ -359,6 +408,9 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 			case DataspacePackage.DATA_SPACE_RESPONSE__CONTEXT:
 				setContext((Context)null);
 				return;
+			case DataspacePackage.DATA_SPACE_RESPONSE__RESPONSE_TYPE:
+				setResponseType(RESPONSE_TYPE_EDEFAULT);
+				return;
 			case DataspacePackage.DATA_SPACE_RESPONSE__CREATED_AT:
 				setCreatedAt(CREATED_AT_EDEFAULT);
 				return;
@@ -383,6 +435,8 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case DataspacePackage.DATA_SPACE_RESPONSE__CONTEXT:
 				return context != null;
+			case DataspacePackage.DATA_SPACE_RESPONSE__RESPONSE_TYPE:
+				return RESPONSE_TYPE_EDEFAULT == null ? responseType != null : !RESPONSE_TYPE_EDEFAULT.equals(responseType);
 			case DataspacePackage.DATA_SPACE_RESPONSE__CREATED_AT:
 				return createdAt != CREATED_AT_EDEFAULT;
 			case DataspacePackage.DATA_SPACE_RESPONSE__MESSAGE:
@@ -405,6 +459,8 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 		result.append(id);
 		result.append(", type: ");
 		result.append(type);
+		result.append(", responseType: ");
+		result.append(responseType);
 		result.append(", createdAt: ");
 		result.append(createdAt);
 		result.append(", message: ");

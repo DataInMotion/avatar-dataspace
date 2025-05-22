@@ -132,10 +132,10 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 	 * @see org.avatar.provider.backend.api.DataSpaceService#getAssetPolicy(java.lang.String)
 	 */
 	@Override
-	public AssetPolicy getAssetPolicy(String policyId) {
+	public DataSpaceResponse getAssetPolicy(String policyId) {
 		if(policyId == null) return null;
 		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "policydefinitions/" + policyId), "application/json");
-		return (AssetPolicy) sendGETRequestToDataSpace(requestRes, DataspacePackage.Literals.ASSET_POLICY);
+		return (DataSpaceResponse) sendGETRequestToDataSpace(requestRes, DataspacePackage.Literals.DATA_SPACE_RESPONSE);
 	}
 	
 	/* 
@@ -143,17 +143,17 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 	 * @see org.avatar.provider.backend.api.DataSpaceService#getAsset(java.lang.String)
 	 */
 	@Override
-	public Asset getAsset(String assetId) {
+	public DataSpaceResponse getAsset(String assetId) {
 		if(assetId == null) return null;
 		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "assets/" + assetId), "application/json");
-		return (Asset) sendGETRequestToDataSpace(requestRes, DataspacePackage.Literals.ASSET);
+		return (DataSpaceResponse) sendGETRequestToDataSpace(requestRes, DataspacePackage.Literals.DATA_SPACE_RESPONSE);
 	}
 
 	private void createInitialAssets(String... assetIds) {
 		for(String assetId : assetIds) {
 			if(getAsset(assetId) == null) {
 				String assetType = assetId.endsWith("json") ? "json" : "xml";
-				createAssetInDataSpace(assetId, "http://dim_himsa:8088/himsa/rest/patient/query/{requestId}", assetType, String.format("HIMSA data in %s format", assetType));
+				createAssetInDataSpace(assetId, "http://himsa:8088/himsa/rest/patient/query/{requestId}", assetType, String.format("HIMSA data in %s format", assetType));
 			} else {
 				LOGGER.info(String.format("Asset %s alrady exists", assetId));
 			}
@@ -168,7 +168,7 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 		headers.put("Method", "GET");
 		options.put(EMFUriHandlerConstants.OPTION_HTTP_METHOD, "GET");	
 		options.put(EMFUriHandlerConstants.OPTION_HTTP_HEADERS, headers);
-		options.put(EMFJs.OPTION_ROOT_ELEMENT, bodyEClass);
+		options.put(EMFJs.OPTION_ROOT_ELEMENT, bodyEClass);		
 		try {
 			requestRes.load(options);
 			if(!requestRes.getContents().isEmpty()) {
@@ -178,8 +178,7 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 				requestRes.getErrors().forEach(d -> LOGGER.severe(String.format("Error Diagnostic: %s", d.getMessage())));
 			}
 		} catch(IOException e) {
-			LOGGER.severe(String.format("IOException while sending request to data space: %s", e));
-			e.printStackTrace();
+			LOGGER.warning(String.format("IOException while sending request to data space: %s", e));
 			requestRes.getErrors().forEach(d -> LOGGER.severe(String.format("Error Diagnostic: %s", d.getMessage())));
 		}
 		return null;

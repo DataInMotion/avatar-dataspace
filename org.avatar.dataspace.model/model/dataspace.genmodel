@@ -8,9 +8,6 @@
   <genPackages prefix="Dataspace" basePackage="org.avatar.ds.model" resource="XMI"
       disposableProviderFactory="true" ecorePackage="dataspace.ecore#/">
     <genClasses ecoreClass="dataspace.ecore#//Asset">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//Asset/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//Asset/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//Asset/context"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//Asset/dataAddress"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//Asset/properties"/>
     </genClasses>
@@ -28,11 +25,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//Context/vocab"/>
     </genClasses>
     <genClasses ecoreClass="dataspace.ecore#//AssetPolicy">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//AssetPolicy/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//AssetPolicy/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//AssetPolicy/context"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//AssetPolicy/policy"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//AssetPolicy/createdAt"/>
     </genClasses>
     <genClasses ecoreClass="dataspace.ecore#//Policy">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//Policy/id"/>
@@ -47,8 +40,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//PolicyContext/edc"/>
     </genClasses>
     <genClasses ecoreClass="dataspace.ecore#//ContractDefinition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//ContractDefinition/id"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//ContractDefinition/context"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//ContractDefinition/accessPolicyId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//ContractDefinition/contractPolicyId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//ContractDefinition/assetsSelector"/>
@@ -57,6 +48,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//DataSpaceResponse/context"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/responseType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/createdAt"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/message"/>
     </genClasses>

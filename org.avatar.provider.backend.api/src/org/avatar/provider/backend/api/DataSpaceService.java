@@ -13,8 +13,6 @@
  */
 package org.avatar.provider.backend.api;
 
-import org.avatar.ds.model.dataspace.Asset;
-import org.avatar.ds.model.dataspace.AssetPolicy;
 import org.avatar.ds.model.dataspace.DataSpaceResponse;
 
 /**
@@ -30,8 +28,8 @@ public interface DataSpaceService {
 	
 	DataSpaceResponse createContractDefinitionInDataSpace(String policyId);
 	
-	AssetPolicy getAssetPolicy(String policyId);
+	DataSpaceResponse getAssetPolicy(String policyId);
 	
-	Asset getAsset(String assetId);
+	DataSpaceResponse getAsset(String assetId);
 
 }

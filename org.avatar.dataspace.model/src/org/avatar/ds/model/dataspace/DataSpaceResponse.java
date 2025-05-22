@@ -18,6 +18,7 @@ import org.osgi.annotation.versioning.ProviderType;
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getId <em>Id</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getType <em>Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getContext <em>Context</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getResponseType <em>Response Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getCreatedAt <em>Created At</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getMessage <em>Message</em>}</li>
  * </ul>
@@ -94,6 +95,28 @@ public interface DataSpaceResponse extends EObject {
 	 * @generated
 	 */
 	void setContext(Context value);
+
+	/**
+	 * Returns the value of the '<em><b>Response Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Response Type</em>' attribute.
+	 * @see #setResponseType(String)
+	 * @see org.avatar.ds.model.dataspace.DataspacePackage#getDataSpaceResponse_ResponseType()
+	 * @model annotation="JsonProperty value='type'"
+	 * @generated
+	 */
+	String getResponseType();
+
+	/**
+	 * Sets the value of the '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getResponseType <em>Response Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Response Type</em>' attribute.
+	 * @see #getResponseType()
+	 * @generated
+	 */
+	void setResponseType(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Created At</b></em>' attribute.

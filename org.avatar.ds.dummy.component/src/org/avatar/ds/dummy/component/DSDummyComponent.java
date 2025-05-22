@@ -1,19 +1,18 @@
 package org.avatar.ds.dummy.component;
 
-import org.avatar.ds.model.dataspace.AssetPolicy;
 import org.avatar.ds.model.dataspace.DataSpaceResponse;
 import org.avatar.provider.backend.api.DataSpaceService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(immediate = true, name = "DSDummyComponent", service =  DSDummyComponent.class, property = {
-		"osgi.command.scope=ds", //
-		"osgi.command.function=addAsset", 
-		"osgi.command.function=addPolicy",
-		"osgi.command.function=addContract",
-		"osgi.command.function=getPolicy"
-})
+//@Component(immediate = true, name = "DSDummyComponent", service =  DSDummyComponent.class, property = {
+//		"osgi.command.scope=ds", //
+//		"osgi.command.function=addAsset", 
+//		"osgi.command.function=addPolicy",
+//		"osgi.command.function=addContract",
+//		"osgi.command.function=getPolicy"
+//})
 public class DSDummyComponent {
 
 	@Reference
@@ -36,7 +35,7 @@ public class DSDummyComponent {
 		return dsService.createContractDefinitionInDataSpace(policyId);
 	}
 	
-	public AssetPolicy getPolicy(String policyId) {
+	public DataSpaceResponse getPolicy(String policyId) {
 		return dsService.getAssetPolicy(policyId);
 	}
 

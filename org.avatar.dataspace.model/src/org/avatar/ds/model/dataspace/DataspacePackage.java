@@ -65,6 +65,88 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	DataspacePackage eINSTANCE = org.avatar.ds.model.dataspace.impl.DataspacePackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl <em>Data Space Response</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl
+	 * @see org.avatar.ds.model.dataspace.impl.DataspacePackageImpl#getDataSpaceResponse()
+	 * @generated
+	 */
+	int DATA_SPACE_RESPONSE = 8;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__TYPE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Context</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__CONTEXT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Response Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__RESPONSE_TYPE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Created At</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__CREATED_AT = 4;
+
+	/**
+	 * The feature id for the '<em><b>Message</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__MESSAGE = 5;
+
+	/**
+	 * The number of structural features of the '<em>Data Space Response</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE_FEATURE_COUNT = 6;
+
+	/**
+	 * The number of operations of the '<em>Data Space Response</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.avatar.ds.model.dataspace.impl.AssetImpl <em>Asset</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -81,7 +163,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET__ID = 0;
+	int ASSET__ID = DATA_SPACE_RESPONSE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -90,7 +172,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET__TYPE = 1;
+	int ASSET__TYPE = DATA_SPACE_RESPONSE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' containment reference.
@@ -99,7 +181,34 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET__CONTEXT = 2;
+	int ASSET__CONTEXT = DATA_SPACE_RESPONSE__CONTEXT;
+
+	/**
+	 * The feature id for the '<em><b>Response Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET__RESPONSE_TYPE = DATA_SPACE_RESPONSE__RESPONSE_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Created At</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET__CREATED_AT = DATA_SPACE_RESPONSE__CREATED_AT;
+
+	/**
+	 * The feature id for the '<em><b>Message</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET__MESSAGE = DATA_SPACE_RESPONSE__MESSAGE;
 
 	/**
 	 * The feature id for the '<em><b>Data Address</b></em>' containment reference.
@@ -108,7 +217,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET__DATA_ADDRESS = 3;
+	int ASSET__DATA_ADDRESS = DATA_SPACE_RESPONSE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' map.
@@ -117,7 +226,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET__PROPERTIES = 4;
+	int ASSET__PROPERTIES = DATA_SPACE_RESPONSE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Asset</em>' class.
@@ -126,7 +235,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_FEATURE_COUNT = 5;
+	int ASSET_FEATURE_COUNT = DATA_SPACE_RESPONSE_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Asset</em>' class.
@@ -135,7 +244,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_OPERATION_COUNT = 0;
+	int ASSET_OPERATION_COUNT = DATA_SPACE_RESPONSE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.avatar.ds.model.dataspace.impl.DataAddressImpl <em>Data Address</em>}' class.
@@ -301,7 +410,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY__ID = 0;
+	int ASSET_POLICY__ID = DATA_SPACE_RESPONSE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -310,7 +419,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY__TYPE = 1;
+	int ASSET_POLICY__TYPE = DATA_SPACE_RESPONSE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' containment reference.
@@ -319,16 +428,16 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY__CONTEXT = 2;
+	int ASSET_POLICY__CONTEXT = DATA_SPACE_RESPONSE__CONTEXT;
 
 	/**
-	 * The feature id for the '<em><b>Policy</b></em>' containment reference.
+	 * The feature id for the '<em><b>Response Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY__POLICY = 3;
+	int ASSET_POLICY__RESPONSE_TYPE = DATA_SPACE_RESPONSE__RESPONSE_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Created At</b></em>' attribute.
@@ -337,7 +446,25 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY__CREATED_AT = 4;
+	int ASSET_POLICY__CREATED_AT = DATA_SPACE_RESPONSE__CREATED_AT;
+
+	/**
+	 * The feature id for the '<em><b>Message</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET_POLICY__MESSAGE = DATA_SPACE_RESPONSE__MESSAGE;
+
+	/**
+	 * The feature id for the '<em><b>Policy</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET_POLICY__POLICY = DATA_SPACE_RESPONSE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Asset Policy</em>' class.
@@ -346,7 +473,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY_FEATURE_COUNT = 5;
+	int ASSET_POLICY_FEATURE_COUNT = DATA_SPACE_RESPONSE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Asset Policy</em>' class.
@@ -355,7 +482,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_POLICY_OPERATION_COUNT = 0;
+	int ASSET_POLICY_OPERATION_COUNT = DATA_SPACE_RESPONSE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.avatar.ds.model.dataspace.impl.PolicyImpl <em>Policy</em>}' class.
@@ -511,80 +638,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONTRACT_DEFINITION__ID = 0;
-
-	/**
-	 * The feature id for the '<em><b>Context</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_DEFINITION__CONTEXT = 1;
-
-	/**
-	 * The feature id for the '<em><b>Access Policy Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_DEFINITION__ACCESS_POLICY_ID = 2;
-
-	/**
-	 * The feature id for the '<em><b>Contract Policy Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_DEFINITION__CONTRACT_POLICY_ID = 3;
-
-	/**
-	 * The feature id for the '<em><b>Assets Selector</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_DEFINITION__ASSETS_SELECTOR = 4;
-
-	/**
-	 * The number of structural features of the '<em>Contract Definition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_DEFINITION_FEATURE_COUNT = 5;
-
-	/**
-	 * The number of operations of the '<em>Contract Definition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTRACT_DEFINITION_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl <em>Data Space Response</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl
-	 * @see org.avatar.ds.model.dataspace.impl.DataspacePackageImpl#getDataSpaceResponse()
-	 * @generated
-	 */
-	int DATA_SPACE_RESPONSE = 8;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DATA_SPACE_RESPONSE__ID = 0;
+	int CONTRACT_DEFINITION__ID = DATA_SPACE_RESPONSE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -593,7 +647,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE__TYPE = 1;
+	int CONTRACT_DEFINITION__TYPE = DATA_SPACE_RESPONSE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' containment reference.
@@ -602,7 +656,16 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE__CONTEXT = 2;
+	int CONTRACT_DEFINITION__CONTEXT = DATA_SPACE_RESPONSE__CONTEXT;
+
+	/**
+	 * The feature id for the '<em><b>Response Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_DEFINITION__RESPONSE_TYPE = DATA_SPACE_RESPONSE__RESPONSE_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Created At</b></em>' attribute.
@@ -611,7 +674,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE__CREATED_AT = 3;
+	int CONTRACT_DEFINITION__CREATED_AT = DATA_SPACE_RESPONSE__CREATED_AT;
 
 	/**
 	 * The feature id for the '<em><b>Message</b></em>' attribute.
@@ -620,25 +683,52 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE__MESSAGE = 4;
+	int CONTRACT_DEFINITION__MESSAGE = DATA_SPACE_RESPONSE__MESSAGE;
 
 	/**
-	 * The number of structural features of the '<em>Data Space Response</em>' class.
+	 * The feature id for the '<em><b>Access Policy Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE_FEATURE_COUNT = 5;
+	int CONTRACT_DEFINITION__ACCESS_POLICY_ID = DATA_SPACE_RESPONSE_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of operations of the '<em>Data Space Response</em>' class.
+	 * The feature id for the '<em><b>Contract Policy Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE_OPERATION_COUNT = 0;
+	int CONTRACT_DEFINITION__CONTRACT_POLICY_ID = DATA_SPACE_RESPONSE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Assets Selector</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_DEFINITION__ASSETS_SELECTOR = DATA_SPACE_RESPONSE_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Contract Definition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_DEFINITION_FEATURE_COUNT = DATA_SPACE_RESPONSE_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Contract Definition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_DEFINITION_OPERATION_COUNT = DATA_SPACE_RESPONSE_OPERATION_COUNT + 0;
 
 
 	/**
@@ -650,39 +740,6 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 */
 	EClass getAsset();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.Asset#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.avatar.ds.model.dataspace.Asset#getId()
-	 * @see #getAsset()
-	 * @generated
-	 */
-	EAttribute getAsset_Id();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.Asset#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.avatar.ds.model.dataspace.Asset#getType()
-	 * @see #getAsset()
-	 * @generated
-	 */
-	EAttribute getAsset_Type();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.avatar.ds.model.dataspace.Asset#getContext <em>Context</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Context</em>'.
-	 * @see org.avatar.ds.model.dataspace.Asset#getContext()
-	 * @see #getAsset()
-	 * @generated
-	 */
-	EReference getAsset_Context();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.avatar.ds.model.dataspace.Asset#getDataAddress <em>Data Address</em>}'.
@@ -826,39 +883,6 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	EClass getAssetPolicy();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.AssetPolicy#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.avatar.ds.model.dataspace.AssetPolicy#getId()
-	 * @see #getAssetPolicy()
-	 * @generated
-	 */
-	EAttribute getAssetPolicy_Id();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.AssetPolicy#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.avatar.ds.model.dataspace.AssetPolicy#getType()
-	 * @see #getAssetPolicy()
-	 * @generated
-	 */
-	EAttribute getAssetPolicy_Type();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.avatar.ds.model.dataspace.AssetPolicy#getContext <em>Context</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Context</em>'.
-	 * @see org.avatar.ds.model.dataspace.AssetPolicy#getContext()
-	 * @see #getAssetPolicy()
-	 * @generated
-	 */
-	EReference getAssetPolicy_Context();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.avatar.ds.model.dataspace.AssetPolicy#getPolicy <em>Policy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -868,17 +892,6 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 */
 	EReference getAssetPolicy_Policy();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.AssetPolicy#getCreatedAt <em>Created At</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Created At</em>'.
-	 * @see org.avatar.ds.model.dataspace.AssetPolicy#getCreatedAt()
-	 * @see #getAssetPolicy()
-	 * @generated
-	 */
-	EAttribute getAssetPolicy_CreatedAt();
 
 	/**
 	 * Returns the meta object for class '{@link org.avatar.ds.model.dataspace.Policy <em>Policy</em>}'.
@@ -999,28 +1012,6 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	EClass getContractDefinition();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.ContractDefinition#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.avatar.ds.model.dataspace.ContractDefinition#getId()
-	 * @see #getContractDefinition()
-	 * @generated
-	 */
-	EAttribute getContractDefinition_Id();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.avatar.ds.model.dataspace.ContractDefinition#getContext <em>Context</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Context</em>'.
-	 * @see org.avatar.ds.model.dataspace.ContractDefinition#getContext()
-	 * @see #getContractDefinition()
-	 * @generated
-	 */
-	EReference getContractDefinition_Context();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.ContractDefinition#getAccessPolicyId <em>Access Policy Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1097,6 +1088,17 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	EReference getDataSpaceResponse_Context();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getResponseType <em>Response Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Response Type</em>'.
+	 * @see org.avatar.ds.model.dataspace.DataSpaceResponse#getResponseType()
+	 * @see #getDataSpaceResponse()
+	 * @generated
+	 */
+	EAttribute getDataSpaceResponse_ResponseType();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getCreatedAt <em>Created At</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1150,30 +1152,6 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 		 * @generated
 		 */
 		EClass ASSET = eINSTANCE.getAsset();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ASSET__ID = eINSTANCE.getAsset_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ASSET__TYPE = eINSTANCE.getAsset_Type();
-
-		/**
-		 * The meta object literal for the '<em><b>Context</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ASSET__CONTEXT = eINSTANCE.getAsset_Context();
 
 		/**
 		 * The meta object literal for the '<em><b>Data Address</b></em>' containment reference feature.
@@ -1288,44 +1266,12 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 		EClass ASSET_POLICY = eINSTANCE.getAssetPolicy();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ASSET_POLICY__ID = eINSTANCE.getAssetPolicy_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ASSET_POLICY__TYPE = eINSTANCE.getAssetPolicy_Type();
-
-		/**
-		 * The meta object literal for the '<em><b>Context</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ASSET_POLICY__CONTEXT = eINSTANCE.getAssetPolicy_Context();
-
-		/**
 		 * The meta object literal for the '<em><b>Policy</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference ASSET_POLICY__POLICY = eINSTANCE.getAssetPolicy_Policy();
-
-		/**
-		 * The meta object literal for the '<em><b>Created At</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ASSET_POLICY__CREATED_AT = eINSTANCE.getAssetPolicy_CreatedAt();
 
 		/**
 		 * The meta object literal for the '{@link org.avatar.ds.model.dataspace.impl.PolicyImpl <em>Policy</em>}' class.
@@ -1422,22 +1368,6 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 		EClass CONTRACT_DEFINITION = eINSTANCE.getContractDefinition();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CONTRACT_DEFINITION__ID = eINSTANCE.getContractDefinition_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Context</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CONTRACT_DEFINITION__CONTEXT = eINSTANCE.getContractDefinition_Context();
-
-		/**
 		 * The meta object literal for the '<em><b>Access Policy Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1494,6 +1424,14 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 		 * @generated
 		 */
 		EReference DATA_SPACE_RESPONSE__CONTEXT = eINSTANCE.getDataSpaceResponse_Context();
+
+		/**
+		 * The meta object literal for the '<em><b>Response Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_SPACE_RESPONSE__RESPONSE_TYPE = eINSTANCE.getDataSpaceResponse_ResponseType();
 
 		/**
 		 * The meta object literal for the '<em><b>Created At</b></em>' attribute feature.
