@@ -90,6 +90,7 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 	 */
 	@Override
 	public DataSpaceResponse createAssetInDataSpace(String requestId, String url, String type, String name) {
+		LOGGER.info(String.format("Adding Asset with url %s", url));
 		Asset asset = DataSpaceHelper.createAsset(requestId, url, type, name);
 		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "assets"), "application/json");
 		requestRes.getContents().add(asset);
