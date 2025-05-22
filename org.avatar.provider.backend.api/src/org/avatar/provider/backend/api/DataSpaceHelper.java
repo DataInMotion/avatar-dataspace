@@ -39,7 +39,7 @@ public class DataSpaceHelper {
 		asset.setContext(ctxt);
 		DataAddress dataAddress = DataspaceFactory.eINSTANCE.createDataAddress();
 		dataAddress.setBaseUrl(url);
-		dataAddress.setType(type);
+		dataAddress.setType("HttpData");
 		dataAddress.setName(name);
 		asset.setDataAddress(dataAddress);
 		asset.getProperties().put("name", name);
