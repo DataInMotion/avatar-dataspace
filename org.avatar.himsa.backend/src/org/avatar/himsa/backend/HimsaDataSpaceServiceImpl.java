@@ -51,7 +51,6 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 
 	private String policyId;
 	private ResourceSet resSet;
-
 	private String baseDSUrl;
 
 	@Activate
@@ -78,7 +77,8 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 		if(contractDefinitionInDataSpace == null) {
 			LOGGER.warning(String.format("Error sreating contract in data space"));
 		}
-		createInitialAssets();
+		String[] assetIds = (String[]) properties.getOrDefault("start.asset.ids", new String[] {});
+		createInitialAssets(assetIds);
 	}
 
 
@@ -137,14 +137,10 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 		return (AssetPolicy) sendGETRequestToDataSpace(requestRes);
 	}
 
-	private void createInitialAssets() {
-		DataSpaceResponse response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/himsa/rest/patient/query/{requestId}", "json", "Patient hearing data in json format");
-		if(response == null) {
-			LOGGER.severe(String.format("Error while creating initial json asset in data space"));
-		}
-		response = createAssetInDataSpace(UUID.randomUUID().toString(), "http://localhost:8088/himsa/rest/patient/query/{requestId}", "xml", "Patient hearing data in xml format");
-		if(response == null) {
-			LOGGER.severe(String.format("Error while creating initial xml asset in data space"));
+	private void createInitialAssets(String... assetIds) {
+		for(String assetId : assetIds) {
+			String assetType = assetId.endsWith("json") ? "json" : "xml";
+			createAssetInDataSpace(assetId, "http://localhost:8088/himsa/rest/patient/query/{requestId}", assetType, String.format("HIMSA data in %s format", assetType));
 		}
 	}
 
@@ -191,12 +187,15 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 					return response;
 				} else {
 					LOGGER.severe(String.format("Response object is not of expected type DataSpaceResponse"));
+					responseRes.getErrors().forEach(d -> LOGGER.severe(String.format("Error Diagnostic: %s", d.getMessage())));
 				}
-			} else {
+			} else {				
 				LOGGER.severe(String.format("Response does NOT contain any object"));
+				responseRes.getErrors().forEach(d -> LOGGER.severe(String.format("Error Diagnostic: %s", d.getMessage())));
 			}
 		} catch(IOException e) {
-			LOGGER.severe(String.format("IOException while sending request to data space: %s", e));
+			LOGGER.severe(String.format("IOException while sending request to data space: %s", e.getCause()));
+			e.printStackTrace();
 		}
 		return null;
 	}

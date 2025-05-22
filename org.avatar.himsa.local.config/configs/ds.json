@@ -2,6 +2,7 @@
   ":configurator:resource-version": 1,
   "DataSpaceService~test": {
   	"base.ds.url": "http://localhost:9081/management/v3/",
-  	"start.policy.id": "avatar_policy_test"
+  	"start.policy.id": "avatar_policy_test",
+  	"start.asset.ids": ["himsa_data_json", "himsa_data_xml"]
   }	  
 }

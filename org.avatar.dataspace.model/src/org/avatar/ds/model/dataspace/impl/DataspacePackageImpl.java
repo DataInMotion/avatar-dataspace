@@ -578,6 +578,16 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
+	public EAttribute getDataSpaceResponse_Message() {
+		return (EAttribute)dataSpaceResponseEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public DataspaceFactory getDataspaceFactory() {
 		return (DataspaceFactory)getEFactoryInstance();
 	}
@@ -651,6 +661,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__TYPE);
 		createEReference(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__CONTEXT);
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__CREATED_AT);
+		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__MESSAGE);
 	}
 
 	/**
@@ -734,6 +745,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		initEAttribute(getDataSpaceResponse_Type(), ecorePackage.getEString(), "type", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDataSpaceResponse_Context(), this.getContext(), null, "context", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataSpaceResponse_CreatedAt(), ecorePackage.getELong(), "createdAt", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataSpaceResponse_Message(), ecorePackage.getEString(), "message", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

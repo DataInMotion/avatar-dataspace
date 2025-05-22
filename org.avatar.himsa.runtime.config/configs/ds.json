@@ -2,6 +2,7 @@
   ":configurator:resource-version": 1,
   "DataSpaceService~himsa": {
   	"base.ds.url": "http://himsa-connector:29193/management/v3/",
-  	"start.policy.id": "avatar_policy"
+  	"start.policy.id": "avatar_policy",
+  	"start.asset.ids": ["himsa_data_json", "himsa_data_xml"]
   }	  
 }

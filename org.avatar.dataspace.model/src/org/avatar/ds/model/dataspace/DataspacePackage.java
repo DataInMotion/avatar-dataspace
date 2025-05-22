@@ -605,13 +605,22 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	int DATA_SPACE_RESPONSE__CREATED_AT = 3;
 
 	/**
+	 * The feature id for the '<em><b>Message</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__MESSAGE = 4;
+
+	/**
 	 * The number of structural features of the '<em>Data Space Response</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE_FEATURE_COUNT = 4;
+	int DATA_SPACE_RESPONSE_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Data Space Response</em>' class.
@@ -1079,6 +1088,17 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	EAttribute getDataSpaceResponse_CreatedAt();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getMessage <em>Message</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Message</em>'.
+	 * @see org.avatar.ds.model.dataspace.DataSpaceResponse#getMessage()
+	 * @see #getDataSpaceResponse()
+	 * @generated
+	 */
+	EAttribute getDataSpaceResponse_Message();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1454,6 +1474,14 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_SPACE_RESPONSE__CREATED_AT = eINSTANCE.getDataSpaceResponse_CreatedAt();
+
+		/**
+		 * The meta object literal for the '<em><b>Message</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_SPACE_RESPONSE__MESSAGE = eINSTANCE.getDataSpaceResponse_Message();
 
 	}
 

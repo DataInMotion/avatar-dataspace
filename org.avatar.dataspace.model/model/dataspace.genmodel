@@ -57,6 +57,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//DataSpaceResponse/context"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/createdAt"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/message"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

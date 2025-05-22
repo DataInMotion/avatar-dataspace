@@ -97,7 +97,6 @@ public class GICSServiceImpl implements GICSService {
 			resource.save(connection.getOutputStream(), null);
 			int responseCode = connection.getResponseCode();
 			if (responseCode == 200 ) {
-				//				InputStream result = dwdCon.getInputStream();
 				Resource responseResource = rs.createResource(URI.createURI(UUID.randomUUID().toString()+".soap"), "soap");
 				responseResource.load(connection.getInputStream(), null);
 				DocumentRoot response = (DocumentRoot) responseResource.getContents().get(0);
@@ -106,12 +105,12 @@ public class GICSServiceImpl implements GICSService {
 				GetAllConsentedIdsForResponse responseBody =  (GetAllConsentedIdsForResponse) responseEnvelope.getBody().getAny().get(0).getValue();
 				return responseBody;
 			} else {
-				LOGGER.warning(String.format("Unexpected response code %d for request GetAllConsentedIdsFor", responseCode));
+				LOGGER.warning(String.format("Unexpected response code %d for request GetAllConsentedIdsFor: %s", responseCode, connection.getResponseMessage()));
 				return null;
 			}
 			
 		} catch(IOException e) {
-			LOGGER.severe(String.format("IOException while sending request GetAllConsentedIdsFor"));
+			LOGGER.severe(String.format("IOException while sending request GetAllConsentedIdsFor: %s", e.getCause()));
 			e.printStackTrace();
 			return null;
 		}		

@@ -19,6 +19,7 @@ import org.osgi.annotation.versioning.ProviderType;
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getType <em>Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getContext <em>Context</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getCreatedAt <em>Created At</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getMessage <em>Message</em>}</li>
  * </ul>
  *
  * @see org.avatar.ds.model.dataspace.DataspacePackage#getDataSpaceResponse()
@@ -115,5 +116,27 @@ public interface DataSpaceResponse extends EObject {
 	 * @generated
 	 */
 	void setCreatedAt(long value);
+
+	/**
+	 * Returns the value of the '<em><b>Message</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Message</em>' attribute.
+	 * @see #setMessage(String)
+	 * @see org.avatar.ds.model.dataspace.DataspacePackage#getDataSpaceResponse_Message()
+	 * @model
+	 * @generated
+	 */
+	String getMessage();
+
+	/**
+	 * Sets the value of the '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getMessage <em>Message</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Message</em>' attribute.
+	 * @see #getMessage()
+	 * @generated
+	 */
+	void setMessage(String value);
 
 } // DataSpaceResponse
