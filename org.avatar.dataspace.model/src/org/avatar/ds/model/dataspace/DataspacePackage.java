@@ -84,13 +84,22 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	int ASSET__ID = 0;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET__TYPE = 1;
+
+	/**
 	 * The feature id for the '<em><b>Context</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET__CONTEXT = 1;
+	int ASSET__CONTEXT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Data Address</b></em>' containment reference.
@@ -99,7 +108,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET__DATA_ADDRESS = 2;
+	int ASSET__DATA_ADDRESS = 3;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' map.
@@ -108,7 +117,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET__PROPERTIES = 3;
+	int ASSET__PROPERTIES = 4;
 
 	/**
 	 * The number of structural features of the '<em>Asset</em>' class.
@@ -117,7 +126,7 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSET_FEATURE_COUNT = 4;
+	int ASSET_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Asset</em>' class.
@@ -654,6 +663,17 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	EAttribute getAsset_Id();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.Asset#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.avatar.ds.model.dataspace.Asset#getType()
+	 * @see #getAsset()
+	 * @generated
+	 */
+	EAttribute getAsset_Type();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.avatar.ds.model.dataspace.Asset#getContext <em>Context</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1138,6 +1158,14 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 		 * @generated
 		 */
 		EAttribute ASSET__ID = eINSTANCE.getAsset_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ASSET__TYPE = eINSTANCE.getAsset_Type();
 
 		/**
 		 * The meta object literal for the '<em><b>Context</b></em>' containment reference feature.

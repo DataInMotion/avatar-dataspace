@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetImpl#getContext <em>Context</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetImpl#getDataAddress <em>Data Address</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.AssetImpl#getProperties <em>Properties</em>}</li>
@@ -58,6 +59,26 @@ public class AssetImpl extends MinimalEObjectImpl.Container implements Asset {
 	 * @ordered
 	 */
 	protected String id = ID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String type = TYPE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getContext() <em>Context</em>}' containment reference.
@@ -129,6 +150,29 @@ public class AssetImpl extends MinimalEObjectImpl.Container implements Asset {
 		id = newId;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.ASSET__ID, oldId, id));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setType(String newType) {
+		String oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.ASSET__TYPE, oldType, type));
 	}
 
 	/**
@@ -262,6 +306,8 @@ public class AssetImpl extends MinimalEObjectImpl.Container implements Asset {
 		switch (featureID) {
 			case DataspacePackage.ASSET__ID:
 				return getId();
+			case DataspacePackage.ASSET__TYPE:
+				return getType();
 			case DataspacePackage.ASSET__CONTEXT:
 				return getContext();
 			case DataspacePackage.ASSET__DATA_ADDRESS:
@@ -283,6 +329,9 @@ public class AssetImpl extends MinimalEObjectImpl.Container implements Asset {
 		switch (featureID) {
 			case DataspacePackage.ASSET__ID:
 				setId((String)newValue);
+				return;
+			case DataspacePackage.ASSET__TYPE:
+				setType((String)newValue);
 				return;
 			case DataspacePackage.ASSET__CONTEXT:
 				setContext((Context)newValue);
@@ -308,6 +357,9 @@ public class AssetImpl extends MinimalEObjectImpl.Container implements Asset {
 			case DataspacePackage.ASSET__ID:
 				setId(ID_EDEFAULT);
 				return;
+			case DataspacePackage.ASSET__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
 			case DataspacePackage.ASSET__CONTEXT:
 				setContext((Context)null);
 				return;
@@ -331,6 +383,8 @@ public class AssetImpl extends MinimalEObjectImpl.Container implements Asset {
 		switch (featureID) {
 			case DataspacePackage.ASSET__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case DataspacePackage.ASSET__TYPE:
+				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case DataspacePackage.ASSET__CONTEXT:
 				return context != null;
 			case DataspacePackage.ASSET__DATA_ADDRESS:
@@ -353,6 +407,8 @@ public class AssetImpl extends MinimalEObjectImpl.Container implements Asset {
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (id: ");
 		result.append(id);
+		result.append(", type: ");
+		result.append(type);
 		result.append(')');
 		return result.toString();
 	}

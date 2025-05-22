@@ -18,6 +18,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * </p>
  * <ul>
  *   <li>{@link org.avatar.ds.model.dataspace.Asset#getId <em>Id</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.Asset#getType <em>Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.Asset#getContext <em>Context</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.Asset#getDataAddress <em>Data Address</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.Asset#getProperties <em>Properties</em>}</li>
@@ -50,6 +51,28 @@ public interface Asset extends EObject {
 	 * @generated
 	 */
 	void setId(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see #setType(String)
+	 * @see org.avatar.ds.model.dataspace.DataspacePackage#getAsset_Type()
+	 * @model annotation="JsonProperty value='@type'"
+	 * @generated
+	 */
+	String getType();
+
+	/**
+	 * Sets the value of the '{@link org.avatar.ds.model.dataspace.Asset#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Context</b></em>' containment reference.

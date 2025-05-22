@@ -9,6 +9,7 @@
       disposableProviderFactory="true" ecorePackage="dataspace.ecore#/">
     <genClasses ecoreClass="dataspace.ecore#//Asset">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//Asset/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//Asset/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//Asset/context"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//Asset/dataAddress"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataspace.ecore#//Asset/properties"/>

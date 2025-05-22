@@ -191,4 +191,15 @@ public class OtherDataSpaceServiceImpl implements DataSpaceService {
 		return null;
 	}
 
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.provider.backend.api.DataSpaceService#getAsset(java.lang.String)
+	 */
+	@Override
+	public Asset getAsset(String assetId) {
+		if(assetId == null) return null;
+		Resource requestRes = resSet.createResource(URI.createURI(baseDSUrl + "assets/" + assetId), "application/json");
+		return (Asset) sendGETRequestToDataSpace(requestRes);
+	}
+
 }

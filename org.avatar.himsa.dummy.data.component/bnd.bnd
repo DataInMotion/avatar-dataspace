@@ -15,7 +15,3 @@ Bundle-Version: ${project-version}
 	org.emau.icmvc.ganimed.ttp.cm2,\
 	org.avatar.gics.service;version=latest
 	
-Require-Capability: \
-	osgi.extender;filter:='(osgi.extender=osgi.configurator)',\
-	osgi.implementation;filter:='(&(osgi.implementation=osgi.cm)(version>=1.6.0)(!(version>=2.0.0)))'
-	

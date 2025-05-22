@@ -136,7 +136,6 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 	public boolean existEndpointResponse(String requestId) throws IOException {
 		Path filePath = Path.of(System.getProperty(dataFolder));
 		return Files.list(filePath).filter(p -> {
-			System.out.println(p.getFileName() + " " + Files.isRegularFile(p) + " " + p.getFileName().toString().startsWith(requestId.concat("_")) + " " + p.getFileName().toString().endsWith(dataFormat));
 			return Files.isRegularFile(p) && p.getFileName().toString().startsWith(requestId.concat("_")) && p.getFileName().toString().endsWith(dataFormat);
 		}).findFirst().isPresent();
 	}

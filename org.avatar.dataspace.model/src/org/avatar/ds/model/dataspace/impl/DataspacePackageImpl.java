@@ -178,8 +178,8 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EReference getAsset_Context() {
-		return (EReference)assetEClass.getEStructuralFeatures().get(1);
+	public EAttribute getAsset_Type() {
+		return (EAttribute)assetEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -188,7 +188,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EReference getAsset_DataAddress() {
+	public EReference getAsset_Context() {
 		return (EReference)assetEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -198,8 +198,18 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
-	public EReference getAsset_Properties() {
+	public EReference getAsset_DataAddress() {
 		return (EReference)assetEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getAsset_Properties() {
+		return (EReference)assetEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -613,6 +623,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		// Create classes and their features
 		assetEClass = createEClass(ASSET);
 		createEAttribute(assetEClass, ASSET__ID);
+		createEAttribute(assetEClass, ASSET__TYPE);
 		createEReference(assetEClass, ASSET__CONTEXT);
 		createEReference(assetEClass, ASSET__DATA_ADDRESS);
 		createEReference(assetEClass, ASSET__PROPERTIES);
@@ -697,6 +708,7 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		// Initialize classes, features, and operations; add parameters
 		initEClass(assetEClass, Asset.class, "Asset", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAsset_Id(), ecorePackage.getEString(), "id", null, 0, 1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAsset_Type(), ecorePackage.getEString(), "type", null, 0, 1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAsset_Context(), this.getContext(), null, "context", null, 0, 1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAsset_DataAddress(), this.getDataAddress(), null, "dataAddress", null, 0, 1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAsset_Properties(), this.getPropertyMap(), null, "properties", null, 0, -1, Asset.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -813,6 +825,12 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		   source,
 		   new String[] {
 			   "value", "@id"
+		   });
+		addAnnotation
+		  (getAsset_Type(),
+		   source,
+		   new String[] {
+			   "value", "@type"
 		   });
 		addAnnotation
 		  (getAsset_Context(),
