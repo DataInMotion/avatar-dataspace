@@ -15,6 +15,7 @@ package org.avatar.himsa.patient.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
@@ -38,9 +39,11 @@ import de.avatar.metadata.MetadataFactory;
 @Component(name = "PatientAnonymizationService", service = {PatientAnonymizationService.class, AnonymizationService.class})
 public class PatientAnonymizationServiceImpl implements PatientAnonymizationService {
 	
+	private static final Logger LOGGER = Logger.getLogger(PatientAnonymizationServiceImpl.class.getName());
+	
 	@Activate
 	public void activate() {
-		System.out.println("AnonymizationService is up");
+		LOGGER.info("PatientAnonymizationService is up");
 	}
 
 	/* 

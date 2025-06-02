@@ -11,7 +11,7 @@
  * Contributors:
  *     Data In Motion - initial API and implementation
  */
-package org.avatar.himsa.rest;
+package org.avatar.other.rest;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * 
  * @author ilenia
- * @since May 22, 2025
+ * @since Jun 2, 2025
  */
 @Component(name = "LogConfigComponent", immediate = true)
 public class LogConfigComponent {
@@ -34,7 +34,6 @@ public class LogConfigComponent {
 		setupLogConfig();
 		LOGGER.info("Log Config done!");
 	}
-	
 	
 	private void setupLogConfig() {
 		String logConfig = ".level=" + java.util.logging.Level.INFO + '\n';

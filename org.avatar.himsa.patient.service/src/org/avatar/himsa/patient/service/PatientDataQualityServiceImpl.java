@@ -15,6 +15,7 @@ package org.avatar.himsa.patient.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientDataQualityService;
@@ -36,13 +37,15 @@ import de.avatar.metadata.MetadataFactory;
  */
 @Component(name = "PatientDataQualityService", service = {PatientDataQualityService.class, DataQualityService.class})
 public class PatientDataQualityServiceImpl implements PatientDataQualityService {
+	
+	private static final Logger LOGGER = Logger.getLogger(PatientDataQualityServiceImpl.class.getName());
 
 	private DataQualityFilter f1;
 	private DataQualityFilter f2;
 
 	@Activate
 	public void activate() {
-		System.out.println("PatientDataQualityService is up!");
+		LOGGER.info("PatientDataQualityService is up!");
 	}
 
 	/* 

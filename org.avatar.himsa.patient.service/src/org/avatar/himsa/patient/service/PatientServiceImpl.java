@@ -147,7 +147,6 @@ public class PatientServiceImpl implements PatientService {
 			IQueryBuilder queryBuilderNoFilter = repo.createQueryBuilder().and(query);
 			IQueryBuilder queryBuilderFilter = repo.createQueryBuilder().and(query, consentQuery);
 			for(EStructuralFeature[] projection : projectionFeaturePaths) {
-				System.out.println("Projection in query " + projection);
 				queryBuilderNoFilter = queryBuilderNoFilter.projectionPath(projection);
 				queryBuilderFilter = queryBuilderFilter.projectionPath(projection);
 			}
