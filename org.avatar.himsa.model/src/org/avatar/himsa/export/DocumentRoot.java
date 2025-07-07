@@ -80,7 +80,7 @@ public interface DocumentRoot extends EObject {
 	 * @see #setPatients(PatientsType)
 	 * @see org.avatar.himsa.export.PatientExportPackage#getDocumentRoot_Patients()
 	 * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Patients' namespace='##targetNamespace'"
+	 *        extendedMetaData="kind='element' name='Patients_._type' namespace='##targetNamespace'"
 	 * @generated
 	 */
 	PatientsType getPatients();

@@ -2283,7 +2283,7 @@ public class PatientExportPackageImpl extends EPackageImpl implements PatientExp
 		   source,
 		   new String[] {
 			   "kind", "element",
-			   "name", "Patients",
+			   "name", "Patients_._type",
 			   "namespace", "##targetNamespace"
 		   });
 		addAnnotation
@@ -2427,7 +2427,7 @@ public class PatientExportPackageImpl extends EPackageImpl implements PatientExp
 		   source,
 		   new String[] {
 			   "kind", "element",
-			   "name", "Patient",
+			   "name", "Patient_._type",
 			   "namespace", "##targetNamespace",
 			   "group", "#group:0"
 		   });
@@ -2435,7 +2435,7 @@ public class PatientExportPackageImpl extends EPackageImpl implements PatientExp
 		  (patientEClass,
 		   source,
 		   new String[] {
-			   "name", "Patient_Type",
+			   "name", "Patient",
 			   "kind", "elementOnly"
 		   });
 		addAnnotation

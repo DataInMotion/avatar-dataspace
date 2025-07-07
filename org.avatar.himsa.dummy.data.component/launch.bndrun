@@ -16,7 +16,6 @@
 	org.apache.felix.gogo.command;version='[1.1.2,1.1.3)',\
 	org.apache.felix.gogo.runtime;version='[1.1.6,1.1.7)',\
 	org.apache.felix.gogo.shell;version='[1.1.4,1.1.5)',\
-	org.apache.felix.metatype;version='[1.2.4,1.2.5)',\
 	org.apache.felix.scr;version='[2.2.10,2.2.11)',\
 	org.avatar.gics.service;version=snapshot,\
 	org.avatar.himsa.dummy.data.component;version=snapshot,\
@@ -25,7 +24,6 @@
 	org.eclipse.emf.ecore;version='[2.35.0,2.35.1)',\
 	org.eclipse.emf.ecore.xmi;version='[2.36.0,2.36.1)',\
 	org.emau.icmvc.ganimed.ttp.cm2;version='[1.0.0,1.0.1)',\
-	org.gecko.emf.osgi.component;version='[6.0.1,6.0.2)',\
 	org.gecko.emf.repository.api;version='[9.3.0,9.3.1)',\
 	org.osgi.service.component;version='[1.5.1,1.5.2)',\
 	org.osgi.service.log;version='[1.5.0,1.5.1)',\
@@ -39,9 +37,9 @@
 	org.gecko.mongo.osgi.component;version='[6.1.0,6.1.1)',\
 	org.mongodb.mongo-java-driver;version='[3.12.14,3.12.15)',\
 	org.osgi.service.metatype;version='[1.4.1,1.4.2)',\
-	org.apache.felix.cm.json;version='[2.0.4,2.0.5)',\
-	org.apache.felix.configurator;version='[1.0.18,1.0.19)',\
-	org.eclipse.parsson.jakarta.json;version='[1.1.5,1.1.6)'
+	org.gecko.emf.osgi.api;version='[6.1.1,6.1.2)',\
+	org.gecko.emf.osgi.component.config;version='[6.1.1,6.1.2)',\
+	org.gecko.emf.osgi.component.minimal;version='[6.1.1,6.1.2)'
 	
 -runproperties: \
 	data=./data/

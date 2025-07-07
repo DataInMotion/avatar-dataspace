@@ -50,7 +50,7 @@ public interface PatientsType extends EObject {
 	 * @return the value of the '<em>Patient</em>' containment reference list.
 	 * @see org.avatar.himsa.export.PatientExportPackage#getPatientsType_Patient()
 	 * @model containment="true" required="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Patient' namespace='##targetNamespace' group='#group:0'"
+	 *        extendedMetaData="kind='element' name='Patient_._type' namespace='##targetNamespace' group='#group:0'"
 	 * @generated
 	 */
 	EList<PatientType1> getPatient();

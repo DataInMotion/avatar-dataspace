@@ -51,7 +51,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * </ul>
  *
  * @see org.avatar.himsa.export.PatientExportPackage#getPatient()
- * @model extendedMetaData="name='Patient_Type' kind='elementOnly'"
+ * @model extendedMetaData="name='Patient' kind='elementOnly'"
  * @generated
  */
 @ProviderType

@@ -227,7 +227,7 @@
         resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
-        <details key="name" value="Patients"/>
+        <details key="name" value="Patients_._type"/>
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -359,7 +359,7 @@
         containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
-        <details key="name" value="Patient"/>
+        <details key="name" value="Patient_._type"/>
         <details key="namespace" value="##targetNamespace"/>
         <details key="group" value="#group:0"/>
       </eAnnotations>
@@ -367,7 +367,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Patient">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="Patient_Type"/>
+      <details key="name" value="Patient"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="patientGUID" eType="#//PatientGUIDType"
