@@ -29,4 +29,4 @@ EXPOSE 8091
 WORKDIR ${OPT_DIR}
 USER ${USERNAME}
 
-CMD ["java", "-Dgosh.args=--nointeractive", "-jar", "de.avatar.other.runtime.jar"]
+CMD ["java", "-Dgosh.args=--noshutdown", "-Dgecko.data.dir=/opt/avatar/runtime/data", "-jar", "de.avatar.other.runtime.jar"]
