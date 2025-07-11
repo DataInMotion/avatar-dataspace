@@ -22,6 +22,7 @@ import org.avatar.provider.backend.api.ProviderBackendService;
 import org.gecko.emf.json.constants.EMFJs;
 import org.gecko.emf.rest.annotations.EMFResourceOptions;
 import org.gecko.emf.rest.annotations.ResourceOption;
+import org.gecko.emf.rest.annotations.json.EMFJSONConfig;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -78,8 +79,9 @@ public class HimsaRESTResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/patient/dryrun")
-	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
-	public Response dryrun(QueryRequest queryRequest) {
+	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class), 
+			@ResourceOption(key = EMFJs.OPTION_TYPE_FIELD, value = "_type")})	
+	public Response dryrun(@EMFJSONConfig(typeFieldName = "_type") QueryRequest queryRequest) {
 		LOGGER.info("GOT DryRun");
 		EndpointResponse response = backendService.executeDryRun(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
@@ -93,8 +95,9 @@ public class HimsaRESTResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/patient/query")
-	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
-	public Response patientByQuery(QueryRequest queryRequest) {
+	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class), 
+			@ResourceOption(key = EMFJs.OPTION_TYPE_FIELD, value = "_type")})
+	public Response patientByQuery(@EMFJSONConfig(typeFieldName = "_type") QueryRequest queryRequest) {
 		LOGGER.info("GOT Query");
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
@@ -108,8 +111,9 @@ public class HimsaRESTResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/patient/query/{reqId}")
-	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
-	public Response patientByQuery2(@PathParam("reqId") String reqId,  QueryRequest queryRequest) {
+	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class), 
+			@ResourceOption(key = EMFJs.OPTION_TYPE_FIELD, value = "_type")})
+	public Response patientByQuery2(@PathParam("reqId") String reqId,  @EMFJSONConfig(typeFieldName = "_type")QueryRequest queryRequest) {
 		LOGGER.info("GOT Query");
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
@@ -122,7 +126,6 @@ public class HimsaRESTResource {
 	@GET
 	@Path("/downloads/{fileName}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class)})
 	public Response download(@PathParam("fileName") String fileName) {
 		
 		File resultFile = new File(System.getProperty("data").concat(fileName));
