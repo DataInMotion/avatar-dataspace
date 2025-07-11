@@ -69,14 +69,14 @@ public class HimsaDataSpaceServiceImpl implements DataSpaceService {
 			LOGGER.info(String.format("Creating policy %s  and initial assets in data space", policyId));
 			DataSpaceResponse assetPolicyInDataSpace = createAssetPolicyInDataSpace(policyId);
 			if(assetPolicyInDataSpace == null) {
-				LOGGER.severe(String.format("Error sreating policy %s in data space", policyId));
+				LOGGER.severe(String.format("Error creating policy %s in data space", policyId));
 			}
 		} else {
 			LOGGER.info(String.format("Policy %s alrady exists", policyId));
 		}
 		DataSpaceResponse contractDefinitionInDataSpace = createContractDefinitionInDataSpace(policyId);
 		if(contractDefinitionInDataSpace == null) {
-			LOGGER.warning(String.format("Error sreating contract in data space"));
+			LOGGER.warning(String.format("Error creating contract in data space"));
 		}
 		String[] assetIds = (String[]) properties.getOrDefault("start.asset.ids", new String[] {});
 		createInitialAssets(assetIds);

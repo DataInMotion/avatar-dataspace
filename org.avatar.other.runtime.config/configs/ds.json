@@ -1,6 +1,6 @@
 {
   ":configurator:resource-version": 1,
-  "DataSpaceService~test": {
+  "DataSpaceService~other": {
   	"base.ds.url": "http://other-connector:29193/management/v3/",
   	"start.policy.id": "avatar_policy",
   	"start.asset.ids": ["other_data_json", "other_data_xml"]
