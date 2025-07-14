@@ -129,13 +129,31 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	int DATA_SPACE_RESPONSE__MESSAGE = 5;
 
 	/**
+	 * The feature id for the '<em><b>Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__PATH = 6;
+
+	/**
+	 * The feature id for the '<em><b>Invalid Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DATA_SPACE_RESPONSE__INVALID_VALUE = 7;
+
+	/**
 	 * The number of structural features of the '<em>Data Space Response</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DATA_SPACE_RESPONSE_FEATURE_COUNT = 6;
+	int DATA_SPACE_RESPONSE_FEATURE_COUNT = 8;
 
 	/**
 	 * The number of operations of the '<em>Data Space Response</em>' class.
@@ -209,6 +227,24 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @ordered
 	 */
 	int ASSET__MESSAGE = DATA_SPACE_RESPONSE__MESSAGE;
+
+	/**
+	 * The feature id for the '<em><b>Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET__PATH = DATA_SPACE_RESPONSE__PATH;
+
+	/**
+	 * The feature id for the '<em><b>Invalid Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET__INVALID_VALUE = DATA_SPACE_RESPONSE__INVALID_VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Data Address</b></em>' containment reference.
@@ -458,6 +494,24 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	int ASSET_POLICY__MESSAGE = DATA_SPACE_RESPONSE__MESSAGE;
 
 	/**
+	 * The feature id for the '<em><b>Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET_POLICY__PATH = DATA_SPACE_RESPONSE__PATH;
+
+	/**
+	 * The feature id for the '<em><b>Invalid Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSET_POLICY__INVALID_VALUE = DATA_SPACE_RESPONSE__INVALID_VALUE;
+
+	/**
 	 * The feature id for the '<em><b>Policy</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -684,6 +738,24 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	 * @ordered
 	 */
 	int CONTRACT_DEFINITION__MESSAGE = DATA_SPACE_RESPONSE__MESSAGE;
+
+	/**
+	 * The feature id for the '<em><b>Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_DEFINITION__PATH = DATA_SPACE_RESPONSE__PATH;
+
+	/**
+	 * The feature id for the '<em><b>Invalid Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTRACT_DEFINITION__INVALID_VALUE = DATA_SPACE_RESPONSE__INVALID_VALUE;
 
 	/**
 	 * The feature id for the '<em><b>Access Policy Id</b></em>' attribute.
@@ -1121,6 +1193,28 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 	EAttribute getDataSpaceResponse_Message();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getPath <em>Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Path</em>'.
+	 * @see org.avatar.ds.model.dataspace.DataSpaceResponse#getPath()
+	 * @see #getDataSpaceResponse()
+	 * @generated
+	 */
+	EAttribute getDataSpaceResponse_Path();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getInvalidValue <em>Invalid Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Invalid Value</em>'.
+	 * @see org.avatar.ds.model.dataspace.DataSpaceResponse#getInvalidValue()
+	 * @see #getDataSpaceResponse()
+	 * @generated
+	 */
+	EAttribute getDataSpaceResponse_InvalidValue();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1448,6 +1542,22 @@ public interface DataspacePackage extends org.eclipse.emf.ecore.EPackage {
 		 * @generated
 		 */
 		EAttribute DATA_SPACE_RESPONSE__MESSAGE = eINSTANCE.getDataSpaceResponse_Message();
+
+		/**
+		 * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_SPACE_RESPONSE__PATH = eINSTANCE.getDataSpaceResponse_Path();
+
+		/**
+		 * The meta object literal for the '<em><b>Invalid Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DATA_SPACE_RESPONSE__INVALID_VALUE = eINSTANCE.getDataSpaceResponse_InvalidValue();
 
 	}
 

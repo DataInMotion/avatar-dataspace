@@ -21,6 +21,8 @@ import org.osgi.annotation.versioning.ProviderType;
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getResponseType <em>Response Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getCreatedAt <em>Created At</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getMessage <em>Message</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getPath <em>Path</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getInvalidValue <em>Invalid Value</em>}</li>
  * </ul>
  *
  * @see org.avatar.ds.model.dataspace.DataspacePackage#getDataSpaceResponse()
@@ -161,5 +163,49 @@ public interface DataSpaceResponse extends EObject {
 	 * @generated
 	 */
 	void setMessage(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Path</em>' attribute.
+	 * @see #setPath(String)
+	 * @see org.avatar.ds.model.dataspace.DataspacePackage#getDataSpaceResponse_Path()
+	 * @model
+	 * @generated
+	 */
+	String getPath();
+
+	/**
+	 * Sets the value of the '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getPath <em>Path</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Path</em>' attribute.
+	 * @see #getPath()
+	 * @generated
+	 */
+	void setPath(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Invalid Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Invalid Value</em>' attribute.
+	 * @see #setInvalidValue(String)
+	 * @see org.avatar.ds.model.dataspace.DataspacePackage#getDataSpaceResponse_InvalidValue()
+	 * @model
+	 * @generated
+	 */
+	String getInvalidValue();
+
+	/**
+	 * Sets the value of the '{@link org.avatar.ds.model.dataspace.DataSpaceResponse#getInvalidValue <em>Invalid Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Invalid Value</em>' attribute.
+	 * @see #getInvalidValue()
+	 * @generated
+	 */
+	void setInvalidValue(String value);
 
 } // DataSpaceResponse

@@ -518,6 +518,26 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 	 * @generated
 	 */
 	@Override
+	public EAttribute getDataSpaceResponse_Path() {
+		return (EAttribute)dataSpaceResponseEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getDataSpaceResponse_InvalidValue() {
+		return (EAttribute)dataSpaceResponseEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public DataspaceFactory getDataspaceFactory() {
 		return (DataspaceFactory)getEFactoryInstance();
 	}
@@ -585,6 +605,8 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__RESPONSE_TYPE);
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__CREATED_AT);
 		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__MESSAGE);
+		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__PATH);
+		createEAttribute(dataSpaceResponseEClass, DATA_SPACE_RESPONSE__INVALID_VALUE);
 	}
 
 	/**
@@ -665,6 +687,8 @@ public class DataspacePackageImpl extends EPackageImpl implements DataspacePacka
 		initEAttribute(getDataSpaceResponse_ResponseType(), ecorePackage.getEString(), "responseType", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataSpaceResponse_CreatedAt(), ecorePackage.getELong(), "createdAt", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDataSpaceResponse_Message(), ecorePackage.getEString(), "message", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataSpaceResponse_Path(), ecorePackage.getEString(), "path", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDataSpaceResponse_InvalidValue(), ecorePackage.getEString(), "invalidValue", null, 0, 1, DataSpaceResponse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

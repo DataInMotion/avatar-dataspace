@@ -51,6 +51,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/responseType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/createdAt"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/message"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataspace.ecore#//DataSpaceResponse/invalidValue"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

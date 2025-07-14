@@ -29,6 +29,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getResponseType <em>Response Type</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getCreatedAt <em>Created At</em>}</li>
  *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getMessage <em>Message</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getPath <em>Path</em>}</li>
+ *   <li>{@link org.avatar.ds.model.dataspace.impl.DataSpaceResponseImpl#getInvalidValue <em>Invalid Value</em>}</li>
  * </ul>
  *
  * @generated
@@ -143,6 +145,46 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 	 * @ordered
 	 */
 	protected String message = MESSAGE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPath()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PATH_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPath()
+	 * @generated
+	 * @ordered
+	 */
+	protected String path = PATH_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getInvalidValue() <em>Invalid Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInvalidValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String INVALID_VALUE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getInvalidValue() <em>Invalid Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getInvalidValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected String invalidValue = INVALID_VALUE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -329,6 +371,52 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 	 * @generated
 	 */
 	@Override
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setPath(String newPath) {
+		String oldPath = path;
+		path = newPath;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.DATA_SPACE_RESPONSE__PATH, oldPath, path));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getInvalidValue() {
+		return invalidValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setInvalidValue(String newInvalidValue) {
+		String oldInvalidValue = invalidValue;
+		invalidValue = newInvalidValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, DataspacePackage.DATA_SPACE_RESPONSE__INVALID_VALUE, oldInvalidValue, invalidValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case DataspacePackage.DATA_SPACE_RESPONSE__CONTEXT:
@@ -357,6 +445,10 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return getCreatedAt();
 			case DataspacePackage.DATA_SPACE_RESPONSE__MESSAGE:
 				return getMessage();
+			case DataspacePackage.DATA_SPACE_RESPONSE__PATH:
+				return getPath();
+			case DataspacePackage.DATA_SPACE_RESPONSE__INVALID_VALUE:
+				return getInvalidValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -386,6 +478,12 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return;
 			case DataspacePackage.DATA_SPACE_RESPONSE__MESSAGE:
 				setMessage((String)newValue);
+				return;
+			case DataspacePackage.DATA_SPACE_RESPONSE__PATH:
+				setPath((String)newValue);
+				return;
+			case DataspacePackage.DATA_SPACE_RESPONSE__INVALID_VALUE:
+				setInvalidValue((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -417,6 +515,12 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 			case DataspacePackage.DATA_SPACE_RESPONSE__MESSAGE:
 				setMessage(MESSAGE_EDEFAULT);
 				return;
+			case DataspacePackage.DATA_SPACE_RESPONSE__PATH:
+				setPath(PATH_EDEFAULT);
+				return;
+			case DataspacePackage.DATA_SPACE_RESPONSE__INVALID_VALUE:
+				setInvalidValue(INVALID_VALUE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -441,6 +545,10 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 				return createdAt != CREATED_AT_EDEFAULT;
 			case DataspacePackage.DATA_SPACE_RESPONSE__MESSAGE:
 				return MESSAGE_EDEFAULT == null ? message != null : !MESSAGE_EDEFAULT.equals(message);
+			case DataspacePackage.DATA_SPACE_RESPONSE__PATH:
+				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
+			case DataspacePackage.DATA_SPACE_RESPONSE__INVALID_VALUE:
+				return INVALID_VALUE_EDEFAULT == null ? invalidValue != null : !INVALID_VALUE_EDEFAULT.equals(invalidValue);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -465,6 +573,10 @@ public class DataSpaceResponseImpl extends MinimalEObjectImpl.Container implemen
 		result.append(createdAt);
 		result.append(", message: ");
 		result.append(message);
+		result.append(", path: ");
+		result.append(path);
+		result.append(", invalidValue: ");
+		result.append(invalidValue);
 		result.append(')');
 		return result.toString();
 	}
