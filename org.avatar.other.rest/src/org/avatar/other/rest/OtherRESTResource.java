@@ -13,12 +13,19 @@
  */
 package org.avatar.other.rest;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.avatar.provider.backend.api.ProviderBackendService;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.gecko.emf.json.constants.EMFJs;
 import org.gecko.emf.rest.annotations.EMFResourceOptions;
 import org.gecko.emf.rest.annotations.ResourceOption;
@@ -69,6 +76,9 @@ public class OtherRESTResource {
 		
 	@Reference(target = "(provider.id=other)")
 	ProviderBackendService backendService;
+	
+	@Reference
+	ResourceSet resSet;
 
 	@GET
 	@Path("/hello")
@@ -113,9 +123,21 @@ public class OtherRESTResource {
 	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class), 
 			@ResourceOption(key = EMFJs.OPTION_TYPE_FIELD, value = "_type")})	public Response patientByQuery2(@PathParam("reqId") String reqId,  @EMFJSONConfig(typeFieldName = "_type") QueryRequest queryRequest) {
 		LOGGER.info(String.format("Got Query with id %s", reqId));
+		Resource res = resSet.createResource(URI.createURI(UUID.randomUUID().toString()+".json"));
+		res.getContents().add(EcoreUtil.copy(queryRequest.getQuery()));
+		try {
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			res.save(os, null);
+			LOGGER.info(String.format("Query is %s", new String(os.toByteArray())));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
 			LOGGER.severe(String.format("Error Response for Query with id %s: %s", reqId, response.getResult() instanceof ErrorResult ? ((ErrorResult) response.getResult()).getError() : ""));
+			if(response.getResult() instanceof ErrorResult errRes) {
+				if(errRes.getThrowable() != null) errRes.getThrowable().printStackTrace();
+			}
 			return Response.status(Status.BAD_REQUEST).entity(response).build();
 		} else {
 			LOGGER.info(String.format("OK Response for Query with id %s", reqId));

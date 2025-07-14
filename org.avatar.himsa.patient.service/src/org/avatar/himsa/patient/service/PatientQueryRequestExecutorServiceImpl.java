@@ -227,6 +227,7 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 				return response;
 
 			} catch(Exception e) {
+				LOGGER.severe(String.format("Error when querying for Query %s", requestId));
 				return createErrorResponse(requestId, e);
 			} 			
 		}
@@ -239,6 +240,7 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
 			errRes.setError(errCause.getMessage());
 			errRes.setErrorText(errCause.getMessage());
+			errRes.setThrowable(errCause);
 			response.setResult(errRes);
 			return response;
 		}
