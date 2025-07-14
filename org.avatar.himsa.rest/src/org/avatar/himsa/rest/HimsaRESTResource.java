@@ -30,6 +30,7 @@ import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsName;
 import org.osgi.service.jakartars.whiteboard.propertytypes.JakartarsResource;
 
 import de.avatar.model.connector.EndpointResponse;
+import de.avatar.model.connector.ErrorResult;
 import de.avatar.model.connector.ResponseCode;
 import de.avatar.status.QueryRequest;
 import jakarta.ws.rs.Consumes;
@@ -117,7 +118,7 @@ public class HimsaRESTResource {
 		LOGGER.info(String.format("Got Query with id %s", reqId));
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
-			LOGGER.severe(String.format("Error Response for Query with id %s", reqId));
+			LOGGER.severe(String.format("Error Response for Query with id %s: %s", reqId, response.getResult() instanceof ErrorResult ? ((ErrorResult) response.getResult()).getError() : ""));
 			return Response.status(Status.BAD_REQUEST).entity(response).build();
 		} else {
 			LOGGER.info(String.format("OK Response for Query with id %s", reqId));

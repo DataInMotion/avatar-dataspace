@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -127,6 +128,9 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 		private String requestType;
 
 		public QueryTask(QueryRequest queryRequest, String requestType) {
+			Objects.requireNonNull(queryRequest, "QueryRequest cannot be null!");
+			Objects.requireNonNull(queryRequest.getRequestId(), "Request id cannot be null!");
+			Objects.requireNonNull(queryRequest.getQuery(), "Query cannot be null!");
 			this.requestType = requestType;
 			this.requestId = queryRequest.getRequestId();
 			this.query = queryRequest.getQuery();
