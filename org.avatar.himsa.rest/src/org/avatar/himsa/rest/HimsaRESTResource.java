@@ -114,11 +114,13 @@ public class HimsaRESTResource {
 	@EMFResourceOptions(options= {@ResourceOption(key = EMFJs.OPTION_SERIALIZE_DEFAULT_VALUE, value = "true", valueType = Boolean.class), 
 			@ResourceOption(key = EMFJs.OPTION_TYPE_FIELD, value = "_type")})
 	public Response patientByQuery2(@PathParam("reqId") String reqId,  @EMFJSONConfig(typeFieldName = "_type")QueryRequest queryRequest) {
-		LOGGER.info("GOT Query");
+		LOGGER.info(String.format("Got Query with id %s", reqId));
 		EndpointResponse response = backendService.executeQuery(queryRequest);
 		if(ResponseCode.ERROR.equals(response.getCode())) {
+			LOGGER.severe(String.format("Error Response for Query with id %s", reqId));
 			return Response.status(Status.BAD_REQUEST).entity(response).build();
 		} else {
+			LOGGER.info(String.format("OK Response for Query with id %s", reqId));
 			return Response.ok(response).build();
 		}		
 	}
