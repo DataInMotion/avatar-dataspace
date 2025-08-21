@@ -12,7 +12,8 @@
 	bnd.identity;id='org.avatar.himsa.dummy.data.component',\
 	bnd.identity;id='org.avatar.himsa.patient.service',\
 	bnd.identity;id='org.avatar.himsa.backend',\
-	bnd.identity;id='de.avatar.connector.cleanup.impl'
+	bnd.identity;id='de.avatar.connector.cleanup.impl',\
+	bnd.identity;id='biz.aQute.scheduler.basic.provider'
 	
 -runblacklist: bnd.identity;id='org.apache.felix.http.jetty'
 -runbundles: \
@@ -104,4 +105,6 @@
 	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
 	org.avatar.dataspace.model;version=snapshot,\
 	de.avatar.connector.cleanup.api;version='[1.0.0,1.0.1)',\
-	de.avatar.connector.cleanup.impl;version='[1.0.0,1.0.1)'
+	de.avatar.connector.cleanup.impl;version='[1.0.0,1.0.1)',\
+	biz.aQute.api.scheduler;version='[1.11.0,1.11.1)',\
+	biz.aQute.scheduler.basic.provider;version='[1.11.0,1.11.1)'

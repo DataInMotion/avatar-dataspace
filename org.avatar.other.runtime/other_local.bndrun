@@ -12,7 +12,8 @@
 	bnd.identity;id='org.avatar.other.local.config',\
 	bnd.identity;id='org.avatar.other.rest',\
 	bnd.identity;id='org.avatar.other.backend',\
-	bnd.identity;id='de.avatar.connector.cleanup.impl'
+	bnd.identity;id='de.avatar.connector.cleanup.impl',\
+	bnd.identity;id='biz.aQute.scheduler.basic.provider'
 	
 -runblacklist: bnd.identity;id='org.apache.felix.http.jetty'
 -runbundles: \
@@ -104,4 +105,6 @@
 	org.avatar.provider.backend.api;version=snapshot,\
 	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
 	org.gecko.emf.osgi.api;version='[6.1.1,6.1.2)',\
-	org.gecko.emf.osgi.component.minimal;version='[6.1.1,6.1.2)'
+	org.gecko.emf.osgi.component.minimal;version='[6.1.1,6.1.2)',\
+	biz.aQute.api.scheduler;version='[1.11.0,1.11.1)',\
+	biz.aQute.scheduler.basic.provider;version='[1.11.0,1.11.1)'

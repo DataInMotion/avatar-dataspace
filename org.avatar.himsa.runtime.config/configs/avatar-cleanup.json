@@ -2,12 +2,10 @@
   ":configurator:resource-version": 1,
   
 	"AvatarDataCleanup": {
+		"jobName": "Avatar Data Cleanup Job",
 	    "cleanupRootFolder": "data",
 	    "cleanupExtensions": [".json", ".xml"],
-		"cleanupDelay": 0,
-		"cleanupRate": 60,
-		"cleanupUnit": "MINUTES",
-		"removeOlderThan": 60, 
-		"removeOlderThanUnit": "MINUTES"
+		"removeOlderThan": 1, 
+		"removeOlderThanUnit": "DAYS"
 	}
 }

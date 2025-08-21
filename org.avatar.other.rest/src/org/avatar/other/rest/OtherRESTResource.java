@@ -57,7 +57,7 @@ import jakarta.ws.rs.core.Response.Status;
  * Started Jakartars whiteboard server for port: <port> and context: /rest/
  * 
  * So the application can be reached under:
- * http://localhost:8088/himsa/rest/hello
+ * http://localhost:8091/other/rest/hello
  * 
  * ------------------------------------------------------------
  * !!!!! SEE ALL REQUIRE DECLARATION IN package-info.java !!!!!

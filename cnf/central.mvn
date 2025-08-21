@@ -143,3 +143,7 @@ org.geckoprojects.libraries:net.datafaker:2.4.2
 org.geckoprojects.emf.model:org.xmlsoap.model:1.0.0
 org.geckoprojects.emf.model:org.emau.icmvc.ganimed.ttp.cm2:1.0.0-SNAPSHOT
 
+#Chron job
+biz.aQute:biz.aQute.api.scheduler:1.11.0-SNAPSHOT
+biz.aQute:biz.aQute.scheduler.basic.provider:1.11.0-SNAPSHOT
+
