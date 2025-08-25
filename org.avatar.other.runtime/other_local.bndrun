@@ -104,7 +104,8 @@
 	org.avatar.dataspace.model;version=snapshot,\
 	org.avatar.provider.backend.api;version=snapshot,\
 	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
-	org.gecko.emf.osgi.api;version='[6.1.1,6.1.2)',\
-	org.gecko.emf.osgi.component.minimal;version='[6.1.1,6.1.2)',\
 	biz.aQute.api.scheduler;version='[1.11.0,1.11.1)',\
-	biz.aQute.scheduler.basic.provider;version='[1.11.0,1.11.1)'
+	biz.aQute.scheduler.basic.provider;version='[1.11.0,1.11.1)',\
+	org.apache.felix.metatype;version='[1.2.4,1.2.5)',\
+	org.gecko.emf.osgi.component;version='[6.0.1,6.0.2)',\
+	org.gecko.emf.util.annotations;version='[1.4.1,1.4.2)'
