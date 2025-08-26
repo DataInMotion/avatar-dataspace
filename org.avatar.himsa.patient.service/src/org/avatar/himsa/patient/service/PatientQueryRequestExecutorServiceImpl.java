@@ -237,10 +237,11 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			addResponseMetadata(response, requestId);
 			response.setSourceId(requestId);
 			response.setCode(ResponseCode.ERROR);
+			
 			ErrorResult errRes = AConnectorFactory.eINSTANCE.createErrorResult();
 			errRes.setError(errCause.getMessage());
 			errRes.setErrorText(errCause.getMessage());
-			errRes.setThrowable(errCause);
+		
 			response.setResult(errRes);
 			return response;
 		}
