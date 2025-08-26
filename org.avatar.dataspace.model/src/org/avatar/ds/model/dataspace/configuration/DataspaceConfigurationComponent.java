@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "DataspaceConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.avatar.ds.model.dataspace.util.DataspaceResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,org.avatar.ds.model.dataspace.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.avatar.ds.model.dataspace.util.DataspaceResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,org.avatar.ds.model.dataspace.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.avatar.ds.model.dataspace.DataspaceFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,org.avatar.ds.model.dataspace\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.avatar.ds.model.dataspace.DataspacePackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,org.avatar.ds.model.dataspace\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,org.avatar.ds.model.dataspace\"" })
@@ -56,6 +56,7 @@ public class DataspaceConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		DataspacePackage ePackage = DataspacePackageImpl.eINSTANCE;
+		
 		
 		DataspaceEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

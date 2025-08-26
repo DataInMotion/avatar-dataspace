@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "CochlearConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"cochlear.util.CochlearResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,cochlear.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"cochlear.util.CochlearResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,cochlear.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"cochlear.CochlearFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,cochlear\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"cochlear.CochlearPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,cochlear\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,cochlear\"" })
@@ -56,6 +56,7 @@ public class CochlearConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		CochlearPackage ePackage = CochlearPackageImpl.eINSTANCE;
+		
 		
 		CochlearEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

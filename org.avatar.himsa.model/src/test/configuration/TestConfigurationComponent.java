@@ -35,7 +35,7 @@ import test.util.TestResourceFactoryImpl;
  * @generated
  */
 @Component(name = "TestConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"test.util.TestResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,test.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"test.util.TestResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,test.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"test.TestFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,test\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"test.TestPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,test\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,test\"" })
@@ -56,6 +56,7 @@ public class TestConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		TestPackage ePackage = TestPackageImpl.eINSTANCE;
+		
 		
 		TestEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

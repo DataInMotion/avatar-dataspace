@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "FittingConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"fitting.util.FittingResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,fitting.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"fitting.util.FittingResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,fitting.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"fitting.FittingFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,fitting\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"fitting.FittingPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,fitting\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,fitting\"" })
@@ -56,6 +56,7 @@ public class FittingConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		FittingPackage ePackage = FittingPackageImpl.eINSTANCE;
+		
 		
 		FittingEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

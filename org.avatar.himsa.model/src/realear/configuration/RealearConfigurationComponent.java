@@ -35,7 +35,7 @@ import realear.util.RealearResourceFactoryImpl;
  * @generated
  */
 @Component(name = "RealearConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"realear.util.RealearResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,realear.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"realear.util.RealearResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,realear.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"realear.RealearFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,realear\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"realear.RealearPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,realear\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,realear\"" })
@@ -56,6 +56,7 @@ public class RealearConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		RealearPackage ePackage = RealearPackageImpl.eINSTANCE;
+		
 		
 		RealearEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

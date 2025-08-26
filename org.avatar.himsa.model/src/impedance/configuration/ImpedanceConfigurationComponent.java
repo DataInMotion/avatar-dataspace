@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "ImpedanceConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"impedance.util.ImpedanceResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,impedance.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"impedance.util.ImpedanceResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,impedance.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"impedance.ImpedanceFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,impedance\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"impedance.ImpedancePackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,impedance\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,impedance\"" })
@@ -56,6 +56,7 @@ public class ImpedanceConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		ImpedancePackage ePackage = ImpedancePackageImpl.eINSTANCE;
+		
 		
 		ImpedanceEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

@@ -35,7 +35,7 @@ import selection.util.SelectionResourceFactoryImpl;
  * @generated
  */
 @Component(name = "SelectionConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"selection.util.SelectionResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,selection.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"selection.util.SelectionResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,selection.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"selection.SelectionFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,selection\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"selection.SelectionPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,selection\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,selection\"" })
@@ -56,6 +56,7 @@ public class SelectionConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		SelectionPackage ePackage = SelectionPackageImpl.eINSTANCE;
+		
 		
 		SelectionEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

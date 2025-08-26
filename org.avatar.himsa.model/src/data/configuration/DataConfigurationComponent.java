@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "DataConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"data.util.DataResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,data.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"data.util.DataResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,data.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"data.DataFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,data\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"data.DataPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,data\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,data\"" })
@@ -56,6 +56,7 @@ public class DataConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		DataPackage ePackage = DataPackageImpl.eINSTANCE;
+		
 		
 		DataEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

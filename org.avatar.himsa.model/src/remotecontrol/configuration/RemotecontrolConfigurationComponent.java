@@ -35,7 +35,7 @@ import remotecontrol.util.RemotecontrolResourceFactoryImpl;
  * @generated
  */
 @Component(name = "RemotecontrolConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"remotecontrol.util.RemotecontrolResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,remotecontrol.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"remotecontrol.util.RemotecontrolResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,remotecontrol.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"remotecontrol.RemotecontrolFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,remotecontrol\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"remotecontrol.RemotecontrolPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,remotecontrol\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,remotecontrol\"" })
@@ -56,6 +56,7 @@ public class RemotecontrolConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		RemotecontrolPackage ePackage = RemotecontrolPackageImpl.eINSTANCE;
+		
 		
 		RemotecontrolEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

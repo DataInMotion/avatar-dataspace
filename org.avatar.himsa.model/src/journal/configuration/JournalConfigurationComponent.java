@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "JournalConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"journal.util.JournalResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,journal.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"journal.util.JournalResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,journal.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"journal.JournalFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,journal\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"journal.JournalPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,journal\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,journal\"" })
@@ -56,6 +56,7 @@ public class JournalConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		JournalPackage ePackage = JournalPackageImpl.eINSTANCE;
+		
 		
 		JournalEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

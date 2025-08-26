@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "Audiogram502Configurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"audiogram502.util.Audiogram502ResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,audiogram502.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"audiogram502.util.Audiogram502ResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,audiogram502.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"audiogram502.Audiogram502Factory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,audiogram502\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"audiogram502.Audiogram502Package, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,audiogram502\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,audiogram502\"" })
@@ -56,6 +56,7 @@ public class Audiogram502ConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		Audiogram502Package ePackage = Audiogram502PackageImpl.eINSTANCE;
+		
 		
 		Audiogram502EPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "PatientExportConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.avatar.himsa.export.util.PatientExportResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,org.avatar.himsa.export.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.avatar.himsa.export.util.PatientExportResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,org.avatar.himsa.export.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.avatar.himsa.export.PatientExportFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,org.avatar.himsa.export\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.avatar.himsa.export.PatientExportPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,org.avatar.himsa.export\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,org.avatar.himsa.export\"" })
@@ -56,6 +56,7 @@ public class PatientExportConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		PatientExportPackage ePackage = PatientExportPackageImpl.eINSTANCE;
+		
 		
 		PatientExportEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

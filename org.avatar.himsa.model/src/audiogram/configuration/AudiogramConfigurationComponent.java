@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "AudiogramConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"audiogram.util.AudiogramResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,audiogram.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"audiogram.util.AudiogramResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,audiogram.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"audiogram.AudiogramFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,audiogram\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"audiogram.AudiogramPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,audiogram\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,audiogram\"" })
@@ -56,6 +56,7 @@ public class AudiogramConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		AudiogramPackage ePackage = AudiogramPackageImpl.eINSTANCE;
+		
 		
 		AudiogramEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

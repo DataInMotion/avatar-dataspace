@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "AdmittanceConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"admittance.util.AdmittanceResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,admittance.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"admittance.util.AdmittanceResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,admittance.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"admittance.AdmittanceFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,admittance\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"admittance.AdmittancePackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,admittance\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,admittance\"" })
@@ -56,6 +56,7 @@ public class AdmittanceConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		AdmittancePackage ePackage = AdmittancePackageImpl.eINSTANCE;
+		
 		
 		AdmittanceEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

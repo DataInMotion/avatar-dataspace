@@ -35,7 +35,7 @@ import tinnitus.util.TinnitusResourceFactoryImpl;
  * @generated
  */
 @Component(name = "TinnitusConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"tinnitus.util.TinnitusResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,tinnitus.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"tinnitus.util.TinnitusResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,tinnitus.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"tinnitus.TinnitusFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,tinnitus\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"tinnitus.TinnitusPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,tinnitus\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,tinnitus\"" })
@@ -56,6 +56,7 @@ public class TinnitusConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		TinnitusPackage ePackage = TinnitusPackageImpl.eINSTANCE;
+		
 		
 		TinnitusEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);

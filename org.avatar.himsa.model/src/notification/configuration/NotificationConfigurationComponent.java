@@ -35,7 +35,7 @@ import org.osgi.service.condition.Condition;
  * @generated
  */
 @Component(name = "NotificationConfigurator")
-@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"notification.util.NotificationResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource.Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,notification.util\"" })
+@Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"notification.util.NotificationResourceFactoryImpl, org.eclipse.emf.ecore.resource.Resource$Factory\"" , "uses:=\"org.eclipse.emf.ecore.resource,notification.util\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"notification.NotificationFactory, org.eclipse.emf.ecore.EFactory\"" , "uses:=\"org.eclipse.emf.ecore,notification\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"notification.NotificationPackage, org.eclipse.emf.ecore.EPackage\"" , "uses:=\"org.eclipse.emf.ecore,notification\"" })
 @Capability( namespace = "osgi.service", attribute = { "objectClass:List<String>=\"org.gecko.emf.osgi.configurator.EPackageConfigurator\"" , "uses:=\"org.eclipse.emf.ecore,notification\"" })
@@ -56,6 +56,7 @@ public class NotificationConfigurationComponent {
 	@Activate
 	public void activate(BundleContext ctx) {
 		NotificationPackage ePackage = NotificationPackageImpl.eINSTANCE;
+		
 		
 		NotificationEPackageConfigurator packageConfigurator = registerEPackageConfiguratorService(ePackage, ctx);
 		registerResourceFactoryService(ctx);
