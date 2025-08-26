@@ -14,9 +14,9 @@
 -runrequires: \
 	bnd.identity;id='org.apache.felix.gogo.command',\
 	bnd.identity;id='org.apache.felix.gogo.shell',\
+	bnd.identity;id='org.avatar.himsa.dummy.data.component',\
 	bnd.identity;id='org.avatar.himsa.rest',\
 	bnd.identity;id='org.avatar.himsa.runtime.config',\
-	bnd.identity;id='org.avatar.himsa.dummy.data.component',\
 	bnd.identity;id='org.avatar.himsa.patient.service',\
 	bnd.identity;id='org.avatar.himsa.backend',\
 	bnd.identity;id='de.avatar.connector.cleanup.impl',\
