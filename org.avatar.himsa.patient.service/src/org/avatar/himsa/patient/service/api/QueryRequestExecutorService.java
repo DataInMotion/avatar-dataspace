@@ -13,6 +13,7 @@
  */
 package org.avatar.himsa.patient.service.api;
 
+import de.avatar.metadata.ConnectorMetadata;
 import de.avatar.model.connector.EndpointResponse;
 import de.avatar.status.QueryRequest;
 
@@ -23,8 +24,8 @@ import de.avatar.status.QueryRequest;
  */
 public interface QueryRequestExecutorService {
 	
-	EndpointResponse executeQueryRequest(QueryRequest queryRequest);
+	EndpointResponse executeQueryRequest(QueryRequest queryRequest, ConnectorMetadata connectorMetadata);
 	
-	EndpointResponse executeDryRunRequest(QueryRequest queryRequest);
+	EndpointResponse executeDryRunRequest(QueryRequest queryRequest, ConnectorMetadata connectorMetadata);
 
 }

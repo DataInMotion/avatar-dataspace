@@ -1,10 +1,11 @@
 package org.avatar.himsa.dummy.data.component;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -177,7 +178,7 @@ public class DummyDataComponent {
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			patient.setBirthDate(xmlCalendar);
 
-			c.setTime(faker.date().past(7, TimeUnit.DAYS));
+			c.setTime(new Date(faker.timeAndDate().past(7, TimeUnit.DAYS).toEpochMilli()));
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			patient.setCreateDate(xmlCalendar);
 		} catch (DatatypeConfigurationException e) {
@@ -249,34 +250,35 @@ public class DummyDataComponent {
 		Qcdto qualityControl = Cm2Factory.eINSTANCE.createQcdto();
 		try {
 			GregorianCalendar c = new GregorianCalendar();
-			Timestamp d1 = faker.date().past(100, 7, TimeUnit.DAYS);
-			Timestamp d2 = faker.date().past(100, 7, TimeUnit.DAYS);
-			Timestamp d3 = faker.date().past(100, 7, TimeUnit.DAYS);
+			Instant d1 = faker.timeAndDate().past(100, 7, TimeUnit.DAYS);			
+			Instant d2 = faker.timeAndDate().past(100, 7, TimeUnit.DAYS);
+			Instant d3 = faker.timeAndDate().past(100, 7, TimeUnit.DAYS);
 			
-			Timestamp creation = d1.before(d2) ? d1 : d2;
-			creation = creation.before(d3) ? creation : d3;
-			Timestamp patientSig = creation.before(d3) ? d3 : creation;
-			Timestamp physicianSig = faker.date().between(patientSig, faker.date().past(6, TimeUnit.DAYS));
+			Instant creation = d1.isBefore(d2) ? d1 : d2;
+			creation = creation.isBefore(d3) ? creation : d3;
+			Instant patientSig = creation.isBefore(d3) ? d3 : creation;
+			Instant physicianSig = faker.timeAndDate().between(patientSig, faker.timeAndDate().past(6, TimeUnit.DAYS));
 			
-			c.setTime(creation.equals(d1) ? d2 : d1);
+			
+			c.setTime(creation.equals(d1) ? new Date(d2.toEpochMilli()) : new Date(d1.toEpochMilli()));
 			XMLGregorianCalendar xmlCalendar;
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			consent.setCreationDate(xmlCalendar); 
 			consentKey.setConsentDate(xmlCalendar);
 			
 			c = new GregorianCalendar();
-			c.setTime(patientSig);
+			c.setTime(new Date(patientSig.toEpochMilli()));
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			consent.setPatientSigningDate(xmlCalendar);
 			
 			c = new GregorianCalendar();
-			c.setTime(physicianSig);
+			c.setTime(new Date(physicianSig.toEpochMilli()));
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			consent.setPhysicianSigningDate(xmlCalendar);
 			
-			Timestamp d4 = faker.date().past(7, TimeUnit.DAYS);
+			Instant d4 = faker.timeAndDate().past(7, TimeUnit.DAYS);
 			c = new GregorianCalendar();
-			c.setTime(d4);
+			c.setTime(new Date(d4.toEpochMilli()));
 			xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 			qualityControl.setDate(xmlCalendar);
 		} catch (DatatypeConfigurationException e) {

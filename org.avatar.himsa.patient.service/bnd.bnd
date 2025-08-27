@@ -16,4 +16,6 @@
 	com.fasterxml.jackson.core.jackson-databind,\
 	com.fasterxml.jackson.core.jackson-core,\
 	de.avatar.query.status.model,\
-	org.avatar.dataspace.model;version=latest
+	org.avatar.dataspace.model;version=latest,\
+	org.avatar.hl7.dummy.data.component;version=latest,\
+	org.hl7.fhir.model

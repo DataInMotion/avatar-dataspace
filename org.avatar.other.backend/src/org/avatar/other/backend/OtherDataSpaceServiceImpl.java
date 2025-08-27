@@ -26,11 +26,14 @@ import org.avatar.ds.model.dataspace.DataSpaceResponse;
 import org.avatar.ds.model.dataspace.DataspacePackage;
 import org.avatar.provider.backend.api.DataSpaceHelper;
 import org.avatar.provider.backend.api.DataSpaceService;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.URIHandler;
 import org.gecko.emf.json.constants.EMFJs;
 import org.gecko.emf.osgi.constants.EMFNamespaces;
 import org.gecko.emf.osgi.constants.EMFUriHandlerConstants;
@@ -60,6 +63,9 @@ public class OtherDataSpaceServiceImpl implements DataSpaceService {
 			ResourceSet resSet,
 			Map<String, Object> properties) {		
 		this.resSet = resSet;
+		URIConverter uriConverter = resSet.getURIConverter();
+		EList<URIHandler> uriHandlers = uriConverter.getURIHandlers();
+		uriHandlers.forEach(uh -> System.out.println(uh.getClass().getName()));
 		baseDSUrl = (String) properties.getOrDefault("base.ds.url", null);
 		if(baseDSUrl == null) {
 			throw new IllegalArgumentException("Property base.ds.url must be set!");

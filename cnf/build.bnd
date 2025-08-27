@@ -9,6 +9,7 @@
 	geckoEMFUtil,\
 	geckoEMFRepository,\
 	geckoOSGi-Test,\
+	geckoEMFModels,\
 	geckoJacoco
 
 # No baselining and Maven Central promotion!!!
@@ -31,7 +32,7 @@ javac.target: 17
 
 -plugin.2.Central: \
     aQute.bnd.repository.maven.provider.MavenBndRepository; \
-        snapshotUrl="https://devel.data-in-motion.biz/nexus/repository/maven-snapshots/,https://oss.sonatype.org/content/repositories/snapshots/"; \
+        snapshotUrl="https://devel.data-in-motion.biz/nexus/repository/maven-snapshots/,https://central.sonatype.com/repository/maven-snapshots/"; \
         releaseUrl="https://repo.maven.apache.org/maven2/,https://devel.data-in-motion.biz/nexus/repository/dim-release/"; \
         index=${.}/central.mvn; \
         readOnly=true; \

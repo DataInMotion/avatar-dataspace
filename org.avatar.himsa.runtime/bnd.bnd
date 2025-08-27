@@ -1,3 +1,4 @@
 -buildpath: \
 	org.gecko.emf.repository.mongo,\
-	de.avatar.connector.cleanup.impl
+	de.avatar.connector.cleanup.impl,\
+	org.gecko.emf.osgi.component.minimal

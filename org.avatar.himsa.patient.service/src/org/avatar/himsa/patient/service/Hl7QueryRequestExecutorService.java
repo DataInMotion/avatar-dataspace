@@ -13,11 +13,13 @@
  */
 package org.avatar.himsa.patient.service;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -28,26 +30,20 @@ import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.avatar.ds.model.dataspace.DataSpaceResponse;
-import org.avatar.himsa.export.Patient;
-import org.avatar.himsa.patient.service.api.PatientAnonymizationService;
-import org.avatar.himsa.patient.service.api.PatientDataQualityService;
-import org.avatar.himsa.patient.service.api.PatientService;
-import org.avatar.himsa.patient.service.api.PatientService.PatientResponse;
-import org.avatar.himsa.patient.service.api.QueryHelper;
 import org.avatar.himsa.patient.service.api.QueryRequestExecutorService;
+import org.avatar.hl7.dummy.data.component.Hl7DummyDataComponent;
 import org.avatar.provider.backend.api.DataSpaceService;
 import org.avatar.provider.backend.api.DataStorageService;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.gecko.emf.repository.EMFRepository;
-import org.gecko.emf.repository.query.IQuery;
 import org.gecko.emf.utilities.UtilitiesFactory;
-import org.osgi.service.component.ComponentServiceObjects;
+import org.hl7.fhir.DomainResource;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 
 import de.avatar.metadata.ConnectorMetadata;
+import de.avatar.metadata.ConsentInfo;
+import de.avatar.metadata.ConsentMetadata;
 import de.avatar.metadata.MetadataFactory;
 import de.avatar.metadata.ResponseMetadata;
 import de.avatar.model.connector.AConnectorFactory;
@@ -55,50 +51,51 @@ import de.avatar.model.connector.AConnectorPackage;
 import de.avatar.model.connector.EcoreResult;
 import de.avatar.model.connector.EndpointResponse;
 import de.avatar.model.connector.ErrorResult;
-import de.avatar.model.connector.PendingResult;
 import de.avatar.model.connector.ResponseCode;
-import de.avatar.query.Operation;
-import de.avatar.query.QSubject;
+import de.avatar.query.DateComparator;
+import de.avatar.query.EnumComparator;
+import de.avatar.query.IsAfter;
+import de.avatar.query.IsAfterOrEqual;
+import de.avatar.query.IsBefore;
+import de.avatar.query.IsBeforeOrEqual;
+import de.avatar.query.QWhere;
 import de.avatar.query.Query;
+import de.avatar.query.StringComparator;
 import de.avatar.status.QueryRequest;
 
 /**
  * 
  * @author ilenia
- * @since Feb 6, 2025
+ * @since Aug 27, 2025
  */
-@Component(name = "PatientQueryRequestExecutorService")
-public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecutorService{
+@Component(name = "Hl7QueryRequestExecutorService")
+public class Hl7QueryRequestExecutorService implements QueryRequestExecutorService {
 
-	private static final Logger LOGGER = Logger.getLogger(PatientQueryRequestExecutorServiceImpl.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Hl7QueryRequestExecutorService.class.getName());
+	private final static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-	private PatientService patientService;
-	private ComponentServiceObjects<EMFRepository> repoSO;
-	private PatientAnonymizationService anonymizationService;
-	private PatientDataQualityService dataQualityService;
+
 	private DataStorageService jsonDataStorage;
 	private DataStorageService xmlDataStorage;
 	private DataSpaceService dataSpaceService;
+	private Hl7DummyDataComponent dummyDataComponent;
 
 
 	@Activate
-	public PatientQueryRequestExecutorServiceImpl(@Reference(cardinality = ReferenceCardinality.MANDATORY) PatientService patientService, 
-			@Reference(cardinality = ReferenceCardinality.MANDATORY) PatientAnonymizationService anonymizationService, 
-			@Reference(cardinality = ReferenceCardinality.MANDATORY) PatientDataQualityService dataQualityService, 
-			@Reference(cardinality = ReferenceCardinality.MANDATORY) ComponentServiceObjects<EMFRepository> repoSO, 
+	public Hl7QueryRequestExecutorService(
+			@Reference(cardinality = ReferenceCardinality.MANDATORY) Hl7DummyDataComponent dummyDataComponent,
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=json)") DataStorageService jsonDataStorage,
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=xml)") DataStorageService xmlDataStorage, 
-			@Reference(cardinality = ReferenceCardinality.MANDATORY) DataSpaceService dataSpaceService) throws ParseException {
-		this.patientService = patientService;
-		this.anonymizationService = anonymizationService;
-		this.dataQualityService = dataQualityService;
-		this.repoSO = repoSO;
+			@Reference(cardinality = ReferenceCardinality.MANDATORY) DataSpaceService dataSpaceService
+			) throws ParseException {
+	
+		this.dummyDataComponent = dummyDataComponent;
 		this.jsonDataStorage = jsonDataStorage;
 		this.xmlDataStorage = xmlDataStorage;
 		this.dataSpaceService = dataSpaceService;
 	}
 
-
+	
 	/* 
 	 * (non-Javadoc)
 	 * @see org.avatar.himsa.patient.service.api.QueryRequestExecutorService#executeQueryRequest(de.avatar.status.QueryRequest)
@@ -118,6 +115,15 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 		}		
 	}
 
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.himsa.patient.service.api.QueryRequestExecutorService#executeDryRunRequest(de.avatar.status.QueryRequest)
+	 */
+	@Override
+	public EndpointResponse executeDryRunRequest(QueryRequest queryRequest, ConnectorMetadata connectorMetadata) {
+		throw new UnsupportedOperationException("Not yet implemented!");
+	}
+	
 	class QueryTask implements Callable<EndpointResponse> {
 
 		private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ss'Z'")
@@ -126,7 +132,6 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 		private Query query;
 		private String requestId;
 		private String contentType;
-		private String requestType;
 
 		private ConnectorMetadata connectorMetadata;
 
@@ -135,7 +140,6 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			Objects.requireNonNull(queryRequest, "QueryRequest cannot be null!");
 			Objects.requireNonNull(queryRequest.getRequestId(), "Request id cannot be null!");
 			Objects.requireNonNull(queryRequest.getQuery(), "Query cannot be null!");
-			this.requestType = requestType;
 			this.requestId = queryRequest.getRequestId();
 			this.query = queryRequest.getQuery();
 			switch(queryRequest.getContentType()) {
@@ -152,7 +156,6 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 		 * (non-Javadoc)
 		 * @see java.util.concurrent.Callable#call()
 		 */
-		@SuppressWarnings("unchecked")
 		@Override
 		public EndpointResponse call() throws Exception {
 
@@ -163,48 +166,40 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			EndpointResponse response;
 
 			try {
-				IQuery iQuery = QueryHelper.buildQuery(query, repoSO);
-				EStructuralFeature[][] projections =  new EStructuralFeature[query.getSubject().size()][];
-				int i = 0;
-				for(QSubject subj : query.getSubject()) {
-					projections[i] = subj.getFeaturePath().getFeature().toArray(new EStructuralFeature[subj.getFeaturePath().getFeature().size()]);
-					i++;
+				Date minBithDate = null, maxBirthDate = null;
+				String gender = null, observationCode = null;
+				for(QWhere where : query.getWhere()) {
+					if(where.getComparator() instanceof DateComparator dateComparator) {
+						if(dateComparator instanceof IsBefore || dateComparator instanceof IsBeforeOrEqual) {
+							maxBirthDate = DATE_FORMAT.parse(dateComparator.getValue());
+						} else if(dateComparator instanceof IsAfter || dateComparator instanceof IsAfterOrEqual) {
+							minBithDate = DATE_FORMAT.parse(dateComparator.getValue());
+						}
+					}
+					else if(where.getComparator() instanceof EnumComparator enumComparator) {
+						gender = enumComparator.getValue();
+					} else if(where.getComparator() instanceof StringComparator strComparator) {
+						observationCode = strComparator.getValue();
+					}
 				}
-				PatientResponse patientResponse = patientService.getPatientsByQuery(iQuery, query.getLimit(), query.getSkip(), query.getSortBy(), projections);
-
+				LOGGER.info(String.format("Start retrieving data..."));
+				List<DomainResource> resources = dummyDataComponent.generateDomainResources(50, gender, minBithDate, maxBirthDate, observationCode);
+					
 				response = AConnectorFactory.eINSTANCE.createEndpointResponse();
-				response.getMetadata().add(connectorMetadata);
 				response.setSourceId(requestId);
 				addResponseMetadata(response, requestId);
-				response.getMetadata().addAll(patientResponse.getMetadata());
-				if("dryrun".equals(requestType)) {
-					response.setCode(ResponseCode.DRYRUN_OK);
-					PendingResult result = AConnectorFactory.eINSTANCE.createPendingResult();
-					result.setEstRuntime(77);
-					response.setResult(result);
-					return response;
-				}
-				applyPostOperations(patientResponse.getPatients(), query.getSubject());
-
-				LOGGER.info(String.format("Start data quality..."));		
-				patientResponse.getMetadata().add(dataQualityService.getDataQualityMetadataForPatients(patientResponse.getPatients(), projections));
-
-				LOGGER.info(String.format("Start anonymizing data..."));
-				List<Patient> anonymizedPatients = (List<Patient>) anonymizationService.anonymizeEObjects(patientResponse.getPatients());
-				patientResponse.getMetadata().add(anonymizationService.getAnonymizationMetadataForFeatures(projections));
-
-				PatientResponse anonymResponse = new PatientResponse(anonymizedPatients, Collections.emptyList());				
-
-				if(anonymResponse.getPatients().isEmpty()) {
+				response.getMetadata().add(getConsentMetadata(resources.size()));
+				response.getMetadata().add(connectorMetadata);
+				
+				if(resources.isEmpty()) {
 					response.setCode(ResponseCode.NO_CONTENT);
 				} else {
 					response.setCode(ResponseCode.OK);
 					org.gecko.emf.utilities.Response emfResponse = UtilitiesFactory.eINSTANCE.createResponse();
-					emfResponse.getData().addAll(anonymResponse.getPatients());
+					emfResponse.getData().addAll(resources);
 					EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
 					result.setValue(emfResponse);
-					response.setResult(result);		
-					response.getMetadata().addAll(anonymResponse.getMetadata());					
+					response.setResult(result);						
 				}	
 				LOGGER.info(String.format("Start saving data..."));
 				try {
@@ -262,44 +257,20 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 			response.getMetadata().add(metadata);
 		}
 
-		private void applyPostOperations(List<Patient> patients, List<QSubject> subjects) {
-			for(Patient patient : patients) {
-				for(QSubject subj : subjects) {
-					EStructuralFeature feature = subj.getFeaturePath().getFeature().get(subj.getFeaturePath().getFeature().size()-1);
-					patient.eSet(feature, doApplyPostOperation(patient.eGet(feature), subj.getOperation()));
-				}
-			}		
-		}
-
-		private Object doApplyPostOperation(Object featureValue, Operation operation) {
-			if(operation == null) return featureValue;
-			switch(operation.eClass().getName()) {
-			case "ToLowerCase":
-				return ((String) featureValue).toLowerCase();
-			case "ToUpperCase":
-				return ((String) featureValue).toUpperCase();		
-			}
-			LOGGER.warning(String.format("Post Query Operation %s currently not supported. Ignoring it!", operation.eClass().getName()));
-			return featureValue;
-		}
+	
+	}
+	
+	private ConsentMetadata getConsentMetadata(int resourcesSize) {
+		ConsentMetadata metadata = MetadataFactory.eINSTANCE.createConsentMetadata();
+		metadata.setResultsBeforeConsentFilter(50);
+		metadata.setResultsAfterConsentFilter(resourcesSize/4);
+		ConsentInfo consentInfo = MetadataFactory.eINSTANCE.createConsentInfo();
+		consentInfo.setDomainId("avatar");
+		consentInfo.setPolicyId("medical_history_policy");
+		consentInfo.setPolicyVersion("1.0");
+		consentInfo.setConsentIdType("Patient ID");
+		metadata.setConsentInfo(consentInfo);
+		return metadata;
 	}
 
-	/* 
-	 * (non-Javadoc)
-	 * @see org.avatar.himsa.patient.service.api.QueryRequestExecutorService#executeDryRunRequest(de.avatar.status.QueryRequest)
-	 */
-	@Override
-	public EndpointResponse executeDryRunRequest(QueryRequest queryRequest, ConnectorMetadata connectorMetadata) {
-		ExecutorService executor = Executors.newSingleThreadExecutor();
-		QueryTask task = new QueryTask(queryRequest, "dryrun", connectorMetadata);
-		try {
-			Future<EndpointResponse> submit = executor.submit(task);
-			EndpointResponse response = submit.get();
-			return response;
-		} catch(Exception e) {
-			return task.createErrorResponse(queryRequest.getRequestId(), e);
-		} finally {
-			executor.shutdown();
-		}		
-	}
 }

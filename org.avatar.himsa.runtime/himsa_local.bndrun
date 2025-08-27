@@ -16,7 +16,16 @@
 	bnd.identity;id='biz.aQute.scheduler.basic.provider'
 	
 -runblacklist: bnd.identity;id='org.apache.felix.http.jetty'
+    
+-runbundles+: \
+	org.gecko.emf.osgi.component.minimal;startlevel=1,\
+	*;startlevel=100
+	
+-runtrace: true
+	
 -runbundles: \
+	biz.aQute.api.scheduler;version='[1.11.0,1.11.1)',\
+	biz.aQute.scheduler.basic.provider;version='[1.11.0,1.11.1)',\
 	com.fasterxml.jackson.core.jackson-annotations;version='[2.15.2,2.15.3)',\
 	com.fasterxml.jackson.core.jackson-core;version='[2.15.2,2.15.3)',\
 	com.fasterxml.jackson.core.jackson-databind;version='[2.15.2,2.15.3)',\
@@ -24,7 +33,12 @@
 	com.fasterxml.jackson.dataformat.jackson-dataformat-yaml;version='[2.14.1,2.14.2)',\
 	com.fasterxml.jackson.datatype.jackson-datatype-jsr310;version='[2.14.1,2.14.2)',\
 	com.googlecode.libphonenumber;version='[8.13.50,8.13.51)',\
+	de.avatar.connector.cleanup.api;version='[1.0.0,1.0.1)',\
+	de.avatar.connector.cleanup.impl;version='[1.0.0,1.0.1)',\
 	de.avatar.connector.model;version='[1.0.0,1.0.1)',\
+	de.avatar.metadata.model;version='[1.0.0,1.0.1)',\
+	de.avatar.query.model;version='[1.0.0,1.0.1)',\
+	de.avatar.query.status.model;version='[1.0.0,1.0.1)',\
 	jakarta.activation-api;version='[2.1.2,2.1.3)',\
 	jakarta.annotation-api;version='[2.1.1,2.1.2)',\
 	jakarta.inject.jakarta.inject-api;version='[2.0.1,2.0.2)',\
@@ -43,12 +57,15 @@
 	org.apache.felix.gogo.shell;version='[1.1.4,1.1.5)',\
 	org.apache.felix.http.jetty12;version='[1.0.4,1.0.5)',\
 	org.apache.felix.http.servlet-api;version='[3.0.0,3.0.1)',\
-	org.apache.felix.scr;version='[2.2.10,2.2.11)',\
+	org.avatar.dataspace.model;version=snapshot,\
 	org.avatar.gics.service;version=snapshot,\
+	org.avatar.himsa.backend;version=snapshot,\
 	org.avatar.himsa.dummy.data.component;version=snapshot,\
 	org.avatar.himsa.local.config;version=snapshot,\
 	org.avatar.himsa.model;version=snapshot,\
+	org.avatar.himsa.patient.service;version=snapshot,\
 	org.avatar.himsa.rest;version=snapshot,\
+	org.avatar.provider.backend.api;version=snapshot,\
 	org.eclipse.emf.common;version='[2.29.0,2.29.1)',\
 	org.eclipse.emf.ecore;version='[2.35.0,2.35.1)',\
 	org.eclipse.emf.ecore.xmi;version='[2.36.0,2.36.1)',\
@@ -60,10 +77,12 @@
 	org.emau.icmvc.ganimed.ttp.cm2;version='[1.0.0,1.0.1)',\
 	org.gecko.emf.collections;version='[2.2.2,2.2.3)',\
 	org.gecko.emf.json;version='[1.5.1,1.5.2)',\
+	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
 	org.gecko.emf.mongo.component;version='[6.1.0,6.1.1)',\
 	org.gecko.emf.repository.api;version='[9.3.0,9.3.1)',\
 	org.gecko.emf.repository.mongo;version='[3.2.0,3.2.1)',\
 	org.gecko.emf.rest.jakartars;version='[2.3.0,2.3.1)',\
+	org.gecko.emf.util.annotations;version='[1.4.1,1.4.2)',\
 	org.gecko.emf.util.model;version='[2.2.2,2.2.3)',\
 	org.gecko.mongo.osgi.api;version='[6.1.0,6.1.1)',\
 	org.gecko.mongo.osgi.component;version='[6.1.0,6.1.1)',\
@@ -93,20 +112,10 @@
 	org.yaml.snakeyaml;version='[1.33.0,1.33.1)',\
 	slf4j.api;version='[1.7.36,1.7.37)',\
 	slf4j.jcl;version='[1.7.36,1.7.37)',\
-	org.avatar.himsa.patient.service;version=snapshot,\
-	de.avatar.metadata.model;version='[1.0.0,1.0.1)',\
-	de.avatar.query.model;version='[1.0.0,1.0.1)',\
-	de.avatar.query.status.model;version='[1.0.0,1.0.1)',\
-	org.avatar.provider.backend.api;version=snapshot,\
-	org.avatar.himsa.backend;version=snapshot,\
-	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
-	org.avatar.dataspace.model;version=snapshot,\
-	de.avatar.connector.cleanup.api;version='[1.0.0,1.0.1)',\
-	de.avatar.connector.cleanup.impl;version='[1.0.0,1.0.1)',\
-	biz.aQute.api.scheduler;version='[1.11.0,1.11.1)',\
-	biz.aQute.scheduler.basic.provider;version='[1.11.0,1.11.1)',\
-	org.gecko.emf.util.annotations;version='[1.4.1,1.4.2)',\
-	org.gecko.emf.osgi.api;version='[6.3.0,6.3.1)',\
-	org.gecko.emf.osgi.component.config;version='[6.3.0,6.3.1)',\
-	org.gecko.emf.osgi.component.minimal;version='[6.3.0,6.3.1)',\
-	org.gecko.emf.osgi.model.info;version='[6.3.0,6.3.1)'
+	org.apache.felix.scr;version='[2.2.12,2.2.13)',\
+	org.avatar.hl7.dummy.data.component;version=snapshot,\
+	org.gecko.emf.osgi.component.config;version='[6.3.2,6.3.3)',\
+	org.gecko.emf.osgi.component.minimal;version='[6.3.2,6.3.3)',\
+	org.gecko.emf.osgi.model.info;version='[6.3.2,6.3.3)',\
+	org.hl7.fhir.model;version='[5.0.0,5.0.1)',\
+	org.w3.xhtml.model;version='[1.0.0,1.0.1)'

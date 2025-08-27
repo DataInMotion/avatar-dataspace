@@ -13,4 +13,5 @@
 	org.avatar.provider.backend.api;version=latest,\
 	de.avatar.query.status.model,\
 	org.avatar.dataspace.model;version=latest,\
-	org.gecko.emf.json
+	org.gecko.emf.json,\
+	org.hl7.fhir.model

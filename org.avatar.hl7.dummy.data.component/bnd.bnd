@@ -1,0 +1,6 @@
+-library: enable-emf
+-buildpath: \
+	org.hl7.fhir.model,\
+	net.datafaker,\
+	org.emau.icmvc.ganimed.ttp.cm2,\
+	org.avatar.gics.service
