@@ -18,4 +18,5 @@
 	de.avatar.query.status.model,\
 	org.avatar.dataspace.model;version=latest,\
 	org.avatar.hl7.dummy.data.component;version=latest,\
-	org.hl7.fhir.model
+	org.hl7.fhir.model,\
+	org.gecko.emf.json

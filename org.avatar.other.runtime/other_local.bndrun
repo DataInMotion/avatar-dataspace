@@ -16,7 +16,9 @@
 	bnd.identity;id='biz.aQute.scheduler.basic.provider',\
 	bnd.identity;id='org.avatar.hl7.dummy.data.component'
 	
--runblacklist: bnd.identity;id='org.apache.felix.http.jetty'
+-runblacklist: \
+	bnd.identity;id='org.apache.felix.http.jetty',\
+	bnd.identity;id='org.osgi.service.component.annotations';version='[1.4.0;1.5.0)'
 -runbundles: \
 	com.fasterxml.jackson.core.jackson-annotations;version='[2.15.2,2.15.3)',\
 	com.fasterxml.jackson.core.jackson-core;version='[2.15.2,2.15.3)',\
@@ -35,7 +37,6 @@
 	javassist;version='[3.29.2,3.29.3)',\
 	net.datafaker;version='[2.4.2,2.4.3)',\
 	org.apache.aries.spifly.dynamic.framework.extension;version='[1.3.7,1.3.8)',\
-	org.apache.commons.logging;version='[1.2.0,1.2.1)',\
 	org.apache.felix.cm.json;version='[2.0.4,2.0.5)',\
 	org.apache.felix.configadmin;version='[1.9.26,1.9.27)',\
 	org.apache.felix.configurator;version='[1.0.18,1.0.19)',\
@@ -63,7 +64,6 @@
 	org.gecko.emf.repository.mongo;version='[3.2.0,3.2.1)',\
 	org.gecko.emf.rest.jakartars;version='[2.3.0,2.3.1)',\
 	org.gecko.emf.util.model;version='[2.2.2,2.2.3)',\
-	org.gecko.mongo.osgi.api;version='[6.1.0,6.1.1)',\
 	org.gecko.mongo.osgi.component;version='[6.1.0,6.1.1)',\
 	org.glassfish.hk2.api;version='[3.0.5,3.0.6)',\
 	org.glassfish.hk2.external.aopalliance-repackaged;version='[3.0.5,3.0.6)',\
@@ -90,7 +90,6 @@
 	org.xmlsoap.model;version='[1.0.0,1.0.1)',\
 	org.yaml.snakeyaml;version='[1.33.0,1.33.1)',\
 	slf4j.api;version='[1.7.36,1.7.37)',\
-	slf4j.jcl;version='[1.7.36,1.7.37)',\
 	org.avatar.himsa.patient.service;version=snapshot,\
 	org.avatar.other.local.config;version=snapshot,\
 	org.avatar.other.rest;version=snapshot,\
@@ -102,7 +101,6 @@
 	de.avatar.query.status.model;version='[1.0.0,1.0.1)',\
 	org.avatar.dataspace.model;version=snapshot,\
 	org.avatar.provider.backend.api;version=snapshot,\
-	org.gecko.emf.mongo.api;version='[6.1.0,6.1.1)',\
 	biz.aQute.api.scheduler;version='[1.11.0,1.11.1)',\
 	biz.aQute.scheduler.basic.provider;version='[1.11.0,1.11.1)',\
 	org.gecko.emf.util.annotations;version='[1.4.1,1.4.2)',\
@@ -110,6 +108,7 @@
 	org.avatar.hl7.dummy.data.component;version=snapshot,\
 	org.hl7.fhir.model;version='[5.0.0,5.0.1)',\
 	org.w3.xhtml.model;version='[1.0.0,1.0.1)',\
-	org.gecko.emf.osgi.component.config;version='[6.3.2,6.3.3)',\
 	org.gecko.emf.osgi.component.minimal;version='[6.3.2,6.3.3)',\
-	org.gecko.emf.osgi.model.info;version='[6.3.2,6.3.3)'
+	org.gecko.emf.osgi.model.info;version='[6.3.2,6.3.3)',\
+	org.osgi.service.cm;version='[1.6.1,1.6.2)',\
+	slf4j.simple;version='[1.7.36,1.7.37)'

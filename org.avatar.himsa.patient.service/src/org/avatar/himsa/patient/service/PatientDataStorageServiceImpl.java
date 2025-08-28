@@ -102,7 +102,7 @@ public class PatientDataStorageServiceImpl implements DataStorageService {
 		if(result instanceof EcoreResult ecoreRes) {
 			resource.getContents().add(ecoreRes.getValue());			
 		}
-		try {				
+		try {	
 			resource.save(null);				
 		} catch(IOException e) {
 			LOGGER.severe(String.format("IOException while saving EcoreResult for response from connector with id %s", responseId));

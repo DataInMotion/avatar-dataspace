@@ -84,6 +84,7 @@ public class FHIRHelper {
 	public static Patient generatePatient(String gender, Date minBirthDate, Date maxBirthDate) throws Exception {
 
 		Patient patient = FHIRFactory.eINSTANCE.createPatient();
+		
 		patient.setId(generateId());
 		org.hl7.fhir.Date birthDate = FHIRFactory.eINSTANCE.createDate();
 		birthDate.setValue(generateRandomBirthDate(minBirthDate, maxBirthDate));
@@ -102,6 +103,7 @@ public class FHIRHelper {
 
 		Observation observation = FHIRFactory.eINSTANCE.createObservation();
 		observation.setId(generateId());
+		
 
 		observation.setSubject(createReference("Patient/"+patientId));
 		observation.setEncounter(createReference("Encounter/"+encounterId));		

@@ -20,7 +20,8 @@
 	bnd.identity;id='org.avatar.himsa.patient.service',\
 	bnd.identity;id='org.avatar.himsa.backend',\
 	bnd.identity;id='de.avatar.connector.cleanup.impl',\
-	bnd.identity;id='biz.aQute.scheduler.basic.provider'
+	bnd.identity;id='biz.aQute.scheduler.basic.provider',\
+	bnd.identity;id='org.avatar.hl7.dummy.data.component'
 -runbundles: \
 	jakarta.activation-api;version='[2.1.2,2.1.3)',\
 	jakarta.annotation-api;version='[2.1.1,2.1.2)',\

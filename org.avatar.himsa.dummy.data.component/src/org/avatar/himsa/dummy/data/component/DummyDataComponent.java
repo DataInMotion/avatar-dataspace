@@ -48,6 +48,8 @@ import org.emau.icmvc.ganimed.ttp.cm2.ModuleStatesType;
 import org.emau.icmvc.ganimed.ttp.cm2.Qcdto;
 import org.emau.icmvc.ganimed.ttp.cm2.SignerIdDTO;
 import org.gecko.emf.mongo.Options;
+import org.gecko.emf.osgi.UriMapProvider;
+import org.gecko.emf.osgi.constants.EMFNamespaces;
 import org.gecko.emf.repository.EMFRepository;
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
@@ -61,7 +63,7 @@ import audiogram502.DocumentRoot;
 import audiogram502.HIMSAAudiometricStandardType;
 import net.datafaker.Faker;
 
-@Component(immediate=true, name="DummyDataComponent", configurationPid = "DataLoadOptions", configurationPolicy = ConfigurationPolicy.REQUIRE)
+@Component(reference = {@Reference(service = UriMapProvider.class, name = "condition", target = "(uri.map.src=mongodb://avatar/)")}, immediate=true, name="DummyDataComponent", configurationPid = "DataLoadOptions", configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class DummyDataComponent {
 
 	@Reference(target="(repo_id=avatar.avatar)")
@@ -69,6 +71,9 @@ public class DummyDataComponent {
 	
 	@Reference
 	GICSService gicsService;
+	
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(" + EMFNamespaces.EMF_CONFIGURATOR_NAME + "=mongo)")
+	ResourceSet resourceSet;
 	
 	private static final Logger LOGGER = Logger.getLogger(DummyDataComponent.class.getName());
 	
@@ -80,14 +85,13 @@ public class DummyDataComponent {
 	private PromiseFactory factory = new PromiseFactory(Executors.newFixedThreadPool(4));
 
 	private Map<String, Object> properties;
-	private ResourceSet resourceSet;
+//	private ResourceSet resourceSet;
 	private HIMSAAudiometricStandardType sampleAudiogram;
 	
 	@Activate
-	public DummyDataComponent(Map<String, Object> properties, @Reference(cardinality = ReferenceCardinality.MANDATORY)
-	ResourceSet resourceSet) {		
+	public void activatet(Map<String, Object> properties) {		
 		this.properties = properties;
-		this.resourceSet = resourceSet;
+//		this.resourceSet = resourceSet;
 		factory.submit(() -> {
 			loadSampleAudiogram();
 			doCreateDummyData();

@@ -1,0 +1,7 @@
+
+-buildpath: \
+	org.gecko.mongo.osgi.api,\
+	org.eclipse.emf.ecore,\
+	org.osgi.service.condition,\
+	org.gecko.emf.osgi.api;version=latest,\
+	org.osgi.service.component.annotations;version='1.5'
