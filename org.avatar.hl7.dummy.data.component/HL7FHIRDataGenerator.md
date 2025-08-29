@@ -6,7 +6,7 @@
 
 + The query should have at least one `from` (`Patient`, `Observation`, `Condition`, `Encounter`).
 
-+ The `where` can be a `DateComparator` on the `Patient#birthDate`, an `EnumComparator` on the `Patient#gender`, a `StringComparator` on an `Observation#code` or a combination of those;
++ The `where` can be a `DateComparator` on the `Patient#birthDate` or an `EnumComparator` on the `Patient#gender`, or both;
 
 + Supported `Observation#code` values are:
 
@@ -42,5 +42,3 @@
   codeMap.put("HP:0001878", new String[]{"D64.9"}); // Anemia -> Anemia, unspecified
   codeMap.put("HP:0002119", new String[]{"G40.909"}); // Seizure -> Epilepsy
   ```
-
-  
