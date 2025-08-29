@@ -241,7 +241,7 @@ public class PatientImpl extends MinimalEObjectImpl.Container implements Patient
 	 * @generated
 	 * @ordered
 	 */
-	protected static final GenderType GENDER_EDEFAULT = null;
+	protected static final GenderType GENDER_EDEFAULT = GenderType.MALE;
 
 	/**
 	 * The cached value of the '{@link #getGender() <em>Gender</em>}' attribute.
@@ -1286,7 +1286,7 @@ public class PatientImpl extends MinimalEObjectImpl.Container implements Patient
 	@Override
 	public void setGender(GenderType newGender) {
 		GenderType oldGender = gender;
-		gender = newGender;
+		gender = newGender == null ? GENDER_EDEFAULT : newGender;
 		boolean oldGenderESet = genderESet;
 		genderESet = true;
 		if (eNotificationRequired())

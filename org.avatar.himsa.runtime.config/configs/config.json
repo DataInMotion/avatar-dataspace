@@ -36,7 +36,8 @@
   		"consent.id.type": "Patient ID"
   	},
   	"DataLoadOptions": {
-  		"collection.name": "Patient"
+  		"collection.name": "Patient",
+  		"hl7.collection.name": "Hl7Patient"
   	}, 
   	"DataStorageService~json": {
   		"data.format": "json", 

@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.patient.service.api.PatientDataQualityService;
 import org.avatar.provider.backend.api.DataQualityService;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.osgi.service.component.annotations.Activate;
@@ -84,6 +85,24 @@ public class PatientDataQualityServiceImpl implements PatientDataQualityService 
 		for(EStructuralFeature[] projPath : projections) {
 			for(Patient patient : patients) {
 				performDataQuality(patient, patients.size(), patient.eClass().getName(), projPath);
+			}
+		}
+		return metadata;
+	}
+	
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.himsa.patient.service.api.PatientDataQualityService#getDataQualityMetadataForObjects(java.util.List, org.eclipse.emf.ecore.EStructuralFeature[][])
+	 */
+	@Override
+	public DataQualityMetadata getDataQualityMetadataForObjects(List<? extends EObject> patients, EClass objectEClass,
+			EStructuralFeature[]... projections) {
+		DataQualityMetadata metadata = getDataQualityMetadata();
+		f1 = metadata.getDataQualityFilter().stream().filter(f -> "check-null-obj".equals(f.getName())).findAny().orElse(null);
+		f2 = metadata.getDataQualityFilter().stream().filter(f -> "check-empty-string".equals(f.getName())).findAny().orElse(null);
+		for(EStructuralFeature[] projPath : projections) {
+			for(EObject patient : patients) {
+				performDataQuality(patient, patients.size(), objectEClass.getName(), projPath);
 			}
 		}
 		return metadata;
@@ -155,4 +174,6 @@ public class PatientDataQualityServiceImpl implements PatientDataQualityService 
 		}
 		return obj;
 	}
+
+	
 }

@@ -64,7 +64,7 @@ public class QueryHelper {
 			List<IQuery> andQueries = new LinkedList<>();
 			List<IQuery> orQueries = new LinkedList<>();
 			for(QWhere w : query.getWhere()) {
-				IQueryBuilder qb = getQueryBuilderByComparatorName(w.getComparator().eClass().getName(), repo);				
+				IQueryBuilder qb = getQueryBuilderByComparatorName(w.getComparator().eClass().getName(), repo);			
 				qb = qb.column((EAttribute)w.getFeaturePath().getFeature().get(w.getFeaturePath().getFeature().size()-1));
 				qb = setQueryValueByComparator(w.getComparator(), qb);
 				if(w instanceof And) andQueries.add(qb.build());
@@ -82,6 +82,8 @@ public class QueryHelper {
 			repoSO.ungetService(repo);
 		}
 	}
+	
+
 
 	
 	private static IQueryBuilder getQueryBuilderByComparatorName(String comparatorName, QueryRepository repo) {

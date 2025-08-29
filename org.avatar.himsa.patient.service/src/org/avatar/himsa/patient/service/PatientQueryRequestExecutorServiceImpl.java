@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.Callable;
@@ -44,6 +45,7 @@ import org.gecko.emf.utilities.UtilitiesFactory;
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 
@@ -67,7 +69,7 @@ import de.avatar.status.QueryRequest;
  * @author ilenia
  * @since Feb 6, 2025
  */
-@Component(name = "PatientQueryRequestExecutorService")
+@Component(name = "PatientQueryRequestExecutorService", configurationPid = {"DataLoadOptions"}, configurationPolicy = ConfigurationPolicy.REQUIRE)
 public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecutorService{
 
 	private static final Logger LOGGER = Logger.getLogger(PatientQueryRequestExecutorServiceImpl.class.getName());
@@ -80,15 +82,19 @@ public class PatientQueryRequestExecutorServiceImpl implements QueryRequestExecu
 	private DataStorageService xmlDataStorage;
 	private DataSpaceService dataSpaceService;
 
+	private Map<String, Object> properties;
+
 
 	@Activate
-	public PatientQueryRequestExecutorServiceImpl(@Reference(cardinality = ReferenceCardinality.MANDATORY) PatientService patientService, 
+	public PatientQueryRequestExecutorServiceImpl(Map<String, Object> properties,
+			@Reference(cardinality = ReferenceCardinality.MANDATORY) PatientService patientService, 
 			@Reference(cardinality = ReferenceCardinality.MANDATORY) PatientAnonymizationService anonymizationService, 
 			@Reference(cardinality = ReferenceCardinality.MANDATORY) PatientDataQualityService dataQualityService, 
 			@Reference(cardinality = ReferenceCardinality.MANDATORY) ComponentServiceObjects<EMFRepository> repoSO, 
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=json)") DataStorageService jsonDataStorage,
 			@Reference(cardinality = ReferenceCardinality.MANDATORY, target = "(data.format=xml)") DataStorageService xmlDataStorage, 
 			@Reference(cardinality = ReferenceCardinality.MANDATORY) DataSpaceService dataSpaceService) throws ParseException {
+		this.properties = properties;
 		this.patientService = patientService;
 		this.anonymizationService = anonymizationService;
 		this.dataQualityService = dataQualityService;

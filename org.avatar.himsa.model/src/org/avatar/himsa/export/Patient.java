@@ -358,14 +358,16 @@ public interface Patient extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Gender</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.avatar.himsa.export.GenderType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Gender</em>' attribute.
+	 * @see org.avatar.himsa.export.GenderType
 	 * @see #isSetGender()
 	 * @see #unsetGender()
 	 * @see #setGender(GenderType)
 	 * @see org.avatar.himsa.export.PatientExportPackage#getPatient_Gender()
-	 * @model unsettable="true" dataType="org.avatar.himsa.export.GenderTypeObject"
+	 * @model unsettable="true"
 	 *        extendedMetaData="kind='element' name='Gender' namespace='##targetNamespace'"
 	 * @generated
 	 */
@@ -376,6 +378,7 @@ public interface Patient extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Gender</em>' attribute.
+	 * @see org.avatar.himsa.export.GenderType
 	 * @see #isSetGender()
 	 * @see #unsetGender()
 	 * @see #getGender()

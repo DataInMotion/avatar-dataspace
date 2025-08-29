@@ -24,6 +24,8 @@ import org.avatar.himsa.export.PatientExportFactory;
 import org.avatar.himsa.export.PatientExportPackage;
 import org.avatar.himsa.patient.service.api.PatientService;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.gecko.emf.mongo.Options;
 import org.gecko.emf.repository.EMFRepository;
@@ -71,16 +73,18 @@ public class PatientServiceImpl implements PatientService {
 	private String consentPolicyId;
 	private String consentPolicyVersion;
 	private String consentIdType;
-	Map<Object, Object> loadOptions = new HashMap<>();
+//	Map<Object, Object> loadOptions = new HashMap<>();
+	private Map<String, Object> properties;
 	
 	
 	@Activate
 	public void activate(Map<String, Object> properties) {
+		this.properties = properties;
 		consentDomainId = (String) properties.get("consent.domain.id");
 		consentPolicyId = (String) properties.get("consent.policy.id");
 		consentPolicyVersion = (String) properties.get("consent.policy.version");
 		consentIdType = (String) properties.get("consent.id.type");
-		if(properties.containsKey("collection.name")) loadOptions.put(Options.OPTION_COLLECTION_NAME, (String) properties.get("collection.name"));
+//		if(properties.containsKey("collection.name")) loadOptions.put(Options.OPTION_COLLECTION_NAME, (String) properties.get("collection.name"));
 	}
 	
 	
@@ -101,7 +105,9 @@ public class PatientServiceImpl implements PatientService {
 		
 		EMFRepository repo = repoSO.getService();
 		ConsentMetadata metadata = MetadataFactory.eINSTANCE.createConsentMetadata();
-		
+		Map<Object, Object> loadOptions = new HashMap<>();
+		if(properties.containsKey("collection.name")) loadOptions.put(Options.OPTION_COLLECTION_NAME, (String) properties.get("collection.name"));
+
 		try {
 			Patient patient = repo.getEObject(modelPackage.getPatient(), id, loadOptions);
 			if(patient != null) {
@@ -140,7 +146,9 @@ public class PatientServiceImpl implements PatientService {
 				getAllConsentedIdsFor(consentDomainId, consentPolicyId, consentPolicyVersion, consentIdType).
 				getReturn().
 				getConsentIds();		
-		
+		Map<Object, Object> loadOptions = new HashMap<>();
+		if(properties.containsKey("collection.name")) loadOptions.put(Options.OPTION_COLLECTION_NAME, (String) properties.get("collection.name"));
+
 		QueryRepository repo = (QueryRepository) repoSO.getService();
 		try {
 			IQuery consentQuery = repo.createQueryBuilder().column(modelPackage.getPatient_PatientGUID()).in(consentIds.toArray()).build();
@@ -168,6 +176,52 @@ public class PatientServiceImpl implements PatientService {
 			metadata.setConsentInfo(consentInfo);
 			patientResponse.getMetadata().add(metadata);
 			patientResponse.getPatients().addAll(filteredPatients);
+			return patientResponse;
+		} finally {
+			repoSO.ungetService(repo);
+		}
+	}
+
+
+	/* 
+	 * (non-Javadoc)
+	 * @see org.avatar.himsa.patient.service.api.PatientService#getObjectsByQuery(org.eclipse.emf.ecore.EClass, java.util.Map, org.gecko.emf.repository.query.IQuery, int, int, java.util.List, org.eclipse.emf.ecore.EStructuralFeature[][])
+	 */
+	@Override
+	public GeneralResponse getObjectsByQuery(EClass eClass, Map<Object, Object> loadOptions, IQuery query, int limit,
+			int skip, List<SortEntity> sort, EStructuralFeature[]... projectionFeaturePaths) {
+		List<String> consentIds = gicsService.
+				getAllConsentedIdsFor(consentDomainId, consentPolicyId, consentPolicyVersion, consentIdType).
+				getReturn().
+				getConsentIds();		
+		
+		QueryRepository repo = (QueryRepository) repoSO.getService();
+		try {
+			IQuery consentQuery = repo.createQueryBuilder().column(modelPackage.getPatient_PatientGUID()).in(consentIds.toArray()).build();
+			IQueryBuilder queryBuilderNoFilter = repo.createQueryBuilder().and(query);
+			IQueryBuilder queryBuilderFilter = repo.createQueryBuilder().and(query, consentQuery);
+			for(EStructuralFeature[] projection : projectionFeaturePaths) {
+				queryBuilderNoFilter = queryBuilderNoFilter.projectionPath(projection);
+				queryBuilderFilter = queryBuilderFilter.projectionPath(projection);
+			}
+			for(SortEntity s : sort) {
+				queryBuilderNoFilter = queryBuilderNoFilter.sort((EAttribute)s.getSortFeature(), "ASC".equals(s.getSortOrder().toString()) ? SortType.ASCENDING : SortType.DESCENDING);
+				queryBuilderFilter = queryBuilderFilter.sort((EAttribute)s.getSortFeature(), "ASC".equals(s.getSortOrder().toString()) ? SortType.ASCENDING : SortType.DESCENDING);
+			}
+			List<EObject> patients =  repo.getEObjectsByQuery(eClass, queryBuilderNoFilter.limit(limit).skip(skip).build(), loadOptions);
+			List<EObject> filteredPatients = repo.getEObjectsByQuery(eClass, queryBuilderFilter.limit(limit).skip(skip).build(), loadOptions);
+			GeneralResponse patientResponse = new GeneralResponse();
+			ConsentMetadata metadata = MetadataFactory.eINSTANCE.createConsentMetadata();
+			metadata.setResultsBeforeConsentFilter(patients.size());
+			metadata.setResultsAfterConsentFilter(filteredPatients.size());
+			ConsentInfo consentInfo = MetadataFactory.eINSTANCE.createConsentInfo();
+			consentInfo.setDomainId(consentDomainId);
+			consentInfo.setPolicyId(consentPolicyId);
+			consentInfo.setPolicyVersion(consentPolicyVersion);
+			consentInfo.setConsentIdType(consentIdType);
+			metadata.setConsentInfo(consentInfo);
+			patientResponse.getMetadata().add(metadata);
+			patientResponse.getQueryResult().addAll(filteredPatients);
 			return patientResponse;
 		} finally {
 			repoSO.ungetService(repo);

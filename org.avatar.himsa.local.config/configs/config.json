@@ -28,12 +28,13 @@
   	},
   	"HIMSAConsentManagement": {
   		"consent.domain.id": "avatar",
-  		"consent.policy.id": "hearing_policy",
+  		"consent.policy.id": "medical_history_policy",
   		"consent.policy.version": "1.0",
   		"consent.id.type": "Patient ID"
   	},
   	"DataLoadOptions": {
-  		"collection.name": "Patient"
+  		"collection.name": "Patient",
+  		"hl7.collection.name": "Hl7Patient"
   	}, 
   	"DataStorageService~json": {
   		"data.format": "json", 

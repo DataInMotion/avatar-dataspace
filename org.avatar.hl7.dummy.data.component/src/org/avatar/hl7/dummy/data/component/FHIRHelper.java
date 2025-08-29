@@ -108,7 +108,8 @@ public class FHIRHelper {
 		observation.setSubject(createReference("Patient/"+patientId));
 		observation.setEncounter(createReference("Encounter/"+encounterId));		
 
-		if(code == null) code = "85354-9"; 
+//		if(code == null) code = "85354-9"; 
+		if(code == null) code = (String) selectRandomElement(OBSERVATION_TO_CONDITION_MAP.keySet().toArray());
 		switch(code) {
 		case "85354-9": //systolic and distolic blood pressure 
 			observation.setCode(generateCodeableConcept("http://loinc.org", "", code, "systolic and distolic blood pressure"));
@@ -212,6 +213,18 @@ public class FHIRHelper {
 		return observation;
 	}
 	
+	public static Encounter generateEncounter(String patientId, String encounterId, String conditionId) {
+		Encounter encounter = FHIRFactory.eINSTANCE.createEncounter();
+		encounter.setId(generateId(encounterId));
+		EncounterStatus status = FHIRFactory.eINSTANCE.createEncounterStatus();
+		status.setValue((EncounterStatusEnum) selectRandomElement(EncounterStatusEnum.values()));
+
+		encounter.setSubject(createReference("Patient/"+patientId));
+		encounter.getDiagnosis().add(generateDiagnosis(patientId, conditionId));
+
+		return encounter;
+	}
+	
 	public static Encounter generateEncounter(String patientId, String conditionId) {
 		Encounter encounter = FHIRFactory.eINSTANCE.createEncounter();
 		encounter.setId(generateId());
@@ -265,6 +278,12 @@ public class FHIRHelper {
 	private static Id generateId() {
 		Id id = FHIRFactory.eINSTANCE.createId();
 		id.setValue(UUID.randomUUID().toString());
+		return id;
+	}
+	
+	private static Id generateId(String idValue) {
+		Id id = FHIRFactory.eINSTANCE.createId();
+		id.setValue(idValue);
 		return id;
 	}
 

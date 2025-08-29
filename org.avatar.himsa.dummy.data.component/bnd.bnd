@@ -14,5 +14,6 @@ Bundle-Version: ${project-version}
 	net.datafaker;version=latest,\
 	org.emau.icmvc.ganimed.ttp.cm2,\
 	org.avatar.gics.service;version=latest,\
-	org.gecko.mongo.osgi.api
+	org.gecko.mongo.osgi.api,\
+	org.hl7.fhir.model
 	

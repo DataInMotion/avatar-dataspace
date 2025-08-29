@@ -15,8 +15,11 @@ package org.avatar.himsa.patient.service.api;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.avatar.himsa.export.Patient;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.gecko.emf.repository.query.IQuery;
 
@@ -35,6 +38,30 @@ public interface PatientService {
 	
 	PatientResponse getPatientsByQuery(IQuery query, int limit, int skip, List<SortEntity> sort, EStructuralFeature[] ... projectionFeaturePaths);
 	
+	GeneralResponse getObjectsByQuery(EClass eClass, Map<Object, Object> loadOptions, IQuery query, int limit, int skip, List<SortEntity> sort, EStructuralFeature[] ... projectionFeaturePaths);
+
+	class GeneralResponse {
+		
+		private List<Metadata> metadata = new LinkedList<>();
+		private List<EObject> queryResult = new LinkedList<>();
+		
+		public GeneralResponse() {
+			
+		}
+		
+		public GeneralResponse(List<EObject> queryResult, ConsentMetadata metadata) {
+			this.queryResult = queryResult;
+			this.metadata.add(metadata);		
+		}
+		
+		public List<EObject> getQueryResult() {
+			return queryResult;
+		}
+		
+		public List<Metadata> getMetadata() {
+			return metadata;
+		}
+	}
 	
 	class PatientResponse {
 		

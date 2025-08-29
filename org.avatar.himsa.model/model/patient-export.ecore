@@ -418,7 +418,7 @@
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gender" eType="#//GenderTypeObject"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gender" eType="#//GenderType"
         unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>

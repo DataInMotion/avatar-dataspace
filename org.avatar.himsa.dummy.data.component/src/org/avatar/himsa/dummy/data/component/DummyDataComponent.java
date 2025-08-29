@@ -26,6 +26,7 @@ import org.avatar.gics.service.api.GICSService;
 import org.avatar.himsa.dummy.data.component.helper.DummyDataHelper;
 import org.avatar.himsa.export.ActionDataType;
 import org.avatar.himsa.export.ActionsType;
+import org.avatar.himsa.export.GenderType;
 import org.avatar.himsa.export.Patient;
 import org.avatar.himsa.export.PatientExportFactory;
 import org.avatar.himsa.export.PatientExportPackage;
@@ -51,6 +52,10 @@ import org.gecko.emf.mongo.Options;
 import org.gecko.emf.osgi.UriMapProvider;
 import org.gecko.emf.osgi.constants.EMFNamespaces;
 import org.gecko.emf.repository.EMFRepository;
+import org.hl7.fhir.AdministrativeGender;
+import org.hl7.fhir.AdministrativeGenderEnum;
+import org.hl7.fhir.FHIRFactory;
+import org.hl7.fhir.Id;
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -85,13 +90,11 @@ public class DummyDataComponent {
 	private PromiseFactory factory = new PromiseFactory(Executors.newFixedThreadPool(4));
 
 	private Map<String, Object> properties;
-//	private ResourceSet resourceSet;
-	private HIMSAAudiometricStandardType sampleAudiogram;
+	private List<HIMSAAudiometricStandardType> sampleAudiogramsList = new ArrayList<>(4);
 	
 	@Activate
 	public void activatet(Map<String, Object> properties) {		
 		this.properties = properties;
-//		this.resourceSet = resourceSet;
 		factory.submit(() -> {
 			loadSampleAudiogram();
 			doCreateDummyData();
@@ -101,12 +104,15 @@ public class DummyDataComponent {
 	}
 	
 	private void loadSampleAudiogram() {
-		EObject eObj = DummyDataHelper.loadXMLResource(System.getProperty("data")+"/sample-data/Format502AudSample.xml", resourceSet);
-		if(eObj != null && eObj instanceof DocumentRoot root) {
-			sampleAudiogram = root.getHIMSAAudiometricStandard();
-		} else {
-			LOGGER.severe(String.format("Error while loading sample audiogram. Cannot include that in sample data!"));
+		for(int i = 0; i < 4; i++) {
+			EObject eObj = DummyDataHelper.loadXMLResource(System.getProperty("data")+"/sample-data/Format502AudSample"+i+".xml", resourceSet);
+			if(eObj != null && eObj instanceof DocumentRoot root) {
+				sampleAudiogramsList.add(root.getHIMSAAudiometricStandard());
+			} else {
+				LOGGER.severe(String.format("Error while loading sample audiogram. Cannot include that in sample data!"));
+			}
 		}
+		
 	}
 
 	
@@ -116,14 +122,20 @@ public class DummyDataComponent {
 			Map<String, Object> loadOptions = new HashMap<>();
 			if(properties.containsKey("collection.name")) loadOptions.put(Options.OPTION_COLLECTION_NAME, (String) properties.get("collection.name"));
 			List<Patient> existingPatients = repo.getAllEObjects(PatientExportPackage.eINSTANCE.getPatient(), loadOptions);
-			boolean createPatients = existingPatients.isEmpty();
+			boolean createPatients = existingPatients.isEmpty();		
 			if(createPatients) {
-				Collection<Patient> patients = createDummyPatients(NUM_OF_DUMMY_INSTANCES);				
+				Collection<Patient> patients = createDummyPatients(NUM_OF_DUMMY_INSTANCES*2);				
 				repo.save(patients.stream().map(mr -> (EObject) mr).toList(), loadOptions);
-				for(Patient patient : patients) {
+				Collection<org.hl7.fhir.Patient> hl7Patients = new ArrayList<>(NUM_OF_DUMMY_INSTANCES); 
+				int i = 0;
+				for(Patient patient : patients) {		
+					if(i%2 == 0)hl7Patients.add(createHl7Patient(patient));
 					ConsentDTO consent = doCreateDummyConsent(patient);
 					gicsService.addConsent(consent);
+					i++;
 				}
+				if(properties.containsKey("hl7.collection.name")) loadOptions.put(Options.OPTION_COLLECTION_NAME, (String) properties.get("hl7.collection.name"));
+				repo.save(hl7Patients.stream().map(p -> (EObject) p).toList(), loadOptions);
 			}
 		} finally {
 			repoSO.ungetService(repo);
@@ -132,6 +144,43 @@ public class DummyDataComponent {
 	}
 
 
+
+	/**
+	 * @param patient
+	 * @return
+	 */
+	private org.hl7.fhir.Patient createHl7Patient(Patient patient) {
+		 org.hl7.fhir.Patient hl7Patient = FHIRFactory.eINSTANCE.createPatient();
+		hl7Patient.setExtId(patient.getPatientGUID());
+		hl7Patient.setId(generateHl7Id(patient.getPatientGUID()));
+		org.hl7.fhir.Date birthDate = FHIRFactory.eINSTANCE.createDate();
+		birthDate.setValue(patient.getBirthDate());
+		hl7Patient.setBirthDate(birthDate);
+		AdministrativeGender administrativeGender = FHIRFactory.eINSTANCE.createAdministrativeGender();
+		administrativeGender.setValue(getHl7Gender(patient.getGender()));
+		hl7Patient.setGender(administrativeGender);
+		org.hl7.fhir.Boolean bool = FHIRFactory.eINSTANCE.createBoolean();
+		bool.setValue(true);
+		hl7Patient.setActive(bool);		
+		return hl7Patient;
+	}
+	
+	private static Id generateHl7Id(String id) {
+		Id hl7Id = FHIRFactory.eINSTANCE.createId();
+		hl7Id.setValue(id);
+		return hl7Id;
+	}
+	
+	private AdministrativeGenderEnum getHl7Gender(GenderType himsaGender) {
+		switch(himsaGender) {
+		case FEMALE:
+			return AdministrativeGenderEnum.FEMALE;	
+		case MALE:
+			return AdministrativeGenderEnum.MALE;
+		case NOT_RECORDED: default:
+			return AdministrativeGenderEnum.UNKNOWN;
+		}
+	}
 
 	private Collection<Patient> createDummyPatients(int numberOfInstances) {
 		List<Patient> patients = new ArrayList<>(numberOfInstances);
@@ -147,7 +196,7 @@ public class DummyDataComponent {
 		patient.setFirstName(getRandomDouble() < 0.7 ? faker.name().firstName() : null);
 		patient.setLastName(getRandomDouble() < 0.7 ? faker.name().lastName() : null);
 		patient.setMiddleName(getRandomDouble() < 0.7 ? faker.name().firstName() : null);
-//		patient.setGender((GenderType) selectRandomElement(GenderType.values()));
+		patient.setGender((GenderType) selectRandomElement(GenderType.values()));
 		patient.setTitle(getRandomDouble() < 0.7 ? faker.name().title() : null);
 		
 		patient.setCity(getRandomDouble() < 0.7 ? faker.address().city() : null);
@@ -198,7 +247,8 @@ public class DummyDataComponent {
 		actionData.setTypeOfData(TypeOfDataType.AUDIOGRAM);
 		actionData.setDataFormat(BigInteger.valueOf(1));
 		PubliclyFormattedData data = PatientExportFactory.eINSTANCE.createPubliclyFormattedData();
-		data.setHIMSAAudiometricStandard1(EcoreUtil.copy(sampleAudiogram));
+		int random = (Integer) selectRandomElement(new Integer[] {0,1,2,3});
+		data.setHIMSAAudiometricStandard1(EcoreUtil.copy(sampleAudiogramsList.get(random)));
 		actionData.setPublicData(data);
 		ActionsType actions = PatientExportFactory.eINSTANCE.createActionsType();	
 		patient.setActions(actions);

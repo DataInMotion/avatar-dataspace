@@ -17,6 +17,8 @@ import java.util.List;
 
 import org.avatar.himsa.export.Patient;
 import org.avatar.provider.backend.api.DataQualityService;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import de.avatar.metadata.DataQualityMetadata;
@@ -29,5 +31,7 @@ import de.avatar.metadata.DataQualityMetadata;
 public interface PatientDataQualityService extends DataQualityService{	
 	
 	DataQualityMetadata getDataQualityMetadataForPatients(List<Patient> patients, EStructuralFeature[] ... projections);
+	
+	DataQualityMetadata getDataQualityMetadataForObjects(List<? extends EObject> patients, EClass objectEClass, EStructuralFeature[] ... projections);
 
 }
