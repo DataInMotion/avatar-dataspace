@@ -90,7 +90,7 @@ public class FHIRHelper {
 		birthDate.setValue(generateRandomBirthDate(minBirthDate, maxBirthDate));
 		patient.setBirthDate(birthDate);
 		AdministrativeGender administrativeGender = FHIRFactory.eINSTANCE.createAdministrativeGender();
-		administrativeGender.setValue(gender != null ? AdministrativeGenderEnum.valueOf(gender) : (AdministrativeGenderEnum) selectRandomElement(AdministrativeGenderEnum.values()));
+		administrativeGender.setValue(gender != null ? AdministrativeGenderEnum.getByName(gender) : (AdministrativeGenderEnum) selectRandomElement(AdministrativeGenderEnum.values()));
 		patient.setGender(administrativeGender);
 		org.hl7.fhir.Boolean bool = FHIRFactory.eINSTANCE.createBoolean();
 		bool.setValue(true);
