@@ -142,7 +142,7 @@ public class Hl7QueryRequestExecutorService implements QueryRequestExecutorServi
 			EndpointResponse response = submit.get();
 			return response;
 		} catch(Exception e) {
-			return task.createErrorResponse(queryRequest.getRequestId(), e);
+			return task.createErrorResponse(queryRequest.getRequestId(), e, connectorMetadata);
 		} finally {
 			executor.shutdown();
 		}		
@@ -274,7 +274,8 @@ public class Hl7QueryRequestExecutorService implements QueryRequestExecutorServi
 
 			boolean exists = "json".equals(contentType) ? jsonDataStorage.existEndpointResponse(requestId) : xmlDataStorage.existEndpointResponse(requestId);
 			if(exists) {
-				return createErrorResponse(requestId, new IllegalArgumentException(String.format("A query with id %s for format %s has already been sent and data are already available", requestId, contentType)));
+				return createDataAlreadyAvailableResponse(requestId, connectorMetadata);
+//				return createErrorResponse(requestId, new IllegalArgumentException(String.format("A query with id %s for format %s has already been sent and data are already available", requestId, contentType)));
 			}
 			EndpointResponse response;
 
@@ -364,17 +365,17 @@ public class Hl7QueryRequestExecutorService implements QueryRequestExecutorServi
 						LOGGER.info(String.format("Start creating asset..."));
 						DataSpaceResponse dsResponse = dataSpaceService.createAssetInDataSpace(requestId, dataFileUrl, contentType, "Asset for Patient Query Result");
 						if(dsResponse == null) {
-							return createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while creating a new Asset in the DataSpace"));
+							return createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while creating a new Asset in the DataSpace"), connectorMetadata);
 						}
 					}				
 				} catch(Exception e) {
-					return createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while saving the data", e));
+					return createErrorResponse(requestId, new IllegalArgumentException("Query was successfull but there was an error while saving the data", e), connectorMetadata);
 				}
 				return response;
 
 			} catch(Exception e) {
 				LOGGER.severe(String.format("Error when querying for Query %s", requestId));
-				return createErrorResponse(requestId, e);
+				return createErrorResponse(requestId, e, connectorMetadata);
 			} 			
 		}
 
@@ -410,10 +411,20 @@ public class Hl7QueryRequestExecutorService implements QueryRequestExecutorServi
 				return "NotRecorded";
 			}
 		}
-
-		private EndpointResponse createErrorResponse(String requestId, Throwable errCause) {
+		
+		private EndpointResponse createDataAlreadyAvailableResponse(String requestId, ConnectorMetadata connectorMetadata) {
 			EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
 			addResponseMetadata(response, requestId);
+			response.getMetadata().add(connectorMetadata);
+			response.setSourceId(requestId);
+			response.setCode(ResponseCode.OK);
+			return response;
+		}
+
+		private EndpointResponse createErrorResponse(String requestId, Throwable errCause, ConnectorMetadata connectorMetadata) {
+			EndpointResponse response = AConnectorFactory.eINSTANCE.createEndpointResponse();
+			addResponseMetadata(response, requestId);
+			response.getMetadata().add(connectorMetadata);
 			response.setSourceId(requestId);
 			response.setCode(ResponseCode.ERROR);
 
