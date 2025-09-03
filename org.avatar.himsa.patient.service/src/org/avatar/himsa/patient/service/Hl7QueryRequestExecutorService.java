@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -298,7 +299,13 @@ public class Hl7QueryRequestExecutorService implements QueryRequestExecutorServi
 				}
 				LOGGER.info(String.format("Start retrieving data..."));
 				List<DomainResource> resources = dummyDataComponent.generateDomainResources(50, gender, minBithDate, maxBirthDate, observationCode);
-
+				List<DomainResource> finalResources = new ArrayList<>(resources.size());
+				for(DomainResource r : resources) {
+					if(r instanceof org.hl7.fhir.Patient hl7Patient) {
+						hl7Patient.eUnset(FHIRPackage.eINSTANCE.getPatient_BirthDate());
+					}
+					finalResources.add(r);
+				}
 				convertToHismaQuery(query);
 
 				IQuery iQuery = QueryHelper.buildQuery(query, repoSO);
@@ -313,7 +320,7 @@ public class Hl7QueryRequestExecutorService implements QueryRequestExecutorServi
 //				response.getMetadata().addAll(himsaResponse.getMetadata());
 				ConsentMetadata himsaConsentMetadata = ((ConsentMetadata) himsaResponse.getMetadata().get(0));
 				
-				if(himsaResponse.getPatients().isEmpty() && resources.isEmpty()) {
+				if(himsaResponse.getPatients().isEmpty() && finalResources.isEmpty()) {
 					response.setCode(ResponseCode.NO_CONTENT);
 				} else {
 					response.setCode(ResponseCode.OK);
@@ -330,13 +337,14 @@ public class Hl7QueryRequestExecutorService implements QueryRequestExecutorServi
 								Observation observation = FHIRHelper.generateObservation(hl7Patient.getId().getValue(), encounterId, null);
 								Condition condition = FHIRHelper.generateCondition(hl7Patient.getId().getValue(), observation.getCode().getCoding().get(0).getCode().getValue());
 								Encounter encounter = FHIRHelper.generateEncounter(hl7Patient.getId().getValue(), encounterId);
+								hl7Patient.eUnset(FHIRPackage.eINSTANCE.getPatient_BirthDate());
 								emfResponse.getData().add(hl7Patient);
 								emfResponse.getData().add(observation);
 								emfResponse.getData().add(condition);
 								emfResponse.getData().add(encounter);	
 							}
 						}
-						emfResponse.getData().addAll(resources);
+						emfResponse.getData().addAll(finalResources);
 						EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
 						result.setValue(emfResponse);
 						
