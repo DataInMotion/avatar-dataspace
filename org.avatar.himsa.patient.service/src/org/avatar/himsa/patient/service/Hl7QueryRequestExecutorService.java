@@ -340,7 +340,7 @@ public class Hl7QueryRequestExecutorService implements QueryRequestExecutorServi
 						EcoreResult result = AConnectorFactory.eINSTANCE.createEcoreResult();
 						result.setValue(emfResponse);
 						
-						response.getMetadata().add(getConsentMetadata(50+himsaConsentMetadata.getResultsBeforeConsentFilter(), resources.size()+himsaConsentMetadata.getResultsAfterConsentFilter()));
+						response.getMetadata().add(getConsentMetadata(50+himsaConsentMetadata.getResultsBeforeConsentFilter(), (resources.size()/4)+himsaConsentMetadata.getResultsAfterConsentFilter()));
 						response.setResult(result);		
 					} finally {
 						repoSO.ungetService(repo);
