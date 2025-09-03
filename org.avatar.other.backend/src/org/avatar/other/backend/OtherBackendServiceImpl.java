@@ -38,9 +38,9 @@ public class OtherBackendServiceImpl implements ProviderBackendService{
 	public EndpointResponse executeQuery(QueryRequest queryRequest) {
 		EndpointResponse response = null;
 		if(FHIRPackage.eNS_URI.equals(queryRequest.getQuery().getFrom().get(0).getRootEClass().getEPackage().getNsURI())) {
-			response = hl7QueryExecutorService.executeQueryRequest(queryRequest, getConnectorMetadata());
+			response = hl7QueryExecutorService.executeQueryRequest(queryRequest, getConnectorMetadata("HL7"));
 		} else {
-			response = himsaQueryExecutorService.executeQueryRequest(queryRequest, getConnectorMetadata());	
+			response = himsaQueryExecutorService.executeQueryRequest(queryRequest, getConnectorMetadata("Himsa"));	
 		}
 		return response;
 	}
@@ -54,18 +54,18 @@ public class OtherBackendServiceImpl implements ProviderBackendService{
 	public EndpointResponse executeDryRun(QueryRequest queryRequest) {
 		EndpointResponse response = null;
 		if(FHIRPackage.eNS_URI.equals(queryRequest.getQuery().getFrom().get(0).getRootEClass().getEPackage().getNsURI())) {
-			response = hl7QueryExecutorService.executeDryRunRequest(queryRequest, getConnectorMetadata());
+			response = hl7QueryExecutorService.executeDryRunRequest(queryRequest, getConnectorMetadata("HL7"));
 		} else {
-			response = himsaQueryExecutorService.executeDryRunRequest(queryRequest, getConnectorMetadata());	
+			response = himsaQueryExecutorService.executeDryRunRequest(queryRequest, getConnectorMetadata("Himsa"));	
 		}	
 		return response;
 	}
 	
-	private ConnectorMetadata getConnectorMetadata() {
+	private ConnectorMetadata getConnectorMetadata(String name) {
 		ConnectorMetadata connMetadata = MetadataFactory.eINSTANCE.createConnectorMetadata();
-		connMetadata.setConnectorId("other");
-		connMetadata.setConnectorName("other");
-		connMetadata.setDescription("Other Data Provider");
+		connMetadata.setConnectorId(name+"-2");
+		connMetadata.setConnectorName(name+"-2");
+		connMetadata.setDescription(name + " Data Provider");
 		connMetadata.setId(UUID.randomUUID().toString());
 		return connMetadata;
 	}
